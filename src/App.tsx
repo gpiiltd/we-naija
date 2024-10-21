@@ -1,9 +1,10 @@
 import React from "react";
+import Signup from "./Pages/Signup";
 
 function App() {
   return (
     <div className="main">
-      <header>WE NAIJA</header>
+      <Signup />
     </div>
   );
 }
