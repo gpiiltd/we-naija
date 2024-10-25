@@ -9,7 +9,7 @@ interface AuthProps {
 const AuthPages: FC<AuthProps> = ({ children }) => {
   return (
     <div className="w-full flex flex-col h-screen  md:flex-row">
-      <div className='pt-12 flex flex-col gap-8 w-full md:bg-teal_green md:h-screen md:w-auto md:pt-24 md:gap-24'>
+      <div className='pt-12 flex flex-col gap-8 w-full md:bg-teal_green md:h-screen md:w-auto md:pt-18 md:gap-24'>
        <div className="md:m-4 flex items-center justify-center">
           <Icon type="logo" />
         </div>
@@ -28,7 +28,7 @@ const AuthPages: FC<AuthProps> = ({ children }) => {
         </div>
       </div>
       </div>
-      <div className="flex px-4 pt-5 md:px-0  md:w-3/5  md:pt-52 md:justify-center md:text-center">
+      <div className="flex px-4 pt-5 md:px-0  md:w-3/5  md:pt-36 md:justify-center md:text-center">
         <Typography
           variant={TypographyVariant.SUBTITLE}
           className="text-light_gray "
