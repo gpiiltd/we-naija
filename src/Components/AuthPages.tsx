@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import Icon from "../assets/SvgImagesAndIcons";
+import Icon from "../Assets/SvgImagesAndIcons";
 import { TypographyVariant } from "./types";
 import Typography from "./Typography";
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useField, useFormikContext } from "formik";
 import { TextInputProps, TypographyVariant } from "../types";
 import Typography from "../Typography";
-import Icon from "../../assets/SvgImagesAndIcons";
+import Icon from "../../Assets/SvgImagesAndIcons";
 
 const InputField: React.FC<TextInputProps> = ({
   label,

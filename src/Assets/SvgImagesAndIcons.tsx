@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Svgprops } from "./types";
-import patients from "../assets/svgImages/patients.svg";
-import logo from '../assets/svgImages/logo.svg'
-import check from '../assets/svgImages/Vector (1).svg'
+import patients from "../Assets/svgImages/patients.svg";
+import logo from '../Assets/svgImages/logo.svg'
+import check from '../Assets/svgImages/Vector (1).svg'
 
 
 const Icon: FC<Svgprops> = ({ type, className }) => {
