@@ -49,13 +49,13 @@ const SignUp = () => {
       <div className="w-full">
         <Typography
           variant={TypographyVariant.SUBTITLE}
-          className="text-black "
+          className="text-black md:text-center"
         >
           Create Account
         </Typography>
         <Typography
           variant={TypographyVariant.NORMAL}
-          className="text-light_gray "
+          className="text-light_gray md:text-center "
         >
           Kindly fill in your details to sign up
         </Typography>
