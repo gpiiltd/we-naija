@@ -88,7 +88,6 @@ const PersonalInfo = () => {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                // className="border border-gray-300 rounded-md w-full h-16 p-2 peer flex"
                 className={`border ${
                   errors.address ? "border-red-500" : "border-gray-300"
                 } rounded-md w-full h-16 p-2 peer`}
