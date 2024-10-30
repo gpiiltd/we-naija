@@ -10,6 +10,7 @@ import notification from "../Assets/svgImages/notification.svg";
 import settings from "../Assets/svgImages/settings.svg";
 import user from "../Assets/svgImages/user.svg";
 import nigerianflag from "../Assets/svgImages/nigerianflag.svg";
+import calendar from "../Assets/svgImages/calender.svg";
 const Icon: FC<Svgprops> = ({ type, className }) => {
   const renderIcon = () => {
     switch (type) {
@@ -37,6 +38,8 @@ const Icon: FC<Svgprops> = ({ type, className }) => {
         return (
           <img src={nigerianflag} alt="nigerian flag" className={className} />
         );
+      case "calendar":
+        return <img src={calendar} alt="calendar" className={className} />;
       default:
         return null;
     }

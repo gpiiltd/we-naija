@@ -5,6 +5,7 @@ import Login from "./Pages/Login";
 import Kyc from "./Pages/Kyc";
 import KycPhonenumber from "./Components/KYCpages/KycPhonenumber";
 import EnterOtp from "./Components/KYCpages/EnterOtp";
+import PersonalInfo from "./Components/KYCpages/PersonalInfo";
 function App() {
     return (
       <Router>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/kyc/*" Component={Kyc} />
         <Route path="/kyc/validate-phone" Component={KycPhonenumber } />
         <Route path="/kyc/enter-otp" Component={EnterOtp } />
+        <Route path="/kyc/personal-information" Component={PersonalInfo } />
         </Routes>
          
       </Router>
