@@ -25,3 +25,10 @@ export enum TypographyVariant {
     onClick?: () => void;
     focusStyle?: string;
   }
+
+  export interface KycCardProps {
+    title: string;
+    description: string;
+    icon: string;
+    linkTo: string;
+  }
