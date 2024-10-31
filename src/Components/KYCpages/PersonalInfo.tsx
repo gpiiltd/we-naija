@@ -9,14 +9,8 @@ import InputField from "../Input/InputField";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import HeaderComponent from "../Header/Header";
 import DateModal from "./DateModal";
+import { Errors } from "../types";
 
-// Define the interface for errors
-interface Errors {
-  address?: string;
-  nationality?: string;
-  gender?: string;
-  dateOfBirth?: string;
-}
 
 const PersonalInfo = () => {
   const [formData, setFormData] = useState({

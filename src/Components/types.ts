@@ -32,3 +32,14 @@ export enum TypographyVariant {
     icon: string;
     linkTo: string;
   }
+
+  export interface Errors {
+    address?: string;
+    nationality?: string;
+    gender?: string;
+    dateOfBirth?: string;
+    idType?: string;
+    idNumber?: string;
+    frontFile?: string;
+    backFile?: string;
+  }
