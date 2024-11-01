@@ -27,7 +27,7 @@ const VADashboard = () => {
             <Icon type="logo" className="w-fit" />
 
             <nav className="hidden md:block pt-2">
-              <ul className="flex justify-center items-center text-sm lg:text-base lg:gap-4">
+              <ul className="flex justify-center items-center text-sm md:text-xs lg:text-base lg:gap-4">
                 <li>
                   <NavLink
                     to="/"
