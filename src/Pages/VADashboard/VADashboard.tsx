@@ -210,6 +210,23 @@ const VADashboard = () => {
                         </NavLink>
                       </li>
                       <li className="flex gap-2">
+                        <FiBell
+                          size={24}
+                          className="text-gray-600 text-primary_green text-lg"
+                        />
+                        <NavLink
+                          to="/community"
+                          onClick={toggleDrawer}
+                          className={({ isActive }) =>
+                            isActive
+                              ? "text-primary_green font-normal"
+                              : "font-thin hover:text-primary_green transition duration-300"
+                          }
+                        >
+                          Notification
+                        </NavLink>
+                      </li>
+                      <li className="flex gap-2">
                         <FiSettings
                           size={24}
                           className="text-gray-600 text-primary_green text-lg"
