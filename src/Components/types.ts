@@ -25,3 +25,11 @@ export enum TypographyVariant {
     onClick?: () => void;
     focusStyle?: string;
   }
+
+  export interface FooterProps {
+    children: ReactNode;
+    bg_color?: string;
+    fullWidth?: string;
+    logo?:any
+    className?: string;
+  }
