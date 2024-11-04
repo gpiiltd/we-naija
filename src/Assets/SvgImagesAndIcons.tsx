@@ -16,7 +16,7 @@ import cup from "../Assets/svgImages/cup.svg";
 
 
 
-const Icon: FC<Svgprops> = ({ type, className }) => {
+const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
     switch (type) {
       case "patients":
@@ -51,7 +51,7 @@ const Icon: FC<Svgprops> = ({ type, className }) => {
     }
   };
 
-  return <>{renderIcon()}</>;
+  return <div onClick={click}>{renderIcon()}</div>;
 };
 
 export default Icon;

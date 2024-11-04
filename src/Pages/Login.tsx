@@ -7,11 +7,15 @@ import * as Yup from "yup";
 import InputField from '../Components/Input/InputField';
 import { Link } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Button } from "@gpiiltd/gpi-ui-library";
+import { Button } from '@gpiiltd/gpi-ui-library';
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(true);
-  //const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+  const [loading,setLoading] = useState(false);
+  const navigate = useNavigate(); 
+
 
   const initialValues = {
     email: "",
@@ -27,6 +31,16 @@ const Login = () => {
       .required("Password cannot be empty")
       .max(20, "Password must not exceed 20 characters").trim(),
   });
+
+
+  const handleLogin = () => {
+setLoading(!loading);
+setTimeout(() => {
+  setLoading(false);
+  navigate("/verified-agent-dashboard"); 
+},3000)
+
+  }
 
   return (
     <AuthPages>
@@ -78,7 +92,8 @@ const Login = () => {
                 active={isValid && dirty}
                 bg_color="#007A61"
                 text_color="white"
-                onClick={() => console.log("Here we go loginnn")}
+                loading={loading}
+                onClick={handleLogin}
                 
               />
             </Form>

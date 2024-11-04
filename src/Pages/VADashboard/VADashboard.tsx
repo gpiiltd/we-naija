@@ -6,8 +6,8 @@ import { TypographyVariant } from "../../Components/types";
 import Header from "../../Components/Header";
 import { FiSettings, FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
-
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 const VADashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -24,17 +24,21 @@ const VADashboard = () => {
           </button>
 
           <div className="flex items-center gap-4">
-            <Icon type="logo" className="w-fit" />
+            <Icon
+              type="logo"
+              className="w-fit"
+              click={() => (window.location.href = "/verified-agent-dashboard")}
+            />
 
             <nav className="hidden md:block pt-2">
               <ul className="flex justify-center items-center text-sm md:text-xs lg:text-base lg:gap-4">
                 <li>
                   <NavLink
-                    to="/"
+                    to="/verified-agent-dashboard/home"
                     className={({ isActive }) =>
                       isActive
-                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                        : "px-2 py-2 font-thin hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-300"
+                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
+                        : "px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200"
                     }
                   >
                     Home
@@ -42,11 +46,11 @@ const VADashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/about"
+                    to="/verified-agent-dashboard/reports"
                     className={({ isActive }) =>
                       isActive
-                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                        : "px-2 py-2 font-thin hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-300"
+                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
+                        : "px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200"
                     }
                   >
                     Report
@@ -54,11 +58,11 @@ const VADashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/contact"
+                    to="/verified-agent-dashboard/leaderboard"
                     className={({ isActive }) =>
                       isActive
-                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                        : "px-2 py-2 font-thin hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-300"
+                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
+                        : "px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200"
                     }
                   >
                     Leaderboard
@@ -66,26 +70,14 @@ const VADashboard = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/community"
+                    to="/verified-agent-dashboard/join-community"
                     className={({ isActive }) =>
                       isActive
-                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                        : "px-2 py-2 font-thin hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-300"
+                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
+                        : "px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200"
                     }
                   >
                     Join Community
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/settings"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                        : "px-2 py-2 font-thin hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-300"
-                    }
-                  >
-                    Settings
                   </NavLink>
                 </li>
               </ul>
@@ -95,31 +87,31 @@ const VADashboard = () => {
           <div className="flex items-center gap-4">
             <nav className="flex justify-center items-center gap-4 text-gray-700">
               <NavLink
-                to="/settings"
+                to="/verified-agent-dashboard/settings"
                 className={({ isActive }) =>
                   isActive
-                    ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                    : "hidden px-2 py-2 font-thin hover:text-primary_green hover:font-normal transition duration-300 md:block"
+                    ? " px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
+                    : "hidden px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200 md:block"
                 }
               >
                 <FiSettings size={20} />
               </NavLink>
               <NavLink
-                to="/notifications"
+                to="/verified-agent-dashboard/notifications"
                 className={({ isActive }) =>
                   isActive
-                    ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                    : "hidden px-2 py-2 font-thin hover:text-primary_green hover:font-normal transition duration-300 md:block"
+                    ? " px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
+                    : "hidden px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200 md:block"
                 }
               >
                 <FiBell size={20} />
               </NavLink>
               <NavLink
-                to="/profile"
+                to="/verified-agent-dashboard/profile"
                 className={({ isActive }) =>
                   isActive
-                    ? "px-2 py-2 text-primary_green bg-effect_green font-normal"
-                    : "px-2 py-2 font-thin hover:text-primary_green hover:font-normal transition duration-300"
+                    ? "px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
+                    : "px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200"
                 }
               >
                 <Icon type="avatar" />
@@ -142,7 +134,13 @@ const VADashboard = () => {
               <div className="flex flex-col justify-between h-full pb-48">
                 <div className="flex flex-col pt-8">
                   <div className="flex justify-between items-center">
-                    <Icon type="logo" />
+                    <Icon
+                      type="logo"
+                      className="w-fit"
+                      click={() =>
+                        (window.location.href = "/verified-agent-dashboard")
+                      }
+                    />
                     <button onClick={toggleDrawer} className="text-lg">
                       <FiX size={24} className="text-gray-500" />
                     </button>
@@ -153,7 +151,7 @@ const VADashboard = () => {
                       <li className="flex gap-2">
                         <Icon type="home" />
                         <NavLink
-                          to="/"
+                          to="/verified-agent-dashboard/home"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -167,7 +165,7 @@ const VADashboard = () => {
                       <li className="flex gap-2">
                         <Icon type="report" />
                         <NavLink
-                          to="/about"
+                          to="/verified-agent-dashboard/reports"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -175,13 +173,13 @@ const VADashboard = () => {
                               : "font-thin hover:text-primary_green transition duration-300"
                           }
                         >
-                          Report
+                          Reports
                         </NavLink>
                       </li>
                       <li className="flex gap-2">
                         <Icon type="cup" />
                         <NavLink
-                          to="/contact"
+                          to="/verified-agent-dashboard/leaderboard"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -198,7 +196,7 @@ const VADashboard = () => {
                           className="text-gray-600 text-primary_green text-lg"
                         />
                         <NavLink
-                          to="/community"
+                          to="/verified-agent-dashboard/join-community"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -215,7 +213,7 @@ const VADashboard = () => {
                           className="text-gray-600 text-primary_green text-lg"
                         />
                         <NavLink
-                          to="/community"
+                          to="/verified-agent-dashboard/notifications"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -232,7 +230,7 @@ const VADashboard = () => {
                           className="text-gray-600 text-primary_green text-lg"
                         />
                         <NavLink
-                          to="/settings"
+                          to="/verified-agent-dashboard/settings"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -250,7 +248,7 @@ const VADashboard = () => {
                 <div className="flex gap-2">
                   <CiLogout size={24} className="text-error text-lg" />
                   <NavLink
-                    to="/"
+                    to="/login"
                     onClick={toggleDrawer}
                     className={({ isActive }) =>
                       isActive
@@ -267,8 +265,9 @@ const VADashboard = () => {
         )}
       </Header>
 
-      <main className="flex-grow">{/* Page content */}</main>
-
+      <main className="flex-grow">
+        <Outlet />
+      </main>
       <Footer bg_color="black" className="px-8 md:px-6  lg:px-12">
         <div className="border-b border-gray-800 md:mb-8 pb-4">
           <div className="flex flex-col gap-4  md:flex-row md:justify-between">
