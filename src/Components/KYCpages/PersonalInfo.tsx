@@ -90,7 +90,7 @@ const PersonalInfo = () => {
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.address
-                    ? "-top-1 left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >
@@ -119,7 +119,7 @@ const PersonalInfo = () => {
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.nationality
-                    ? "-top-1 left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >
@@ -148,7 +148,7 @@ const PersonalInfo = () => {
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.gender
-                    ? "-top-1 left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >
@@ -176,7 +176,7 @@ const PersonalInfo = () => {
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.dateOfBirth
-                    ? "-top-1 left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >

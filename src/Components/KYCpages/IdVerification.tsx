@@ -4,29 +4,27 @@ import logo from "../Assets/svgImages/logo.svg";
 import { TypographyVariant } from "../types";
 import { Errors } from "../types";
 import Icon from "../../Assets/SvgImagesAndIcons";
+import FileUpload from "./FileUpload";
+import SkipButton from "./SkipButton";
 
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [frontFile, setFrontFile] = useState<File | null>(null);
   const [backFile, setBackFile] = useState<File | null>(null);
-  const [errors, setErrors] = useState<Errors>({}); // State to hold validation errors
+  const [errors, setErrors] = useState<Errors>({});
 
   const handleIdTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdType(e.target.value);
-    setErrors({ ...errors, idType: "" }); // Clear error for ID type
+    setErrors({ ...errors, idType: "" });
   };
 
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdNumber(e.target.value);
-    setErrors({ ...errors, idNumber: "" }); // Clear error for ID number
+    setErrors({ ...errors, idNumber: "" });
   };
 
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    isFront: boolean
-  ) => {
-    const file = e.target.files?.[0] || null;
+  const handleFileChange = (file: File | null, isFront: boolean) => {
     if (isFront) {
       setFrontFile(file);
     } else {
@@ -48,11 +46,10 @@ const IDVerification = () => {
   const handleSubmit = () => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors); // Set errors if validation fails
+      setErrors(validationErrors);
       return;
     }
     console.log("Form Data:", { idType, idNumber, frontFile, backFile });
-    // Proceed with form submission logic here
   };
 
   return (
@@ -67,85 +64,74 @@ const IDVerification = () => {
         </div>
         <Typography
           variant={TypographyVariant.NORMAL}
-          className="text-left mb-6"
+          className="text-left mb-6 text-gray-500"
         >
           Kindly fill in your ID card details
         </Typography>
 
-        {/* ID Card Type Selection */}
-        <div className="mb-4 text-gray-500">
-          <Typography variant={TypographyVariant.NORMAL} className="mb-2 text-black">
+        <div className="mb-4">
+          <Typography variant={TypographyVariant.SUBTITLE} className="mb-2 ">
             Choose ID card type
           </Typography>
-          <label className="block">
-            <input
-              type="radio"
-              value="National ID"
-              checked={idType === "National ID"}
-              onChange={handleIdTypeChange}
-            />
-            National ID
-          </label>
-          <label className="block">
-            <input
-              type="radio"
-              value="International passport"
-              checked={idType === "International passport"}
-              onChange={handleIdTypeChange}
-            />
-            International Passport
-          </label>
-          <label className="block">
-            <input
-              type="radio"
-              value="Drivers licence"
-              checked={idType === "Drivers licence"}
-              onChange={handleIdTypeChange}
-            />
-            Drivers Licence
-          </label>
-          <label className="block">
-            <input
-              type="radio"
-              value="Permanent voter card"
-              checked={idType === "Permanent voter card"}
-              onChange={handleIdTypeChange}
-            />
-            Permanent Voter Card
-          </label>
+          {[
+            "National ID",
+            "International passport",
+            "Drivers licence",
+            "Permanent voter card",
+          ].map((type) => (
+            <label key={type} className="flex items-center mb-4">
+              <input
+                type="radio"
+                value={type}
+                checked={idType === type}
+                onChange={handleIdTypeChange}
+                className="hidden"
+              />
+              <span
+                className={`inline-block w-6 h-6 border-2 border-gray-300 rounded-full mr-2 cursor-pointer  ${
+                  idType === type ? "bg-green-700 border-green-700" : ""
+                }`}
+              ></span>
+              <Typography
+                variant={TypographyVariant.NORMAL}
+                className={`${
+                  idType === type ? "text-black" : "text-gray-500"
+                }`}
+              >
+                {type}
+              </Typography>
+            </label>
+          ))}
           {errors.idType && (
             <p className="text-red-500 text-sm">{errors.idType}</p>
           )}
         </div>
 
-        {/* ID Number Input */}
-        <div className="relative mb-4">
-          <input
-            type="text"
-            value={idNumber}
-            onChange={handleIdNumberChange}
-            className={`border ${
-              errors.idNumber ? "border-red-500" : "border-gray-300"
-            } rounded-md w-full h-12 p-2`}
-            placeholder=" " // Add a space to trigger the floating effect
-          />
-          <label
-            className={`absolute left-2 top-2 transition-all duration-200 transform ${
-              idNumber ? "-top-4 left-2 text-teal-500" : "text-gray-500"
-            }`}
-          >
-            Enter ID Number
-          </label>
-          {errors.idNumber && (
-            <p className="text-red-500 text-sm">{errors.idNumber}</p>
-          )}
-        </div>
+        <Typography variant={TypographyVariant.SUBTITLE} className="mb-4 mt-8">
+          Enter ID Number
+        </Typography>
+        <input
+          type="text"
+          value={idNumber}
+          onChange={handleIdNumberChange}
+          className={`border ${
+            errors.idNumber ? "border-red-500" : "border-gray-300"
+          } rounded-md w-full h-12 p-2`}
+          placeholder="ID Number"
+        />
+
+        {errors.idNumber && (
+          <p className="text-red-500 text-sm">{errors.idNumber}</p>
+        )}
 
         {/* File Upload Instructions */}
-        <Typography variant={TypographyVariant.NORMAL} className="mb-2">
+        <Typography variant={TypographyVariant.SUBTITLE} className="mb-2 mt-8">
           Upload a photo of your selected valid ID
         </Typography>
-        <Typography variant={TypographyVariant.NORMAL} className="mb-4">
+        <Typography
+          variant={TypographyVariant.NORMAL}
+          className="mb-4 text-gray-500"
+        >
           1. Make sure the whole ID is in the frame.
           <br />
           2. The photo should clearly show the front of your ID - with no edges
@@ -154,40 +140,44 @@ const IDVerification = () => {
           3. Take the photo indoors to prevent glare or reflections.
         </Typography>
 
-        {/* Front of ID Upload */}
         <div className="relative mb-4">
-          <label className="block mb-1">Front of the ID card</label>
-          <input
-            type="file"
-            accept="image/*,application/pdf"
-            onChange={(e) => handleFileChange(e, true)}
-            className="border border-gray-300 rounded-md w-full h-12 p-2"
-          />
-          {errors.frontFile && (
-            <p className="text-red-500 text-sm">{errors.frontFile}</p>
-          )}
-        </div>
+          <Typography
+            variant={TypographyVariant.SUBTITLE}
+            className="mb-2 mt-8"
+          >
+            Front of the ID card
+          </Typography>
 
-        {/* Back of ID Upload */}
-        <div className="relative mb-4">
-          <label className="block mb-1">Back of the ID card</label>
-          <input
-            type="file"
-            accept="image/*,application/pdf"
-            onChange={(e) => handleFileChange(e, false)}
-            className="border border-gray-300 rounded-md w-full h-12 p-2"
+          {/* File Uploads */}
+          <FileUpload
+            label="Kindly upload it as an image or pdf"
+            onChange={(file) => handleFileChange(file, true)}
+            error={errors.frontFile}
           />
-          {errors.backFile && (
-            <p className="text-red-500 text-sm">{errors.backFile}</p>
-          )}
+
+          <Typography
+            variant={TypographyVariant.SUBTITLE}
+            className="mb-2 mt-8"
+          >
+            Back of the ID card
+          </Typography>
+          <FileUpload
+            label="Kindly upload it as an image or pdf"
+            onChange={(file) => handleFileChange(file, false)}
+            error={errors.backFile}
+          />
         </div>
 
         <button
           onClick={handleSubmit}
-          className="w-full bg-teal-500 text-white"
+          className="w-full bg-teal-700 text-white rounded-xl h-14 mt-8"
         >
           Submit
         </button>
+
+        <div className="flex pt-4 items-center justify-center">
+          <SkipButton />
+        </div>
       </div>
     </div>
   );
