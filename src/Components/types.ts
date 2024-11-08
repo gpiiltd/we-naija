@@ -49,3 +49,16 @@ export enum TypographyVariant {
     width?: string;
     height?: string;
   }
+  export interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    children: React.ReactNode;
+    width?: string;
+    closeIcon?: string;
+  }
+  export interface ICustomModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title?: string;
+    children: ReactNode;
+  }

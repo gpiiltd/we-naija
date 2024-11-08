@@ -17,7 +17,8 @@ module.exports = {
         orange:'#ED7D31',
         cream:'#E5E7EB',
         red:'#AA161D',
-        black:'#344054'
+        black:'#344054',
+        d_red:'#7A0019'
 
       },
       placeholder: {

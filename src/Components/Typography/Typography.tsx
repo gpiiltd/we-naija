@@ -7,7 +7,7 @@ const Typography: React.FC<TypographyProps> = ({
   className,
 }) => {
   const classes = {
-    [TypographyVariant.TITLE]: "text-3xl  ",
+    [TypographyVariant.TITLE]: "text-3xl tracking-wide leading-5 ",
     [TypographyVariant.SUBTITLE]: "text-2xl  ",
     [TypographyVariant.NORMAL]: "text-base  ",
     [TypographyVariant.BOLD]: "text-base ",

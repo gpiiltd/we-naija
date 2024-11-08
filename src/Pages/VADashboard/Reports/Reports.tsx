@@ -1,13 +1,15 @@
 import React from "react";
-import Typography from "../../Components/Typography";
-import { TypographyVariant } from "../../Components/types";
-import blue_card from "../../Assets/svgImages/blue_card.svg";
-import red_card from "../../Assets/svgImages/red_card.svg";
-import woman from "../../Assets/svgImages/woman.svg";
-
+import Typography from "../../../Components/Typography";
+import { TypographyVariant } from "../../../Components/types";
+import blue_card from "../../../Assets/svgImages/blue_card.svg";
+import red_card from "../../../Assets/svgImages/red_card.svg";
+import woman from "../../../Assets/svgImages/woman.svg";
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@gpiiltd/gpi-ui-library";
 
 const Reports = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-1">
@@ -36,7 +38,8 @@ Community Task              </h3>
                   <span className="font-extrabold">earn star points.</span>
                 </p>
                 <div className="flex h-7 justify-center w-[50%] mt-2  md:w-[40%] lg:w-[50%] lg:h-12">
-  <Button text="View" active={true} bg_color="transparent" />
+  <Button text="View" active={true} bg_color="transparent"       onClick={() => navigate('/verified-agent-dashboard/reports/community-tasks')}
+  />
 </div>
               </div>
             </div>
