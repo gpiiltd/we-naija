@@ -12,6 +12,10 @@ import avatar from "../Assets/svgImages/Avatar.svg";
 import report_icon from "../Assets/svgImages/report.svg";
 import home from "../Assets/svgImages/home.svg";
 import cup from "../Assets/svgImages/cup.svg";
+import startpoints from "../Assets/svgImages/star_points.svg";
+import kyc from "../Assets/svgImages/kyc.svg";
+
+
 
 
 
@@ -44,7 +48,11 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
             case "home":
             return <img src={home} alt="we-naija icon" className={className} />;
             case "cup":
-            return <img src={cup} alt="we-naija icon" className={className} />;
+            return <img src={cup} alt="cup icon" className={className} />;
+            case "starPoints":
+              return <img src={startpoints} alt="start point icon" className={className} />;
+              case "kyc":
+                return <img src={kyc} alt="start point icon" className={className} />;
 
       default:
         return null;

@@ -1,4 +1,3 @@
-import { Typography } from "@gpiiltd/gpi-ui-library";
 import Footer from "../../Components/Footer";
 import { NavLink } from "react-router-dom";
 import Icon from "../../Assets/SvgImagesAndIcons";
@@ -8,6 +7,7 @@ import { FiSettings, FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import Typography from "../../Components/Typography";
 
 const VADashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -17,7 +17,7 @@ const VADashboard = () => {
   };
   return (
     <div className="min-h-screen flex flex-col w-full">
-      <Header className="px-4 md:px-6 lg:px-12">
+      <Header className="px-4 md:px-6 lg:px-16">
         <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
           <button onClick={toggleDrawer} className="md:hidden text-gray-700">
             <FiMenu size={24} />
@@ -265,10 +265,10 @@ const VADashboard = () => {
         )}
       </Header>
 
-      <main className="flex-grow">
+      <main className="flex-grow px-4 md:px-6  lg:px-16 pt-8">
         <Outlet />
       </main>
-      <Footer bg_color="black" className="px-8 md:px-6  lg:px-12">
+      <Footer bg_color="black" className="px-8 md:px-6  lg:px-16">
         <div className="border-b border-gray-800 md:mb-8 pb-4">
           <div className="flex flex-col gap-4  md:flex-row md:justify-between">
             <Icon type="wenaija" className="w-fit" />
@@ -360,7 +360,7 @@ const VADashboard = () => {
           <Typography variant={TypographyVariant.SMALL}>
             © 2024 Wenailja. All rights reserved.
           </Typography>
-          <ul className="flex space-x-6">
+          <ul className="flex space-x-3">
             <li className="cursor-pointer">Terms</li>
             <li className="cursor-pointer">Privacy </li>
             <li className="cursor-pointer">Cookies </li>

@@ -42,3 +42,10 @@ export enum TypographyVariant {
     text_color?: string;
     border_color?: string;
   }
+  export interface CardProps {
+    titleLeft: React.ReactNode;
+    titleRight: React.ReactNode;
+    children: React.ReactNode;
+    width?: string;
+    height?: string;
+  }
