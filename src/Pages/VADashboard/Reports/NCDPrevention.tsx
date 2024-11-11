@@ -22,12 +22,13 @@ const NCDPrevention = () => {
         </Typography>
       </div>
       <Typography
-  variant={TypographyVariant.SMALL}
-  className="pt-1 text-light_gray max-w-lg" 
->
-  Lorem ipsum dolor sit amet consectetur. Mauris adipiscing vel euismod
-  convallis adipiscing enim. Choose any available indicator and begin task.
-</Typography>
+        variant={TypographyVariant.SMALL}
+        className="pt-1 text-light_gray max-w-lg"
+      >
+        Lorem ipsum dolor sit amet consectetur. Mauris adipiscing vel euismod
+        convallis adipiscing enim. Choose any available indicator and begin
+        task.
+      </Typography>
       <div className="pt-4">
         <Typography variant={TypographyVariant.NORMAL}>
           Indicators (6){" "}
@@ -56,7 +57,7 @@ const NCDPrevention = () => {
                   variant={TypographyVariant.NORMAL}
                   className="font-bold tracking-wide"
                 >
-                  NCD Prevention
+                  Mental health promotion
                 </Typography>
                 <Typography
                   variant={TypographyVariant.SMALL}
@@ -96,7 +97,7 @@ const NCDPrevention = () => {
                 </Typography>
               </div>
             </div>
-            <ProgressBar />
+            <ProgressBar percent={0} />
           </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
@@ -107,7 +108,108 @@ const NCDPrevention = () => {
                   variant={TypographyVariant.NORMAL}
                   className="font-bold tracking-wide"
                 >
-                  NCD Prevention
+Substance abuse prevention                </Typography>
+                <Typography
+                  variant={TypographyVariant.SMALL}
+                  className="pt-2 text-light_gray"
+                >
+                  Lorem ipsum dolor sit amet consectetur. Platea ullamcorper
+                  egestas amet tortor ut.
+                </Typography>
+              </div>
+
+              <div className="bg-effect_green p-1 rounded-full">
+                {" "}
+                <IoIosArrowForward
+                  className="font-extrabold"
+                  size={24}
+                  color="#007A61"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 ">
+              <div className="flex gap-2 items-center ">
+                <Icon type="kyc" />
+                <Typography
+                  variant={TypographyVariant.SMALL}
+                  className="pt-2 text-light_gray"
+                >
+                  5 tasks{" "}
+                </Typography>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Icon type="starPoints" />
+                <Typography
+                  variant={TypographyVariant.SMALL}
+                  className="pt-2 text-orange"
+                >
+                  15 star points{" "}
+                </Typography>
+              </div>
+            </div>
+            <ProgressBar percent={20} />
+          </div>
+        </Card>
+        <Card titleLeft={undefined} titleRight={undefined}>
+          <div className="py-8 px-6">
+            <div className="flex gap-2 items-center  justify-between cursor-pointer">
+              <div>
+                <Typography
+                  variant={TypographyVariant.NORMAL}
+                  className="font-bold tracking-wide"
+                >
+Privacy and confidentiality               </Typography>
+                <Typography
+                  variant={TypographyVariant.SMALL}
+                  className="pt-1 text-light_gray max-w-lg"
+                >
+                  Lorem ipsum dolor sit amet consectetur. Mauris adipiscing vel
+                  euismod convallis adipiscing enim. Choose any available
+                  indicator and begin task.
+                </Typography>
+              </div>
+
+              <div className="bg-effect_green p-1 rounded-full">
+                {" "}
+                <IoIosArrowForward
+                  className="font-extrabold"
+                  size={24}
+                  color="#007A61"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 ">
+              <div className="flex gap-2 items-center ">
+                <Icon type="kyc" />
+                <Typography
+                  variant={TypographyVariant.SMALL}
+                  className="pt-2 text-light_gray"
+                >
+                  5 tasks{" "}
+                </Typography>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Icon type="starPoints" />
+                <Typography
+                  variant={TypographyVariant.SMALL}
+                  className="pt-2 text-orange"
+                >
+                  15 star points{" "}
+                </Typography>
+              </div>
+            </div>
+            <ProgressBar percent={20} />
+          </div>
+        </Card>
+        <Card titleLeft={undefined} titleRight={undefined}>
+          <div className="py-8 px-6">
+            <div className="flex gap-2 items-center  justify-between cursor-pointer">
+              <div>
+                <Typography
+                  variant={TypographyVariant.NORMAL}
+                  className="font-bold tracking-wide"
+                >
+                  Risk factor education
                 </Typography>
                 <Typography
                   variant={TypographyVariant.SMALL}
@@ -147,7 +249,7 @@ const NCDPrevention = () => {
                 </Typography>
               </div>
             </div>
-            <ProgressBar />
+            <ProgressBar percent={20} />
           </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
@@ -158,58 +260,7 @@ const NCDPrevention = () => {
                   variant={TypographyVariant.NORMAL}
                   className="font-bold tracking-wide"
                 >
-                  NCD Prevention
-                </Typography>
-                <Typography
-  variant={TypographyVariant.SMALL}
-  className="pt-1 text-light_gray max-w-lg" 
->
-  Lorem ipsum dolor sit amet consectetur. Mauris adipiscing vel euismod
-  convallis adipiscing enim. Choose any available indicator and begin task.
-</Typography>
-              </div>
-
-              <div className="bg-effect_green p-1 rounded-full">
-                {" "}
-                <IoIosArrowForward
-                  className="font-extrabold"
-                  size={24}
-                  color="#007A61"
-                />
-              </div>
-            </div>
-            <div className="flex gap-3 ">
-              <div className="flex gap-2 items-center ">
-                <Icon type="kyc" />
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="pt-2 text-light_gray"
-                >
-                  5 tasks{" "}
-                </Typography>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Icon type="starPoints" />
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="pt-2 text-orange"
-                >
-                  15 star points{" "}
-                </Typography>
-              </div>
-            </div>
-            <ProgressBar />
-          </div>
-        </Card>
-        <Card titleLeft={undefined} titleRight={undefined}>
-          <div className="py-8 px-6">
-            <div className="flex gap-2 items-center  justify-between cursor-pointer">
-              <div>
-                <Typography
-                  variant={TypographyVariant.NORMAL}
-                  className="font-bold tracking-wide"
-                >
-                  NCD Prevention
+                  Genetic counselling
                 </Typography>
                 <Typography
                   variant={TypographyVariant.SMALL}
@@ -249,7 +300,7 @@ const NCDPrevention = () => {
                 </Typography>
               </div>
             </div>
-            <ProgressBar />
+            <ProgressBar percent={20} />
           </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
@@ -260,8 +311,7 @@ const NCDPrevention = () => {
                   variant={TypographyVariant.NORMAL}
                   className="font-bold tracking-wide"
                 >
-                  NCD Prevention
-                </Typography>
+Hepatitis, sentization and prevention                </Typography>
                 <Typography
                   variant={TypographyVariant.SMALL}
                   className="pt-2 text-light_gray"
@@ -300,58 +350,7 @@ const NCDPrevention = () => {
                 </Typography>
               </div>
             </div>
-            <ProgressBar />
-          </div>
-        </Card>
-        <Card titleLeft={undefined} titleRight={undefined}>
-          <div className="py-8 px-6">
-            <div className="flex gap-2 items-center  justify-between cursor-pointer">
-              <div>
-                <Typography
-                  variant={TypographyVariant.NORMAL}
-                  className="font-bold tracking-wide"
-                >
-                  NCD Prevention
-                </Typography>
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="pt-2 text-light_gray"
-                >
-                  Lorem ipsum dolor sit amet consectetur. Platea ullamcorper
-                  egestas amet tortor ut.
-                </Typography>
-              </div>
-
-              <div className="bg-effect_green p-1 rounded-full">
-                {" "}
-                <IoIosArrowForward
-                  className="font-extrabold"
-                  size={24}
-                  color="#007A61"
-                />
-              </div>
-            </div>
-            <div className="flex gap-3 ">
-              <div className="flex gap-2 items-center ">
-                <Icon type="kyc" />
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="pt-2 text-light_gray"
-                >
-                  5 tasks{" "}
-                </Typography>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Icon type="starPoints" />
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="pt-2 text-orange"
-                >
-                  15 star points{" "}
-                </Typography>
-              </div>
-            </div>
-            <ProgressBar />
+            <ProgressBar percent={20} />
           </div>
         </Card>
       </div>

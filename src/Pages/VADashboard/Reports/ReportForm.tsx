@@ -13,8 +13,7 @@ import CustomModal from "../../../Components/Modal";
 
 const validationSchema = Yup.object({
   textArea: Yup.string()
-    .max(20, "Text must be 20 characters or less")
-    .required("This field is required"),
+    .max(20, "You are allowed a maximum of 20 characters")
 });
 const ReportForm = () => {
   const navigate = useNavigate();
@@ -61,7 +60,7 @@ const ReportForm = () => {
           What do you understand by mental health?
         </Typography>
         <div className="flex gap-1 pt-4">
-          <LuBookMinus color="green" />
+          <LuBookMinus color="#007A61" />
           <Typography
             variant={TypographyVariant.SMALL}
             className="ext-light_gray"

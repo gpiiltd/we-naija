@@ -4,8 +4,10 @@ import { TypographyVariant } from "../../../Components/types";
 import blue_card from "../../../Assets/svgImages/blue_card.svg";
 import red_card from "../../../Assets/svgImages/red_card.svg";
 import woman from "../../../Assets/svgImages/woman.svg";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
+import Icon from "../../../Assets/SvgImagesAndIcons";
+import { PiPaperPlaneTiltFill } from "react-icons/pi";
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -24,63 +26,70 @@ const Reports = () => {
         Kindly select the type of report type you would like to participate in
         today.{" "}
       </Typography>
-      <div className="flex flex-col md:flex-row gap-8 md:justify-between w-full">
-        {/* first card */}
-        <div className="border  md:w-[350px] lg:w-[670px]  h-fit rounded-xl shadow relative flex flex-col justify-start text-white tracking-wide">
+      <div className="grid gap-8  md:grid-cols-2">
+        {/* First Row - Two Columns on Large and Medium Screens */}
+        <div className="border h-fit rounded-xl shadow relative flex flex-col justify-start text-white tracking-wide">
           <img src={red_card} alt="heart icon" />
-          <div className="py-6 mb-12 md:py-2 lg:py-2 absolute lg:pt-8">
+          <div className="py-6 mb-12 md:py-2 lg:py-2 absolute lg:pt-4">
             <div className="px-4 lg:p-6">
-              <h3 className="font-bold text-sm md:text-lg  lg:text-3xl lg:font-extrabold lg:lg:leading-6">
-Community Task              </h3>
-              <div className=" flex flex-col gap-1 lg:pt-2 lg:pr-52">
+              <h3 className="font-bold text-sm md:text-lg lg:text-3xl lg:font-extrabold lg:leading-6">
+              Community Task              </h3>
+              <div className="flex flex-col gap-1 lg:pt-2 lg:pr-52">
                 <p className="text-xs md:text-sm lg:leading-6 lg:text-base font-thin">
-                As a Health Hero, complete curated tasks to deepen your health knowledge, provide valuable data, and {" "}
+                As a Health Hero, complete curated tasks to deepen your health knowledge, provide valuable data, and {' '}
                   <span className="font-extrabold">earn star points.</span>
                 </p>
-                <div className="flex h-7 justify-center w-[50%] mt-2  md:w-[40%] lg:w-[50%] lg:h-12">
-  <Button text="View" active={true} bg_color="transparent"       onClick={() => navigate('/verified-agent-dashboard/reports/community-tasks')}
-  />
-</div>
+                <div className="flex mt-3  h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
+                  <Button text="View" active={true} bg_color="transparent"onClick={() => navigate('/verified-agent-dashboard/reports/community-tasks')}/>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* second card */}
-        <div className="border  md:w-[350px] lg:w-[670px]  h-fit rounded-xl shadow relative flex flex-col justify-start text-white tracking-wide">
-          <img src={blue_card} alt="heart icon" />
-          <div className="py-6 mb-12 md:py-2 lg:py-2 absolute lg:pt-8">
-            <div className="px-4 lg:p-6">
-              <h3 className="font-bold text-sm md:text-lg  lg:text-3xl lg:font-extrabold lg:lg:leading-6">
-                Health Institution Survey{" "}
-              </h3>
-              <div className=" flex flex-col gap-1 lg:pt-2 lg:pr-52">
-                <p className="text-xs md:text-sm lg:leading-6 lg:text-base font-thin">
-                Take part in surveys at our partners health institutes, provide feedback on key indicators, and {" "}
-                  <span className="font-extrabold">earn star points.</span>
-                </p>
-                <div className="flex h-7 justify-center w-[50%] mt-2  md:w-[40%] lg:w-[50%] lg:h-12">
-  <Button text="View" active={true} bg_color="transparent" />
-</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div className=" md:w-[600px] lg:w-[916px] rounded-xl relative flex tracking-wide self-center pt-8 md:pt-24">
-        <img src={woman} alt="heart icon" />
-        <div className="absolute px-4 py-2 md:px-16  md:py-12">
-          <div className="flex flex-col md:gap-3 lg:gap-8 pr-[100px] md:pr-[150px] lg:pr-[400px]">
-            <h3 className="text-sm md:text-base lg:text-2xl font-extrabold">
-              Be the Change. Connect with Fellow Health Champions.
-            </h3>
-            <div className="flex justify-center  w-[50%] md:w-[40%] lg:w-[50%]">
-              <Button
-                text="Join community"
-                active={true}
-                bg_color="#ED7D31"
-                text_color="white"
-              />
+        <div className="border h-fit rounded-xl shadow relative flex flex-col justify-start text-white tracking-wide">
+          <img src={blue_card} alt="heart icon" />
+          <div className="py-6 mb-12 md:py-2 lg:py-2 absolute lg:pt-4">
+            <div className="px-4 lg:p-6">
+              <h3 className="font-bold text-sm md:text-lg lg:text-3xl lg:font-extrabold lg:leading-6">
+                Health Institution Survey
+              </h3>
+              <div className="flex flex-col gap-1 lg:pt-2 lg:pr-52">
+                <p className="text-xs md:text-sm lg:leading-6 lg:text-base font-thin">
+                  Take part in surveys at our partners' health institutes,
+                  provide feedback on key indicators, and {' '}
+                  <span className="font-extrabold">earn star points.</span>
+                </p>
+                <div className="flex mt-3  h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
+                  <Button text="View" active={true} bg_color="transparent" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Second Row - Full Width on All Screens */}
+        <div className="h-fit rounded-xl items-center flex  flex-col text-black tracking-wide self-center pt-8 md:pt-24 md:col-span-2">
+          <div className="flex flex-col ">
+            <img src={woman} alt="heart icon" className="relative" />
+            <div className="absolute flex flex-row items-center justify-center px-3 pt-3 md:px-8  md:pt-16">
+              <div className="  ">
+                <p className="text-xs font-bold md:text-base lg:text-2xl md:font-extrabold">
+                  Be the Change. Connect with Fellow Health Champions.
+                </p>
+                <div className="flex pt-2 md:pt-4 ">
+                  <button
+                    onClick={() => console.log("successful")}
+                    className=" flex items-center gap-2 px-3 py-2 rounded bg-orange text-white  focus:outline-none"
+                  >
+                    <span className="text-xs font-thin md:text-base md:font-bold">
+                      Join Community
+                    </span>
+                    <PiPaperPlaneTiltFill />
+                  </button>
+                </div>
+              </div>
+              <div className="w-[30%]	"></div>
             </div>
           </div>
         </div>

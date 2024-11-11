@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { useField, useFormikContext } from "formik";
 import { TextInputProps, TypographyVariant } from "../types";
 import Typography from "../Typography/Typography";
+import { RiErrorWarningLine } from "react-icons/ri";
 
 const TextAreaField: FC<TextInputProps & { rows?: number }> = ({
   label,
@@ -37,7 +38,7 @@ const TextAreaField: FC<TextInputProps & { rows?: number }> = ({
         <textarea
           rows={rows}
           placeholder={placeholder}
-          className={`mt-1 block w-full_width px-3 py-2 border border-primary_color rounded-md shadow-sm focus:outline-none placeholder-primary_color placeholder-opacity-50 placeholder-xs 
+          className={`mt-1 block text-light_gray text-base tracking-wide w-full_width px-3 py-2 border border-primary_color rounded-md shadow-sm focus:outline-none placeholder-primary_color placeholder-opacity-50 placeholder-xs 
        `}
           {...field}
           {...props}
@@ -50,17 +51,25 @@ const TextAreaField: FC<TextInputProps & { rows?: number }> = ({
         />
       </div>
       {meta.touched && meta.error ? (
-        <Typography
-          variant={TypographyVariant.SMALL}
-          className="text-error mt-1"
-        >
-          {meta.error}
-        </Typography>
+        <div className="flex gap-1">
+          <RiErrorWarningLine size={24} color={"#007A61"} className="pt-1"/>
+
+          <Typography
+            variant={TypographyVariant.SMALL}
+            className="text-light_gray mt-1"
+          >
+            {meta.error}
+          </Typography>
+        </div>
       ) : (
         helperText && (
-          <Typography variant={TypographyVariant.SMALL} className="mt-1">
-            {helperText}
-          </Typography>
+          <div>
+            <RiErrorWarningLine size={24} color={"#007A61"} />
+
+            <Typography variant={TypographyVariant.SMALL} className="mt-1">
+              {helperText}
+            </Typography>
+          </div>
         )
       )}
     </div>
