@@ -1,7 +1,5 @@
 import React from 'react';
 import Icon from "../../Assets/SvgImagesAndIcons";
-import ProgressBar from './ProgressBar';
-import { Button } from '@gpiiltd/gpi-ui-library';
 
 
 interface HomeGoToReportCardProps {
