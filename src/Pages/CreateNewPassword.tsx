@@ -68,7 +68,7 @@ const ForgotPassword = () => {
       </div>
       <div className="flex w-full px-4 pt-5 justify-center items-center md:px-32 lg:px-56">
         <div className="w-full pt-8 lg:pt-0">
-          <div className="flex flex-col justify-center items-start lg:items-center pt-6">
+          <div className="flex flex-col justify-center items-center pt-6">
             <Typography
               variant={TypographyVariant.SUBTITLE}
               className="text-black "

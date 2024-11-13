@@ -21,7 +21,6 @@ const CustomModal: React.FC<ICustomModalProps> = ({
       },
       modal: {
         borderRadius: '10px',
-        width: '30%', 
        
       },
     }}
