@@ -8,6 +8,9 @@ import CommunityTasks from "./Pages/VADashboard/Reports/CommunityTasks";
 import NCDPrevention from "./Pages/VADashboard/Reports/NCDPrevention";
 import MentalHeaalth from "./Pages/VADashboard/Reports/MentalHeaalth";
 import ReportForm from "./Pages/VADashboard/Reports/ReportForm";
+import ForgotPassword from "./Pages/ForgotPassword";
+import OTP from "./Pages/OTP";
+import CreateNewPassword from "./Pages/CreateNewPassword";
 
 
 
@@ -17,6 +20,12 @@ function App() {
     <Routes>
       <Route path="/" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/otp" element={<OTP />} />
+      <Route path="/reset-password" element={<CreateNewPassword />} />
+
+
+
       <Route path="/verified-agent-dashboard" element={<VADashboard />}>
         <Route index element={<Navigate to="home" />} />
         <Route path="home" element={<div>Home</div>} />
