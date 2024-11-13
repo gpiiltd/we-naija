@@ -3,7 +3,6 @@ import Typography from "../Components/Typography/Typography";
 import { TypographyVariant } from "../Components/types";
 import { Formik, Form } from "formik";
 import InputField from "../Components/Input/InputField";
-import { Link } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import { useNavigate } from "react-router-dom";
 import Icon from "../Assets/SvgImagesAndIcons";
