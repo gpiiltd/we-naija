@@ -30,12 +30,8 @@ import startpoints from "../Assets/svgImages/star_points.svg";
 import kyc from "../Assets/svgImages/kyc.svg";
 import task from "../Assets/svgImages/tasks.svg";
 import warning_icon from "../Assets/svgImages/warning.svg";
-
-
-
-
-
-
+import key from "../Assets/svgImages/key.svg";
+import success from "../Assets/svgImages/success.svg";
 
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
@@ -59,6 +55,36 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return <img src={facebook} alt="we-naija icon" className={className} />;
       case "twitter":
         return <img src={twitter} alt="we-naija icon" className={className} />;
+      case "avatar":
+        return <img src={avatar} alt="we-naija icon" className={className} />;
+      case "report":
+        return (
+          <img src={report_icon} alt="we-naija icon" className={className} />
+        );
+      case "home":
+        return <img src={home} alt="we-naija icon" className={className} />;
+      case "cup":
+        return <img src={cup} alt="cup icon" className={className} />;
+      case "starPoints":
+        return (
+          <img src={startpoints} alt="start point icon" className={className} />
+        );
+      case "kyc":
+        return <img src={kyc} alt="start point icon" className={className} />;
+      case "tasks":
+        return <img src={task} alt="start point icon" className={className} />;
+      case "warning":
+        return (
+          <img
+            src={warning_icon}
+            alt="start point icon"
+            className={className}
+          />
+        );
+      case "keys":
+        return <img src={key} alt="start point icon" className={className} />;
+        case "success":
+          return <img src={success} alt="start point icon" className={className} />;
         case "avatar":
           return <img src={avatar} alt="we-naija icon" className={className} />;
           case "report":

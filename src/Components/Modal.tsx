@@ -2,6 +2,8 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { ICustomModalProps } from "./types";
 
+
+
 const CustomModal: React.FC<ICustomModalProps> = ({
   isOpen,
   onClose,
@@ -19,7 +21,6 @@ const CustomModal: React.FC<ICustomModalProps> = ({
       },
       modal: {
         borderRadius: '10px',
-        width: '30%', // Make it responsive
        
       },
     }}

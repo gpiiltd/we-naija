@@ -98,7 +98,7 @@ const ReportForm = () => {
           onClose={closeModal}
           title="My Custom Modal"
         >
-          <div className="  py-4 flex flex-col ">
+          <div className="  py-2 flex flex-col px-3">
             <div className='flex flex-col gap-4 justify-center items-center'>
                <Icon type='warning'/>
             <Typography variant={TypographyVariant.NORMAL}>
@@ -110,7 +110,7 @@ const ReportForm = () => {
             >
               This action cannot be reversed
             </Typography>
-            <div className='flex flex-col gap-3 w-full'>
+            <div className='flex flex-col gap-3 w-full md:w-[450px]'>
             <Button
                 text="Yes, I’m sure"
                 active={true}

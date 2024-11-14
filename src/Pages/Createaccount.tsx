@@ -81,7 +81,7 @@ const SignUp = () => {
             validationSchema={validationSchema}
           >
             {({ isValid, dirty }) => (
-              <Form>
+              <Form className="flex flex-col gap-5">
                 <InputField
                   placeHolder="Enter your email address"
                   type="text"
