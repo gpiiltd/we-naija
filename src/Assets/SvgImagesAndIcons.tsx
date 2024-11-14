@@ -26,13 +26,19 @@ import locationGreenSvg from "../Assets/svgImages/Location.svg";
 import callingGreenSvg from "../Assets/svgImages/Calling.svg";
 import messageGreenSvg from "../Assets/svgImages/Message.svg";
 import timeGreenSvg from "../Assets/svgImages/TimeGreenCircle.svg";
+import startpoints from "../Assets/svgImages/star_points.svg";
+import kyc from "../Assets/svgImages/kyc.svg";
+import task from "../Assets/svgImages/tasks.svg";
+import warning_icon from "../Assets/svgImages/warning.svg";
 
 
 
 
 
 
-const Icon: FC<Svgprops> = ({ type, className }) => {
+
+
+const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
     switch (type) {
       case "patients":
@@ -90,13 +96,22 @@ const Icon: FC<Svgprops> = ({ type, className }) => {
             case "messageGreenSvg":
             return <img src={messageGreenSvg} alt="we-naija time Clock svg" className={className} />;
             
+            return <img src={cup} alt="cup icon" className={className} />;
+            case "starPoints":
+              return <img src={startpoints} alt="start point icon" className={className} />;
+              case "kyc":
+                return <img src={kyc} alt="start point icon" className={className} />;
+                case "tasks":
+                return <img src={task} alt="start point icon" className={className} />;
+                case "warning":
+                  return <img src={warning_icon} alt="start point icon" className={className} />;
 
       default:
         return null;
     }
   };
 
-  return <>{renderIcon()}</>;
+  return <div onClick={click}>{renderIcon()}</div>;
 };
 
 export default Icon;
