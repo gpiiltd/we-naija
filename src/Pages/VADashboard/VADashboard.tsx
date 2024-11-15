@@ -269,7 +269,7 @@ const VADashboard = () => {
         <Outlet />
 
       </main>
-      <Footer bg_color="black" className="px-8 md:px-6  lg:px-16">
+      <Footer bg_color="black" className="px-8 md:px-6  lg:px-16 py-20 md:py-0">
         <div className="border-b border-gray-800 md:mb-8 pb-4">
           <div className="flex flex-col gap-4  md:flex-row md:justify-between">
             <Icon type="wenaija"
