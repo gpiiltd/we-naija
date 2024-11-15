@@ -18,8 +18,19 @@ const validationSchema = Yup.object({
 const ReportForm = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading,setLoading] = useState(false);
+
 
   const closeModal = () => setIsModalOpen(false);
+
+  const giveReport = () => {
+    setLoading(!loading);
+    setTimeout(() => {
+      setLoading(false);
+      setIsModalOpen(false)
+      navigate('/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion')
+    },3000)
+  }
 
   return (
     <div className="flex mt-8  flex-col md:px-32 ">
@@ -116,7 +127,8 @@ const ReportForm = () => {
                 active={true}
                 bg_color="#007A61"
                 text_color="white"
-                onClick={() => navigate('/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion')}
+                loading={loading}
+                onClick={giveReport}
               />
                 <Button
                 text="Go back"

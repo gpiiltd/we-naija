@@ -6,19 +6,20 @@ import Icon from "../../Assets/SvgImagesAndIcons";
 interface InstitutionsCardProps {
   statusMessage: string;
   responseTimeMessage: string;
+  onClick?:()=>void;
 }
 
 const InstitutionsCard: React.FC<InstitutionsCardProps> = ({
   statusMessage,
-  responseTimeMessage,
+  onClick
 }) => {
   return (
-    <div className="div">
-        <div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4'>
+    <div className="div " onClick={onClick}>
+        <div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 '>
 {[1, 2, 3, 4, 5, 6].map((map, i) => (
-    <div className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4">
+    <div className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer">
     <div className="py-4 px-6 mr-4">
-      <section className="flex justify-start">
+      <section className="flex justify-start ">
         <Icon type="homeAvatar" className="pr-2" />
         <div className="">
         <p className='font-bold text-black'>Quotient Specialist Hospital</p>
