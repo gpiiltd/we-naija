@@ -1,13 +1,10 @@
 import Footer from "../../Components/Footer";
+import { NavLink } from "react-router-dom";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { TypographyVariant } from "../../Components/types";
 import Header from "../../Components/Header";
 import { FiSettings, FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
-
-
-import { NavLink } from "react-router-dom";
-
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
@@ -19,8 +16,6 @@ const VADashboard = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
   return (
-    <div className="w-full h-screen overflow-x-hidden overflow-y-auto flex flex-col ">
-      <Header className="w-full px-4 md:px-6 lg:px-12">
     <div className="min-h-screen flex flex-col w-full">
       <Header className="px-4 md:px-6 lg:px-16">
         <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
@@ -31,7 +26,7 @@ const VADashboard = () => {
           <div className="flex items-center gap-4">
             <Icon
               type="logo"
-              className="w-fit"
+              className="w-fit cursor-pointer"
               click={() => (window.location.href = "/verified-agent-dashboard")}
             />
 
@@ -270,24 +265,16 @@ const VADashboard = () => {
         )}
       </Header>
 
-      {/* Page content */}
-      {/* <main className="flex-grow bg-blue-500 sm:bg-green-500 md:bg-red-500 lg:bg-yellow-500 xl:bg-purple-500">  */}
-      <main className="flex-grow mx-5 my-8 sm:mx-9 md:mx-12 lg:mx-12"> 
-      
-      {/* <PendingKyc /> */}
-      {/* <HospitalDetail /> */}
-
-      </main>
-
-      <Footer bg_color="black" className="px-8 md:px-6  lg:px-12">
       <main className="flex-grow px-4 md:px-6  lg:px-16 pt-8">
         <Outlet />
-      </main>
-      <Footer bg_color="black" className="px-8 md:px-6  lg:px-16">
 
+      </main>
+      <Footer bg_color="black" className="px-8 md:px-6  lg:px-16 py-20 md:py-0">
         <div className="border-b border-gray-800 md:mb-8 pb-4">
           <div className="flex flex-col gap-4  md:flex-row md:justify-between">
-            <Icon type="wenaija" className="w-fit" />
+            <Icon type="wenaija"
+              className="w-fit cursor-pointer"
+              click={() => (window.location.href = "/verified-agent-dashboard")} />
             <div className="text-cream  ">
               <ul className="flex md:space-x-6">
                 <li className="cursor-pointer">
@@ -388,5 +375,4 @@ const VADashboard = () => {
 };
 
 export default VADashboard;
-
 

@@ -5,8 +5,12 @@ import InstitutionsCard from '../../Components/Home/Institution_card'
 import Icon from '../../Assets/SvgImagesAndIcons'
 import backgroundImage from '../../Assets/svgImages/reportCardBg.svg';
 import bigGirlSvg from "../../Assets/svgImages/bgGirl.svg";
+import {useNavigate } from "react-router-dom";
+
 
 const PendingKyc = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
         <p className="font-normal text-[#5E5959] text-lg">
@@ -33,17 +37,13 @@ const PendingKyc = () => {
           <InstitutionsCard 
             statusMessage="No 5, Lekki view, Lagos Island, Lagos state, Nigeria."
             responseTimeMessage="You would receive a response in less than 12 hours"
+            onClick={() => navigate('hospital-details')}
+            
           />
           <div className="w-full flex justify-center mt-16">
           <div className="relative h-[230px] w-[50vw] ">
-         
            <div className="absolute inset-0 bg-slate-300 rounded-lg">
-
            <img src={backgroundImage} alt="" className="h-[230px] w-[50vw] rounded-lg"/>
-           
-           
-            
-
             <p className="font-bold text-white text-2xl">
               Be the Change. Connect with<br />Fellow Health Champions.
             </p>
@@ -61,10 +61,9 @@ const PendingKyc = () => {
            />
 
 
+          </div>
+          </div>
 
-          </div>
-          </div>
-      
     </div>
   )
 }

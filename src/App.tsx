@@ -11,6 +11,8 @@ import ReportForm from "./Pages/VADashboard/Reports/ReportForm";
 import ForgotPassword from "./Pages/ForgotPassword";
 import OTP from "./Pages/OTP";
 import CreateNewPassword from "./Pages/CreateNewPassword";
+import PendingKyc from "./Pages/Home/PendingKyc";
+import HospitalDetail from "./Pages/Home/HospitalDetail";
 
 
 
@@ -28,8 +30,11 @@ function App() {
 
       <Route path="/verified-agent-dashboard" element={<VADashboard />}>
         <Route index element={<Navigate to="home" />} />
-        <Route path="home" element={<div>Home</div>} />
+        <Route path="home" Component={PendingKyc} />
+        <Route path="/verified-agent-dashboard/home/hospital-details" Component={HospitalDetail} />
+
         <Route path="reports" Component={Reports} />
+        
         <Route path="/verified-agent-dashboard/reports/community-tasks" Component={CommunityTasks} />
         <Route path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention" Component={NCDPrevention} />
         <Route path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion" Component={MentalHeaalth}

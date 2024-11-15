@@ -6,7 +6,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../../Assets/SvgImagesAndIcons";
-import ProgressBar from "../../../Components/ProgressBar";
+import ProgressBar from "../../../Components/Home/ProgressBar";
 
 const NCDPrevention = () => {
   const navigate = useNavigate();
@@ -97,8 +97,8 @@ const NCDPrevention = () => {
                 </Typography>
               </div>
             </div>
-            <ProgressBar percent={0} />
-          </div>
+            <ProgressBar percentage={50} />
+            </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
           <div className="py-8 px-6">
@@ -147,7 +147,7 @@ Substance abuse prevention                </Typography>
                 </Typography>
               </div>
             </div>
-            <ProgressBar percent={20} />
+            <ProgressBar percentage={10} />
           </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
@@ -198,7 +198,7 @@ Privacy and confidentiality               </Typography>
                 </Typography>
               </div>
             </div>
-            <ProgressBar percent={20} />
+            <ProgressBar percentage={10} />
           </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
@@ -249,7 +249,7 @@ Privacy and confidentiality               </Typography>
                 </Typography>
               </div>
             </div>
-            <ProgressBar percent={20} />
+            <ProgressBar percentage={50} />
           </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
@@ -300,7 +300,7 @@ Privacy and confidentiality               </Typography>
                 </Typography>
               </div>
             </div>
-            <ProgressBar percent={20} />
+            <ProgressBar percentage={60} />
           </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
@@ -350,7 +350,7 @@ Hepatitis, sentization and prevention                </Typography>
                 </Typography>
               </div>
             </div>
-            <ProgressBar percent={20} />
+            <ProgressBar percentage={60} />
           </div>
         </Card>
       </div>
