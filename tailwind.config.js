@@ -8,11 +8,17 @@ module.exports = {
       },
       colors: {
         teal_green: "#ECFFFB",
+        primary_green:'#007A61',
+        effect_green:"#F0FEFB",
         light_gray: "#5E5959",
         error:'#F57068',
         active_color:'#f77f00',
         primary_color:'#B8C1CB',
-        orange:'#ED7D31'
+        orange:'#ED7D31',
+        cream:'#E5E7EB',
+        red:'#AA161D',
+        black:'#17191C',
+        d_red:'#7A0019'
 
       },
       placeholder: {
