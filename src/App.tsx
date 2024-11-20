@@ -2,6 +2,25 @@ import React from "react";
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import SignUp from "./Pages/Createaccount";
 import Login from "./Pages/Login";
+import Kyc from "./Pages/Kyc";
+import KycPhonenumber from "./Components/KYCpages/KycPhonenumber";
+import EnterOtp from "./Components/KYCpages/EnterOtp";
+import PersonalInfo from "./Components/KYCpages/PersonalInfo";
+import IdVerification from "./Components/KYCpages/IdVerification";
+function App() {
+    return (
+      <Router>
+        <Routes>
+        <Route path="/" Component={SignUp} />
+        <Route path="/login" Component={Login} />
+        <Route path="/kyc/*" Component={Kyc} />
+        <Route path="/kyc/validate-phone" Component={KycPhonenumber } />
+        <Route path="/kyc/enter-otp" Component={EnterOtp } />
+        <Route path="/kyc/personal-information" Component={PersonalInfo } />
+        <Route path="/kyc/id-verification" Component={IdVerification } />
+        </Routes>
+         
+      </Router>
 import VADashboard from "./Pages/VADashboard/VADashboard";
 import Reports from "./Pages/VADashboard/Reports/Reports";
 import CommunityTasks from "./Pages/VADashboard/Reports/CommunityTasks";
@@ -14,8 +33,6 @@ import CreateNewPassword from "./Pages/CreateNewPassword";
 import PendingKyc from "./Pages/Home/PendingKyc";
 import HospitalDetail from "./Pages/Home/HospitalDetail";
 
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -25,8 +42,6 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/otp" element={<OTP />} />
       <Route path="/reset-password" element={<CreateNewPassword />} />
-
-
 
       <Route path="/verified-agent-dashboard" element={<VADashboard />}>
         <Route index element={<Navigate to="home" />} />

@@ -26,6 +26,23 @@ export enum TypographyVariant {
     focusStyle?: string;
   }
 
+  export interface KycCardProps {
+    title: string;
+    description: string;
+    icon: string;
+    linkTo: string;
+  }
+
+  export interface Errors {
+    address?: string;
+    nationality?: string;
+    gender?: string;
+    dateOfBirth?: string;
+    idType?: string;
+    idNumber?: string;
+    frontFile?: string;
+    backFile?: string;
+  }
   export interface FooterProps {
     children: ReactNode;
     bg_color?: string;
