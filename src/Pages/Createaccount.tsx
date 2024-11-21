@@ -8,13 +8,17 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
+
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+  const [loading,setLoading] = useState(false);
+  const navigate = useNavigate(); 
+
+
 
   const initialValues = {
     fullName: "",
@@ -43,6 +47,13 @@ const SignUp = () => {
       .oneOf([Yup.ref("password")], "Passwords must match")
       .trim(),
   });
+  const handSignup = () => {
+    setLoading(!loading);
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/login"); 
+    },3000)
+  }
 
   return (
     <AuthPages>
@@ -70,7 +81,7 @@ const SignUp = () => {
             validationSchema={validationSchema}
           >
             {({ isValid, dirty }) => (
-              <Form>
+              <Form className="flex flex-col gap-5">
                 <InputField
                   placeHolder="Enter your email address"
                   type="text"
@@ -111,7 +122,8 @@ const SignUp = () => {
                   active={isValid && dirty}
                   bg_color="#007A61"
                   text_color="white"
-                  onClick={() => console.log("helooooo")}
+                  loading={loading}
+                  onClick={handSignup}
                 />
               </Form>
             )}

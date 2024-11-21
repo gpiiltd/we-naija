@@ -15,7 +15,10 @@ module.exports = {
         active_color:'#f77f00',
         primary_color:'#B8C1CB',
         orange:'#ED7D31',
-        cream:'#E5E7EB'
+        cream:'#E5E7EB',
+        red:'#AA161D',
+        black:'#17191C',
+        d_red:'#7A0019'
 
       },
       placeholder: {

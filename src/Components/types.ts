@@ -26,10 +26,56 @@ export enum TypographyVariant {
     focusStyle?: string;
   }
 
+  export interface KycCardProps {
+    title: string;
+    description: string;
+    icon: string;
+    linkTo: string;
+  }
+
+  export interface Errors {
+    address?: string;
+    nationality?: string;
+    gender?: string;
+    dateOfBirth?: string;
+    idType?: string;
+    idNumber?: string;
+    frontFile?: string;
+    backFile?: string;
+  }
   export interface FooterProps {
     children: ReactNode;
     bg_color?: string;
     fullWidth?: string;
     logo?:any
     className?: string;
+  }
+  export interface ButtonProps {
+    bg_color?: string;
+    text?: string;
+    onClick?: () => void;
+    active?: boolean;
+    loading?: boolean;
+    text_color?: string;
+    border_color?: string;
+  }
+  export interface CardProps {
+    titleLeft: React.ReactNode;
+    titleRight: React.ReactNode;
+    children: React.ReactNode;
+    width?: string;
+    height?: string;
+  }
+  export interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    children: React.ReactNode;
+    width?: string;
+    closeIcon?: string;
+  }
+  export interface ICustomModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title?: string;
+    children: ReactNode;
   }

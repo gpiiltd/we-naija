@@ -30,7 +30,7 @@ const InputField: React.FC<TextInputProps> = ({
   };
 
   return (
-    <div className="relative w-full mb-6">
+    <div className="relative w-full ">
       <input
         type={type}
         className={`text-base  font-normal pt-5 pl-5 block w-full  flex justify-center items-center  px-3 py-3 border border-primary_color rounded-md shadow-sm focus:outline-none placeholder-transparent ${
