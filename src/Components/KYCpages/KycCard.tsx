@@ -13,10 +13,12 @@ const KycCard = ({ title, description, icon, linkTo }: KycCardProps) => {
         <div className="flex items-start">
           <Icon type={icon} className="w-10 h-10 mr-4" />
           <div className="pl-4">
-            <Typography variant={TypographyVariant.TITLE}>{title}</Typography>
+            <h1 className="text-center md:mb-4 text-xl  md:text-3xl">
+              {title}
+            </h1>
             <Typography
               variant={TypographyVariant.NORMAL}
-              className="text-gray-500 w-[80%] "
+              className="text-gray-500 w-full text-sm md:w-[80%] "
             >
               {description}
             </Typography>

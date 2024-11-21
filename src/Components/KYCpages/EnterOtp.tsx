@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
-import logo from "../Assets/svgImages/logo.svg";
 import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import InputField from "../Input/InputField";
-import Icon from "../../Assets/SvgImagesAndIcons";
-import HeaderComponent from "../Header/Header";
+import KycHeader from "./KycHeader";
 
 const EnterOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -53,10 +48,10 @@ const EnterOtp = () => {
 
   return (
     <>
-      <HeaderComponent />
-      <div className="flex flex-col items-center justify-center min-h-screen ">
-        <div className="bg-white p-8 rounded-lg ">
-          <Typography variant={TypographyVariant.TITLE} className="">
+      <KycHeader />
+      <div className="flex flex-col items-center justify-center min-h-screen -mt-14">
+        <div className="bg-white w-full p-4 md:p-8 rounded-lg md:w-2/4 ">
+          <Typography variant={TypographyVariant.SUBTITLE} className="">
             Enter OTP
           </Typography>
           <Typography
@@ -75,8 +70,8 @@ const EnterOtp = () => {
                 type="text"
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)} // Handle key down events
-                className="border border-gray-300 rounded-md w-14 h-14 text-center text-lg mr-4"
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                className="border border-gray-300 rounded-xl md:w-14 md:h-14 w-10 h-10 text-center text-lg md:mr-4 mr-2 focus:border-green-700 focus:outline-none"
                 maxLength={1}
               />
             ))}

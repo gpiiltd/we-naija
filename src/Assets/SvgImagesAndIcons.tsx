@@ -15,7 +15,7 @@ import cloudUpload from "../Assets/svgImages/cloudUpload.svg";
 import imageUploadIcon from "../Assets/svgImages/imageUploadIcon.svg";
 import pdfUploadIcon from "../Assets/svgImages/pdfUploadIcon.svg";
 import deleteIcon from "../Assets/svgImages/deleteIcon.svg";
-const Icon: FC<Svgprops> = ({ type, className }) => {
+// const Icon: FC<Svgprops> = ({ type, className }) => {
 import weNaija from "../Assets/svgImages/Wenaija.svg";
 import linkedin from "../Assets/svgImages/Linkedin.svg";
 import instagram from "../Assets/svgImages/insta.svg";
@@ -133,54 +133,151 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         );
       case "keys":
         return <img src={key} alt="start point icon" className={className} />;
-        case "success":
-          return <img src={success} alt="start point icon" className={className} />;
-        case "avatar":
-          return <img src={avatar} alt="we-naija icon" className={className} />;
-          case "report":
-            return <img src={report_icon} alt="we-naija icon" className={className} />;
-            case "home":
-            return <img src={home} alt="we-naija icon" className={className} />;
-            case "cup":
-            return <img src={cup} alt="we-naija icon" className={className} />;
-            case "home-kyc-verification":
-            return <img src={firstImageSvg} alt="we-naija home-kyc-verification svg" className={className} />;
-            case "home-report-star":
-            return <img src={homeReportStarSvg} alt="we-naija homeReportStar svg" className={className} />;
-            case "homeAvatar":
-            return <img src={homeAvatarSvg} alt="we-naija homeAvatar svg" className={className} />;
-            case "arrowUpSvg":
-            return <img src={arrowUpSvg} alt="we-naija arrowUp svg" className={className} />;case "arrowUpSvg":
-            case "timeClocKSvg":
-            return <img src={timeClocKSvg} alt="we-naija time Clock svg" className={className} />;
-            case "whiteArrowSvg":
-            return <img src={whiteArrowSvg} alt="we-naija time Clock svg" className={className} />;
-            case "bigGirlSvg":
-            return <img src={bigGirlSvg} alt="we-naija time Clock svg" className={className} />;
-            case "arrowBackSvg":
-            return <img src={arrowBackSvg} alt="we-naija time Clock svg" className={className} />;
-            case "timerSurveySvg":
-            return <img src={timerSurveySvg} alt="we-naija time Clock svg" className={className} />;
-            case "arrowLeftSvg":
-            return <img src={arrowLeftSvg} alt="we-naija time Clock svg" className={className} />;
-            case "locationGreenSvg":
-            return <img src={locationGreenSvg} alt="we-naija time Clock svg" className={className} />;
-            case "timeGreenSvg":
-            return <img src={timeGreenSvg} alt="we-naija time Clock svg" className={className} />;
-            case "callingGreenSvg":
-            return <img src={callingGreenSvg} alt="we-naija time Clock svg" className={className} />;
-            case "messageGreenSvg":
-            return <img src={messageGreenSvg} alt="we-naija time Clock svg" className={className} />;
-            
-            return <img src={cup} alt="cup icon" className={className} />;
-            case "starPoints":
-              return <img src={startpoints} alt="start point icon" className={className} />;
-              case "kyc":
-                return <img src={kyc} alt="start point icon" className={className} />;
-                case "tasks":
-                return <img src={task} alt="start point icon" className={className} />;
-                case "warning":
-                  return <img src={warning_icon} alt="start point icon" className={className} />;
+      case "success":
+        return (
+          <img src={success} alt="start point icon" className={className} />
+        );
+      case "avatar":
+        return <img src={avatar} alt="we-naija icon" className={className} />;
+      case "report":
+        return (
+          <img src={report_icon} alt="we-naija icon" className={className} />
+        );
+      case "home":
+        return <img src={home} alt="we-naija icon" className={className} />;
+      case "cup":
+        return <img src={cup} alt="we-naija icon" className={className} />;
+      case "home-kyc-verification":
+        return (
+          <img
+            src={firstImageSvg}
+            alt="we-naija home-kyc-verification svg"
+            className={className}
+          />
+        );
+      case "home-report-star":
+        return (
+          <img
+            src={homeReportStarSvg}
+            alt="we-naija homeReportStar svg"
+            className={className}
+          />
+        );
+      case "homeAvatar":
+        return (
+          <img
+            src={homeAvatarSvg}
+            alt="we-naija homeAvatar svg"
+            className={className}
+          />
+        );
+      case "arrowUpSvg":
+        return (
+          <img
+            src={arrowUpSvg}
+            alt="we-naija arrowUp svg"
+            className={className}
+          />
+        );
+      case "arrowUpSvg":
+      case "timeClocKSvg":
+        return (
+          <img
+            src={timeClocKSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "whiteArrowSvg":
+        return (
+          <img
+            src={whiteArrowSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "bigGirlSvg":
+        return (
+          <img
+            src={bigGirlSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "arrowBackSvg":
+        return (
+          <img
+            src={arrowBackSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "timerSurveySvg":
+        return (
+          <img
+            src={timerSurveySvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "arrowLeftSvg":
+        return (
+          <img
+            src={arrowLeftSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "locationGreenSvg":
+        return (
+          <img
+            src={locationGreenSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "timeGreenSvg":
+        return (
+          <img
+            src={timeGreenSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "callingGreenSvg":
+        return (
+          <img
+            src={callingGreenSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+      case "messageGreenSvg":
+        return (
+          <img
+            src={messageGreenSvg}
+            alt="we-naija time Clock svg"
+            className={className}
+          />
+        );
+
+        return <img src={cup} alt="cup icon" className={className} />;
+      case "starPoints":
+        return (
+          <img src={startpoints} alt="start point icon" className={className} />
+        );
+      case "kyc":
+        return <img src={kyc} alt="start point icon" className={className} />;
+      case "tasks":
+        return <img src={task} alt="start point icon" className={className} />;
+      case "warning":
+        return (
+          <img
+            src={warning_icon}
+            alt="start point icon"
+            className={className}
+          />
+        );
       default:
         return null;
     }

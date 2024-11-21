@@ -7,20 +7,6 @@ import KycPhonenumber from "./Components/KYCpages/KycPhonenumber";
 import EnterOtp from "./Components/KYCpages/EnterOtp";
 import PersonalInfo from "./Components/KYCpages/PersonalInfo";
 import IdVerification from "./Components/KYCpages/IdVerification";
-function App() {
-    return (
-      <Router>
-        <Routes>
-        <Route path="/" Component={SignUp} />
-        <Route path="/login" Component={Login} />
-        <Route path="/kyc/*" Component={Kyc} />
-        <Route path="/kyc/validate-phone" Component={KycPhonenumber } />
-        <Route path="/kyc/enter-otp" Component={EnterOtp } />
-        <Route path="/kyc/personal-information" Component={PersonalInfo } />
-        <Route path="/kyc/id-verification" Component={IdVerification } />
-        </Routes>
-         
-      </Router>
 import VADashboard from "./Pages/VADashboard/VADashboard";
 import Reports from "./Pages/VADashboard/Reports/Reports";
 import CommunityTasks from "./Pages/VADashboard/Reports/CommunityTasks";
@@ -36,36 +22,53 @@ import HospitalDetail from "./Pages/Home/HospitalDetail";
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/otp" element={<OTP />} />
-      <Route path="/reset-password" element={<CreateNewPassword />} />
+      <Routes>
+        <Route path="/" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/otp" element={<OTP />} />
+        <Route path="/reset-password" element={<CreateNewPassword />} />
+        <Route path="/kyc/*" Component={Kyc} />
+        <Route path="/kyc/validate-phone" Component={KycPhonenumber} />
+        <Route path="/kyc/enter-otp" Component={EnterOtp} />
+        <Route path="/kyc/personal-information" Component={PersonalInfo} />
+        <Route path="/kyc/id-verification" Component={IdVerification} />
 
-      <Route path="/verified-agent-dashboard" element={<VADashboard />}>
-        <Route index element={<Navigate to="home" />} />
-        <Route path="home" Component={PendingKyc} />
-        <Route path="/verified-agent-dashboard/home/hospital-details" Component={HospitalDetail} />
+        <Route path="/verified-agent-dashboard" element={<VADashboard />}>
+          <Route index element={<Navigate to="home" />} />
+          <Route path="home" Component={PendingKyc} />
+          <Route
+            path="/verified-agent-dashboard/home/hospital-details"
+            Component={HospitalDetail}
+          />
 
-        <Route path="reports" Component={Reports} />
-        
-        <Route path="/verified-agent-dashboard/reports/community-tasks" Component={CommunityTasks} />
-        <Route path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention" Component={NCDPrevention} />
-        <Route path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion" Component={MentalHeaalth}
-         />
-          <Route path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form" Component={ReportForm}
-         />
-        <Route path="leaderboard" element={<div>Leaderboard</div>} />
-        <Route path="join-community" element={<div>Community</div>} />
-        <Route path="settings" element={<div>Settings</div>} />
-        <Route path="notifications" element={<div>Notificationss</div>} />
-        <Route path="profile" element={<div>Profile</div>} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
+          <Route path="reports" Component={Reports} />
+
+          <Route
+            path="/verified-agent-dashboard/reports/community-tasks"
+            Component={CommunityTasks}
+          />
+          <Route
+            path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention"
+            Component={NCDPrevention}
+          />
+          <Route
+            path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+            Component={MentalHeaalth}
+          />
+          <Route
+            path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+            Component={ReportForm}
+          />
+          <Route path="leaderboard" element={<div>Leaderboard</div>} />
+          <Route path="join-community" element={<div>Community</div>} />
+          <Route path="settings" element={<div>Settings</div>} />
+          <Route path="notifications" element={<div>Notificationss</div>} />
+          <Route path="profile" element={<div>Profile</div>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-

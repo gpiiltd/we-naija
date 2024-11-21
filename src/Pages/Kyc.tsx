@@ -1,16 +1,16 @@
 import React from "react";
 import Typography from "../Components/Typography";
-
 import { TypographyVariant } from "../Components/types";
 import KycCard from "../Components/KYCpages/KycCard";
-import HeaderComponent from "../Components/Header/Header";
 import SkipButton from "../Components/KYCpages/SkipButton";
+import KycHeader from "../Components/KYCpages/KycHeader";
+
 const Kyc = () => {
   return (
     <div className="">
-      <HeaderComponent />
+      <KycHeader />
 
-      <div className="flex flex-col items-center justify-center min-h-screen mt-14">
+      <div className="flex flex-col p-4 md:p-8 items-center justify-center min-h-screen mt-14">
         <div className="text-center">
           <Typography variant={TypographyVariant.TITLE}>
             You’re almost there!

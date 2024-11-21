@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
-import logo from "../Assets/svgImages/logo.svg";
 import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import InputField from "../Input/InputField";
 import Icon from "../../Assets/SvgImagesAndIcons";
-import HeaderComponent from "../Header/Header";
 import DateModal from "./DateModal";
 import { Errors } from "../types";
-
+import KycHeader from "./KycHeader";
 
 const PersonalInfo = () => {
   const [formData, setFormData] = useState({
@@ -57,15 +52,15 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <HeaderComponent />
+      <KycHeader />
       <div className="flex flex-col items-center justify-center min-h-screen ">
-        <div className="bg-white p-8 rounded-lg w-2/4 ">
+        <div className="bg-white w-full p-4 md:p-8 rounded-lg md:w-2/4 ">
           <div className="flex items-center mb-4">
             <Icon type="person" className="w-6 h-6 mr-4" />
 
-            <Typography variant={TypographyVariant.TITLE} className="">
+            <h1 className="text-center md:mb-4 text-xl  md:text-3xl">
               Personal Information
-            </Typography>
+            </h1>
           </div>
 
           <Typography
@@ -90,7 +85,7 @@ const PersonalInfo = () => {
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.address
-                    ? "-top-[2px] left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 md:text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >
@@ -106,7 +101,6 @@ const PersonalInfo = () => {
                 name="nationality"
                 value={formData.nationality}
                 onChange={handleChange}
-                // className="border border-gray-300 rounded-md w-full h-16 p-1 peer "
                 className={`border ${
                   errors.nationality ? "border-red-500" : "border-gray-300"
                 } rounded-md w-full h-16 p-1 peer`}
@@ -119,7 +113,7 @@ const PersonalInfo = () => {
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.nationality
-                    ? "-top-[2px] left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 md:text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >
@@ -135,7 +129,6 @@ const PersonalInfo = () => {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                // className="border border-gray-300 rounded-md w-full h-16 p-1 peer"
                 className={`border ${
                   errors.gender ? "border-red-500" : "border-gray-300"
                 } rounded-md w-full h-16 p-1 peer`}
@@ -148,7 +141,7 @@ const PersonalInfo = () => {
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.gender
-                    ? "-top-[2px] left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 md:text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >
@@ -168,15 +161,11 @@ const PersonalInfo = () => {
                 readOnly
                 placeholder=" " // Add a space to trigger the floating effect
                 className="border border-gray-300 rounded-md w-full h-16 p-1 peer"
-
-                // className={`border ${
-                //   errors.dateOfBirth ? "border-red-500" : "border-gray-300"
-                // } rounded-md w-full h-16 p-2 cursor-pointer peer`}
               />
               <label
                 className={`absolute left-2 top-2 transition-all duration-200 transform ${
                   formData.dateOfBirth
-                    ? "-top-[2px] left-2 text-gray-500 text-lg "
+                    ? "-top-[2px] left-2 text-gray-500 md:text-lg "
                     : "text-gray-500 text-2xl"
                 }`}
               >

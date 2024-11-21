@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
-import logo from "../Assets/svgImages/logo.svg";
 import { TypographyVariant } from "../../Components/types";
 import SkipButton from "./SkipButton";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputField from "../../Components/Input/InputField";
 import Icon from "../../Assets/SvgImagesAndIcons";
-import HeaderComponent from "../Header/Header";
 import { useNavigate } from "react-router-dom";
+import KycHeader from "./KycHeader";
 
 const KycPhonenumber = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const navigate = useNavigate();
 
   const handleProceed = () => {
-    // Handle the proceed action (e.g., send OTP)
     console.log("Proceed with phone number:", phoneNumber);
+    navigate("/kyc/enter-otp");
   };
 
   const initialValues = {
@@ -32,17 +31,15 @@ const KycPhonenumber = () => {
 
   return (
     <>
-      <HeaderComponent />
+      <KycHeader />
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 ">
         <div className="bg-white p-8 rounded-lg shadow-lg  lg:px-48 lg:py-36">
           <div className="flex items-center justify-center gap-4">
             <Icon type="mobile" className="w-10 h-10 mb-4" />
-            <Typography
-              variant={TypographyVariant.TITLE}
-              className="text-center mb-4"
-            >
+
+            <h1 className="text-center mb-4 text-xl  md:text-3xl">
               Validate Phone Number
-            </Typography>
+            </h1>
           </div>
           <Typography
             variant={TypographyVariant.NORMAL}
@@ -87,7 +84,7 @@ const KycPhonenumber = () => {
                   active={isValid && dirty}
                   bg_color="#007A61"
                   text_color="white"
-                  onClick={() => navigate("/kyc/enter-otp")}
+                  onClick={handleProceed}
                 />
               </Form>
             )}
