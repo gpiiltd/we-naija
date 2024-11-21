@@ -18,6 +18,7 @@ import OTP from "./Pages/OTP";
 import CreateNewPassword from "./Pages/CreateNewPassword";
 import PendingKyc from "./Pages/Home/PendingKyc";
 import HospitalDetail from "./Pages/Home/HospitalDetail";
+import Leaderboard from "./Pages/Leaderboard/Leaderboard";
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
             path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
             Component={ReportForm}
           />
-          <Route path="leaderboard" element={<div>Leaderboard</div>} />
+          <Route path="leaderboard" Component={Leaderboard} />
           <Route path="join-community" element={<div>Community</div>} />
           <Route path="settings" element={<div>Settings</div>} />
           <Route path="notifications" element={<div>Notificationss</div>} />
