@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignUp from "./Pages/Createaccount";
 import Login from "./Pages/Login";
 import VADashboard from "./Pages/VADashboard/VADashboard";
-import Leaderboard from "./Pages/Leaderboard/Leaderboard";
 function App() {
     return (
       <Router>
@@ -11,7 +10,6 @@ function App() {
         <Route path="/" Component={SignUp} />
         <Route path="/login" Component={Login} />
         <Route path="/verified-agent-dashboard" Component={VADashboard} />
-        <Route path="/leaderboard" Component={Leaderboard} />
 
         </Routes>
          

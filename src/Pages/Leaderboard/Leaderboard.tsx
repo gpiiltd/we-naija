@@ -30,9 +30,9 @@ const Leaderboard = () => {
       <Typography variant={TypographyVariant.SUBTITLE} className="">
         Leaderboard
       </Typography>
-      <div className="flex justify-center items-center  text-white rounded-lg p-4 mb-4 space-x-8">
+      <div className="flex flex-col md:flex-row justify-center items-center  text-white rounded-lg p-4 mb-4 md:space-x-8 ">
         <div
-          className="relative w-[50%] h-[300px] rounded-xl flex flex-col items-center justify-center bg-[#007A61]"
+          className="relative w-full md:w-[50%] h-[300px] rounded-xl flex flex-col items-center justify-center bg-[#007A61] mb-4 md:mb-0"
           style={{
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "cover",
@@ -65,7 +65,7 @@ const Leaderboard = () => {
         </div>
 
         <div
-          className=" w-[50%] h-[300px] rounded-xl flex flex-col items-center justify-center bg-white border border-gray-200"
+          className=" w-full md:w-[50%] h-[300px] rounded-xl flex flex-col items-center justify-center bg-white border border-gray-200"
           style={{
             backgroundImage: `url(${backgroundImage2})`,
             backgroundSize: "cover",
