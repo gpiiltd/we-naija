@@ -15,7 +15,6 @@ import cloudUpload from "../Assets/svgImages/cloudUpload.svg";
 import imageUploadIcon from "../Assets/svgImages/imageUploadIcon.svg";
 import pdfUploadIcon from "../Assets/svgImages/pdfUploadIcon.svg";
 import deleteIcon from "../Assets/svgImages/deleteIcon.svg";
-// const Icon: FC<Svgprops> = ({ type, className }) => {
 import weNaija from "../Assets/svgImages/Wenaija.svg";
 import linkedin from "../Assets/svgImages/Linkedin.svg";
 import instagram from "../Assets/svgImages/insta.svg";

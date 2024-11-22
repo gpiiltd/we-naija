@@ -61,7 +61,7 @@ const Reports = () => {
                   <span className="font-extrabold">earn star points.</span>
                 </p>
                 <div className="flex mt-3  h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
-                  <Button text="View" active={true} bg_color="transparent" />
+                  <Button text="View" active={true} bg_color="transparent" onClick={()=> navigate('/verified-agent-dashboard/reports/hospitals')}/>
                 </div>
               </div>
             </div>
