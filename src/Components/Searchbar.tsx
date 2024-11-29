@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { SearchBarProps } from './types';
+import React, { useState, useEffect } from "react";
+import { SearchBarProps } from "./types";
+import { IoMdCheckmark } from "react-icons/io";
 
 const SearchBar: React.FC<SearchBarProps> = ({
   placeholder = "Search...",
@@ -8,10 +9,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
   suggestions = [],
   value = "",
 }) => {
-  const [searchTerm, setSearchTerm] = useState(value); 
+  const [searchTerm, setSearchTerm] = useState(value);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedPlaceholder, setSelectedPlaceholder] = useState(placeholder);
-
+  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
   useEffect(() => {
     setSearchTerm(value);
   }, [value]);
@@ -20,7 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     const newSearchTerm = event.target.value;
     setSearchTerm(newSearchTerm);
     setIsFocused(true);
-    if (onChange) onChange(newSearchTerm); 
+    if (onChange) onChange(newSearchTerm);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,6 +33,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     setSelectedPlaceholder(suggestion);
     setSearchTerm(suggestion);
     setIsFocused(false);
+    setSelectedSuggestion(suggestion);
   };
 
   const filteredSuggestions = suggestions.filter((suggestion) =>
@@ -39,14 +41,14 @@ const SearchBar: React.FC<SearchBarProps> = ({
   );
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <form onSubmit={handleSubmit} className="flex items-center">
         <input
           type="text"
-          value={searchTerm} 
+          value={searchTerm}
           onChange={handleInputChange}
           placeholder={selectedPlaceholder}
-          className="py-2 pl-10 text-sm text-primary_color rounded-lg border border-primary_color focus:outline-none focus:ring-1 focus:ring-primary_color w-[20rem]"
+          className="py-2 pl-10 text-sm text-text-black  border border-primary_color rounded-lg focus:outline-none focus:ring-1 focus:ring-primary_color w-[20rem]"
           onFocus={() => setIsFocused(true)}
         />
         <button
@@ -58,7 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             className="h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="lightgray"
+            stroke="#667085"
           >
             <path
               strokeLinecap="round"
@@ -72,13 +74,21 @@ const SearchBar: React.FC<SearchBarProps> = ({
       {isFocused && filteredSuggestions.length > 0 && (
         <ul className="absolute bg-white shadow-md w-full rounded-lg py-2 mt-2">
           {filteredSuggestions.map((suggestion, index) => (
-            <li
+            <div
               key={index}
-              className="px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
-              onMouseDown={() => handleSuggestionClick(suggestion)}
+              className={`flex justify-between hover:bg-highlight_green items-center px-4 py-2 ${
+                selectedSuggestion === suggestion ? "bg-highlight_green" : ""
+              }`}
             >
-              {suggestion}
-            </li>
+              <li
+                className=" text-black  cursor-pointer"
+                onMouseDown={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion}
+              </li>
+
+              {selectedSuggestion === suggestion && <IoMdCheckmark color="#007A61" />}
+            </div>
           ))}
         </ul>
       )}

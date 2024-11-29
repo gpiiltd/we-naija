@@ -51,6 +51,8 @@ import championIcon from "../Assets/svgImages/championIcon.svg";
 import lockIcon from "../Assets/svgImages/lockIcon.svg";
 import lineScout from "../Assets/svgImages/lineScout.svg";
 import starIcon from "../Assets/svgImages/starIcon.svg";
+import no_data from "../Assets/svgImages/no_data.svg";
+
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -143,16 +145,6 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return (
           <img src={success} alt="start point icon" className={className} />
         );
-      case "avatar":
-        return <img src={avatar} alt="we-naija icon" className={className} />;
-      case "report":
-        return (
-          <img src={report_icon} alt="we-naija icon" className={className} />
-        );
-      case "home":
-        return <img src={home} alt="we-naija icon" className={className} />;
-      case "cup":
-        return <img src={cup} alt="we-naija icon" className={className} />;
       case "home-kyc-verification":
         return (
           <img
@@ -185,7 +177,7 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
             className={className}
           />
         );
-      case "arrowUpSvg":
+      
       case "timeClocKSvg":
         return (
           <img
@@ -266,24 +258,6 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
             className={className}
           />
         );
-
-        return <img src={cup} alt="cup icon" className={className} />;
-      case "starPoints":
-        return (
-          <img src={startpoints} alt="start point icon" className={className} />
-        );
-      case "kyc":
-        return <img src={kyc} alt="start point icon" className={className} />;
-      case "tasks":
-        return <img src={task} alt="start point icon" className={className} />;
-      case "warning":
-        return (
-          <img
-            src={warning_icon}
-            alt="start point icon"
-            className={className}
-          />
-        );
       case "scoutIcon":
         return (
           <img src={scoutIcon} alt="scoutIcon icon" className={className} />
@@ -316,6 +290,8 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         );
       case "starIcon":
         return <img src={starIcon} alt="starIcon icon" className={className} />;
+        case "noData":
+          return <img src={no_data} alt="starIcon icon" className={className} />;
       default:
         return null;
     }

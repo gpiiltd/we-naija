@@ -2,7 +2,6 @@ import { FC } from "react";
 import { ClipLoader } from "react-spinners";
 import { ButtonProps } from "./types";
 
-// Assuming `Icon` is a component that renders the icon, such as from `react-icons` or a custom one.
 const ButtonComponent: FC<ButtonProps> = ({
   text,
   loading,
@@ -11,7 +10,7 @@ const ButtonComponent: FC<ButtonProps> = ({
   bg_color,
   text_color,
   border_color,
-  icon,  // Icon prop for rendering an icon or image
+  icon,  
 }) => {
   return (
     <div
@@ -26,7 +25,11 @@ const ButtonComponent: FC<ButtonProps> = ({
         opacity: active ? 1 : 0.3,
         borderColor: active ? border_color : "transparent",
         borderStyle: "solid",
-        padding: "0.3rem 0.4rem", 
+        padding: "0.3rem 0.6rem", 
+        borderWidth:1,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       
 
       }}
