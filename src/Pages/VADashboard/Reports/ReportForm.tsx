@@ -107,12 +107,11 @@ const ReportForm = () => {
         <CustomModal
           isOpen={isModalOpen}
           onClose={closeModal}
-          title="My Custom Modal"
         >
-          <div className="  py-2 flex flex-col px-3">
-            <div className='flex flex-col gap-4 justify-center items-center'>
-               <Icon type='warning'/>
-            <Typography variant={TypographyVariant.NORMAL}>
+          <div className="  py-2 flex flex-col px-3 gap-3">
+            <section className='flex flex-col justify-center items-center gap-4 pb-6'>
+            <Icon type='warning'/>
+            <Typography variant={TypographyVariant.NORMAL} className="text-center">
               Are you sure you want to submit?
             </Typography>
             <Typography
@@ -121,7 +120,11 @@ const ReportForm = () => {
             >
               This action cannot be reversed
             </Typography>
-            <div className='flex flex-col gap-3 w-full md:w-[450px]'>
+            </section>
+         
+            <div className='flex flex-col gap-4 justify-center '>
+          
+            <div className='flex flex-col gap-3 '>
             <Button
                 text="Yes, I’m sure"
                 active={true}

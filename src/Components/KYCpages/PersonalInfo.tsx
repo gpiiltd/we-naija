@@ -6,6 +6,8 @@ import Icon from "../../Assets/SvgImagesAndIcons";
 import DateModal from "./DateModal";
 import { Errors } from "../types";
 import KycHeader from "./KycHeader";
+import { useNavigate } from "react-router-dom";
+
 
 const PersonalInfo = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +18,8 @@ const PersonalInfo = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+  const navigate = useNavigate();
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -46,6 +50,7 @@ const PersonalInfo = () => {
       setErrors(validationErrors);
       return;
     }
+    navigate('/kyc/id-verification')
     console.log("Form Data:", formData);
     // Proceed with form submission logic here
   };

@@ -3,10 +3,14 @@ import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
+import { useNavigate } from "react-router-dom";
+
 
 const EnterOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
 
   const phoneNumber = "08104201433"; // Example phone number
 
@@ -41,6 +45,7 @@ const EnterOtp = () => {
       return;
     }
     const otpCode = otp.join("");
+    navigate('/kyc/*')
     console.log("Entered OTP:", otpCode);
   };
 

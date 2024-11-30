@@ -6,6 +6,8 @@ import Icon from "../../Assets/SvgImagesAndIcons";
 import FileUpload from "./FileUpload";
 import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
+import { useNavigate } from "react-router-dom";
+
 
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
@@ -13,6 +15,8 @@ const IDVerification = () => {
   const [frontFile, setFrontFile] = useState<File | null>(null);
   const [backFile, setBackFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
+  const navigate = useNavigate();
+
 
   const handleIdTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdType(e.target.value);
@@ -49,6 +53,8 @@ const IDVerification = () => {
       setErrors(validationErrors);
       return;
     }
+    navigate('/verified-agent-dashboard')
+
     console.log("Form Data:", { idType, idNumber, frontFile, backFile });
   };
 

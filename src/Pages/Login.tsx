@@ -35,7 +35,7 @@ const Login = () => {
     setLoading(!loading);
     setTimeout(() => {
       setLoading(false);
-      navigate("/verified-agent-dashboard");
+      navigate("/kyc/*");
     }, 3000);
   };
 

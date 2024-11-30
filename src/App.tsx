@@ -19,6 +19,7 @@ import CreateNewPassword from "./Pages/CreateNewPassword";
 import PendingKyc from "./Pages/Home/PendingKyc";
 import HospitalDetail from "./Pages/Home/HospitalDetail";
 import Leaderboard from "./Pages/Leaderboard/Leaderboard";
+import Hospitals from "./Pages/VADashboard/Reports/HIS/Hospitals";
 
 function App() {
   return (
@@ -60,6 +61,10 @@ function App() {
           <Route
             path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
             Component={ReportForm}
+          />
+           <Route
+            path="/verified-agent-dashboard/reports/hospitals"
+            Component={Hospitals}
           />
           <Route path="leaderboard" Component={Leaderboard} />
           <Route path="join-community" element={<div>Community</div>} />

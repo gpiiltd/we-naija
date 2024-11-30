@@ -58,6 +58,7 @@ export enum TypographyVariant {
     loading?: boolean;
     text_color?: string;
     border_color?: string;
+    icon?: any
   }
   export interface CardProps {
     titleLeft: React.ReactNode;
@@ -78,4 +79,11 @@ export enum TypographyVariant {
     onClose: () => void;
     title?: string;
     children: ReactNode;
+  }
+  export interface SearchBarProps {
+    placeholder?: string;
+    onChange?: (value: string) => void;
+    onSubmit?: (value: string) => void;
+    suggestions?: string[];
+    value?:string
   }
