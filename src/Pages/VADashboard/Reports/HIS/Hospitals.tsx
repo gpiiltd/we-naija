@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Typography from "../../../../Components/Typography";
@@ -31,12 +31,11 @@ const Hospitals = () => {
     "Ibadan",
   ];
   const [buttonText, setButtonText] = useState("Location");
-  const [loading,setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
-    console.log('*****',searchQuery);
+    console.log("*****", searchQuery);
   };
 
   const handleSearchSubmit = (query: string) => {
@@ -68,14 +67,14 @@ const Hospitals = () => {
     if (cityDropdown.selected && stateDropdown.selected) {
       setLoading(!loading);
       setTimeout(() => {
-        console.log('Updating button text...');
+        console.log("Updating button text...");
         setLoading(false);
         setButtonText(`${cityDropdown.selected}, ${stateDropdown.selected}`);
-        setShowModal(false); 
+        setShowModal(false);
       }, 3000);
     } else {
       setButtonText("Location");
-      setShowModal(false); 
+      setShowModal(false);
     }
   };
 
@@ -100,7 +99,7 @@ const Hospitals = () => {
             Health institutes survey
           </Typography>
         </div>
-        <div className="flex justify-between w-full">
+        <div className="flex flex-col justify-between w-full  md:flex-row">
           <Typography
             variant={TypographyVariant.SMALL}
             className="text-light_gray"
@@ -108,7 +107,7 @@ const Hospitals = () => {
             Select a health institute to submit a survey report today and earn
             star points
           </Typography>
-          <div className="flex flex-col gap-1 justify-center ">
+          <div className="flex gap-2 pt-3 flex-col justify-center md:gap-1  md:pt-0 md:flex-row">
             <SearchBar
               placeholder="Search for a clinic or hospital..."
               value={searchQuery}
@@ -130,13 +129,13 @@ const Hospitals = () => {
 
       {/*  */}
       {searchQuery !== "" && (
-  <Typography
-    variant={TypographyVariant.NORMAL}
-    className="text-black font-extrabold pt-5"
-  >
-    Search result:
-  </Typography>
-)}
+        <Typography
+          variant={TypographyVariant.NORMAL}
+          className="text-black font-extrabold pt-5"
+        >
+          Search result:
+        </Typography>
+      )}
       {hospitalData.filter((hospital) =>
         hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
       ).length === 0 ? (
@@ -167,61 +166,59 @@ const Hospitals = () => {
         </div>
       ) : (
         <>
-        <div className="grid gap-6 pb-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {hospitalData
-            .filter((hospital) =>
-              hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((hospital,index) => (
-              
-              <div
-                key={index}
-                className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer"
-              >
-                <div className="py-4 px-6 mr-4">
-                  <section className="flex justify-start">
-                    <Icon type="homeAvatar" className="pr-2" />
-                    <div>
-                      <p className="font-bold text-black">{hospital.name}</p>
-                      <p className="font-normal text-[#5E5959]">
-                        {hospital.abbreviation}
-                      </p>
-                    </div>
-                  </section>
-                  <p className="font-normal text-sm pt-3">{hospital.address}</p>
-                  <div className="flex items-center justify-start pt-2">
-                    <Icon type="timeClocKSvg" className="pr-2" />
-                    <p className="font-normal text-sm text-[#5E5959] pr-1">
-                      {hospital.schedule}
+          <div className="grid gap-6 pb-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {hospitalData
+              .filter((hospital) =>
+                hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((hospital, index) => (
+                <div
+                  key={index}
+                  className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer"
+                >
+                  <div className="py-4 px-6 mr-4">
+                    <section className="flex justify-start">
+                      <Icon type="homeAvatar" className="pr-2" />
+                      <div>
+                        <p className="font-bold text-black">{hospital.name}</p>
+                        <p className="font-normal text-[#5E5959]">
+                          {hospital.abbreviation}
+                        </p>
+                      </div>
+                    </section>
+                    <p className="font-normal text-sm pt-3">
+                      {hospital.address}
                     </p>
-                    <p className="font-normal text-sm">({hospital.hours})</p>
+                    <div className="flex items-center justify-start pt-2">
+                      <Icon type="timeClocKSvg" className="pr-2" />
+                      <p className="font-normal text-sm text-[#5E5959] pr-1">
+                        {hospital.schedule}
+                      </p>
+                      <p className="font-normal text-sm">({hospital.hours})</p>
+                    </div>
+                  </div>
+                  <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
+                  <div className="flex items-center justify-end pr-4 pt-2 mb-1" onClick={()=>navigate('/verified-agent-dashboard/reports/hospitals/survey-list')}>
+                    <p className="font-bold text-sm text-[#007A61] pr-1">
+                      Give report
+                    </p>
+                    <Icon type="arrowUpSvg" className="pr-2" />
                   </div>
                 </div>
-                <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
-                <div className="flex items-center justify-end pr-4 pt-2 mb-1">
-                  <p className="font-bold text-sm text-[#007A61] pr-1">
-                    Give report
-                  </p>
-                  <Icon type="arrowUpSvg" className="pr-2" />
-                </div>
-              </div>
-            ))}
-        </div>
-           <div className="flex justify-center  ">
-           <ButtonComponent
-             text="Show more"
-             bg_color="transparent"
-             active={true}
-             text_color="#5E5959"
-             border_color="#5E5959"
-           />
-         </div>
-         </>
-         
+              ))}
+          </div>
+          <div className="flex justify-center  ">
+            <ButtonComponent
+              text="Show more"
+              bg_color="transparent"
+              active={true}
+              text_color="#5E5959"
+              border_color="#5E5959"
+            />
+          </div>
+        </>
       )}
       {/*  */}
-
-   
 
       <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="py-2 flex flex-col">
@@ -334,7 +331,6 @@ const Hospitals = () => {
                   text_color="#FFFFFF"
                   onClick={handleFilter}
                   loading={loading}
-
                 />
               </div>
             </div>

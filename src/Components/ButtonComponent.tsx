@@ -30,8 +30,6 @@ const ButtonComponent: FC<ButtonProps> = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-      
-
       }}
     >
       <button
@@ -46,6 +44,7 @@ const ButtonComponent: FC<ButtonProps> = ({
           letterSpacing: "0.05em",
           fontWeight: "300",
           backgroundColor: "transparent",
+          width: "100%",
         }}
       >
         {loading ? (
