@@ -52,7 +52,15 @@ import lockIcon from "../Assets/svgImages/lockIcon.svg";
 import lineScout from "../Assets/svgImages/lineScout.svg";
 import starIcon from "../Assets/svgImages/starIcon.svg";
 import no_data from "../Assets/svgImages/no_data.svg";
-
+import plusCircle from "../Assets/svgImages/pluscircle.svg";
+import minusCircle from "../Assets/svgImages/minuscircle.svg";
+import locationWhiteSvg from "../Assets/svgImages/locationw.svg";
+import instagramo from "../Assets/svgImages/instagramo.svg";
+import twittero from "../Assets/svgImages/twittero.svg";
+import facebooko from "../Assets/svgImages/facebooko.svg";
+import phone from "../Assets/svgImages/phone.svg";
+import email from "../Assets/svgImages/email.svg";
+import location from "../Assets/svgImages/locationw.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -177,7 +185,7 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
             className={className}
           />
         );
-      
+
       case "timeClocKSvg":
         return (
           <img
@@ -290,8 +298,41 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         );
       case "starIcon":
         return <img src={starIcon} alt="starIcon icon" className={className} />;
-        case "noData":
-          return <img src={no_data} alt="starIcon icon" className={className} />;
+      case "noData":
+        return <img src={no_data} alt="starIcon icon" className={className} />;
+      case "plusCircle":
+        return (
+          <img src={plusCircle} alt="plusCircle icon" className={className} />
+        );
+      case "minusCircle":
+        return (
+          <img src={minusCircle} alt="minusCircle icon" className={className} />
+        );
+      case "locationWhiteSvg":
+        return (
+          <img
+            src={locationWhiteSvg}
+            alt="locationWhiteSvg icon"
+            className={className}
+          />
+        );
+      case "instagramo":
+        return (
+          <img src={instagramo} alt="instagramo icon" className={className} />
+        );
+      case "twittero":
+        return <img src={twittero} alt="twittero icon" className={className} />;
+      case "facebooko":
+        return (
+          <img src={facebooko} alt="facebooko icon" className={className} />
+        );
+      case "phone":
+        return <img src={phone} alt="phone icon" className={className} />;
+      case "email":
+        return <img src={email} alt="email icon" className={className} />;
+      case "location":
+        return <img src={location} alt="location icon" className={className} />;
+
       default:
         return null;
     }

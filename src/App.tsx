@@ -20,6 +20,13 @@ import PendingKyc from "./Pages/Home/PendingKyc";
 import HospitalDetail from "./Pages/Home/HospitalDetail";
 import Leaderboard from "./Pages/Leaderboard/Leaderboard";
 import Hospitals from "./Pages/VADashboard/Reports/HIS/Hospitals";
+import BasicInfo from "./Pages/Settings/BasicInfo";
+import SettingsHeader from "./Pages/Settings/SettingsHeader";
+import ContactInfo from "./Pages/Settings/ContactInfo";
+import PasswordReset from "./Pages/Settings/PasswordReset";
+import KycVerification from "./Pages/Settings/KycVerification";
+import JoinCommunity from "./Pages/Settings/JoinCommunity";
+import HelpandSupport from "./Pages/Settings/HelpandSupport";
 
 function App() {
   return (
@@ -62,13 +69,21 @@ function App() {
             path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
             Component={ReportForm}
           />
-           <Route
+          <Route
             path="/verified-agent-dashboard/reports/hospitals"
             Component={Hospitals}
           />
           <Route path="leaderboard" Component={Leaderboard} />
           <Route path="join-community" element={<div>Community</div>} />
-          <Route path="settings" element={<div>Settings</div>} />
+          <Route path="settings" element={<SettingsHeader />}>
+            <Route index element={<Navigate to="basic-information" />} />
+            <Route path="basic-information" element={<BasicInfo />} />
+            <Route path="contact-information" element={<ContactInfo />} />
+            <Route path="password-reset" element={<PasswordReset />} />
+            <Route path="kyc-verification" element={<KycVerification />} />
+            <Route path="join-community" element={<JoinCommunity />} />
+            <Route path="help-and-support" element={<HelpandSupport />} />
+          </Route>
           <Route path="notifications" element={<div>Notificationss</div>} />
           <Route path="profile" element={<div>Profile</div>} />
         </Route>

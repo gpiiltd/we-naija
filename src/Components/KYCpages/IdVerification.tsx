@@ -7,7 +7,7 @@ import FileUpload from "./FileUpload";
 import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
-
+import CustomModal from "../Modal";
 
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
@@ -17,6 +17,8 @@ const IDVerification = () => {
   const [errors, setErrors] = useState<Errors>({});
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleIdTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdType(e.target.value);
@@ -48,14 +50,11 @@ const IDVerification = () => {
   };
 
   const handleSubmit = () => {
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    navigate('/verified-agent-dashboard')
-
-    console.log("Form Data:", { idType, idNumber, frontFile, backFile });
+    setLoading(!loading);
+    setTimeout(() => {
+      setLoading(false);
+      setShowModal(true);
+    }, 3000);
   };
 
   return (
@@ -193,6 +192,38 @@ const IDVerification = () => {
             <SkipButton />
           </div>
         </div>
+
+        <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <div className="flex flex-col gap-6 pb-6">
+            <div className="flex flex-col justify-center items-center pt-6">
+              <Icon type="success" />
+
+              <Typography
+                variant={TypographyVariant.NORMAL}
+                className="text-black pt-3 font-extrabold"
+              >
+                KYC successful submitted{" "}
+              </Typography>
+              <Typography
+                variant={TypographyVariant.SMALL}
+                className="text-light_gray pt-4"
+              >
+                Great job!
+              </Typography>
+            </div>{" "}
+            <Button
+              text="Proceed to dashboard"
+              active={true}
+              bg_color="#007A61"
+              text_color="white"
+              loading={loading}
+              onClick={() => {
+                setShowModal(false);
+                navigate("/verified-agent-dashboard");
+              }}
+            />
+          </div>
+        </CustomModal>
       </div>
     </>
   );
