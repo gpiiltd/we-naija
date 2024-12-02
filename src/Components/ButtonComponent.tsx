@@ -18,7 +18,6 @@ const ButtonComponent: FC<ButtonProps> = ({
         cursor: active ? "pointer" : "default",
         fontSize: "1rem",
         borderRadius: "0.380rem",
-        fontWeight: "400",
         transition: "all 0.3s",
         backgroundColor: bg_color,
         color: text_color,
@@ -42,7 +41,7 @@ const ButtonComponent: FC<ButtonProps> = ({
           alignItems: "center",
           fontSize: "1rem",
           letterSpacing: "0.05em",
-          fontWeight: "300",
+          fontWeight: "500",
           backgroundColor: "transparent",
           width: "100%",
         }}

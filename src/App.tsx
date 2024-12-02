@@ -21,6 +21,7 @@ import HospitalDetail from "./Pages/Home/HospitalDetail";
 import Leaderboard from "./Pages/Leaderboard/Leaderboard";
 import Hospitals from "./Pages/VADashboard/Reports/HIS/Hospitals";
 import SurveyList from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyList";
+import GiveReport from "./Pages/VADashboard/Reports/HIS/GiveReport/GiveReport";
 
 function App() {
   return (
@@ -70,6 +71,10 @@ function App() {
              <Route
             path="/verified-agent-dashboard/reports/hospitals/survey-list"
             Component={SurveyList}
+          />
+           <Route
+            path="/verified-agent-dashboard/reports/hospitals/give-report"
+            Component={GiveReport}
           />
           <Route path="leaderboard" Component={Leaderboard} />
           <Route path="join-community" element={<div>Community</div>} />
