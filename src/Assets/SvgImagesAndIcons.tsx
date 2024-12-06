@@ -61,6 +61,15 @@ import facebooko from "../Assets/svgImages/facebooko.svg";
 import phone from "../Assets/svgImages/phone.svg";
 import email from "../Assets/svgImages/email.svg";
 import location from "../Assets/svgImages/locationw.svg";
+import chatUs from "../Assets/svgImages/chatUs.svg";
+import basicInfo from "../Assets/svgImages/basicInfo.svg";
+import passwordReset from "../Assets/svgImages/passwordReset.svg";
+import faq from "../Assets/svgImages/faq.svg";
+import kycVerify from "../Assets/svgImages/kycVerify.svg";
+import joinCom from "../Assets/svgImages/joinCom.svg";
+import contactUs from "../Assets/svgImages/contactUs.svg";
+import contactInfo from "../Assets/svgImages/contactInfo.svg";
+import arrowRight from "../Assets/svgImages/arrowRight.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -332,6 +341,40 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return <img src={email} alt="email icon" className={className} />;
       case "location":
         return <img src={location} alt="location icon" className={className} />;
+      case "chatUs":
+        return <img src={chatUs} alt="chatUs icon" className={className} />;
+      case "basicInfo":
+        return (
+          <img src={basicInfo} alt="basicInfo icon" className={className} />
+        );
+      case "passwordReset":
+        return (
+          <img
+            src={passwordReset}
+            alt="passwordReset icon"
+            className={className}
+          />
+        );
+      case "faq":
+        return <img src={faq} alt="faq icon" className={className} />;
+      case "kycVerify":
+        return (
+          <img src={kycVerify} alt="kycVerify icon" className={className} />
+        );
+      case "joinCom":
+        return <img src={joinCom} alt="joinCom icon" className={className} />;
+      case "contactUs":
+        return (
+          <img src={contactUs} alt="contactUs icon" className={className} />
+        );
+      case "contactInfo":
+        return (
+          <img src={contactInfo} alt="contactInfo icon" className={className} />
+        );
+      case "arrowRight":
+        return (
+          <img src={arrowRight} alt="arrowRight icon" className={className} />
+        );
 
       default:
         return null;

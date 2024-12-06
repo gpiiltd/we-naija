@@ -27,6 +27,7 @@ import PasswordReset from "./Pages/Settings/PasswordReset";
 import KycVerification from "./Pages/Settings/KycVerification";
 import JoinCommunity from "./Pages/Settings/JoinCommunity";
 import HelpandSupport from "./Pages/Settings/HelpandSupport";
+import SettingsMobile from "./Pages/Settings/SettingsMobile";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
             <Route path="kyc-verification" element={<KycVerification />} />
             <Route path="join-community" element={<JoinCommunity />} />
             <Route path="help-and-support" element={<HelpandSupport />} />
+            <Route path="setting-mobile" element={<SettingsMobile />} />
           </Route>
           <Route path="notifications" element={<div>Notificationss</div>} />
           <Route path="profile" element={<div>Profile</div>} />

@@ -1,17 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { TypographyVariant } from "../../Components/types";
 import Header from "../../Components/Header";
-import { FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
 
 const SettingsHeader = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
   return (
     <div className="min-h-screen flex flex-col w-full">
       <Typography
@@ -22,9 +16,7 @@ const SettingsHeader = () => {
       </Typography>
       <Header className="">
         <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
-          <button onClick={toggleDrawer} className="md:hidden text-gray-700">
-            <FiMenu size={24} />
-          </button>
+         
 
           <div className="flex items-center gap-4">
             <nav className="hidden md:block pt-2 pb-4">
