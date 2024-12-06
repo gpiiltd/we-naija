@@ -1,49 +1,31 @@
 import React, { useState } from "react";
 import { TypographyVariant } from "../../Components/types";
 import Typography from "../../Components/Typography";
-import { Button } from "@gpiiltd/gpi-ui-library";
-
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import InputField from "../../Components/Input/InputField";
-import { useNavigate } from "react-router-dom";
+import FloatingSelect from "../../Components/Input/FloatingSelect";
+import FloatingInput from "../../Components/Input/FloatingInput";
+import { nigerianAddresses } from "../../utils/selectOptions";
 
 const ContactInfo = () => {
-  const [formData, setFormData] = useState({
-    address: "",
-    nationality: "",
-    gender: "",
-    dateOfBirth: "",
-  });
+  const [email, setEmail] = useState("jellygrande@gmail.com");
+  const [phoneNumber, setPhoneNumber] = useState("081042001438");
+  const [address, setAddress] = useState("123 Lagos Street, Lagos");
+  const [error, setError] = useState("");
 
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const initialValues = {
-    fullName: "",
-    email: "",
+  const isFormComplete = address !== "" && email !== "" && phoneNumber !== "";
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    console.log("Form submitted:", {
+      email,
+      phoneNumber,
+      address,
+    });
   };
 
-  const validationSchema = Yup.object().shape({
-    fullName: Yup.string()
-      .required("Full name is required")
-      .min(2, "Full name must be at least 2 characters long"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Invalid email format")
-      .trim(),
-  });
-
-  const handleSaveChanges = () => {
-    setLoading(!loading);
-    // console.log("Form values:", email);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/login");
-    }, 3000);
-  };
   return (
     <div className="flex justify-center items-center mt-4">
-      <div className="w-[50%]">
+      <div className="w-full md:w-[50%]">
         <div className="flex flex-col gap-2">
           <Typography variant={TypographyVariant.SUBTITLE}>
             Contact Information
@@ -56,49 +38,42 @@ const ContactInfo = () => {
           </Typography>
         </div>
         <div className="pt-10">
-          <Formik
-            initialValues={initialValues}
-            validateOnChange={true}
-            validateOnBlur={true}
-            onSubmit={(values) => {
-              console.log("Form values:", values);
-            }}
-            validationSchema={validationSchema}
-          >
-            {({ isValid, dirty }) => (
-              <Form className="flex flex-col gap-5">
-                <InputField
-                  placeHolder="Enter your full name"
-                  type="text"
-                  focusStyle="green"
-                  label="Full Name"
-                  name="fullName"
-                />
-                <InputField
-                  type="text"
-                  focusStyle="green"
-                  label="User Name"
-                  name="userName"
-                />
-                <InputField
-                  placeHolder="Enter your residential address"
-                  type="text"
-                  focusStyle="green"
-                  label="Residential Address"
-                  name="address"
-                />
-
-                <Button
-                  text="Save Changes"
-                  active={isValid && dirty}
-                  bg_color="#007A61"
-                  text_color="white"
-                  loading={loading}
-                  onClick={handleSaveChanges}
-                />
-              </Form>
-            )}
-          </Formik>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-1 ">
+            <FloatingInput
+              label="Email"
+              value={email}
+              onChange={setEmail}
+              error={email === "" && error ? "Email is required." : ""}
+            />
+            <FloatingInput
+              label="Phone Number"
+              value={phoneNumber}
+              onChange={setPhoneNumber}
+              error={
+                phoneNumber === "" && error ? "Phone number is required." : ""
+              }
+            />
+            <FloatingSelect
+              label="Residential Address"
+              options={nigerianAddresses}
+              value={address}
+              onChange={setAddress}
+              error={address === "" && error ? "Address is required." : ""}
+            />
+            <button
+              type="submit"
+              className={`mt-4 w-full py-4 rounded-md ${
+                isFormComplete
+                  ? "bg-[#007A61] hover:bg-[#015443] text-white"
+                  : "bg-[#007A61] text-white cursor-not-allowed opacity-50"
+              }`}
+              // onClick={handleButtonClick} //
+              // disabled={!isFormComplete} // Disable button if form is not complete
+            >
+              Save changes
+            </button>
+            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}{" "}
+          </form>
         </div>
       </div>
     </div>

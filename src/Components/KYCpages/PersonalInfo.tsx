@@ -8,10 +8,12 @@ import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import FloatingInput from "../Input/FloatingInput";
 import FloatingSelect from "../Input/FloatingSelect";
+import { genderOptions } from "../../utils/selectOptions";
+import { nationalityOptions } from "../../utils/selectOptions";
 
 const PersonalInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
@@ -23,42 +25,38 @@ const PersonalInfo = () => {
     setDateOfBirth(date);
   };
 
-  const nationalityOptions = [
-    "American",
-    "Canadian",
-    "British",
-    "Australian",
-    "Indian",
-    "Chinese",
-    "Brazilian",
-    "French",
-    "German",
-    "Japanese",
-  ];
-
-  const genderOptions = ["Male", "Female", "Other", "Prefer not to say"];
+  const isFormComplete =
+    address !== "" && nationality !== "" && gender !== "" && dateOfBirth !== "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Form submitted:", { name, nationality, gender, dateOfBirth });
+    if (!isFormComplete) {
+      setError(".");
+      return;
+    }
+
+    console.log("Form submitted:", {
+      address,
+      nationality,
+      gender,
+      dateOfBirth,
+    });
     navigate("/kyc");
   };
 
-  const isFormComplete = name !== "" && nationality !== "" && gender !== "";
-
-  const handleButtonClick = () => {
-    if (!isFormComplete) {
-      setError(".");
-    }
-  };
+  // const handleButtonClick = () => {
+  //   if (!isFormComplete) {
+  //     setError(".");
+  //   }
+  // };
 
   return (
     <>
       <KycHeader />
       <div className="flex flex-col items-center justify-center mt-12 md:mt-24 ">
         <div className="bg-white w-full p-4 md:p-8 rounded-lg md:w-2/4 ">
-          <div className="flex items-center mb-4">
+          <div className="flex  mb-4">
             <Icon type="person" className="w-6 h-6 mr-4" />
 
             <h1 className="text-center md:mb-4 text-xl  md:text-3xl">
@@ -76,9 +74,9 @@ const PersonalInfo = () => {
           <form onSubmit={handleSubmit} className=" ">
             <FloatingInput
               label="Residential address"
-              value={name}
-              onChange={setName}
-              error={name === "" && error ? "Address is required." : ""}
+              value={address}
+              onChange={setAddress}
+              error={address === "" && error ? "Address is required." : ""}
             />
             <FloatingSelect
               label="Nationality"
@@ -112,10 +110,10 @@ const PersonalInfo = () => {
               type="submit"
               className={`mt-4 w-full py-4 rounded-md ${
                 isFormComplete
-                  ? "bg-[#007A61] hover:bg-[#007A61] text-white"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  ? "bg-[#007A61] hover:bg-[#015443] text-white"
+                  : "bg-[#007A61] text-white cursor-not-allowed opacity-50"
               }`}
-              onClick={handleButtonClick} //
+              // onClick={handleButtonClick} //
               // disabled={!isFormComplete} // Disable button if form is not complete
             >
               Poceed

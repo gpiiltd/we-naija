@@ -26,9 +26,9 @@ const FloatingSelect: React.FC<FloatingSelectProps> = ({
   return (
     <div className="relative mb-6">
       <div
-        className={`block w-full bg-white border  border-primary_color rounded-md py-2 px-3 text-gray-700  cursor-pointer ${
+        className={`block w-full bg-white border   rounded-md py-2 px-3 text-gray-700  cursor-pointer ${
           isFocused || value ? "pt-5" : "py-5"
-        } font-normal ${error ? "text-error" : "border-gray-300"}`}
+        } font-normal ${error ? "text-error" : isFocused ? "border-green-500 ring-1 ring-green-500 " : "border-gray-300"}`}
         onClick={() => setIsOpen(!isOpen)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => {
@@ -56,7 +56,7 @@ const FloatingSelect: React.FC<FloatingSelectProps> = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md ">
+        <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 text-gray-700 rounded-md overflow-y-auto max-h-40">
           {options.map((option, index) => (
             <div
               key={index}

@@ -29,6 +29,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
         type={type}
         value={value}
         readOnly={readOnly}
+        onClick={onClick}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
@@ -46,7 +47,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
 
       {error && <p className="text-error text-xs mt-1">{error}</p>}
 
-      <span className="absolute right-3 top-3 cursor-pointer" onClick={onClick}>
+      <span className="absolute right-3 top-3 cursor-pointer">
         {icon}
       </span>
     </div>

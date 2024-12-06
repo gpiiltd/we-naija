@@ -48,7 +48,7 @@ const PasswordReset = () => {
 
   return (
     <div className="flex justify-center items-center mt-4">
-      <div className="flex w-[50%] px-4  justify-center items-center ">
+      <div className="flex w-full md:w-[50%] px-4  justify-center items-center ">
         <div className="w-full  ">
           <div className="flex flex-col ">
             <Typography

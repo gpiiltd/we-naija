@@ -69,8 +69,8 @@ const IDVerification = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen mt-4">
-        <div className="bg-white  rounded-lg md:w-[50%] ">
+      <div className="flex flex-col items-center justify-center  mt-4">
+        <div className="bg-white  rounded-lg w-full md:w-[50%] ">
           <div className="flex items-center mb-4">
             <h1 className="text-center md:mb-2 text-xl  md:text-2xl">
               KYC verification
