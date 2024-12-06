@@ -146,11 +146,17 @@ const Leaderboard = () => {
           </thead>
           <tbody>
             {leaderboardData[timeFrame as keyof typeof leaderboardData].map(
-              (player) => (
+              (player, index) => (
                 <tr key={player.name}>
-                  <td className="border-y-2 px-4 py-2">{player.rank}</td>
+                  <td className="border-y-2 px-4 py-2 items-center justify-center">
+                    {player.rank < 4 ? (
+                      <Icon type={`medal${player.rank}`} className="w-10 h-10" />
+                    ) : (
+                      player.rank
+                    )}
+                  </td>
                   <td className="border-y-2 px-4 py-2 flex items-center">
-                    <div className="text-lg font-semibold bg-[#F0FEFB] rounded-full px-6 py-4 text-[#007A61]  mr-2">
+                    <div className="text-lg font-semibold bg-[#F0FEFB] rounded-full px-6 py-4 text-[#007A61] mr-2">
                       {getInitials(player.name)}
                     </div>
                     {player.name}

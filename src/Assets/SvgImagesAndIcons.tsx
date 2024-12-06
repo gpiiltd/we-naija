@@ -70,6 +70,9 @@ import joinCom from "../Assets/svgImages/joinCom.svg";
 import contactUs from "../Assets/svgImages/contactUs.svg";
 import contactInfo from "../Assets/svgImages/contactInfo.svg";
 import arrowRight from "../Assets/svgImages/arrowRight.svg";
+import medal1 from "../Assets/svgImages/medal1.svg";
+import medal2 from "../Assets/svgImages/medal2.svg";
+import medal3 from "../Assets/svgImages/medal3.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -374,6 +377,18 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "arrowRight":
         return (
           <img src={arrowRight} alt="arrowRight icon" className={className} />
+        );
+      case "medal1":
+        return (
+          <img src={medal1} alt="medal1 icon" className={className} />
+        );
+      case "medal2":
+        return (
+          <img src={medal2} alt="medal2 icon" className={className} />
+        );
+      case "medal3":
+        return (
+          <img src={medal3} alt="medal3 icon" className={className} />
         );
 
       default:
