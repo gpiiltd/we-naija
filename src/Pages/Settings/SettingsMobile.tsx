@@ -366,7 +366,7 @@ const SettingsMobile = () => {
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
               onClick={() =>
-                navigate("/verified-agent-dashboard/settings/help-and-support")
+                navigate("/verified-agent-dashboard/settings/help-and-support/faq")
               }
             >
               <div className="flex items-center gap-2">
@@ -378,7 +378,7 @@ const SettingsMobile = () => {
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
               onClick={() =>
-                navigate("/verified-agent-dashboard/settings/help-and-support")
+                navigate("/verified-agent-dashboard/settings/help-and-support/contact-us")
               }
             >
               <div className="flex items-center gap-2">

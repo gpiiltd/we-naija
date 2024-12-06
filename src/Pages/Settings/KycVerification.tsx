@@ -9,6 +9,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
+import Icon from "../../Assets/SvgImagesAndIcons";
 
 const IDVerification = () => {
   const [idType, setIdType] = useState("International passport");
@@ -47,12 +48,18 @@ const IDVerification = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center  mt-4 mb-8">
+      <div className="flex flex-col items-center justify-center  md:mt-4 mb-8">
         <div className="bg-white  rounded-lg w-full md:w-[50%] ">
           <div className="flex items-center mb-4">
-            <h1 className="text-center md:mb-2 text-xl  md:text-2xl">
-              KYC verification
-            </h1>
+          <div className="flex">
+            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
+            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+            </span>
+
+            <Typography variant={TypographyVariant.SUBTITLE}>
+              KYC Verification
+            </Typography>
+          </div>
           </div>
 
           <VerificationCard

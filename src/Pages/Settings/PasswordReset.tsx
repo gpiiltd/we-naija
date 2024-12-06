@@ -6,11 +6,14 @@ import InputField from "../../Components/Input/InputField";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
+import Icon from "../../Assets/SvgImagesAndIcons";
+import { useNavigate } from "react-router-dom";
 
 const PasswordReset = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const initialValues = {
     existingPassword: "",
@@ -47,16 +50,19 @@ const PasswordReset = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-4">
+    <div className="flex justify-center items-center md:mt-4">
       <div className="flex w-full md:w-[50%] px-4  justify-center items-center ">
         <div className="w-full  ">
           <div className="flex flex-col ">
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className="text-black "
-            >
+          <div className="flex">
+            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
+            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+            </span>
+
+            <Typography variant={TypographyVariant.SUBTITLE}>
               Password reset
             </Typography>
+          </div>
             <Typography
               variant={TypographyVariant.NORMAL}
               className="text-light_gray mt-2"

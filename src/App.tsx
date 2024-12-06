@@ -28,6 +28,8 @@ import KycVerification from "./Pages/Settings/KycVerification";
 import JoinCommunity from "./Pages/Settings/JoinCommunity";
 import HelpandSupport from "./Pages/Settings/HelpandSupport";
 import SettingsMobile from "./Pages/Settings/SettingsMobile";
+import FAQ from "./Pages/Settings/FAQ";
+import ContactUs from "./Pages/Settings/ContactUs";
 
 function App() {
   return (
@@ -85,6 +87,8 @@ function App() {
             <Route path="join-community" element={<JoinCommunity />} />
             <Route path="help-and-support" element={<HelpandSupport />} />
             <Route path="setting-mobile" element={<SettingsMobile />} />
+            <Route path="help-and-support/faq" element={<FAQ />} />
+            <Route path="help-and-support/contact-us" element={<ContactUs />} />
           </Route>
           <Route path="notifications" element={<div>Notificationss</div>} />
           <Route path="profile" element={<div>Profile</div>} />

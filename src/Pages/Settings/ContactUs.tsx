@@ -1,10 +1,27 @@
 import React from "react";
 import backgroundImage from "../../Assets/svgImages/background.svg"; // Import the SVG file
 import Icon from "../../Assets/SvgImagesAndIcons";
+import { useNavigate } from "react-router-dom";
 
 const ContactUs = () => {
+    const navigate = useNavigate();
+
   return (
-    <div className="flex justify-center items-center mt-4">
+    <>  
+    <div className="flex md:hidden">
+        <span
+          onClick={() =>
+            navigate("/verified-agent-dashboard/settings/setting-mobile")
+          }
+        >
+          <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+        </span>
+
+        <h5 className="text-2xl font-semibold mb-4 md:text-center">
+          Contact us
+        </h5>
+      </div>
+    <div className="flex justify-center items-center mt-4 mb-8">
       <div
         className="relative w-full md:w-[60%] lg:w-[40%] h-[600px] rounded-xl flex flex-col  bg-[#007A61] "
         style={{
@@ -54,6 +71,7 @@ const ContactUs = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

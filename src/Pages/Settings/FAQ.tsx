@@ -1,9 +1,11 @@
 // src/Pages/Settings/FAQ.tsx
 import React, { useState } from "react";
 import Icon from "../../Assets/SvgImagesAndIcons";
+import { useNavigate } from "react-router-dom";
 
 const FAQ: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const faqs = [
     {
@@ -39,10 +41,20 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <div className="md:max-w-[60%] mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4 text-center">
-        Frequently Asked Questions
-      </h2>
+    <div className="md:max-w-[60%] mx-auto p-6 bg-white rounded-lg shadow-md mb-8">
+      <div className="flex">
+        <span
+          onClick={() =>
+            navigate("/verified-agent-dashboard/settings/setting-mobile")
+          }
+        >
+          <Icon type="arrowBackSvg" className="mr-4 md:hidden" />
+        </span>
+
+        <h5 className="text-sm md:text-2xl font-semibold mb-4 md:text-center">
+          Frequently Asked Questions
+        </h5>
+      </div>
       {faqs.map((faq, index) => (
         <div key={index} className=" rounded-lg  m-4">
           <div

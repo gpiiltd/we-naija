@@ -4,12 +4,15 @@ import Typography from "../../Components/Typography";
 import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
 import { nigerianAddresses } from "../../utils/selectOptions";
+import { useNavigate } from "react-router-dom";
 
+import Icon from "../../Assets/SvgImagesAndIcons";
 const ContactInfo = () => {
   const [email, setEmail] = useState("jellygrande@gmail.com");
   const [phoneNumber, setPhoneNumber] = useState("081042001438");
   const [address, setAddress] = useState("123 Lagos Street, Lagos");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const isFormComplete = address !== "" && email !== "" && phoneNumber !== "";
 
@@ -24,12 +27,18 @@ const ContactInfo = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-4">
+    <div className="flex justify-center items-center md:mt-4">
       <div className="w-full md:w-[50%]">
         <div className="flex flex-col gap-2">
-          <Typography variant={TypographyVariant.SUBTITLE}>
-            Contact Information
-          </Typography>
+          <div className="flex">
+            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
+            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+            </span>
+
+            <Typography variant={TypographyVariant.SUBTITLE}>
+              Contact Information
+            </Typography>
+          </div>
           <Typography
             variant={TypographyVariant.SMALL}
             className="text-gray-500 mt-2"

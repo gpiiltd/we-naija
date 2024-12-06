@@ -6,6 +6,7 @@ import DateModal from "../../Components/KYCpages/DateModal";
 import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
 import { genderOptions, nationalityOptions } from "../../utils/selectOptions";
+import { useNavigate } from "react-router-dom";
 
 const BasicInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +16,7 @@ const BasicInfo = () => {
   const [gender, setGender] = useState("Female");
   const [error, setError] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("26-06-1991");
+  const navigate = useNavigate();
 
   const isFormComplete =
     nationality !== "" && gender !== "" && dateOfBirth !== "";
@@ -36,15 +38,21 @@ const BasicInfo = () => {
   };
 
   return (
-    <div className="flex justify-between items-start gap-10 md:mx-32 mt-4">
+    <div className="flex justify-between items-start gap-10 md:mx-32 md:mt-4">
       <div className="hidden md:flex  gap-2 w-32 h-32 bg-white items-center justify-center rounded-xl  border border-gray-200">
         <Icon type="avatar" className="w-20 h-20" />
       </div>
       <div className="w-full md:w-[60%] lg:mr-80">
         <div className="flex flex-col gap-2">
-          <Typography variant={TypographyVariant.SUBTITLE}>
-            Basic Information
-          </Typography>
+        <div className="flex">
+            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
+            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+            </span>
+
+            <Typography variant={TypographyVariant.SUBTITLE}>
+              Basic Information
+            </Typography>
+          </div>
           <Typography
             variant={TypographyVariant.SMALL}
             className="text-gray-500"
