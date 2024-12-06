@@ -30,6 +30,7 @@ import startpoints from "../Assets/svgImages/star_points.svg";
 import kyc from "../Assets/svgImages/kyc.svg";
 import task from "../Assets/svgImages/tasks.svg";
 import warning_icon from "../Assets/svgImages/warning.svg";
+import favoriteNote from "../Assets/svgImages/note-favorite.svg";
 
 
 
@@ -105,6 +106,8 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
                 return <img src={task} alt="start point icon" className={className} />;
                 case "warning":
                   return <img src={warning_icon} alt="start point icon" className={className} />;
+                  case "favoriteNote":
+                    return <img src={favoriteNote} alt="start point icon" className={className} />;
 
       default:
         return null;

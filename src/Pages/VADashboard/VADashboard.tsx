@@ -11,6 +11,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
+import PendingKyc from "../Home/PendingKyc";
 
 const VADashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -20,7 +21,7 @@ const VADashboard = () => {
   };
   return (
     <div className="w-full h-screen overflow-x-hidden overflow-y-auto flex flex-col ">
-      <Header className="w-full px-4 md:px-6 lg:px-12">
+      {/* <Header className="w-full px-4 md:px-6 lg:px-12"> */}
     <div className="min-h-screen flex flex-col w-full">
       <Header className="px-4 md:px-6 lg:px-16">
         <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
@@ -274,15 +275,15 @@ const VADashboard = () => {
       {/* <main className="flex-grow bg-blue-500 sm:bg-green-500 md:bg-red-500 lg:bg-yellow-500 xl:bg-purple-500">  */}
       <main className="flex-grow mx-5 my-8 sm:mx-9 md:mx-12 lg:mx-12"> 
       
-      {/* <PendingKyc /> */}
+      <PendingKyc />
       {/* <HospitalDetail /> */}
 
       </main>
 
-      <Footer bg_color="black" className="px-8 md:px-6  lg:px-12">
+      {/* <Footer bg_color="black" className="px-8 md:px-6  lg:px-12">
       <main className="flex-grow px-4 md:px-6  lg:px-16 pt-8">
         <Outlet />
-      </main>
+      </main> */}
       <Footer bg_color="black" className="px-8 md:px-6  lg:px-16">
 
         <div className="border-b border-gray-800 md:mb-8 pb-4">
@@ -383,6 +384,7 @@ const VADashboard = () => {
           </ul>
         </div>
       </Footer>
+    </div>
     </div>
   );
 };
