@@ -6,7 +6,7 @@ const ContactUs = () => {
   return (
     <div className="flex justify-center items-center mt-4">
       <div
-        className="relative w-full md:w-[40%] h-[600px] rounded-xl flex flex-col  bg-[#007A61] "
+        className="relative w-full md:w-[60%] lg:w-[40%] h-[600px] rounded-xl flex flex-col  bg-[#007A61] "
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",

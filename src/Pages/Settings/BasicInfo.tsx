@@ -36,7 +36,7 @@ const BasicInfo = () => {
   };
 
   return (
-    <div className="flex justify-between items-start gap-10 mx-32 mt-4">
+    <div className="flex justify-between items-start gap-10 md:mx-32 mt-4">
       <div className="hidden md:flex  gap-2 w-32 h-32 bg-white items-center justify-center rounded-xl  border border-gray-200">
         <Icon type="avatar" className="w-20 h-20" />
       </div>
