@@ -352,7 +352,7 @@ const SettingsMobile = () => {
             >
               <div className="flex items-center gap-2">
                 <Icon type="joinCom" className="w-fit" />
-                <span>Join community on Telegram</span>
+                <span className="">Join community</span>
               </div>
               <Icon type="arrowRight" className="w-fit" />
             </button>
