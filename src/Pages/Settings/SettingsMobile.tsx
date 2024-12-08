@@ -1,23 +1,16 @@
-import Footer from "../../Components/Footer";
-import { NavLink } from "react-router-dom";
-import Icon from "../../Assets/SvgImagesAndIcons";
+import { Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
-import Header from "../../Components/Header";
-import { FiSettings, FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
+import { NavLink } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import Typography from "../../Components/Typography";
+import Icon from "../../Assets/SvgImagesAndIcons";
+import { useNavigate } from "react-router-dom";
 
-const VADashboard = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+const SettingsMobile = () => {
+  const navigate = useNavigate();
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
   return (
-    <div className="min-h-screen flex flex-col w-full">
-      <Header className="px-4 md:px-6 lg:px-16">
+    <div className="flex flex-col w-full  bg-[#E3E3E359]">
+      {/* <Header className="px-4 md:px-6 lg:px-16">
         <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
           <button onClick={toggleDrawer} className="md:hidden text-gray-700">
             <FiMenu size={24} />
@@ -87,7 +80,7 @@ const VADashboard = () => {
           <div className="flex items-center gap-4">
             <nav className="flex justify-center items-center gap-4 text-gray-700">
               <NavLink
-                to={isDrawerOpen ? "/verified-agent-dashboard/leaderboard" : "/verified-agent-dashboard/settings"}
+                to="/verified-agent-dashboard/settings"
                 className={({ isActive }) =>
                   isActive
                     ? " px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
@@ -230,7 +223,7 @@ const VADashboard = () => {
                           className="text-gray-600 text-primary_green text-lg"
                         />
                         <NavLink
-                          to="/verified-agent-dashboard/settings/setting-mobile"
+                          to="/verified-agent-dashboard/settings"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -263,116 +256,164 @@ const VADashboard = () => {
             </div>
           </div>
         )}
-      </Header>
+      </Header> */}
+      <Typography
+        variant={TypographyVariant.SUBTITLE}
+        className="text-xl font-semibold items-center px-4 mt-8"
+      >
+        Settings
+      </Typography>
 
-      <main className="flex-grow px-4 md:px-6  lg:px-16 pt-8">
-        <Outlet />
-
-      </main>
-      <Footer bg_color="black" className="px-8 md:px-6  lg:px-16 py-20 md:py-0">
-        <div className="border-b border-gray-800 md:mb-8 pb-4">
-          <div className="flex flex-col gap-4  md:flex-row md:justify-between">
-            <Icon type="wenaija"
-              className="w-fit cursor-pointer"
-              click={() => (window.location.href = "/verified-agent-dashboard")} />
-            <div className="text-cream  ">
-              <ul className="flex md:space-x-6">
-                <li className="cursor-pointer">
-                  <Icon type="linkedin" />
-                </li>
-                <li className="cursor-pointer">
-                  <Icon type="facebook" />
-                </li>
-                <li className="cursor-pointer">
-                  <Icon type="twitter" />
-                </li>
-                <li className="cursor-pointer">
-                  <Icon type="instagram" />
-                </li>
-              </ul>
-            </div>
+      {/* User Info */}
+      <div className="flex flex-col items-center mt-4">
+        <div className="flex items-center">
+          <div className="bg-[#F0FEFB] text-[#007A61] rounded-full w-16 h-16 flex items-center justify-center">
+            BA
           </div>
+        </div>
+        <h2 className="text-lg font-semibold mt-4">Blessing Asuquo</h2>
+      </div>
 
-          <nav className="text-cream text-xs py-4 ">
-            <ul className="flex flex-col gap-4 md:flex-row">
-              <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-thin"
-                      : " font-thin hover:text-gray-300 transition duration-200"
-                  }
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-thin"
-                      : "font-thin hover:text-gray-300 transition duration-200"
-                  }
-                >
-                  Report
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/contact"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-thin"
-                      : "font-thin hover:text-gray-300 transition duration-200"
-                  }
-                >
-                  Leaderboard
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/contact"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-thin"
-                      : "font-thin hover:text-gray-300 transition duration-200"
-                  }
-                >
-                  Join community
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/contact"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-thin text-xs"
-                      : "font-thin hover:text-gray-300 transition duration-200"
-                  }
-                >
-                  Settings
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
+      {/* Sections */}
+      <div className="flex flex-col p-4 space-y-4 mt-4">
+        {/* Personal Information */}
+        <h3 className="font-normal text-gray-500">Personal information</h3>
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex flex-col space-y-2 mt-2">
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/basic-information")
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="basicInfo" className="w-fit" />
+                <span>Basic information</span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate(
+                  "/verified-agent-dashboard/settings/contact-information"
+                )
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="contactInfo" className="w-fit" />
+                <span>Contact information </span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+          </div>
         </div>
 
-        <div className="text-cream py-4 text-xs font-thin flex flex-col gap-4 md:flex-row md:justify-between  ">
-          <Typography variant={TypographyVariant.SMALL}>
-            © 2024 Wenailja. All rights reserved.
-          </Typography>
-          <ul className="flex space-x-3">
-            <li className="cursor-pointer">Terms</li>
-            <li className="cursor-pointer">Privacy </li>
-            <li className="cursor-pointer">Cookies </li>
-          </ul>
+        {/* Account Settings */}
+        <h3 className="font-normal text-gray-500">Account settings</h3>
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex flex-col space-y-2 mt-2">
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/password-reset")
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="passwordReset" className="w-fit" />
+                <span>Password reset</span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/kyc-verification")
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="kycVerify" className="w-fit" />
+                <span>Kyc verification</span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+          </div>
         </div>
-      </Footer>
+
+        {/* Community */}
+        <h3 className="font-normal text-gray-500">Community</h3>
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex flex-col space-y-2 mt-2">
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/join-community")
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="joinCom" className="w-fit" />
+                <span className="">Join community</span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+          </div>
+        </div>
+
+        {/* Help & Support */}
+        <h3 className="font-normal text-gray-500">Help & support</h3>
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex flex-col space-y-2 mt-2">
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/help-and-support/faq")
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="faq" className="w-fit" />
+                <span>FAQs</span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/help-and-support/contact-us")
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="contactUs" className="w-fit" />
+                <span>Contact us</span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+            <button
+              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/help-and-support")
+              }
+            >
+              <div className="flex items-center gap-2">
+                <Icon type="chatUs" className="w-fit" />
+                <span>Chat with us</span>
+              </div>
+              <Icon type="arrowRight" className="w-fit" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-2 justify-center mt-8 mb-12">
+        <CiLogout size={24} className="text-error" />
+        <NavLink
+          to="/login"
+          className="text-error font-semibold"
+        >
+          Logout
+        </NavLink>
+      </div>
     </div>
   );
 };
 
-export default VADashboard;
-
+export default SettingsMobile;

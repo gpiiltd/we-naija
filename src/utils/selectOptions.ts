@@ -1,0 +1,76 @@
+export const nationalityOptions = [
+  "American",
+  "Canadian",
+  "British",
+  "Australian",
+  "Indian",
+  "Chinese",
+  "Brazilian",
+  "French",
+  "German",
+  "Japanese",
+  "Mexican",
+  "Italian",
+  "Russian",
+  "Spanish",
+  "South African",
+  "Nigerian",
+  "Egyptian",
+  "Argentinian",
+  "Colombian",
+  "Chilean",
+  "Peruvian",
+  "Venezuelan",
+  "Dutch",
+  "Belgian",
+  "Swiss",
+  "Austrian",
+  "Swedish",
+  "Norwegian",
+  "Danish",
+  "Finnish",
+  "Polish",
+  "Czech",
+  "Hungarian",
+  "Greek",
+  "Turkish",
+  "Saudi Arabian",
+  "Emirati",
+  "Israeli",
+  "Thai",
+  "Vietnamese",
+  "Malaysian",
+  "Indonesian",
+  "Filipino",
+  "South Korean",
+  "Singaporean",
+  "New Zealander",
+  "Irish",
+  "Portuguese",
+  "Romanian",
+  "Bulgarian"
+];
+
+export const genderOptions = [
+  "Male",
+  "Female",
+  "Non-binary",
+  "Bigender",
+  "Prefer not to say"
+];
+
+export const nigerianAddresses = [
+  "123 Lagos Street, Lagos",
+  "456 Abuja Crescent, Abuja",
+  "789 Port Harcourt Road, Port Harcourt",
+  "101 Kano Avenue, Kano",
+  "202 Ibadan Boulevard, Ibadan",
+  "303 Enugu Lane, Enugu",
+  "404 Benin City Drive, Benin City",
+  "505 Jos Close, Jos",
+  "606 Kaduna Street, Kaduna",
+  "707 Warri Road, Warri"
+];
+
+
+

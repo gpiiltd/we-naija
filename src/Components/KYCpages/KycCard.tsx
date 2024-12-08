@@ -13,7 +13,7 @@ const KycCard = ({ title, description, icon, linkTo }: KycCardProps) => {
         <div className="flex items-start">
           <Icon type={icon} className="w-10 h-10 mr-4" />
           <div className="pl-4">
-            <h1 className="text-center md:mb-4 text-xl  md:text-3xl">
+            <h1 className=" md:mb-2 text-xl font-semibold  md:text-2xl">
               {title}
             </h1>
             <Typography
