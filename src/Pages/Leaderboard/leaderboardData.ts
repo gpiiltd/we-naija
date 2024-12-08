@@ -18,12 +18,12 @@ const generateLeaderboardData = (count: number) => {
       badge: getRandomBadge(),
     });
   }
-  data.sort((a, b) => b.points - a.points);
+  // data.sort((a, b) => b.points - a.points);
   return data;
 };
 
 export const leaderboardData = {
-  daily: generateLeaderboardData(60),
+  daily: generateLeaderboardData(70),
   weekly: generateLeaderboardData(35),
   monthly: generateLeaderboardData(42),
 };
