@@ -9,7 +9,7 @@ import { CiClock2 } from "react-icons/ci";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineEnvelope } from "react-icons/hi2";
 import ProgressBar from "../../../../../Components/Home/ProgressBar";
-import { Button, Card } from "@gpiiltd/gpi-ui-library";
+import { Card } from "@gpiiltd/gpi-ui-library";
 import { LuClock12 } from "react-icons/lu";
 
 import { IoIosArrowForward } from "react-icons/io";
@@ -106,8 +106,9 @@ const SurveyList = () => {
         </div>
         {/* cards */}
         <div className="grid gap-6 py-6  grid-cols-1 md:grid-cols-2">
-          <Card titleLeft={undefined} titleRight={undefined}>
-            <div className="py-8 px-6">
+          <Card titleLeft={undefined} titleRight={undefined} >
+            <div className="py-8 px-6" onClick={()=>navigate('/verified-agent-dashboard/reports/hospitals/give-report')}
+            >
               <div className="flex gap-2 items-center  justify-between cursor-pointer">
                 <div>
                   <Typography
