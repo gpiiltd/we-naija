@@ -17,14 +17,27 @@ import {
   thirdSetQuestions,
 } from "./questions";
 
+
+interface SelectedOptions {
+    firstQuestion: string;
+    secondQuestion: string;
+    thirdQuestion: string;
+  }
 const Survey = () => {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(1);
-  const [selectedFirstOption, setselectedFirstOption] = useState<string>("");
+//   const [selectedFirstOption, setselectedFirstOption] = useState<string>("");
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [uploadedFileSize, setUploadedFileSize] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedFirstAnswer, setSelectedFirstAnswer] = useState<string>("")
+  const [selectedSecondAnswer, setSelectedSecondAnswer] = useState<string>("")
+  const [selectedthirdAnswer, setSelectedThirdAnswer] = useState<string>("")
+
+
+ 
+
 
   const handleNext = () => {
     setCurrentQuestion((prev) => prev + 1);
@@ -35,8 +48,15 @@ const Survey = () => {
   };
 
   const handleFirstQuestion = (value: any) => {
-    setselectedFirstOption(value);
+    setSelectedFirstAnswer(value);
   };
+  const handleSecondQuestion = (value: any) => {
+    setSelectedSecondAnswer(value);
+  };
+  const handleThirdQuestion = (value: any) => {
+    setSelectedThirdAnswer(value);
+  };
+ 
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -127,9 +147,9 @@ const Survey = () => {
                   key={option.value}
                   label={option.label}
                   value={option.value}
-                  selectedValue={selectedFirstOption}
+                  selectedValue={selectedFirstAnswer}
                   onChange={handleFirstQuestion}
-                />
+                  />
               ))}
             </section>
           </form>
@@ -146,7 +166,7 @@ const Survey = () => {
               text="Proceed"
               text_color="#FFFFFF"
               bg_color="#007A61"
-              active={selectedFirstOption !== ""}
+              active={selectedFirstAnswer !== ""}
               onClick={handleNext}
             />
           </div>
@@ -251,7 +271,7 @@ const Survey = () => {
                       onClick={handlePrev}
                     />
                     <Button
-                      text="I understand"
+                      text="Proceed"
                       text_color="#FFFFFF"
                       bg_color="#007A61"
                       active={isValid && dirty}
@@ -294,9 +314,9 @@ const Survey = () => {
                   key={option.value}
                   label={option.label}
                   value={option.value}
-                  selectedValue={selectedFirstOption}
-                  onChange={handleFirstQuestion}
-                />
+                  selectedValue={selectedSecondAnswer}
+                  onChange={handleSecondQuestion}
+                  />
               ))}
             </section>
           </form>
@@ -313,7 +333,7 @@ const Survey = () => {
               text="Proceed"
               text_color="#FFFFFF"
               bg_color="#007A61"
-              active={selectedFirstOption !== ""}
+              active={selectedSecondAnswer !== ''}
               onClick={handleNext}
             />
           </div>
@@ -348,9 +368,9 @@ const Survey = () => {
                   key={option.value}
                   label={option.label}
                   value={option.value}
-                  selectedValue={selectedFirstOption}
-                  onChange={handleFirstQuestion}
-                />
+                  selectedValue={selectedSecondAnswer}
+                  onChange={handleThirdQuestion}
+                  />
               ))}
             </section>
           </form>
@@ -367,7 +387,7 @@ const Survey = () => {
               text="Proceed"
               text_color="#FFFFFF"
               bg_color="#007A61"
-              active={selectedFirstOption !== ""}
+              active={selectedthirdAnswer !== ""}
               onClick={handleNext}
             />
           </div>
