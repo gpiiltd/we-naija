@@ -54,8 +54,30 @@ import starIcon from "../Assets/svgImages/starIcon.svg";
 import no_data from "../Assets/svgImages/no_data.svg";
 import line from "../Assets/svgImages/Line.svg";
 import video from "../Assets/svgImages/video.svg";
-
-
+import plusCircle from "../Assets/svgImages/pluscircle.svg";
+import minusCircle from "../Assets/svgImages/minuscircle.svg";
+import locationWhiteSvg from "../Assets/svgImages/locationw.svg";
+import instagramo from "../Assets/svgImages/instagramo.svg";
+import twittero from "../Assets/svgImages/twittero.svg";
+import facebooko from "../Assets/svgImages/facebooko.svg";
+import phone from "../Assets/svgImages/phone.svg";
+import email from "../Assets/svgImages/email.svg";
+import location from "../Assets/svgImages/locationw.svg";
+import chatUs from "../Assets/svgImages/chatUs.svg";
+import basicInfo from "../Assets/svgImages/basicInfo.svg";
+import passwordReset from "../Assets/svgImages/passwordReset.svg";
+import faq from "../Assets/svgImages/faq.svg";
+import kycVerify from "../Assets/svgImages/kycVerify.svg";
+import joinCom from "../Assets/svgImages/joinCom.svg";
+import contactUs from "../Assets/svgImages/contactUs.svg";
+import contactInfo from "../Assets/svgImages/contactInfo.svg";
+import arrowRight from "../Assets/svgImages/arrowRight.svg";
+import medal1 from "../Assets/svgImages/medal1.svg";
+import medal2 from "../Assets/svgImages/medal2.svg";
+import medal3 from "../Assets/svgImages/medal3.svg";
+import lineGuardian from "../Assets/svgImages/lineGuardian.svg";
+import lineChampion from "../Assets/svgImages/lineChampion.svg";
+import lineLegend from "../Assets/svgImages/lineLegend.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -180,7 +202,7 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
             className={className}
           />
         );
-      
+
       case "timeClocKSvg":
         return (
           <img
@@ -299,6 +321,107 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
             return <img src={line} alt="starIcon icon" className={className} />;
             case "watch":
               return <img src={video} alt="starIcon icon" className={className} />;
+      case "noData":
+        return <img src={no_data} alt="starIcon icon" className={className} />;
+      case "plusCircle":
+        return (
+          <img src={plusCircle} alt="plusCircle icon" className={className} />
+        );
+      case "minusCircle":
+        return (
+          <img src={minusCircle} alt="minusCircle icon" className={className} />
+        );
+      case "locationWhiteSvg":
+        return (
+          <img
+            src={locationWhiteSvg}
+            alt="locationWhiteSvg icon"
+            className={className}
+          />
+        );
+      case "instagramo":
+        return (
+          <img src={instagramo} alt="instagramo icon" className={className} />
+        );
+      case "twittero":
+        return <img src={twittero} alt="twittero icon" className={className} />;
+      case "facebooko":
+        return (
+          <img src={facebooko} alt="facebooko icon" className={className} />
+        );
+      case "phone":
+        return <img src={phone} alt="phone icon" className={className} />;
+      case "email":
+        return <img src={email} alt="email icon" className={className} />;
+      case "location":
+        return <img src={location} alt="location icon" className={className} />;
+      case "chatUs":
+        return <img src={chatUs} alt="chatUs icon" className={className} />;
+      case "basicInfo":
+        return (
+          <img src={basicInfo} alt="basicInfo icon" className={className} />
+        );
+      case "passwordReset":
+        return (
+          <img
+            src={passwordReset}
+            alt="passwordReset icon"
+            className={className}
+          />
+        );
+      case "faq":
+        return <img src={faq} alt="faq icon" className={className} />;
+      case "kycVerify":
+        return (
+          <img src={kycVerify} alt="kycVerify icon" className={className} />
+        );
+      case "joinCom":
+        return <img src={joinCom} alt="joinCom icon" className={className} />;
+      case "contactUs":
+        return (
+          <img src={contactUs} alt="contactUs icon" className={className} />
+        );
+      case "contactInfo":
+        return (
+          <img src={contactInfo} alt="contactInfo icon" className={className} />
+        );
+      case "arrowRight":
+        return (
+          <img src={arrowRight} alt="arrowRight icon" className={className} />
+        );
+      case "medal1":
+        return (
+          <img src={medal1} alt="medal1 icon" className={className} />
+        );
+      case "medal2":
+        return (
+          <img src={medal2} alt="medal2 icon" className={className} />
+        );
+      case "medal3":
+        return (
+          <img src={medal3} alt="medal3 icon" className={className} />
+        );
+      case "lineGuardian":
+        return (
+          <img
+            src={lineGuardian}
+            alt="lineGuardian icon"
+            className={className}
+          />
+        );
+      case "lineChampion":
+        return (
+          <img
+            src={lineChampion}
+            alt="lineChampion icon"
+            className={className}
+          />
+        );
+      case "lineLegend":
+        return (
+          <img src={lineLegend} alt="lineLegend icon" className={className} />
+        );
+
       default:
         return null;
     }
