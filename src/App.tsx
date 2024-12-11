@@ -20,6 +20,8 @@ import PendingKyc from "./Pages/Home/PendingKyc";
 import HospitalDetail from "./Pages/Home/HospitalDetail";
 import Leaderboard from "./Pages/Leaderboard/Leaderboard";
 import Hospitals from "./Pages/VADashboard/Reports/HIS/Hospitals";
+import SurveyList from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyList";
+import GiveReport from "./Pages/VADashboard/Reports/HIS/GiveReport/GiveReport";
 import BasicInfo from "./Pages/Settings/BasicInfo";
 import SettingsHeader from "./Pages/Settings/SettingsHeader";
 import ContactInfo from "./Pages/Settings/ContactInfo";
@@ -75,6 +77,14 @@ function App() {
           <Route
             path="/verified-agent-dashboard/reports/hospitals"
             Component={Hospitals}
+          />
+             <Route
+            path="/verified-agent-dashboard/reports/hospitals/survey-list"
+            Component={SurveyList}
+          />
+           <Route
+            path="/verified-agent-dashboard/reports/hospitals/give-report"
+            Component={GiveReport}
           />
           <Route path="leaderboard" Component={Leaderboard} />
           <Route path="join-community" element={<div>Community</div>} />

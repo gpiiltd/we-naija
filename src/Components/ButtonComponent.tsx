@@ -18,20 +18,19 @@ const ButtonComponent: FC<ButtonProps> = ({
         cursor: active ? "pointer" : "default",
         fontSize: "1rem",
         borderRadius: "0.380rem",
-        fontWeight: "400",
         transition: "all 0.3s",
         backgroundColor: bg_color,
         color: text_color,
         opacity: active ? 1 : 0.3,
         borderColor: active ? border_color : "transparent",
         borderStyle: "solid",
-        padding: "0.3rem 0.6rem", 
-        borderWidth:1,
+        padding: "0.3rem 0.6rem",
+        borderWidth: 1,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-      
-
+        width: "fit-content", 
+        minWidth: "120px", 
       }}
     >
       <button
@@ -44,21 +43,39 @@ const ButtonComponent: FC<ButtonProps> = ({
           alignItems: "center",
           fontSize: "1rem",
           letterSpacing: "0.05em",
-          fontWeight: "300",
+          fontWeight: "500",
           backgroundColor: "transparent",
+          width: "100%",
+          position: "relative",
         }}
       >
-        {loading ? (
-          <ClipLoader color="#B8C1CB" size={24} />
-        ) : (
-          <>
-            {icon && <span>{icon}</span>}
-            <span>{text}</span>
-          </>
+        <span
+          style={{
+            visibility: loading ? "hidden" : "visible",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          {icon && <span>{icon}</span>}
+          <span>{text}</span>
+        </span>
+        {loading && (
+          <span
+            style={{
+              position: "absolute",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ClipLoader color="#B8C1CB" size={24} />
+          </span>
         )}
       </button>
     </div>
   );
 };
+
 
 export default ButtonComponent;

@@ -52,6 +52,8 @@ import lockIcon from "../Assets/svgImages/lockIcon.svg";
 import lineScout from "../Assets/svgImages/lineScout.svg";
 import starIcon from "../Assets/svgImages/starIcon.svg";
 import no_data from "../Assets/svgImages/no_data.svg";
+import line from "../Assets/svgImages/Line.svg";
+import video from "../Assets/svgImages/video.svg";
 import plusCircle from "../Assets/svgImages/pluscircle.svg";
 import minusCircle from "../Assets/svgImages/minuscircle.svg";
 import locationWhiteSvg from "../Assets/svgImages/locationw.svg";
@@ -313,6 +315,12 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         );
       case "starIcon":
         return <img src={starIcon} alt="starIcon icon" className={className} />;
+        case "noData":
+          return <img src={no_data} alt="starIcon icon" className={className} />;
+          case "line":
+            return <img src={line} alt="starIcon icon" className={className} />;
+            case "watch":
+              return <img src={video} alt="starIcon icon" className={className} />;
       case "noData":
         return <img src={no_data} alt="starIcon icon" className={className} />;
       case "plusCircle":
