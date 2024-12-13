@@ -64,7 +64,7 @@ const EnterOtp = () => {
             className=" mb-6 text-gray-500"
           >
             Enter the 6-digit code sent to{" "}
-            <span className="font-bold text-green-700">{phoneNumber}</span>
+            <span className="font-bold text-primary_green">{phoneNumber}</span>
           </Typography>
 
           <div className="flex mb-6 gap-1 pt-4 items-center justify-center">
