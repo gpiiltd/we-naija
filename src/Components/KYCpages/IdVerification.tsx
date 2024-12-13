@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
+import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../types";
 import { Errors } from "../types";
 import Icon from "../../Assets/SvgImagesAndIcons";
@@ -12,7 +12,9 @@ import CustomModal from "../Modal";
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
   const [idNumber, setIdNumber] = useState("");
+  // eslint-disable-next-line
   const [frontFile, setFrontFile] = useState<File | null>(null);
+  // eslint-disable-next-line
   const [backFile, setBackFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const navigate = useNavigate();
@@ -36,17 +38,6 @@ const IDVerification = () => {
     } else {
       setBackFile(file);
     }
-  };
-
-  const validateForm = () => {
-    const newErrors: any = {};
-    if (!idType) newErrors.idType = "Please select an ID card type.";
-    if (!idNumber) newErrors.idNumber = "ID number is required.";
-    if (!frontFile)
-      newErrors.frontFile = "Please upload the front of the ID card.";
-    if (!backFile)
-      newErrors.backFile = "Please upload the back of the ID card.";
-    return newErrors;
   };
 
   const handleSubmit = () => {
@@ -194,7 +185,7 @@ const IDVerification = () => {
         </div>
 
         <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>
-          <div className="flex flex-col gap-6 pb-6">
+          <div className="flex flex-col gap-6 pb-6 px-8">
             <div className="flex flex-col justify-center items-center pt-6">
               <Icon type="success" />
 

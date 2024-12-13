@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../Components/Header";
-import { FiSettings, FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
+import { FiSettings, FiBell, FiX, FiMenu } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
 import { useState } from "react";
 import Icon from "../../Assets/SvgImagesAndIcons";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
+import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
 import SkipButton from "./SkipButton";
 import { Formik, Form } from "formik";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import KycHeader from "./KycHeader";
 
 const KycPhonenumber = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber] = useState("");
   const navigate = useNavigate();
 
   const handleProceed = () => {
