@@ -11,7 +11,7 @@ const ContactInfo = () => {
   const [email, setEmail] = useState("jellygrande@gmail.com");
   const [phoneNumber, setPhoneNumber] = useState("081042001438");
   const [address, setAddress] = useState("123 Lagos Street, Lagos");
-  const [error, setError] = useState("");
+  const [error] = useState("");
   const navigate = useNavigate();
 
   const isFormComplete = address !== "" && email !== "" && phoneNumber !== "";
