@@ -71,6 +71,5 @@ export const hospitalData = [
         schedule: "Monday - Friday",
         hours: "9 AM - 6 PM",
       },
-    // Add more hospital data as needed
   ];
   

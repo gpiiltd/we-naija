@@ -267,7 +267,6 @@ const VADashboard = () => {
 
       <main className="flex-grow px-4 md:px-6  lg:px-16 pt-8">
         <Outlet />
-
       </main>
       <Footer bg_color="black" className="px-8 md:px-6  lg:px-16 py-20 md:py-0">
         <div className="border-b border-gray-800 md:mb-8 pb-4">

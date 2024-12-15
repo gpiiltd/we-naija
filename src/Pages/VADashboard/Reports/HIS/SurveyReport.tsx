@@ -17,16 +17,9 @@ import {
   thirdSetQuestions,
 } from "./questions";
 
-
-interface SelectedOptions {
-    firstQuestion: string;
-    secondQuestion: string;
-    thirdQuestion: string;
-  }
 const Survey = () => {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(1);
-//   const [selectedFirstOption, setselectedFirstOption] = useState<string>("");
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [uploadedFileSize, setUploadedFileSize] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
