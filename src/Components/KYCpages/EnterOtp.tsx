@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
+import { Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
@@ -12,7 +12,7 @@ const EnterOtp = () => {
   const navigate = useNavigate();
 
 
-  const phoneNumber = "08104201433"; // Example phone number
+  const phoneNumber = "08104201433";
 
   const handleChange = (index: number, value: string) => {
     if (/^[0-9]*$/.test(value)) {
@@ -45,7 +45,7 @@ const EnterOtp = () => {
       return;
     }
     const otpCode = otp.join("");
-    navigate('/kyc/*')
+    navigate('/kyc/personal-information')
     console.log("Entered OTP:", otpCode);
   };
 
@@ -64,7 +64,7 @@ const EnterOtp = () => {
             className=" mb-6 text-gray-500"
           >
             Enter the 6-digit code sent to{" "}
-            <span className="font-bold text-green-700">{phoneNumber}</span>
+            <span className="font-bold text-primary_green">{phoneNumber}</span>
           </Typography>
 
           <div className="flex mb-6 gap-1 pt-4 items-center justify-center">
@@ -95,15 +95,15 @@ const EnterOtp = () => {
             className="text-center mt-12 flex flex-col items-center justify-center"
           >
             Didn’t receive a code?{" "}
-            <a href="#" className=" mt-4" style={{ color: "#ED7D31" }}>
+            <p  className=" mt-4" style={{ color: "#ED7D31" }}>
               Re-send code via SMS
-            </a>
+            </p>
           </Typography>
 
           <button
             onClick={handleSubmit}
-            className={`w-full text-white bg-teal-600 py-4 rounded-xl mt-4 ${
-              isSubmitDisabled ? "opacity-30" : ""
+            className={`w-full text-white bg-primary_green py-4 rounded-xl mt-4 ${
+              isSubmitDisabled ? "opacity-50" : ""
             }`}
             disabled={isSubmitDisabled}
           >

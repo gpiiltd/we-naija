@@ -1,4 +1,3 @@
-import React from "react";
 import Typography from "../Components/Typography";
 import { TypographyVariant } from "../Components/types";
 import KycCard from "../Components/KYCpages/KycCard";
@@ -10,14 +9,14 @@ const Kyc = () => {
     <div className="">
       <KycHeader />
 
-      <div className="flex flex-col p-4 md:p-8 items-center justify-center min-h-screen mt-14">
+      <div className="flex flex-col p-4 md:p-8 items-center justify-center min-h-screen mt-14 lg:mt-2">
         <div className="text-center">
-          <Typography variant={TypographyVariant.TITLE}>
+          <Typography variant={TypographyVariant.SUBTITLE} className="font-bold text-[#17191C]">
             You’re almost there!
           </Typography>
           <Typography
             variant={TypographyVariant.NORMAL}
-            className="text-gray-500"
+            className="text-gray-500 mt-4"
           >
             Complete your KYC verification.
           </Typography>

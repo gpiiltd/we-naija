@@ -8,7 +8,7 @@ const HelpandSupport = () => {
 
   return (
     <div className="">
-      <div className="flex justify-center bg-[#F2F4F7] space-x-4 mb-6 w-full md:w-[50%] lg:w-[30%] mx-auto rounded-xl p-4">
+      <div className="flex justify-center bg-[#F2F4F7] space-x-4 mb-6 w-full md:w-[50%] lg:w-[40%] mx-auto rounded-xl p-4">
         <button
           className={`py-2 px-4 rounded-lg ${
             activeTab === "faq" ? "bg-white text-gray-800" : "text-gray-600"

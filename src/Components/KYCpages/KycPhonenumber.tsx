@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Header, Typography } from "@gpiiltd/gpi-ui-library";
+import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
 import SkipButton from "./SkipButton";
 import { Formik, Form } from "formik";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import KycHeader from "./KycHeader";
 
 const KycPhonenumber = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber] = useState("");
   const navigate = useNavigate();
 
   const handleProceed = () => {
@@ -60,7 +60,7 @@ const KycPhonenumber = () => {
             {({ isValid, dirty }) => (
               <Form>
                 <div className="flex items-start mb-8">
-                  <div className=" flex items-center justify-center w-[40%] h-14    border border-primary_color rounded-l-xl border-r-0">
+                  <div className=" flex items-center justify-center w-[40%] h-[58px]  -mr-1  border border-primary_color rounded-l-xl border-r-0">
                     <Icon type="nigerianflag" className="w-6 h-6 mr-4" />
 
                     <Typography

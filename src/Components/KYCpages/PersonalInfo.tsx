@@ -42,14 +42,8 @@ const PersonalInfo = () => {
       gender,
       dateOfBirth,
     });
-    navigate("/kyc");
+    navigate("/kyc/id-verification");
   };
-
-  // const handleButtonClick = () => {
-  //   if (!isFormComplete) {
-  //     setError(".");
-  //   }
-  // };
 
   return (
     <>
@@ -108,13 +102,11 @@ const PersonalInfo = () => {
             />
             <button
               type="submit"
-              className={`mt-4 w-full py-4 rounded-md ${
+              className={`mt-4 w-full py-4 rounded-md bg-primary_green  text-white ${
                 isFormComplete
-                  ? "bg-[#007A61] hover:bg-[#015443] text-white"
-                  : "bg-[#007A61] text-white cursor-not-allowed opacity-50"
+                  ? "hover:bg-[#015443]"
+                  : "cursor-not-allowed opacity-50"
               }`}
-              // onClick={handleButtonClick} //
-              // disabled={!isFormComplete} // Disable button if form is not complete
             >
               Poceed
             </button>

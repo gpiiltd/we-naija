@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import Typography from "../../Components/Typography";
 
@@ -13,7 +12,7 @@ const KycCard = ({ title, description, icon, linkTo }: KycCardProps) => {
         <div className="flex items-start">
           <Icon type={icon} className="w-10 h-10 mr-4" />
           <div className="pl-4">
-            <h1 className=" md:mb-2 text-xl font-semibold  md:text-2xl">
+            <h1 className=" md:mb-2 text-lg font-semibold  md:text-xl">
               {title}
             </h1>
             <Typography

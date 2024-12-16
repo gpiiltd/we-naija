@@ -14,7 +14,7 @@ const BasicInfo = () => {
   const [userName, setUsername] = useState("G- Jelly");
   const [nationality, setNationality] = useState("Nigerian");
   const [gender, setGender] = useState("Female");
-  const [error, setError] = useState("");
+  const [error,] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("26-06-1991");
   const navigate = useNavigate();
 

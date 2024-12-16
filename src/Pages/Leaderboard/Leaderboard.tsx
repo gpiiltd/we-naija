@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { leaderboardData } from "./leaderboardData";
 import backgroundImage from "../../Assets/svgImages/background.svg";
 import backgroundImage2 from "../../Assets/svgImages/background2.svg";

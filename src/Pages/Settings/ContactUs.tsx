@@ -1,5 +1,4 @@
-import React from "react";
-import backgroundImage from "../../Assets/svgImages/background.svg"; // Import the SVG file
+import backgroundImage from "../../Assets/svgImages/background.svg";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useNavigate } from "react-router-dom";
 
@@ -57,13 +56,13 @@ const ContactUs = () => {
               <span className="ml-8 text-lg">33, New York City, United States.</span>
             </div>
             <div className="flex space-x-8">
-              <a href="#" className="text-white hover:text-gray-300">
+              <a href="https://www.facebook.com/profile.php?id=100093181866208" className="text-white hover:text-gray-300">
                 <Icon type="facebooko" />
               </a>
-              <a href="#" className="text-white hover:text-gray-300">
+              <a href="https://x.com/wenaija" className="text-white hover:text-gray-300">
                 <Icon type="twittero" />
               </a>
-              <a href="#" className="text-white hover:text-gray-300">
+              <a href="https://www.instagram.com/wenaija" className="text-white hover:text-gray-300">
                 <Icon type="instagramo" />
               </a>
             </div>
