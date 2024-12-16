@@ -73,4 +73,38 @@ export const nigerianAddresses = [
 ];
 
 
-
+export const notifications = [
+  {
+    id: 1,
+    user: "Wenaija",
+    handle: "@support",
+    message: "Your report for Quotient Specialist Hospital has been submitted",
+    time: "1 hr ago",
+    read: false,
+  },
+  {
+    id: 2,
+    user: "Wenaija",
+    handle: "@support",
+    message: "Your KYC status is verified",
+    time: "2 hr ago",
+    read: true,
+  },
+  {
+    id: 3,
+    user: "Wenaija",
+    handle: "@support",
+    message: "Kindly upload your ID card to complete your KYC verification",
+    time: "2 hr ago",
+    read: false,
+  },
+  {
+    id: 4,
+    user: "Wenaija",
+    handle: "@support",
+    message:
+      "Thank you for signing up successfully. Kindly begin your KYC verification",
+    time: "4 hr ago",
+    read: true,
+  },
+];
