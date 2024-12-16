@@ -18,7 +18,7 @@ const CommunityTasks = () => {
         </div>
 
         <Typography variant={TypographyVariant.SUBTITLE}>
-        Community
+        Community Task
         </Typography>
       </div>
       <Breadcrumb />

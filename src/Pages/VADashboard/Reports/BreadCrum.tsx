@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { IoChevronForward } from "react-icons/io5";
-
-
-
 const Breadcrumb = () => {
   const location = useLocation();
   const [crumb, setCrumb] = useState<Record<string, string | boolean>[]>([]);
-
 
   useEffect(() => {
     const breadCrumb = localStorage.getItem("breadcrumb");
