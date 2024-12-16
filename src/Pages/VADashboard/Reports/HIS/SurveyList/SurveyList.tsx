@@ -56,7 +56,7 @@ const SurveyList = () => {
               variant={TypographyVariant.SUBTITLE}
               className="font-bold"
             >
-              Quotient Specialist Hospital (QSH){" "}
+              Quotient Specialist Hospital (QSH)
             </Typography>
           </div>
         </section>
@@ -68,7 +68,7 @@ const SurveyList = () => {
                 variant={TypographyVariant.SMALL}
                 className="text-light_gray"
               >
-                No 5, Lekki view, Lagos Island, Lagos state. Nigeria{" "}
+                No 5, Lekki view, Lagos Island, Lagos state. Nigeria
               </Typography>
             </div>
 
@@ -90,7 +90,7 @@ const SurveyList = () => {
                 variant={TypographyVariant.SMALL}
                 className="text-light_gray"
               >
-                08105201636{" "}
+                08105201636
               </Typography>
             </div>
             <div className="flex gap-2">
@@ -113,7 +113,7 @@ const SurveyList = () => {
               variant={TypographyVariant.NORMAL}
               className="font-bold"
             >
-              Survey list (4){" "}
+              Survey list (4)
             </Typography>
             <Typography
               variant={TypographyVariant.SMALL}

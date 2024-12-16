@@ -10,6 +10,7 @@ import Icon from "../../../../Assets/SvgImagesAndIcons";
 import { hospitalData } from "./hospitaldata";
 import CustomModal from "../../../../Components/Modal";
 import { AiOutlineDown } from "react-icons/ai";
+import Breadcrumb from "../BreadCrum";
 
 const Hospitals = () => {
   const navigate = useNavigate();
@@ -99,7 +100,10 @@ const Hospitals = () => {
           >
             Health institutes survey
           </Typography>
+
         </div>
+        <Breadcrumb />
+
         <div className="flex flex-col justify-between w-full  md:flex-row">
           <Typography
             variant={TypographyVariant.SMALL}

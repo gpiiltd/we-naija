@@ -12,32 +12,16 @@ import { handleBreadCrumbNavigate } from "../../../utils/handleBreadCrumb";
 const Reports = () => {
   const navigate = useNavigate();
 
-  // const handleCommunityTask = () => {
-  //   const breadCrumb = localStorage.getItem("breadcrumb");
-  //   const addBreadCrumb = JSON.parse(breadCrumb!);
-  //   const communityTask = {
-  //     path: "/verified-agent-dashboard/reports/community-tasks",
-  //     label: "Community task",
-  //     active: true,
-  //   }
-  //   addBreadCrumb[addBreadCrumb.length - 1].active = false
-  //   addBreadCrumb.push(communityTask);
-  //   localStorage.setItem("breadcrumb", JSON.stringify(addBreadCrumb));
-  //   navigate("/verified-agent-dashboard/reports/community-tasks");
-  // };
 
   useEffect(() => {
-    const breadCrumb = localStorage.getItem("breadcrumb");
-    if (!breadCrumb) {
-      let breadCrumb = [
-        {
-          path: "/verified-agent-dashboard/reports",
-          label: "Report",
-          active: true,
-        },
-      ];
-      localStorage.setItem("breadcrumb", JSON.stringify(breadCrumb));
-    }
+    const originalBreadCrumb = [
+      {
+        path: "/verified-agent-dashboard/reports",
+        label: "Report",
+        active: true,
+      },
+    ];
+    localStorage.setItem("breadcrumb", JSON.stringify(originalBreadCrumb));
   }, []);
 
   return (
@@ -56,7 +40,6 @@ const Reports = () => {
       </Typography>
 
       <div className="grid gap-8  md:grid-cols-2">
-        {/* First Row - Two Columns on Large and Medium Screens */}
         <div className="border h-fit rounded-xl shadow relative flex flex-col justify-start text-white tracking-wide">
           <img src={red_card} alt="heart icon" />
           <div className="py-6 mb-12 md:py-2 lg:py-2 absolute lg:pt-4">
@@ -120,8 +103,6 @@ const Reports = () => {
             </div>
           </div>
         </div>
-
-        {/* Second Row - Full Width on All Screens */}
         <div className="h-fit rounded-xl items-center flex  flex-col text-black tracking-wide self-center pt-8 md:pt-24 md:col-span-2">
           <div className="flex flex-col ">
             <img src={woman} alt="heart icon" className="relative" />
