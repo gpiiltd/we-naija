@@ -323,9 +323,7 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
             return <img src={line} alt="starIcon icon" className={className} />;
             case "watch":
               return <img src={video} alt="starIcon icon" className={className} />;
-      case "noData":
-        return <img src={no_data} alt="starIcon icon" className={className} />;
-      case "plusCircle":
+     case "plusCircle":
         return (
           <img src={plusCircle} alt="plusCircle icon" className={className} />
         );
