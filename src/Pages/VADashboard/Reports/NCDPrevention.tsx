@@ -7,6 +7,8 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../../Assets/SvgImagesAndIcons";
 import ProgressBar from "../../../Components/Home/ProgressBar";
+import { handleBreadCrumbNavigate } from "../../../utils/handleBreadCrumb";
+import Breadcrumb from "./BreadCrum";
 
 const NCDPrevention = () => {
   const navigate = useNavigate();
@@ -21,6 +23,8 @@ const NCDPrevention = () => {
           NCD prevention
         </Typography>
       </div>
+      <Breadcrumb />
+
       <Typography
         variant={TypographyVariant.SMALL}
         className="pt-1 text-light_gray max-w-lg"
@@ -47,8 +51,10 @@ const NCDPrevention = () => {
             <div
               className="flex gap-2 items-center  justify-between cursor-pointer"
               onClick={() =>
-                navigate(
-                  "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+                handleBreadCrumbNavigate(
+                  "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion",
+                  "Mental Health Promotion",
+                  navigate
                 )
               }
             >
@@ -98,7 +104,7 @@ const NCDPrevention = () => {
               </div>
             </div>
             <ProgressBar percentage={50} />
-            </div>
+          </div>
         </Card>
         <Card titleLeft={undefined} titleRight={undefined}>
           <div className="py-8 px-6">
@@ -108,7 +114,8 @@ const NCDPrevention = () => {
                   variant={TypographyVariant.NORMAL}
                   className="font-bold tracking-wide"
                 >
-Substance abuse prevention                </Typography>
+                  Substance abuse prevention{" "}
+                </Typography>
                 <Typography
                   variant={TypographyVariant.SMALL}
                   className="pt-2 text-light_gray"
@@ -158,7 +165,8 @@ Substance abuse prevention                </Typography>
                   variant={TypographyVariant.NORMAL}
                   className="font-bold tracking-wide"
                 >
-Privacy and confidentiality               </Typography>
+                  Privacy and confidentiality{" "}
+                </Typography>
                 <Typography
                   variant={TypographyVariant.SMALL}
                   className="pt-1 text-light_gray max-w-lg"
@@ -311,7 +319,8 @@ Privacy and confidentiality               </Typography>
                   variant={TypographyVariant.NORMAL}
                   className="font-bold tracking-wide"
                 >
-Hepatitis, sentization and prevention                </Typography>
+                  Hepatitis, sentization and prevention{" "}
+                </Typography>
                 <Typography
                   variant={TypographyVariant.SMALL}
                   className="pt-2 text-light_gray"

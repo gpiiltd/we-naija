@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Typography from "../../../Components/Typography";
 import { TypographyVariant } from "../../../Components/types";
 import Icon from "../../../Assets/SvgImagesAndIcons";
@@ -12,14 +12,12 @@ import { Button } from "@gpiiltd/gpi-ui-library";
 import CustomModal from "../../../Components/Modal";
 
 const validationSchema = Yup.object({
-  textArea: Yup.string()
-    .max(20, "You are allowed a maximum of 20 characters")
+  textArea: Yup.string().max(20, "You are allowed a maximum of 20 characters"),
 });
 const ReportForm = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading,setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const closeModal = () => setIsModalOpen(false);
 
@@ -27,10 +25,12 @@ const ReportForm = () => {
     setLoading(!loading);
     setTimeout(() => {
       setLoading(false);
-      setIsModalOpen(false)
-      navigate('/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion')
-    },3000)
-  }
+      setIsModalOpen(false);
+      navigate(
+        "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+      );
+    }, 3000);
+  };
 
   return (
     <div className="flex mt-8  flex-col md:px-32 ">
@@ -67,9 +67,14 @@ const ReportForm = () => {
         </div>
 
         {/* main component */}
-        <Typography variant={TypographyVariant.NORMAL} className="font-bold pt-5">
+        <Typography
+          variant={TypographyVariant.NORMAL}
+          className="font-bold pt-5"
+        >
           What do you understand by mental health?
         </Typography>
+        <Icon type="response" className="w-full" />
+
         <div className="flex gap-1 pt-4">
           <LuBookMinus color="#007A61" />
           <Typography
@@ -93,59 +98,54 @@ const ReportForm = () => {
                 name="textArea"
                 placeHolder="Write here..."
               />
- <Button
+              <Button
                 text="Submit"
                 active={isValid && dirty}
                 bg_color="#007A61"
                 text_color="white"
                 onClick={() => setIsModalOpen(true)}
               />
-             
             </Form>
           )}
         </Formik>
-        <CustomModal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-        >
+        <CustomModal isOpen={isModalOpen} onClose={closeModal}>
           <div className="  py-2 flex flex-col px-3 gap-3">
-            <section className='flex flex-col justify-center items-center gap-4 pb-6'>
-            <Icon type='warning'/>
-            <Typography variant={TypographyVariant.NORMAL} className="text-center">
-              Are you sure you want to submit?
-            </Typography>
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="text-light_gray"
-            >
-              This action cannot be reversed
-            </Typography>
+            <section className="flex flex-col justify-center items-center gap-4 pb-6">
+              <Icon type="warning" />
+              <Typography
+                variant={TypographyVariant.NORMAL}
+                className="text-center"
+              >
+                Are you sure you want to submit?
+              </Typography>
+              <Typography
+                variant={TypographyVariant.SMALL}
+                className="text-light_gray"
+              >
+                This action cannot be reversed
+              </Typography>
             </section>
-         
-            <div className='flex flex-col gap-4 justify-center '>
-          
-            <div className='flex flex-col gap-3 '>
-            <Button
-                text="Yes, I’m sure"
-                active={true}
-                bg_color="#007A61"
-                text_color="white"
-                loading={loading}
-                onClick={giveReport}
-              />
+
+            <div className="flex flex-col gap-4 justify-center ">
+              <div className="flex flex-col gap-3 ">
                 <Button
-                text="Go back"
-                active={true}
-                bg_color="transparent"
-                border_color="#D0D5DD"
-                text_color="#344054"
-                onClick={() => setIsModalOpen(false)}
-              />
-            
+                  text="Yes, I’m sure"
+                  active={true}
+                  bg_color="#007A61"
+                  text_color="white"
+                  loading={loading}
+                  onClick={giveReport}
+                />
+                <Button
+                  text="Go back"
+                  active={true}
+                  bg_color="transparent"
+                  border_color="#D0D5DD"
+                  text_color="#344054"
+                  onClick={() => setIsModalOpen(false)}
+                />
+              </div>
             </div>
-            </div>
-          
-           
           </div>
         </CustomModal>
       </div>

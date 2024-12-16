@@ -5,6 +5,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import Typography from "../../../Components/Typography";
 import { TypographyVariant } from "../../../Components/types";
 import Icon from "../../../Assets/SvgImagesAndIcons";
+import Breadcrumb from "./BreadCrum";
 
 
 const questions = [
@@ -27,7 +28,10 @@ const MentalHeaalth = () => {
   <Typography variant={TypographyVariant.SUBTITLE}>
     Mental health promotion
   </Typography>
+
 </div>
+<Breadcrumb />
+
 <Typography
   variant={TypographyVariant.SMALL}
   className="pt-1 text-light_gray max-w-lg" // Adjust this max-width to control line breaks

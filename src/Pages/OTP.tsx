@@ -63,7 +63,7 @@ const OTP = () => {
             <div className="">
               <Typography
                 variant={TypographyVariant.NORMAL}
-                className="text-light_gray  text-center  "
+                className="text-light_gray  text-center"
               >
                 Enter OTP send to your email
               </Typography>
@@ -95,7 +95,7 @@ const OTP = () => {
             </Typography>
             <Typography
               variant={TypographyVariant.NORMAL}
-              className="text-black  text-center  "
+              className="text-black  text-center"
             >
               Re-send code via SMS (0:30){" "}
             </Typography>

@@ -48,7 +48,6 @@ function App() {
         <Route path="/kyc/enter-otp" Component={EnterOtp} />
         <Route path="/kyc/personal-information" Component={PersonalInfo} />
         <Route path="/kyc/id-verification" Component={IdVerification} />
-
         <Route path="/verified-agent-dashboard" element={<VADashboard />}>
           <Route index element={<Navigate to="home" />} />
           <Route path="home" Component={PendingKyc} />
@@ -56,15 +55,13 @@ function App() {
             path="/verified-agent-dashboard/home/hospital-details"
             Component={HospitalDetail}
           />
-
           <Route path="reports" Component={Reports} />
-
           <Route
             path="/verified-agent-dashboard/reports/community-tasks"
             Component={CommunityTasks}
           />
           <Route
-            path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention"
+            path="/verified-agent-dashboard/reports/NCD-prevention"
             Component={NCDPrevention}
           />
           <Route
