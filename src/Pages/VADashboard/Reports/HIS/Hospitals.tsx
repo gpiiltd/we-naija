@@ -33,6 +33,7 @@ const Hospitals = () => {
   const [buttonText, setButtonText] = useState("Location");
   const [loading, setLoading] = useState(false);
 
+
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
     console.log("*****", searchQuery);

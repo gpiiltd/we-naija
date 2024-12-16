@@ -78,6 +78,8 @@ import medal3 from "../Assets/svgImages/medal3.svg";
 import lineGuardian from "../Assets/svgImages/lineGuardian.svg";
 import lineChampion from "../Assets/svgImages/lineChampion.svg";
 import lineLegend from "../Assets/svgImages/lineLegend.svg";
+import response from "../Assets/svgImages/response.svg";
+
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -421,6 +423,10 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return (
           <img src={lineLegend} alt="lineLegend icon" className={className} />
         );
+        case "response":
+          return (
+            <img src={response} alt="lineLegend icon" className={className} />
+          );
 
       default:
         return null;
