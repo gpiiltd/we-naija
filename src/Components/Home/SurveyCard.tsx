@@ -8,15 +8,17 @@ interface SurveysCardProps {
   statusMessage: string;
   responseTimeMessage: string;
   progressPercentage: number;
+  onClick:() => void;
 }
 
 const SurveysCard: React.FC<SurveysCardProps> = ({
   statusMessage,
   responseTimeMessage,
   progressPercentage,
+  onClick
 }) => {
   return (
-    <div className="">
+    <div className="" onClick={onClick}>
         <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-4'>
 {[1, 2, 3, 4].map((map, i) => (
     // <div className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4">

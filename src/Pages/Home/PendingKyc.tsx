@@ -7,9 +7,17 @@ import backgroundImage from '../../Assets/svgImages/reportCardBg.svg';
 import backgroundImageGreen from '../../Assets/svgImages/background_bg_green.svg';
 import bigGirlSvg from "../../Assets/svgImages/bgGirl.svg";
 import KycNumberOfReportsCard from '../../Components/Home/KycNumberOfReportsCard'
+import { useNavigate } from 'react-router-dom'
 
 const PendingKyc = () => {
+  const navigate = useNavigate();
+
+  const handleOnTap = () => {
+    navigate("/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form");
+}
+
   return (
+    
     <div className='h-full pb-[1.5px]'>
         <p className="font-normal text-[#5E5959] text-lg">
           Hello, <span className="font-bold text-black">Blessing</span> 👋
@@ -35,10 +43,13 @@ const PendingKyc = () => {
           </p>
           <p className="font-light text-[#5E5959] text-sm">
           Below are list of recommend institute to visit and give a report based on your residential address.
+          <button onClick={handleOnTap}><p className='font-bold text-sm text-[#007A61] pr-1'>Give report</p></button>
           </p>
           <InstitutionsCard 
             statusMessage="No 5, Lekki view, Lagos Island, Lagos state, Nigeria."
             responseTimeMessage="You would receive a response in less than 12 hours"
+            onClick={() => navigate("/verified-agent-dashboard/home/hospital-details")}
+
           />
           <div className="w-full flex justify-center mt-16 mb-[65px] lg:mb-20 ">
           <div className="relative h-[250px] w-full md:w-[50vw]">

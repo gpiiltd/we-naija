@@ -31,6 +31,9 @@ import kyc from "../Assets/svgImages/kyc.svg";
 import task from "../Assets/svgImages/tasks.svg";
 import warning_icon from "../Assets/svgImages/warning.svg";
 import favoriteNote from "../Assets/svgImages/note-favorite.svg";
+import infoIcon from "../Assets/svgImages/info-icon.svg";
+import toastCheck from "../Assets/svgImages/toast-check.svg";
+import cancel from "../Assets/svgImages/cancel.svg";
 
 
 
@@ -108,6 +111,12 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
                   return <img src={warning_icon} alt="start point icon" className={className} />;
                   case "favoriteNote":
                     return <img src={favoriteNote} alt="start point icon" className={className} />;
+                    case "infoIcon":
+                      return <img src={infoIcon} alt="start point icon" className={className} />;
+                      case "toastCheck":
+                        return <img src={toastCheck} alt="start point icon" className={className} />;
+                        case "cancel":
+                          return <img src={cancel} alt="start point icon" className={className} />;
 
       default:
         return null;

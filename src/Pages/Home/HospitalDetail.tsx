@@ -1,11 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Icon from '../../Assets/SvgImagesAndIcons'
 import SurveysCard from '../../Components/Home/SurveyCard'
+import Dialog from '../../Components/Home/Dialog'
+import { NavLink } from 'react-router-dom';
+import { Typography } from '@gpiiltd/gpi-ui-library';
+import { TypographyVariant } from '../../Components/types';
+import Footer from '../../Components/Footer';
+
 
 function HospitalDetail() {
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openDialog = () => setIsDialogOpen(true);
+  const closeDialog = () => setIsDialogOpen(false);
   return (
-    <div className="w-full h-[160vh] overscroll-contain">
-        
+    <>
+      <div>
+      <Dialog 
+      isOpen={isDialogOpen} 
+      onClose={closeDialog} 
+      title="My Dialog" 
+      className='absolute w-full bg-[#34405499]' 
+      feedBackClassName='w-[373px] lg:w-[573px] flex items-center justify-center'>
+        <p>This is a reusable dialog component!</p>
+      </Dialog>
+      <div className="w-full h-full overscroll-contain">
         <div className="w-full  items-start">
          <div className="flex ">
            <Icon type="arrowBackSvg" className="mr-8" />
@@ -46,22 +66,30 @@ function HospitalDetail() {
           
         </div>
 
-        <SurveysCard responseTimeMessage="Acceptability of services" statusMessage="Lorem ipsum dolor sit amet consectetur. Orci enim pulvinar pulvinar adipiscing." progressPercentage={45} />
+        <SurveysCard 
+        responseTimeMessage="Acceptability of services" 
+        statusMessage="Lorem ipsum dolor sit amet consectetur. Orci enim pulvinar pulvinar adipiscing." 
+        progressPercentage={45} 
+        onClick={openDialog}
+        />
 
         {/* This is the last content */}
-        <div className="w-full bg-slate-200 mt-16 flex px-40 py-14 rounded-lg font-bold text-lg">
-          <div className="w-full flex justify-between items-center">
-            <p>Have generic feedback or reports on this facility?</p>
+        <div className="w-full bg-slate-200 mt-16 flex px-5 lg:px-40 py-14 rounded-lg font-bold text-lg">
+          <div className="w-full  flex flex-col justify-between items-center lg:flex-row">
+            <p className='pb-5'>Have generic feedback or reports on this facility?</p>
             <div className="flex ">
-            {/* <button className="border-[1.5px] border-[#5E5959] rounded-lg mt-6 text-[#5E5959] text-sm font-bold items-center px-[5rem] py-[1rem] lg:px-[7rem] sm:px-[5rem] md:px-[5rem]">Show more</button> */}
-              
-              <button className="border-[1.5px] px-14 py-3 border-[#5E5959] rounded-lg text-black text-sm font-bold mr-5">Upload images</button>
-              <button className="bg-[#007A61] px-14 py-3 rounded-lg  text-white text-sm font-normal">Write a report</button>
+              <button className="border-[1.5px] px-10 py-3 border-[#5E5959] rounded-lg text-black text-sm font-bold mr-5">Upload images</button>
+              <button className="bg-[#007A61] px-10 py-3 rounded-lg  text-white text-sm font-normal">Write a report</button>
             </div>
           </div>
 
         </div>
+        
+       
+        
         </div>
+      </div>
+    </>
 
   )
 }

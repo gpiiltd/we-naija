@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
 import PendingKyc from "../Home/PendingKyc";
+import Toast from "../../Components/Home/Toast";
 
 const VADashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -273,7 +274,8 @@ const VADashboard = () => {
 
       {/* Page content */}
       {/* <main className="flex-grow bg-blue-500 sm:bg-green-500 md:bg-red-500 lg:bg-yellow-500 xl:bg-purple-500">  */}
-      <main className="flex-grow mx-5 my-8 sm:mx-9 md:mx-12 lg:mx-12"> 
+      <main className="w-full flex-grow mx-5 my-8 sm:mx-9 md:mx-12 lg:mx-12"> 
+      <Toast isVisible={true} /> {/* This will be shown true || false based on certain logic */}
       
       <PendingKyc />
       {/* <HospitalDetail /> */}

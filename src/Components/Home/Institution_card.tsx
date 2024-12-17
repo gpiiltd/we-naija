@@ -1,19 +1,30 @@
 import React from 'react';
 import Icon from "../../Assets/SvgImagesAndIcons";
+import { useNavigate } from 'react-router-dom';
 
 
 // Define the props interface
 interface InstitutionsCardProps {
   statusMessage: string;
   responseTimeMessage: string;
+  onClick: () => void;
 }
 
 const InstitutionsCard: React.FC<InstitutionsCardProps> = ({
   statusMessage,
   responseTimeMessage,
+  onClick,
 }) => {
+  const navigate = useNavigate();
+   
+  const handleOnTap = () => {
+      navigate("profile");
+  }
+
+
+
   return (
-    <div className="div">
+    <div className="div" onClick={onClick}>
         <div className='grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4'>
 {[1, 2, 3, 4, 5, 6].map((map, i) => (
     <div className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4">
@@ -37,11 +48,12 @@ const InstitutionsCard: React.FC<InstitutionsCardProps> = ({
     <div className='h-[1.5px] w-full bg-[#E4E7EC]'></div>
     <div className="flex items-center justify-end pr-4 pt-2 mb-1">
       
-      <p className='font-bold text-sm text-[#007A61] pr-1'>Give report</p>
+     <button onClick={handleOnTap}><p className='font-bold text-sm text-[#007A61] pr-1'>Give report</p></button>
       <Icon type="arrowUpSvg" className="pr-2" />
       </div>
     </div>
-))}
+),
+)}
     </div>
     <div className='flex justify-center w-full'>
     <button className="border-[1.5px] border-[#5E5959] rounded-lg mt-6 text-[#5E5959] text-sm font-bold items-center px-[5rem] py-[1rem] lg:px-[7rem] sm:px-[5rem] md:px-[5rem]">Show more</button>
