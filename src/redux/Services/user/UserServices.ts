@@ -10,29 +10,23 @@ interface SignupData {
 }
 
 export const triggerUserSignup = createAsyncThunk<
-  SignupResponse,        
-  SignupData,            
-  { rejectValue: string } 
->(
-  'user/signup', 
-  async (signupData, thunkAPI) => {
-    try {
-      const response = await axios.post<SignupResponse>(
-        apiUrl.signUp,
-        signupData 
+  SignupResponse,
+  SignupData,
+  { rejectValue: string }
+>("user/signup", async (signupData, thunkAPI) => {
+  try {
+    const response = await axios.post<SignupResponse>(
+      apiUrl.signUp,
+      signupData
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to create user"
       );
-      console.log('response', response.data)
-      return response.data;
-    } catch (error: any) {
-        if(error) {
-            console.log('error', error)
-            return thunkAPI.rejectWithValue(
-                error.response?.data?.message || "Failed to create user"
-              );
-        }else {
-            throw error
-        }
-    
+    } else {
+      throw error;
     }
   }
-);
+});

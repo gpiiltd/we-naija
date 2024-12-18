@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //input component will be replaced with UI library input component aster testing
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthPages from "../Components/AuthPages";
 import Typography from "../Components/Typography";
 import { TypographyVariant } from "../Components/types";
@@ -16,15 +17,15 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
+import { resetState } from "../redux/Slices/user/userSlice";
 
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, userData} = useSelector((state: RootState) => state.user);
+  const { error, userData,message,loading} = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     fullName: "",
@@ -60,34 +61,20 @@ const SignUp = () => {
       full_name: values.fullName.trim(),
       password: values.password.trim(),
     };
-
-    console.log("Signup payload:", payload);
-    setLoading(true);
-
     dispatch(triggerUserSignup(payload))
-      .then((response) => {
-        if (response.payload && userData) {
-          console.log("Signup successful:", userData);
-          toast("Signup successful");
-          setLoading(false);
-          navigate("/login");
-        } else if (error) {
-          console.error("Signup failed:", error);
-          toast(`Signup failed: ${error}`);
-          setLoading(false);
-        } else {
-          console.error("Unexpected error");
-          toast("An unknown error occurred. Please try again.");
-
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.error("Error:", error);
-        toast("User already exists");
-      });
   };
+
+  useEffect(()=>{
+    if(error) {
+      toast.error(error);
+    }else if(!error && Object.keys(userData).length > 0) {
+      toast("Signup successful")
+      setTimeout(()=> {
+        navigate("/login");
+      },2000)
+    }
+    dispatch(resetState())
+  },[error,userData,message,loading])
 
   return (
     <AuthPages>

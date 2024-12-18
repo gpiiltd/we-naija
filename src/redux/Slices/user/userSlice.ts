@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SignupResponse } from "../../Services/user/types";
 import { triggerUserSignup } from "../../Services/user/UserServices";
 
-
 interface UserState {
-  userData: Record<string, any>; 
+  userData: Record<string, any>;
   loading: boolean;
-  error: string | null; 
+  error: string | null;
   message: string | null;
+
 }
 
 const initialState: UserState = {
@@ -24,6 +24,12 @@ const userSlice = createSlice({
     clearData(state) {
       state.userData = {};
     },
+    resetState: state => {
+      state.error = initialState.error;
+      state.message = initialState.message;
+      state.loading=initialState.loading;
+      state.userData = initialState.userData;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -31,29 +37,24 @@ const userSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(triggerUserSignup.fulfilled, (state, action: PayloadAction<SignupResponse>) => {
-        state.loading = false;
-        state.userData = action.payload.data;
-        state.message = action.payload.data.message;
-        console.log('message',action.payload.data.message)
-        console.log('user data', state.userData);
-      })
+      .addCase(
+        triggerUserSignup.fulfilled,
+        (state, action: PayloadAction<SignupResponse>) => {
+          state.loading = false;
+          state.userData = action.payload.data;
+          state.message = action.payload.data.message;
+        }
+      )
       .addCase(
         triggerUserSignup.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          if (action.payload) {
-            state.error = action.payload.data.message;
-            state.message = action.payload.data.message
-            console.log('errrrra', state.error);
-          } else {
-            state.error = "An unknown error occurred";
-          }
+         state.error = action.payload
         }
       );
   },
 });
 
-export const { clearData } = userSlice.actions;
+export const { clearData,resetState } = userSlice.actions;
 
 export default userSlice.reducer;
