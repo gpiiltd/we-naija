@@ -10,15 +10,17 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
-
+import { useDispatch } from "react-redux";
+import { triggerUserSignup } from "../redux/Services/user/UserServices";
+import type { AppDispatch } from "../redux/Store/store";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-  const [loading,setLoading] = useState(false);
-  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-
+  const dispatch: AppDispatch = useDispatch();
 
   const initialValues = {
     fullName: "",
@@ -47,13 +49,24 @@ const SignUp = () => {
       .oneOf([Yup.ref("password")], "Passwords must match")
       .trim(),
   });
-  const handSignup = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/login"); 
-    },3000)
-  }
+
+  const handleSignup = () => {
+    const payload = {
+      email: initialValues.email.trim().toLowerCase(),
+      full_name: initialValues.fullName.trim(),
+      password: initialValues.password.trim(),
+    };
+    setLoading(true);
+    dispatch(triggerUserSignup(payload))
+      .then(() => {
+        setLoading(false);
+        navigate("/login");
+      })
+      .catch((error: any) => {
+        setLoading(false);
+        console.error("Signup failed:", error);
+      });
+  };
 
   return (
     <AuthPages>
@@ -123,7 +136,7 @@ const SignUp = () => {
                   bg_color="#007A61"
                   text_color="white"
                   loading={loading}
-                  onClick={handSignup}
+                  onClick={handleSignup}
                 />
               </Form>
             )}
