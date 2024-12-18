@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useField, useFormikContext } from "formik";
+import { useField} from "formik";
 import { TextInputProps, TypographyVariant } from "../types";
 import Typography from "../Typography";
 import Icon from "../../Assets/SvgImagesAndIcons";
@@ -10,23 +10,27 @@ const InputField: React.FC<TextInputProps> = ({
   placeHolder,
   icon,
   type,
+  value,
   onClick,
   focusStyle,
+  setFieldValue,
+  setFieldTouched,
+  setValues,
   ...props
 }) => {
   const [field, meta] = useField(props.name);
-  const { setFieldValue, setFieldTouched } = useFormikContext();
   const [isFocused, setIsFocused] = useState(false);
 
   const handleBlur = () => {
-    setFieldTouched(props.name, true);
+    setFieldTouched!(props.name, true, false);
     setIsFocused(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setFieldValue(props.name, value);
-    setFieldTouched(props.name, true, false);
+    const { value, name } = e.target;
+    console.log('values', value, name);
+    setFieldValue!(props.name, value);
+    setFieldTouched!(props.name, true, false);
   };
 
   return (

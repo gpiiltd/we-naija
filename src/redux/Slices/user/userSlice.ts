@@ -7,12 +7,14 @@ interface UserState {
   userData: Record<string, any>; 
   loading: boolean;
   error: string | null; 
+  message: string | null;
 }
 
 const initialState: UserState = {
   userData: {},
   loading: false,
   error: null,
+  message: null,
 };
 
 const userSlice = createSlice({
@@ -31,13 +33,22 @@ const userSlice = createSlice({
       })
       .addCase(triggerUserSignup.fulfilled, (state, action: PayloadAction<SignupResponse>) => {
         state.loading = false;
-        state.userData = action.payload.data.user; 
+        state.userData = action.payload.data;
+        state.message = action.payload.data.message;
+        console.log('message',action.payload.data.message)
+        console.log('user data', state.userData);
       })
       .addCase(
         triggerUserSignup.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
+        (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.error = action.payload || "An unknown error occurred"; 
+          if (action.payload) {
+            state.error = action.payload.data.message;
+            state.message = action.payload.data.message
+            console.log('errrrra', state.error);
+          } else {
+            state.error = "An unknown error occurred";
+          }
         }
       );
   },

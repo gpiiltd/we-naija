@@ -32,84 +32,91 @@ import HelpandSupport from "./Pages/Settings/HelpandSupport";
 import SettingsMobile from "./Pages/Settings/SettingsMobile";
 import FAQ from "./Pages/Settings/FAQ";
 import ContactUs from "./Pages/Settings/ContactUs";
-import Notification from './Pages/Notification';
+import Notification from "./Pages/Notification";
 import { Provider } from "react-redux";
-import store from "../src/redux/Store/store"
+import store from "../src/redux/Store/store";
+import "react-toastify/dist/ReactToastify.css"; // Ensure this CSS is imported
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/otp" element={<OTP />} />
-          <Route path="/reset-password" element={<CreateNewPassword />} />
-          <Route path="/kyc/*" Component={Kyc} />
-          <Route path="/kyc/validate-phone" Component={KycPhonenumber} />
-          <Route path="/kyc/enter-otp" Component={EnterOtp} />
-          <Route path="/kyc/personal-information" Component={PersonalInfo} />
-          <Route path="/kyc/id-verification" Component={IdVerification} />
-          <Route path="/verified-agent-dashboard" element={<VADashboard />}>
-            <Route index element={<Navigate to="home" />} />
-            <Route path="home" Component={PendingKyc} />
-            <Route
-              path="/verified-agent-dashboard/home/hospital-details"
-              Component={HospitalDetail}
-            />
-            <Route path="reports" Component={Reports} />
-            <Route
-              path="/verified-agent-dashboard/reports/community-tasks"
-              Component={CommunityTasks}
-            />
-            <Route
-              path="/verified-agent-dashboard/reports/NCD-prevention"
-              Component={NCDPrevention}
-            />
-            <Route
-              path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
-              Component={MentalHeaalth}
-            />
-            <Route
-              path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
-              Component={ReportForm}
-            />
-            <Route
-              path="/verified-agent-dashboard/reports/hospitals"
-              Component={Hospitals}
-            />
-            <Route
-              path="/verified-agent-dashboard/reports/hospitals/survey-list"
-              Component={SurveyList}
-            />
-            <Route
-              path="/verified-agent-dashboard/reports/hospitals/give-report"
-              Component={GiveReport}
-            />
-            <Route path="leaderboard" Component={Leaderboard} />
-            <Route path="join-community" element={<div>Community</div>} />
-            <Route path="settings" element={<SettingsHeader />}>
-              <Route index element={<Navigate to="basic-information" />} />
-              <Route path="basic-information" element={<BasicInfo />} />
-              <Route path="contact-information" element={<ContactInfo />} />
-              <Route path="password-reset" element={<PasswordReset />} />
-              <Route path="kyc-verification" element={<KycVerification />} />
-              <Route path="join-community" element={<JoinCommunity />} />
-              <Route path="help-and-support" element={<HelpandSupport />} />
-              <Route path="setting-mobile" element={<SettingsMobile />} />
-              <Route path="help-and-support/faq" element={<FAQ />} />
-              <Route path="help-and-support/contact-us" element={<ContactUs />} />
+    <>
+      {" "}
+      <ToastContainer />
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/otp" element={<OTP />} />
+            <Route path="/reset-password" element={<CreateNewPassword />} />
+            <Route path="/kyc/*" Component={Kyc} />
+            <Route path="/kyc/validate-phone" Component={KycPhonenumber} />
+            <Route path="/kyc/enter-otp" Component={EnterOtp} />
+            <Route path="/kyc/personal-information" Component={PersonalInfo} />
+            <Route path="/kyc/id-verification" Component={IdVerification} />
+            <Route path="/verified-agent-dashboard" element={<VADashboard />}>
+              <Route index element={<Navigate to="home" />} />
+              <Route path="home" Component={PendingKyc} />
+              <Route
+                path="/verified-agent-dashboard/home/hospital-details"
+                Component={HospitalDetail}
+              />
+              <Route path="reports" Component={Reports} />
+              <Route
+                path="/verified-agent-dashboard/reports/community-tasks"
+                Component={CommunityTasks}
+              />
+              <Route
+                path="/verified-agent-dashboard/reports/NCD-prevention"
+                Component={NCDPrevention}
+              />
+              <Route
+                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+                Component={MentalHeaalth}
+              />
+              <Route
+                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+                Component={ReportForm}
+              />
+              <Route
+                path="/verified-agent-dashboard/reports/hospitals"
+                Component={Hospitals}
+              />
+              <Route
+                path="/verified-agent-dashboard/reports/hospitals/survey-list"
+                Component={SurveyList}
+              />
+              <Route
+                path="/verified-agent-dashboard/reports/hospitals/give-report"
+                Component={GiveReport}
+              />
+              <Route path="leaderboard" Component={Leaderboard} />
+              <Route path="join-community" element={<div>Community</div>} />
+              <Route path="settings" element={<SettingsHeader />}>
+                <Route index element={<Navigate to="basic-information" />} />
+                <Route path="basic-information" element={<BasicInfo />} />
+                <Route path="contact-information" element={<ContactInfo />} />
+                <Route path="password-reset" element={<PasswordReset />} />
+                <Route path="kyc-verification" element={<KycVerification />} />
+                <Route path="join-community" element={<JoinCommunity />} />
+                <Route path="help-and-support" element={<HelpandSupport />} />
+                <Route path="setting-mobile" element={<SettingsMobile />} />
+                <Route path="help-and-support/faq" element={<FAQ />} />
+                <Route
+                  path="help-and-support/contact-us"
+                  element={<ContactUs />}
+                />
+              </Route>
+              <Route path="notifications" element={<Notification />} />
+              <Route path="profile" element={<div>Profile</div>} />
             </Route>
-            <Route path="notifications" element={<Notification />} />
-            <Route path="profile" element={<div>Profile</div>} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </>
   );
 }
-
-
 
 export default App;

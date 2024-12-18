@@ -18,15 +18,21 @@ export const triggerUserSignup = createAsyncThunk<
   async (signupData, thunkAPI) => {
     try {
       const response = await axios.post<SignupResponse>(
-        "https://nssf-backend-b65295a32eec.herokuapp.com/api/auth/signup",
+        apiUrl.signUp,
         signupData 
       );
-      console.log('response', response)
+      console.log('response', response.data)
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Failed to create user"
-      );
+        if(error) {
+            console.log('error', error)
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message || "Failed to create user"
+              );
+        }else {
+            throw error
+        }
+    
     }
   }
 );

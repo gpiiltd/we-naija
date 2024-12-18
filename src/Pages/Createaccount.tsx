@@ -10,17 +10,21 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { triggerUserSignup } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
+import { RootState } from "../redux/Store/store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Ensure this CSS is imported
+
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const dispatch: AppDispatch = useDispatch();
+  const { error, userData, message } = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     fullName: "",
@@ -50,26 +54,44 @@ const SignUp = () => {
       .trim(),
   });
 
-  const handleSignup = () => {
+  const handleSignup = (values: any) => {
     const payload = {
-      email: initialValues.email.trim().toLowerCase(),
-      full_name: initialValues.fullName.trim(),
-      password: initialValues.password.trim(),
+      email: values.email.trim().toLowerCase(),
+      full_name: values.fullName.trim(),
+      password: values.password.trim(),
     };
+
+    console.log("Signup payload:", payload);
     setLoading(true);
+
     dispatch(triggerUserSignup(payload))
-      .then(() => {
-        setLoading(false);
-        navigate("/login");
+      .then((response) => {
+        if (response.payload && userData) {
+          console.log("Signup successful:", userData);
+          toast("Signup successful");
+          setLoading(false);
+          navigate("/login");
+        } else if (error) {
+          console.error("Signup failed:", error);
+          toast(`Signup failed: ${error}`);
+          setLoading(false);
+        } else {
+          console.error("Unexpected error");
+          toast("An unknown error occurred. Please try again.");
+          setLoading(false);
+        }
       })
-      .catch((error: any) => {
+      .catch((error) => {
         setLoading(false);
-        console.error("Signup failed:", error);
+        console.error("Error:", error);
+        toast(error);
       });
   };
 
   return (
     <AuthPages>
+      <ToastContainer />
+
       <div className="w-full">
         <Typography
           variant={TypographyVariant.SUBTITLE}
@@ -88,12 +110,10 @@ const SignUp = () => {
             initialValues={initialValues}
             validateOnChange={true}
             validateOnBlur={true}
-            onSubmit={(values) => {
-              console.log("Form values:", values);
-            }}
             validationSchema={validationSchema}
+            onSubmit={handleSignup}
           >
-            {({ isValid, dirty }) => (
+            {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
               <Form className="flex flex-col gap-5">
                 <InputField
                   placeHolder="Enter your email address"
@@ -101,6 +121,8 @@ const SignUp = () => {
                   focusStyle="green"
                   label="Full Name"
                   name="fullName"
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
                 <InputField
                   placeHolder="Enter your email address"
@@ -108,6 +130,8 @@ const SignUp = () => {
                   focusStyle="green"
                   label="Email address"
                   name="email"
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
                 <InputField
                   placeHolder="Enter your password"
@@ -118,6 +142,8 @@ const SignUp = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   icon={showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                   helperText="Password strong"
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
                 <InputField
                   placeHolder="Enter your password"
@@ -128,6 +154,8 @@ const SignUp = () => {
                   helperText="Passwords matched"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   icon={showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
 
                 <Button
@@ -136,7 +164,6 @@ const SignUp = () => {
                   bg_color="#007A61"
                   text_color="white"
                   loading={loading}
-                  onClick={handleSignup}
                 />
               </Form>
             )}
