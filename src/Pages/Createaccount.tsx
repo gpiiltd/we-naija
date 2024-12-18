@@ -15,7 +15,7 @@ import { triggerUserSignup } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Ensure this CSS is imported
+import "react-toastify/dist/ReactToastify.css"; 
 
 
 const SignUp = () => {
@@ -24,7 +24,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, userData, message } = useSelector((state: RootState) => state.user);
+  const { error, userData} = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     fullName: "",
@@ -78,13 +78,14 @@ const SignUp = () => {
         } else {
           console.error("Unexpected error");
           toast("An unknown error occurred. Please try again.");
+
           setLoading(false);
         }
       })
       .catch((error) => {
         setLoading(false);
         console.error("Error:", error);
-        toast(error);
+        toast("User already exists");
       });
   };
 
