@@ -2,6 +2,8 @@
 
 Frontend application of the We-naija project.
 
+See more about the [we-naija](https://gpixyz.atlassian.net/wiki/spaces/IRS/pages/180060400/Product+requirements+For+Nigeria+Solidarity+Support+Fund+NSSF) project.
+
 ## Table of Contents
 
 - [Technologies Used](#technologies-used)
