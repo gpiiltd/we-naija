@@ -24,6 +24,10 @@ export enum TypographyVariant {
     icon?: ReactNode;
     onClick?: () => void;
     focusStyle?: string;
+    value?: string;
+    setValues?: (value:Record<string,string>) => void;
+    setFieldValue?:(a:string, b:string)=> void
+    setFieldTouched?:(a: string, b: boolean, c: boolean)=> void
   }
 
   export interface KycCardProps {
