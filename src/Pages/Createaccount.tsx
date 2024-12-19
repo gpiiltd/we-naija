@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //input component will be replaced with UI library input component aster testing
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthPages from "../Components/AuthPages";
 import Typography from "../Components/Typography";
 import { TypographyVariant } from "../Components/types";
@@ -10,15 +11,21 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
+import { useSelector, useDispatch } from "react-redux";
+import { triggerUserSignup } from "../redux/Services/user/UserServices";
+import type { AppDispatch } from "../redux/Store/store";
+import { RootState } from "../redux/Store/store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+import { resetState } from "../redux/Slices/user/userSlice";
 
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-  const [loading,setLoading] = useState(false);
-  const navigate = useNavigate(); 
-
-
+  const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { error, userData,message,loading} = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     fullName: "",
@@ -47,16 +54,32 @@ const SignUp = () => {
       .oneOf([Yup.ref("password")], "Passwords must match")
       .trim(),
   });
-  const handSignup = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/login"); 
-    },3000)
-  }
+
+  const handleSignup = (values: any) => {
+    const payload = {
+      email: values.email.trim().toLowerCase(),
+      full_name: values.fullName.trim(),
+      password: values.password.trim(),
+    };
+    dispatch(triggerUserSignup(payload))
+  };
+
+  useEffect(()=>{
+    if(error) {
+      toast.error(error);
+    }else if(!error && Object.keys(userData).length > 0) {
+      toast("Signup successful")
+      setTimeout(()=> {
+        navigate("/login");
+      },2000)
+    }
+    dispatch(resetState())
+  },[error,userData,message,loading])
 
   return (
     <AuthPages>
+      <ToastContainer />
+
       <div className="w-full">
         <Typography
           variant={TypographyVariant.SUBTITLE}
@@ -75,12 +98,10 @@ const SignUp = () => {
             initialValues={initialValues}
             validateOnChange={true}
             validateOnBlur={true}
-            onSubmit={(values) => {
-              console.log("Form values:", values);
-            }}
             validationSchema={validationSchema}
+            onSubmit={handleSignup}
           >
-            {({ isValid, dirty }) => (
+            {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
               <Form className="flex flex-col gap-5">
                 <InputField
                   placeHolder="Enter your email address"
@@ -88,6 +109,8 @@ const SignUp = () => {
                   focusStyle="green"
                   label="Full Name"
                   name="fullName"
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
                 <InputField
                   placeHolder="Enter your email address"
@@ -95,6 +118,8 @@ const SignUp = () => {
                   focusStyle="green"
                   label="Email address"
                   name="email"
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
                 <InputField
                   placeHolder="Enter your password"
@@ -105,6 +130,8 @@ const SignUp = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   icon={showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                   helperText="Password strong"
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
                 <InputField
                   placeHolder="Enter your password"
@@ -115,6 +142,8 @@ const SignUp = () => {
                   helperText="Passwords matched"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   icon={showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
 
                 <Button
@@ -123,7 +152,6 @@ const SignUp = () => {
                   bg_color="#007A61"
                   text_color="white"
                   loading={loading}
-                  onClick={handSignup}
                 />
               </Form>
             )}

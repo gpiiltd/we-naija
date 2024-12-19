@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Typography from "../../../Components/Typography";
 import { TypographyVariant } from "../../../Components/types";
 import blue_card from "../../../Assets/svgImages/blue_card.svg";
