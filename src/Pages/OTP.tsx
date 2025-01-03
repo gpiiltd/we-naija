@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "../Assets/SvgImagesAndIcons";
 import Typography from "../Components/Typography";
 import { TypographyVariant } from "../Components/types";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/Store/store";
 
 const borderStyle = {
   border: "1px solid #ccc",
@@ -22,6 +24,13 @@ const OTP = () => {
   const [loading, setLoading] = useState(false);
   const [OTP, setOTP] = useState("");
   const navigate = useNavigate();
+  const { email } = useSelector((state: RootState) => state.user);
+
+  // useEffect(() => {
+  //   if (!email) {
+  //     navigate('/forgot-password');
+  //   }
+  // }, [email, navigate]);
 
   const sendOtp = () => {
     setLoading(!loading);
@@ -69,9 +78,9 @@ const OTP = () => {
               </Typography>
               <Typography
                 variant={TypographyVariant.NORMAL}
-                className="text-primary_green font-extrabold "
+                className="text-primary_green font-extrabold text-center"
               >
-                “asuquogodwin0@gmail.com”{" "}
+                {email}
               </Typography>
             </div>
             <div className="flex flex-col justify-center items-center pt-4 w-full">

@@ -7,7 +7,7 @@ interface UserState {
   loading: boolean;
   error: string | null;
   message: string | null;
-
+  email: string | null;
 }
 
 const initialState: UserState = {
@@ -15,6 +15,7 @@ const initialState: UserState = {
   loading: false,
   error: null,
   message: null,
+  email: null,
 };
 
 const userSlice = createSlice({
@@ -29,6 +30,9 @@ const userSlice = createSlice({
       state.message = initialState.message;
       state.loading=initialState.loading;
       state.userData = initialState.userData;
+    },
+    setUserEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -76,6 +80,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearData,resetState } = userSlice.actions;
+export const { clearData,resetState,setUserEmail } = userSlice.actions;
 
 export default userSlice.reducer;

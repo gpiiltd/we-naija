@@ -13,7 +13,7 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
-import { resetState } from "../redux/Slices/user/userSlice";
+import { resetState, setUserEmail } from "../redux/Slices/user/userSlice";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ const ForgotPassword = () => {
     const payload = {
       email: values.email.trim().toLowerCase(),
     };
+    dispatch(setUserEmail(payload.email));
     dispatch(triggerForgotPassword(payload));
   };
 
@@ -109,7 +110,6 @@ const ForgotPassword = () => {
                     bg_color="#007A61"
                     text_color="white"
                     loading={loading}
-                    // onClick={handleForgotPassword}
                   />
                 </Form>
               )}
