@@ -33,3 +33,8 @@ interface User {
     data?: string;
     message?: string;
   }
+
+  export interface OTPData {
+    code: string;
+    target: string;
+  }

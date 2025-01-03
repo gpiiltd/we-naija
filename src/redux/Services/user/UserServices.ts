@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiUrl } from "../../../config";
-import { ForgotPasswordData, ForgotPasswordResponse, SignupResponse } from "./types";
+import { ForgotPasswordData, ForgotPasswordResponse, OTPData, SignupResponse } from "./types";
 
 interface SignupData {
   email: string;
@@ -45,6 +45,24 @@ export const triggerForgotPassword = createAsyncThunk<
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message || error.response?.data || "Failed to send forgot password email"
+    );
+  }
+});
+
+export const triggerOTPValidation = createAsyncThunk<
+  ForgotPasswordResponse,
+  OTPData,
+  { rejectValue: string }
+>("user/ValidateOTP", async (OTPData, thunkAPI) => {
+  try {
+    const response = await axios.post<ForgotPasswordResponse>(
+      apiUrl.validateOtp,
+      OTPData
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.message || error.response?.data || "Failed to validate OTP"
     );
   }
 });

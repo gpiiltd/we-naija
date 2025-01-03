@@ -5,8 +5,14 @@ import { TypographyVariant } from "../Components/types";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { RootState } from "../redux/Store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { triggerOTPValidation } from "../redux/Services/user/UserServices";
+import type { AppDispatch } from "../redux/Store/store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+import { resetState } from "../redux/Slices/user/userSlice";
+
 
 const borderStyle = {
   border: "1px solid #ccc",
@@ -21,27 +27,35 @@ const borderStyle = {
 };
 
 const OTP = () => {
-  const [loading, setLoading] = useState(false);
   const [OTP, setOTP] = useState("");
   const navigate = useNavigate();
   const { email } = useSelector((state: RootState) => state.user);
-
-  // useEffect(() => {
-  //   if (!email) {
-  //     navigate('/forgot-password');
-  //   }
-  // }, [email, navigate]);
+  const dispatch: AppDispatch = useDispatch();
+  const { error, message,loading} = useSelector((state: RootState) => state.user);
 
   const sendOtp = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/reset-password");
-    }, 3000);
+    const payload = {
+      code: OTP,
+      target: email,
+    };
+    dispatch(triggerOTPValidation(payload));
   };
+
+  useEffect(() => {
+    if(error) {
+      toast.error(error);
+    } else if(!error && message) {
+      toast(message);
+      setTimeout(() => {
+        navigate("/reset-password");
+      }, 1000);
+    }
+    dispatch(resetState());
+  }, [error, message, navigate, dispatch]);
 
   return (
     <div className="w-full flex flex-col h-screen lg:flex-row">
+      <ToastContainer />
       <div className="hidden lg:flex pt-12 w-full  flex-col gap-8 md:pb-8 md:bg-teal_green md:h-screen md:gap-12 lg:pt-18 lg:gap-24 lg:w-2/4 lg:pb-0">
         <div className="md:m-4 flex items-center justify-center">
           <Icon type="logo" />
