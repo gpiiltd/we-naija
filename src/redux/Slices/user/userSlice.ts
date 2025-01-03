@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SignupResponse } from "../../Services/user/types";
-import { triggerUserSignup } from "../../Services/user/UserServices";
+import { ForgotPasswordResponse, SignupResponse } from "../../Services/user/types";
+import { triggerForgotPassword, triggerUserSignup } from "../../Services/user/UserServices";
 
 interface UserState {
   userData: Record<string, any>;
@@ -50,6 +50,27 @@ const userSlice = createSlice({
         (state, action: PayloadAction<any>) => {
           state.loading = false;
          state.error = action.payload
+        }
+      )
+      .addCase(
+        triggerForgotPassword.pending,
+        (state) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        triggerForgotPassword.fulfilled,
+        (state, action: PayloadAction<ForgotPasswordResponse>) => {
+          state.loading = false;
+          state.message = action.payload.data || null;
+        }
+      )
+      .addCase(
+        triggerForgotPassword.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.message;
         }
       );
   },

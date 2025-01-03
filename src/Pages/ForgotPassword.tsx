@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Typography from "../Components/Typography/Typography";
 import { TypographyVariant } from "../Components/types";
 import { Formik, Form } from "formik";
@@ -7,26 +7,45 @@ import { Link } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import { useNavigate } from "react-router-dom";
 import Icon from "../Assets/SvgImagesAndIcons";
+import { useSelector, useDispatch } from "react-redux";
+import { triggerForgotPassword } from "../redux/Services/user/UserServices";
+import type { AppDispatch } from "../redux/Store/store";
+import { RootState } from "../redux/Store/store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+import { resetState } from "../redux/Slices/user/userSlice";
 
 const ForgotPassword = () => {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { error, message,loading} = useSelector((state: RootState) => state.user);
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: ""
   };
 
-  const handleForgotPassword = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/otp");
-    }, 3000);
+  const handleForgotPassword = (values: any) => {
+    const payload = {
+      email: values.email.trim().toLowerCase(),
+    };
+    dispatch(triggerForgotPassword(payload));
   };
+
+  useEffect(() => {
+    if(error) {
+      toast.error(error);
+    } else if(!error && message) {
+      toast(message);
+      setTimeout(() => {
+        navigate("/otp");
+      }, 1000);
+    }
+    dispatch(resetState());
+  }, [error, message, navigate, dispatch]);
 
   return (
     <div className="w-full flex flex-col h-screen lg:flex-row">
+      <ToastContainer />
       <div className="hidden lg:flex pt-12 w-full  flex-col gap-8 md:pb-8 md:bg-teal_green md:h-screen md:gap-12 lg:pt-18 lg:gap-24 lg:w-2/4 lg:pb-0">
         <div className="md:m-4 flex items-center justify-center">
           <Icon type="logo" />
@@ -70,11 +89,9 @@ const ForgotPassword = () => {
               initialValues={initialValues}
               validateOnChange={true}
               validateOnBlur={true}
-              onSubmit={(values) => {
-                console.log("Form values:", values);
-              }}
+              onSubmit={handleForgotPassword}
             >
-              {({ isValid, dirty }) => (
+              {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
                 <Form className="flex flex-col gap-5">
                   <InputField
                     placeHolder="Enter your email address"
@@ -82,6 +99,8 @@ const ForgotPassword = () => {
                     focusStyle="green"
                     label="Email address"
                     name="email"
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
 
                   <Button
@@ -90,7 +109,7 @@ const ForgotPassword = () => {
                     bg_color="#007A61"
                     text_color="white"
                     loading={loading}
-                    onClick={handleForgotPassword}
+                    // onClick={handleForgotPassword}
                   />
                 </Form>
               )}

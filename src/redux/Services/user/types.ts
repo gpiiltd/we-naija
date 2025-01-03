@@ -23,3 +23,13 @@ interface User {
       message: string;
     };
   }
+
+  export interface ForgotPasswordData {
+    email: string;
+  }
+  
+  export interface ForgotPasswordResponse {
+    code: number;
+    data?: string;
+    message?: string;
+  }
