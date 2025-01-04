@@ -1,13 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ForgotPasswordResponse, SignupResponse } from "../../Services/user/types";
-import { triggerForgotPassword, triggerOTPValidation, triggerUserSignup } from "../../Services/user/UserServices";
+import {
+  ForgotPasswordResponse,
+  SignupResponse,
+} from "../../Services/user/types";
+import {
+  triggerForgotPassword,
+  triggerOTPValidation,
+  triggerResetPassword,
+  triggerUserSignup,
+} from "../../Services/user/UserServices";
 
 interface UserState {
   userData: Record<string, any>;
   loading: boolean;
   error: string | null;
   message: string | null;
-  email: string ;
+  email: string;
 }
 
 const initialState: UserState = {
@@ -25,10 +33,10 @@ const userSlice = createSlice({
     clearData(state) {
       state.userData = {};
     },
-    resetState: state => {
+    resetState: (state) => {
       state.error = initialState.error;
       state.message = initialState.message;
-      state.loading=initialState.loading;
+      state.loading = initialState.loading;
       state.userData = initialState.userData;
     },
     setUserEmail: (state, action: PayloadAction<string>) => {
@@ -53,16 +61,13 @@ const userSlice = createSlice({
         triggerUserSignup.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-         state.error = action.payload
+          state.error = action.payload;
         }
       )
-      .addCase(
-        triggerForgotPassword.pending,
-        (state) => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
+      .addCase(triggerForgotPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(
         triggerForgotPassword.fulfilled,
         (state, action: PayloadAction<ForgotPasswordResponse>) => {
@@ -77,13 +82,10 @@ const userSlice = createSlice({
           state.error = action.payload.message;
         }
       )
-      .addCase(
-        triggerOTPValidation.pending,
-        (state) => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
+      .addCase(triggerOTPValidation.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(
         triggerOTPValidation.fulfilled,
         (state, action: PayloadAction<ForgotPasswordResponse>) => {
@@ -97,10 +99,28 @@ const userSlice = createSlice({
           state.loading = false;
           state.error = action.payload.message;
         }
+      )
+      .addCase(triggerResetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        triggerResetPassword.fulfilled,
+        (state, action: PayloadAction<ForgotPasswordResponse>) => {
+          state.loading = false;
+          state.message = action.payload.data || null;
+        }
+      )
+      .addCase(
+        triggerResetPassword.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.message;
+        }
       );
   },
 });
 
-export const { clearData,resetState,setUserEmail } = userSlice.actions;
+export const { clearData, resetState, setUserEmail } = userSlice.actions;
 
 export default userSlice.reducer;

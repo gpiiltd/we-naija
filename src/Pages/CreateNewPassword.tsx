@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "../Components/Typography/Typography";
 import { TypographyVariant } from "../Components/types";
 import { Formik, Form } from "formik";
@@ -9,14 +9,24 @@ import Icon from "../Assets/SvgImagesAndIcons";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
 import CustomModal from "../Components/Modal";
+import { useSelector, useDispatch } from "react-redux";
+import { triggerResetPassword } from "../redux/Services/user/UserServices";
+import type { AppDispatch } from "../redux/Store/store";
+import { RootState } from "../redux/Store/store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+import { resetState } from "../redux/Slices/user/userSlice";
 
-const ForgotPassword = () => {
+
+const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { error, message,loading} = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     passwordReset: "",
@@ -37,16 +47,31 @@ const ForgotPassword = () => {
       .trim(),
   });
 
-  const handleForgotPassword = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      setShowModal(true);
-    }, 3000);
+  const handleNewPassword = (values: any) => {
+    const payload = {
+      password: values.passwordReset.trim(),
+      repeat_password: values.confirmPassword.trim(),
+    };
+    dispatch(triggerResetPassword(payload));
   };
+
+  useEffect(() => {
+    if(error) {
+      toast.error(error);
+    } else if(!error && message) {
+      toast(message);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+    }
+    dispatch(resetState());
+  }, [error, message, navigate, dispatch]);
+
+  
 
   return (
     <div className="w-full flex flex-col h-screen lg:flex-row">
+      <ToastContainer />
       <div className="hidden lg:flex pt-12 w-full  flex-col gap-8 md:pb-8 md:bg-teal_green md:h-screen md:gap-12 lg:pt-18 lg:gap-24 lg:w-2/4 lg:pb-0">
         <div className="md:m-4 flex items-center justify-center">
           <Icon type="logo" />
@@ -87,12 +112,11 @@ const ForgotPassword = () => {
               initialValues={initialValues}
               validateOnChange={true}
               validateOnBlur={true}
-              onSubmit={(values) => {
-                console.log("Form values:", values);
-              }}
               validationSchema={validationSchema}
+              onSubmit={handleNewPassword}
+
             >
-              {({ isValid, dirty }) => (
+              {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
                 <Form className="flex flex-col gap-5">
                   <InputField
                     placeHolder="Enter your password"
@@ -102,6 +126,8 @@ const ForgotPassword = () => {
                     name="passwordReset"
                     onClick={() => setShowPassword(!showPassword)}
                     icon={showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
                   <InputField
                     placeHolder="Enter your password"
@@ -114,6 +140,8 @@ const ForgotPassword = () => {
                     icon={
                       showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />
                     }
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
 
                   <Button
@@ -122,7 +150,6 @@ const ForgotPassword = () => {
                     bg_color="#007A61"
                     text_color="white"
                     loading={loading}
-                    onClick={handleForgotPassword}
                   />
                 </Form>
               )}
@@ -170,4 +197,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default CreateNewPassword;

@@ -38,3 +38,8 @@ interface User {
     code: string;
     target: string;
   }
+
+  export interface ResetPasswordData {
+    password: string;
+    repeat_password: string;
+  }
