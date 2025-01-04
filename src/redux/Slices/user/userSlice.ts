@@ -5,6 +5,7 @@ import {
 } from "../../Services/user/types";
 import {
   triggerForgotPassword,
+  triggerOTPRequest,
   triggerOTPValidation,
   triggerResetPassword,
   triggerUserSignup,
@@ -95,6 +96,24 @@ const userSlice = createSlice({
       )
       .addCase(
         triggerOTPValidation.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.message;
+        }
+      )
+      .addCase(triggerOTPRequest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        triggerOTPRequest.fulfilled,
+        (state, action: PayloadAction<ForgotPasswordResponse>) => {
+          state.loading = false;
+          state.message = action.payload.data || null;
+        }
+      )
+      .addCase(
+        triggerOTPRequest.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;

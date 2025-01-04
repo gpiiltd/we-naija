@@ -39,6 +39,12 @@ interface User {
     target: string;
   }
 
+  export interface OTPRequestData {
+    message_type: string;
+    topic: string;
+    target: string;
+  }
+
   export interface ResetPasswordData {
     password: string;
     repeat_password: string;

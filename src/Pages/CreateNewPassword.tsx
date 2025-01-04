@@ -21,7 +21,6 @@ import { resetState } from "../redux/Slices/user/userSlice";
 const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-  // const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
