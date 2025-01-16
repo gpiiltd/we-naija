@@ -48,4 +48,5 @@ interface User {
   export interface ResetPasswordData {
     password: string;
     repeat_password: string;
+    email?: string;
   }

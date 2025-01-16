@@ -80,7 +80,7 @@ const userSlice = createSlice({
         triggerForgotPassword.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.error = action.payload.message;
+          state.error = action.payload.data;
         }
       )
       .addCase(triggerOTPValidation.pending, (state) => {
@@ -134,7 +134,7 @@ const userSlice = createSlice({
         triggerResetPassword.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.error = action.payload.message;
+          state.error = action.payload.data;
         }
       );
   },

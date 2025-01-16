@@ -15,13 +15,14 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
-import { resetState } from "../redux/Slices/user/userSlice";
+// import { resetState } from "../redux/Slices/user/userSlice";
 
 
 const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const { email } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -50,6 +51,7 @@ const CreateNewPassword = () => {
     const payload = {
       password: values.passwordReset.trim(),
       repeat_password: values.confirmPassword.trim(),
+      email: email,
     };
     dispatch(triggerResetPassword(payload));
   };
@@ -63,7 +65,7 @@ const CreateNewPassword = () => {
         navigate("/login");
       }, 1000);
     }
-    dispatch(resetState());
+    // dispatch(resetState());
   }, [error, message, navigate, dispatch]);
 
   

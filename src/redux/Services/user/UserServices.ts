@@ -89,12 +89,11 @@ export const triggerResetPassword = createAsyncThunk<
   ForgotPasswordResponse,
   ResetPasswordData,
   { rejectValue: string }
->("user/resetPassword", async (ResetPasswordData, thunkAPI) => {
+>("user/resetPassword", async (resetPasswordData, thunkAPI) => {
   try {
-    console.log("ResetPasswordData>>>", ResetPasswordData);
     const response = await axios.patch<ForgotPasswordResponse>(
-      apiUrl.resetPassword,
-      ResetPasswordData
+      `${apiUrl.resetPassword}?email=${resetPasswordData.email}`,
+      resetPasswordData
     );
     return response.data;
   } catch (error: any) {
