@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthPages from "../Components/AuthPages";
 import Typography from "../Components/Typography/Typography";
 import { TypographyVariant } from "../Components/types";
@@ -9,11 +9,20 @@ import { Link } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/Store/store";
+import { triggerUserLogin } from "../redux/Services/user/UserServices";
+import { resetState } from "../redux/Slices/user/userSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(true);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { error, userData, message, loading } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const initialValues = {
     email: "",
@@ -31,16 +40,29 @@ const Login = () => {
       .trim(),
   });
 
-  const handleLogin = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/kyc/*");
-    }, 3000);
+  const handleLogin = (values: any) => {
+    const payload = {
+      email: values.email.trim().toLowerCase(),
+      password: values.password.trim(),
+    };
+    dispatch(triggerUserLogin(payload));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    } else if (!error && Object.keys(userData).length > 0) {
+      toast("Login successful");
+      setTimeout(() => {
+        navigate("/kyc/*");
+      }, 2000);
+    }
+    dispatch(resetState());
+  }, [error, userData, message, loading, dispatch, navigate]);
 
   return (
     <AuthPages>
+      <ToastContainer />
       <div className="w-full">
         <Typography
           variant={TypographyVariant.SUBTITLE}
@@ -59,12 +81,10 @@ const Login = () => {
             initialValues={initialValues}
             validateOnChange={true}
             validateOnBlur={true}
-            onSubmit={(values) => {
-              console.log("Form values:", values);
-            }}
             validationSchema={validationSchema}
+            onSubmit={handleLogin}
           >
-            {({ isValid, dirty }) => (
+            {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
               <Form className="flex flex-col gap-5">
                 <InputField
                   placeHolder="Enter your email address"
@@ -72,6 +92,8 @@ const Login = () => {
                   focusStyle="green"
                   label="Email address"
                   name="email"
+                  setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                 />
                 <div>
                   <InputField
@@ -82,16 +104,17 @@ const Login = () => {
                     name="password"
                     onClick={() => setShowPassword(!showPassword)}
                     icon={showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
-                  <div onClick={()=>navigate("/forgot-password")}>
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-orange text-end pt-3 cursor-pointer"
-                  >
-                    Forgot password?
-                  </Typography>
+                  <div onClick={() => navigate("/forgot-password")}>
+                    <Typography
+                      variant={TypographyVariant.SMALL}
+                      className="text-orange text-end pt-3 cursor-pointer"
+                    >
+                      Forgot password?
+                    </Typography>
                   </div>
-                 
                 </div>
 
                 <Button
@@ -100,7 +123,6 @@ const Login = () => {
                   bg_color="#007A61"
                   text_color="white"
                   loading={loading}
-                  onClick={handleLogin}
                 />
               </Form>
             )}

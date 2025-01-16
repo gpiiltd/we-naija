@@ -16,16 +16,17 @@ import { triggerUserSignup } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 import { resetState } from "../redux/Slices/user/userSlice";
-
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, userData,message,loading} = useSelector((state: RootState) => state.user);
+  const { error, userData, message, loading } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const initialValues = {
     fullName: "",
@@ -60,26 +61,26 @@ const SignUp = () => {
       email: values.email.trim().toLowerCase(),
       full_name: values.fullName.trim(),
       password: values.password.trim(),
+      user_type: "customer",
     };
-    dispatch(triggerUserSignup(payload))
+    dispatch(triggerUserSignup(payload));
   };
 
-  useEffect(()=>{
-    if(error) {
+  useEffect(() => {
+    if (error) {
       toast.error(error);
-    }else if(!error && Object.keys(userData).length > 0) {
-      toast("Signup successful")
-      setTimeout(()=> {
+    } else if (!error && Object.keys(userData).length > 0) {
+      toast("Signup successful");
+      setTimeout(() => {
         navigate("/login");
-      },2000)
+      }, 2000);
     }
-    dispatch(resetState())
-  },[error,userData,message,loading])
+    dispatch(resetState());
+  }, [error, userData, message, loading]);
 
   return (
     <AuthPages>
       <ToastContainer />
-
       <div className="w-full">
         <Typography
           variant={TypographyVariant.SUBTITLE}
@@ -145,7 +146,6 @@ const SignUp = () => {
                   setFieldValue={setFieldValue}
                   setFieldTouched={setFieldTouched}
                 />
-
                 <Button
                   text="Sign Up"
                   active={isValid && dirty}
