@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "../Assets/SvgImagesAndIcons";
 import Typography from "../Components/Typography";
 import { TypographyVariant } from "../Components/types";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../redux/Store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { triggerOTPValidation, triggerOTPRequest } from "../redux/Services/user/UserServices";
+import type { AppDispatch } from "../redux/Store/store";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
+import { resetState } from "../redux/Slices/user/userSlice";
+
 
 const borderStyle = {
   border: "1px solid #ccc",
@@ -19,20 +27,71 @@ const borderStyle = {
 };
 
 const OTP = () => {
-  const [loading, setLoading] = useState(false);
   const [OTP, setOTP] = useState("");
+  const [countdown, setCountdown] = useState(30);
+  const [canResend, setCanResend] = useState(false);
   const navigate = useNavigate();
+  const { email } = useSelector((state: RootState) => state.user);
+  const dispatch: AppDispatch = useDispatch();
+  const { error, message,loading} = useSelector((state: RootState) => state.user);
 
   const sendOtp = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/reset-password");
-    }, 3000);
+    const payload = {
+      code: OTP,
+      target: email,
+    };
+    dispatch(triggerOTPValidation(payload));
   };
+
+  useEffect(() => {
+    if(error) {
+      toast.error(error);
+    } else if(!error && message) {
+      toast(message);
+
+      if(message.includes("Email verification successful")) {
+        setTimeout(() => {
+          navigate("/reset-password");
+        }, 1000);
+      }
+    }
+    dispatch(resetState());
+  }, [error, message, navigate, dispatch]);
+
+  const handleResendOTP = () => {
+    const payload = {
+      target: email,
+      message_type: "email", 
+      topic: "OTP Request"
+    }
+    if (canResend) {
+      dispatch(triggerOTPRequest(payload));
+      if(error) {
+        toast.error(error);
+      } else if(!error && message) {
+        toast(message);
+      }
+      setCountdown(30);
+      setCanResend(false);
+    }
+  };
+
+  useEffect(() => {
+    const timer = countdown > 0 && setInterval(() => {
+      setCountdown(current => {
+        if (current <= 1) {
+          setCanResend(true);
+          return 0;
+        }
+        return current - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer as NodeJS.Timeout);
+  }, [countdown]);
 
   return (
     <div className="w-full flex flex-col h-screen lg:flex-row">
+      <ToastContainer />
       <div className="hidden lg:flex pt-12 w-full  flex-col gap-8 md:pb-8 md:bg-teal_green md:h-screen md:gap-12 lg:pt-18 lg:gap-24 lg:w-2/4 lg:pb-0">
         <div className="md:m-4 flex items-center justify-center">
           <Icon type="logo" />
@@ -69,9 +128,9 @@ const OTP = () => {
               </Typography>
               <Typography
                 variant={TypographyVariant.NORMAL}
-                className="text-primary_green font-extrabold "
+                className="text-primary_green font-extrabold text-center"
               >
-                “asuquogodwin0@gmail.com”{" "}
+                {email}
               </Typography>
             </div>
             <div className="flex flex-col justify-center items-center pt-4 w-full">
@@ -89,16 +148,23 @@ const OTP = () => {
             </div>
             <Typography
               variant={TypographyVariant.NORMAL}
-              className="text-light_gray  text-center  "
+              className="text-light_gray text-center"
             >
-              Didn’t receive a code?{" "}
+              Didn't receive a code?{" "}
             </Typography>
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="text-black  text-center"
+            <div
+              onClick={handleResendOTP}
+              className={`cursor-${canResend ? 'pointer' : 'default'}`}
             >
-              Re-send code via SMS (0:30){" "}
-            </Typography>
+              <Typography
+                variant={TypographyVariant.NORMAL}
+                className={`text-center ${
+                  canResend ? 'text-orange underline' : 'text-black'
+                }`}
+              >
+                {canResend ? "Re-send code via SMS" : `Re-send code via SMS (0:${countdown < 10 ? `0${countdown}` : countdown})`}
+              </Typography>
+            </div>
             <div className="w-full pt-8 lg:pt-6">
               {" "}
               <Button

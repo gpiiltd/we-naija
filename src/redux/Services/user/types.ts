@@ -23,3 +23,30 @@ interface User {
       message: string;
     };
   }
+
+  export interface ForgotPasswordData {
+    email: string;
+  }
+  
+  export interface ForgotPasswordResponse {
+    code: number;
+    data?: string;
+    message?: string;
+  }
+
+  export interface OTPData {
+    code: string;
+    target: string;
+  }
+
+  export interface OTPRequestData {
+    message_type: string;
+    topic: string;
+    target: string;
+  }
+
+  export interface ResetPasswordData {
+    password: string;
+    repeat_password: string;
+    email?: string;
+  }
