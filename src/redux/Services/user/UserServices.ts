@@ -1,3 +1,4 @@
+import { LoginResponse } from './../user/types';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiUrl } from "../../../config";
@@ -6,6 +7,12 @@ import { ForgotPasswordData, ForgotPasswordResponse, OTPData, OTPRequestData, Re
 interface SignupData {
   email: string;
   full_name: string;
+  password: string;
+  user_type: string;
+}
+
+interface LoginData {
+  email: string;
   password: string;
 }
 
@@ -21,16 +28,40 @@ export const triggerUserSignup = createAsyncThunk<
     );
     return response.data;
   } catch (error: any) {
-    if (error) {
+    if (error.response) {
+      
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Failed to create user"
+        error.response.data?.message || error.response.statusText
       );
+    } else if (error.request) {
+      return thunkAPI.rejectWithValue("No response received from server");
     } else {
-      throw error;
+      return thunkAPI.rejectWithValue("Error setting up request");
     }
   }
 });
 
+export const triggerUserLogin = createAsyncThunk<
+LoginResponse,LoginData,
+  { rejectValue: string }
+>("user/login", async (LoginData, thunkAPI) => {
+  try {
+    const response = await axios.post<LoginResponse>(
+      apiUrl.login,
+      LoginData
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      
+      return thunkAPI.rejectWithValue(
+        error.response.data?.message || error.response.statusText
+      );
+    } else if (error.request) {
+      return thunkAPI.rejectWithValue("No response received from server");
+    } else {
+      return thunkAPI.rejectWithValue("Error setting up request");
+    }
 export const triggerForgotPassword = createAsyncThunk<
   ForgotPasswordResponse,
   ForgotPasswordData,
