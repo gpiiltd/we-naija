@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SignupResponse } from "../../Services/user/types";
-import { triggerUserSignup,triggerUserLogin} from "../../Services/user/UserServices";
 import {
   ForgotPasswordResponse,
   SignupResponse,
 } from "../../Services/user/types";
 import {
-  triggerForgotPassword,
-  triggerOTPRequest,
-  triggerOTPValidation,
-  triggerResetPassword,
   triggerUserSignup,
+  triggerUserLogin,
+  triggerForgotPassword,
+  triggerOTPValidation,
+  triggerOTPRequest,
+  triggerResetPassword
 } from "../../Services/user/UserServices";
 
 interface UserState {
@@ -18,7 +17,6 @@ interface UserState {
   loading: boolean;
   error: string | null;
   message: string | null;
-
   email: string;
 }
 
@@ -40,7 +38,6 @@ const userSlice = createSlice({
     resetState: (state) => {
       state.error = initialState.error;
       state.message = initialState.message;
-      state.loading = initialState.loading;
       state.userData = initialState.userData;
     },
     setUserEmail: (state, action: PayloadAction<string>) => {
@@ -157,8 +154,12 @@ const userSlice = createSlice({
       .addCase(
         triggerUserLogin.rejected,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
+        console.log('loader',state.loading)
+        state.loading = false;
          state.error = action.payload
+         state.message=action.payload
+         return state; // Add this line
+
         }
       );
 

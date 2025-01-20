@@ -49,14 +49,31 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-    } else if (!error && Object.keys(userData).length > 0) {
-      toast("Login successful");
-      setTimeout(() => {
-        navigate("/kyc/*");
-      }, 2000);
-    }
+    const handleUserVerification = (userData: any) => {
+      if (error) {
+        toast.error(
+          `${message}, kindly check credential and try again`
+        );
+      } else if (userData && userData.user && userData.user.email) {
+        const { user } = userData;
+        console.log("USERDATA", user);
+        if (user.email.verified === true) {
+          toast("User email verified, proceeding to login");
+          setTimeout(() => {
+            navigate("/kyc/*");
+          }, 2000);
+        } else if (user.email.verified === false) {
+          toast.error(
+            "User not verified, Kindly check your email for verification CODE"
+          );
+          setTimeout(() => {
+            navigate("/otp");
+          }, 3000);
+        }
+      }
+    };
+
+    handleUserVerification(userData);
     dispatch(resetState());
   }, [error, userData, message, loading, dispatch, navigate]);
 
@@ -131,7 +148,7 @@ const Login = () => {
             <Typography variant={TypographyVariant.SMALL}>
               Don't have an account?
             </Typography>
-            <Link to="/">
+            <Link to="/signup">
               <Typography
                 variant={TypographyVariant.SMALL}
                 className="text-orange font-extrabold cursor-pointer"

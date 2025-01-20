@@ -72,7 +72,7 @@ const SignUp = () => {
     } else if (!error && Object.keys(userData).length > 0) {
       toast("Signup successful");
       setTimeout(() => {
-        navigate("/login");
+        navigate("/");
       }, 2000);
     }
     dispatch(resetState());
@@ -160,7 +160,7 @@ const SignUp = () => {
             <Typography variant={TypographyVariant.SMALL}>
               Already have an account?
             </Typography>
-            <Link to="/login">
+            <Link to="/">
               <Typography
                 variant={TypographyVariant.SMALL}
                 className="text-orange font-extrabold cursor-pointer"

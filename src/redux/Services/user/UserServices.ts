@@ -1,8 +1,15 @@
-import { LoginResponse } from './../user/types';
+import { LoginResponse } from "./../user/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiUrl } from "../../../config";
-import { ForgotPasswordData, ForgotPasswordResponse, OTPData, OTPRequestData, ResetPasswordData, SignupResponse } from "./types";
+import {
+  ForgotPasswordData,
+  ForgotPasswordResponse,
+  OTPData,
+  OTPRequestData,
+  ResetPasswordData,
+  SignupResponse,
+} from "./types";
 
 interface SignupData {
   email: string;
@@ -29,9 +36,8 @@ export const triggerUserSignup = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      
       return thunkAPI.rejectWithValue(
-        error.response.data?.message || error.response.statusText
+        error.response.data?.data || error.response.statusText
       );
     } else if (error.request) {
       return thunkAPI.rejectWithValue("No response received from server");
@@ -42,26 +48,26 @@ export const triggerUserSignup = createAsyncThunk<
 });
 
 export const triggerUserLogin = createAsyncThunk<
-LoginResponse,LoginData,
+  LoginResponse,
+  LoginData,
   { rejectValue: string }
 >("user/login", async (LoginData, thunkAPI) => {
   try {
-    const response = await axios.post<LoginResponse>(
-      apiUrl.login,
-      LoginData
-    );
+    const response = await axios.post<LoginResponse>(apiUrl.login, LoginData);
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      
       return thunkAPI.rejectWithValue(
-        error.response.data?.message || error.response.statusText
+        error.response.data?.data || error.response.data?.data ||  error.response.statusText
       );
     } else if (error.request) {
       return thunkAPI.rejectWithValue("No response received from server");
     } else {
       return thunkAPI.rejectWithValue("Error setting up request");
     }
+  }
+});
+
 export const triggerForgotPassword = createAsyncThunk<
   ForgotPasswordResponse,
   ForgotPasswordData,
@@ -75,7 +81,9 @@ export const triggerForgotPassword = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to send forgot password email"
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to send forgot password email"
     );
   }
 });
@@ -93,7 +101,9 @@ export const triggerOTPRequest = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to validate OTP"
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to validate OTP"
     );
   }
 });
@@ -111,7 +121,9 @@ export const triggerOTPValidation = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to validate OTP"
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to validate OTP"
     );
   }
 });
@@ -129,7 +141,9 @@ export const triggerResetPassword = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to reset password"
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to reset password"
     );
   }
 });
