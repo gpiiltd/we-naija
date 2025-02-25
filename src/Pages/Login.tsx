@@ -44,21 +44,32 @@ const Login = () => {
     const payload = {
       email: values.email.trim().toLowerCase(),
       password: values.password.trim(),
+      user_type: "customer",
     };
+    
     dispatch(triggerUserLogin(payload));
+    checkLoginStatus();
   };
-
-  useEffect(() => {
+  
+  const checkLoginStatus = () => {
+    console.log("userdata", userData);
     if (error) {
-      toast.error(error);
-    } else if (!error && Object.keys(userData).length > 0) {
-      toast("Login successful");
-      setTimeout(() => {
-        navigate("/kyc/*");
-      }, 2000);
+      toast.error(message);
+      return;
     }
-    dispatch(resetState());
-  }, [error, userData, message, loading, dispatch, navigate]);
+    if (Object.keys(userData).length > 0 && userData.user.email.verified === true) {
+      toast.success("Login successful");
+      setTimeout(() => {
+        navigate("/verified-agent-dashboard");
+      }, 3000);
+    } else if(Object.keys(userData).length > 0 && userData.user.email.verified === false) {
+      toast.error("User not verified");
+      setTimeout(() => {
+        navigate("/otp");
+      }, 3000);
+    }
+  };
+  
 
   return (
     <AuthPages>

@@ -18,10 +18,13 @@ import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { resetState } from "../redux/Slices/user/userSlice";
+import CustomModal from "../Components/Modal";
+import Icon from "../Assets/SvgImagesAndIcons";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const { error, userData, message, loading } = useSelector(
@@ -66,14 +69,16 @@ const SignUp = () => {
     dispatch(triggerUserSignup(payload));
   };
 
+  const navigateToLogin = () => {
+    setShowModal(false);
+    navigate("/login");
+  };
+
   useEffect(() => {
-    if (error) {
-      toast.error(error);
+    if (message) {
+      toast.error(message);
     } else if (!error && Object.keys(userData).length > 0) {
-      toast("Signup successful");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      setShowModal(true);
     }
     dispatch(resetState());
   }, [error, userData, message, loading]);
@@ -171,6 +176,32 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+      <CustomModal isOpen={showModal} onClose={() => setShowModal(!showModal)}>
+        <section className="flex flex-col gap-3 py-6 px-3">
+          <div className="flex flex-col gap-2 items-center justify-center">
+            <Icon type="success" />
+            <Typography
+              variant={TypographyVariant.NORMAL}
+              className="text-black text-center font-bold"
+            >
+              Registration successful
+            </Typography>
+            <Typography
+              variant={TypographyVariant.SMALL}
+              className="text-[#5E5959] text-center"
+            >
+              Account successfully created.
+            </Typography>
+          </div>
+          <Button
+            text="Login"
+            bg_color="#007A61"
+            text_color="#FFFFFF"
+            onClick={navigateToLogin}
+            active={true}
+          />
+        </section>
+      </CustomModal>
     </AuthPages>
   );
 };

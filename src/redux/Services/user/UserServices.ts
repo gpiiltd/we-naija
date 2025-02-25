@@ -19,7 +19,7 @@ interface LoginData {
 export const triggerUserSignup = createAsyncThunk<
   SignupResponse,
   SignupData,
-  { rejectValue: string }
+  { rejectValue: any }
 >("user/signup", async (signupData, thunkAPI) => {
   try {
     const response = await axios.post<SignupResponse>(
@@ -29,39 +29,48 @@ export const triggerUserSignup = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      
-      return thunkAPI.rejectWithValue(
-        error.response.data?.message || error.response.statusText
-      );
+      return thunkAPI.rejectWithValue(error.response.data);
     } else if (error.request) {
-      return thunkAPI.rejectWithValue("No response received from server");
+      return thunkAPI.rejectWithValue({
+        code: null,
+        data: "No response received from server"
+      });
     } else {
-      return thunkAPI.rejectWithValue("Error setting up request");
+      return thunkAPI.rejectWithValue({
+        code: null,
+        data: "Error setting up request"
+      });
     }
   }
 });
 
+
 export const triggerUserLogin = createAsyncThunk<
-LoginResponse,LoginData,
-  { rejectValue: string }
->("user/login", async (LoginData, thunkAPI) => {
+  LoginResponse,
+  LoginData,
+  { rejectValue: any }
+>("user/login", async (loginData, thunkAPI) => {
   try {
-    const response = await axios.post<LoginResponse>(
-      apiUrl.login,
-      LoginData
-    );
+    const response = await axios.post<LoginResponse>(apiUrl.login, loginData);
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      
-      return thunkAPI.rejectWithValue(
-        error.response.data?.message || error.response.statusText
-      );
+      return thunkAPI.rejectWithValue(error.response.data);
     } else if (error.request) {
-      return thunkAPI.rejectWithValue("No response received from server");
+      return thunkAPI.rejectWithValue({
+        code: null,
+        data: "No response received from server",
+      });
     } else {
-      return thunkAPI.rejectWithValue("Error setting up request");
+      return thunkAPI.rejectWithValue({
+        code: null,
+        data: "Error setting up request",
+      });
     }
+  }
+});
+
+
 export const triggerForgotPassword = createAsyncThunk<
   ForgotPasswordResponse,
   ForgotPasswordData,

@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SignupResponse } from "../../Services/user/types";
-import { triggerUserSignup,triggerUserLogin} from "../../Services/user/UserServices";
 import {
   ForgotPasswordResponse,
   SignupResponse,
@@ -10,6 +8,7 @@ import {
   triggerOTPRequest,
   triggerOTPValidation,
   triggerResetPassword,
+  triggerUserLogin,
   triggerUserSignup,
 } from "../../Services/user/UserServices";
 
@@ -18,7 +17,6 @@ interface UserState {
   loading: boolean;
   error: string | null;
   message: string | null;
-
   email: string;
 }
 
@@ -40,7 +38,6 @@ const userSlice = createSlice({
     resetState: (state) => {
       state.error = initialState.error;
       state.message = initialState.message;
-      state.loading = initialState.loading;
       state.userData = initialState.userData;
     },
     setUserEmail: (state, action: PayloadAction<string>) => {
@@ -61,13 +58,12 @@ const userSlice = createSlice({
           state.message = action.payload.data.message;
         }
       )
-      .addCase(
-        triggerUserSignup.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload;
-        }
-      )
+      .addCase(triggerUserSignup.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload; 
+        state.message = typeof action.payload === "string" ? action.payload : action.payload.data;
+      })
+      
       .addCase(triggerForgotPassword.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -158,10 +154,11 @@ const userSlice = createSlice({
         triggerUserLogin.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-         state.error = action.payload
+          state.error = action.payload;
+          state.message = typeof action.payload === "string" ? action.payload : action.payload.data;
+          console.log("MESSAGE", state.message);
         }
       );
-
   },
 });
 
