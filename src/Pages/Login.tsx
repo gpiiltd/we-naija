@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/Store/store";
 import { triggerUserLogin } from "../redux/Services/user/UserServices";
-import { resetState } from "../redux/Slices/user/userSlice";
+import { resetState, setUserEmail } from "../redux/Slices/user/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -46,30 +46,38 @@ const Login = () => {
       password: values.password.trim(),
       user_type: "customer",
     };
-    
+
     dispatch(triggerUserLogin(payload));
     checkLoginStatus();
   };
-  
+
   const checkLoginStatus = () => {
     console.log("userdata", userData);
     if (error) {
       toast.error(message);
       return;
     }
-    if (Object.keys(userData).length > 0 && userData.user.email.verified === true) {
+    if (
+      Object.keys(userData).length > 0 &&
+      userData.user.email.verified === true
+    ) {
       toast.success("Login successful");
+      const userEmail = userData?.user?.email?.address.address || "";
+      dispatch(setUserEmail(userEmail));
       setTimeout(() => {
         navigate("/verified-agent-dashboard");
       }, 3000);
-    } else if(Object.keys(userData).length > 0 && userData.user.email.verified === false) {
+    } else if (
+      Object.keys(userData).length > 0 &&
+      userData.user.email.verified === false
+    ) {
       toast.error("User not verified");
+      dispatch(setUserEmail(userData.user.email.address));
       setTimeout(() => {
         navigate("/otp");
       }, 3000);
     }
   };
-  
 
   return (
     <AuthPages>

@@ -1,8 +1,15 @@
-import { LoginResponse } from './../user/types';
+import { LoginResponse } from "./../user/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiUrl } from "../../../config";
-import { ForgotPasswordData, ForgotPasswordResponse, OTPData, OTPRequestData, ResetPasswordData, SignupResponse } from "./types";
+import {
+  ForgotPasswordData,
+  ForgotPasswordResponse,
+  OTPData,
+  OTPRequestData,
+  ResetPasswordData,
+  SignupResponse,
+} from "./types";
 
 interface SignupData {
   email: string;
@@ -33,17 +40,16 @@ export const triggerUserSignup = createAsyncThunk<
     } else if (error.request) {
       return thunkAPI.rejectWithValue({
         code: null,
-        data: "No response received from server"
+        data: "No response received from server",
       });
     } else {
       return thunkAPI.rejectWithValue({
         code: null,
-        data: "Error setting up request"
+        data: "Error setting up request",
       });
     }
   }
 });
-
 
 export const triggerUserLogin = createAsyncThunk<
   LoginResponse,
@@ -70,7 +76,6 @@ export const triggerUserLogin = createAsyncThunk<
   }
 });
 
-
 export const triggerForgotPassword = createAsyncThunk<
   ForgotPasswordResponse,
   ForgotPasswordData,
@@ -84,7 +89,9 @@ export const triggerForgotPassword = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to send forgot password email"
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to send forgot password email"
     );
   }
 });
@@ -102,7 +109,9 @@ export const triggerOTPRequest = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to validate OTP"
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to validate OTP"
     );
   }
 });
@@ -110,20 +119,31 @@ export const triggerOTPRequest = createAsyncThunk<
 export const triggerOTPValidation = createAsyncThunk<
   ForgotPasswordResponse,
   OTPData,
-  { rejectValue: string }
->("user/ValidateOTP", async (OTPData, thunkAPI) => {
+  { rejectValue: any }
+>("user/ValidateOTP", async (otpData, thunkAPI) => {
   try {
     const response = await axios.post<ForgotPasswordResponse>(
       apiUrl.validateOtp,
-      OTPData
+      otpData
     );
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to validate OTP"
-    );
+    if (error.response) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    } else if (error.request) {
+      return thunkAPI.rejectWithValue({
+        code: null,
+        data: "No response received from server",
+      });
+    } else {
+      return thunkAPI.rejectWithValue({
+        code: null,
+        data: "Error setting up request",
+      });
+    }
   }
 });
+
 
 export const triggerResetPassword = createAsyncThunk<
   ForgotPasswordResponse,
@@ -138,7 +158,9 @@ export const triggerResetPassword = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
-      error.response?.message || error.response?.data || "Failed to reset password"
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to reset password"
     );
   }
 });

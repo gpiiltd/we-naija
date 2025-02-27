@@ -42,8 +42,13 @@ const userSlice = createSlice({
     },
     setUserEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
+      console.log('Email in state',state.email);
     },
+    // setLastScreenTime: (state, action: PayloadAction<string>) => {
+    //   state.lastScreenTime = action.payload;
+    // }
   },
+  
   extraReducers: (builder) => {
     builder
       .addCase(triggerUserSignup.pending, (state) => {
@@ -97,7 +102,9 @@ const userSlice = createSlice({
         triggerOTPValidation.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.error = action.payload.message;
+          state.error = action.payload.code;
+          state.message = typeof action.payload === "string" ? action.payload : action.payload.data;
+
         }
       )
       .addCase(triggerOTPRequest.pending, (state) => {

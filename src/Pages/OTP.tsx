@@ -31,32 +31,48 @@ const OTP = () => {
   const [countdown, setCountdown] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const navigate = useNavigate();
-  const { email } = useSelector((state: RootState) => state.user);
   const dispatch: AppDispatch = useDispatch();
-  const { error, message,loading} = useSelector((state: RootState) => state.user);
-
-  const sendOtp = () => {
-    const payload = {
-      code: OTP,
-      target: email,
-    };
-    dispatch(triggerOTPValidation(payload));
+  const { error, message,loading,email} = useSelector((state: RootState) => state.user);
+console.log('Email: ', email)
+const sendOtp = () => {
+  const payload = {
+    code: OTP,
+    target: email,
   };
+  dispatch(triggerOTPValidation(payload));
+};
+
 
   useEffect(() => {
     if(error) {
-      toast.error(error);
+      toast.error(message);
     } else if(!error && message) {
       toast(message);
-
       if(message.includes("Email verification successful")) {
         setTimeout(() => {
-          navigate("/reset-password");
+          navigate("/login");
         }, 1000);
       }
     }
     dispatch(resetState());
   }, [error, message, navigate, dispatch]);
+
+  // const handleVerificationMessage = (lastScreen: "forgot-password" | "login") => {
+  //   if (error) {
+  //     toast.error(message);
+  //   } else if (!error && message) {
+  //     toast(message);
+  //     if (message.includes("Email verification successful")) {
+  //       setTimeout(() => {
+  //         const nextScreen =
+  //           lastScreen === "forgot-password" ? "/reset-password" : "/login";
+  //         navigate(nextScreen);
+  //       }, 1000);
+  //     }
+  //   }
+  //   dispatch(resetState());
+  // };
+  
 
   const handleResendOTP = () => {
     const payload = {
