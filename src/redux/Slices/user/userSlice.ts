@@ -38,6 +38,8 @@ const userSlice = createSlice({
     resetState: (state) => {
       state.error = initialState.error;
       state.message = initialState.message;
+    },
+    resetUserData: (state) => {
       state.userData = initialState.userData;
     },
     setUserEmail: (state, action: PayloadAction<string>) => {
@@ -169,6 +171,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearData, resetState, setUserEmail } = userSlice.actions;
+export const { clearData, resetState, setUserEmail,resetUserData } = userSlice.actions;
 
 export default userSlice.reducer;
