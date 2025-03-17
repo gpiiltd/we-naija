@@ -15,7 +15,7 @@ interface SignupData {
   email: string;
   full_name: string;
   password: string;
-  user_type: string;
+  confirm_password: string;
 }
 
 interface LoginData {
@@ -58,6 +58,7 @@ export const triggerUserLogin = createAsyncThunk<
 >("user/login", async (loginData, thunkAPI) => {
   try {
     const response = await axios.post<LoginResponse>(apiUrl.login, loginData);
+    console.log("response", response.data);
     return response.data;
   } catch (error: any) {
     if (error.response) {

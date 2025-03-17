@@ -64,7 +64,7 @@ const SignUp = () => {
       email: values.email.trim().toLowerCase(),
       full_name: values.fullName.trim(),
       password: values.password.trim(),
-      user_type: "customer",
+      confirm_password: values.confirm_password.trim(),
     };
     dispatch(triggerUserSignup(payload));
   };
