@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AuthPages from "../Components/AuthPages";
 import Typography from "../Components/Typography/Typography";
 import { TypographyVariant } from "../Components/types";
@@ -40,45 +40,55 @@ const Login = () => {
       .trim(),
   });
 
-  const handleLogin = (values: any) => {
-    const payload = {
-      email: values.email.trim().toLowerCase(),
-      password: values.password.trim(),
-      user_type: "customer",
-    };
 
-    dispatch(triggerUserLogin(payload));
+
+const handleLogin = (values:any) => {
+  const payload = {
+    email: values.email.trim().toLowerCase(),
+    password: values.password.trim(),
+    user_type: "customer",
+  };
+
+  dispatch(triggerUserLogin(payload));
+};
+
+useEffect(() => {
+  if (userData || error) {
     checkLoginStatus();
-  };
+  }
+}, [userData, error]);
 
-  const checkLoginStatus = () => {
-    console.log("userdata", userData);
-    if (error) {
-      toast.error(message);
-      return;
-    }
-    if (
-      Object.keys(userData).length > 0 &&
-      userData.user.email.verified === true
-    ) {
-      toast.success("Login successful");
-      const userEmail = userData?.user?.email?.address.address || "";
-      dispatch(setUserEmail(userEmail));
-      setTimeout(() => {
-        navigate("/verified-agent-dashboard");
-      }, 3000);
-    } else if (
-      Object.keys(userData).length > 0 &&
-      userData.user.email.verified === false
-    ) {
-      toast.error("User not verified");
-      dispatch(setUserEmail(userData.user.email.address));
-      setTimeout(() => {
-        navigate("/otp");
-      }, 3000);
-    }
-  };
+const checkLoginStatus = () => {
+  console.log("userdata", userData);
+  if (error) {
+    toast.error(message);
+    dispatch(resetState())
+    return;
+  }
+  if (
+    Object.keys(userData).length > 0 &&
+    userData.user.email.verified === true
+  ) {
+    toast.success("Login successful");
+    const userEmail = userData?.user?.email?.address.address || "";
+    dispatch(setUserEmail(userEmail));
+    setTimeout(() => {
+      navigate("/verified-agent-dashboard");
+      dispatch(resetState())
 
+    }, 3000);
+  } else if (
+    Object.keys(userData).length > 0 &&
+    userData.user.email.verified === false
+  ) {
+    toast.error("User not verified");
+    dispatch(setUserEmail(userData.user.email.address));
+    setTimeout(() => {
+      navigate("/otp");
+    }, 3000);
+  }
+};
+  
   return (
     <AuthPages>
       <ToastContainer />
