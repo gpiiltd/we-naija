@@ -61,10 +61,7 @@ const Login = () => {
       dispatch(resetState());
       return;
     }
-    if (
-      Object.keys(userData).length > 0 &&
-      userData.kyc_status === "pending"
-    ) {
+    if (Object.keys(userData).length > 0 && userData.kyc_status === "pending") {
       toast.success("Login successful");
       const userEmail = userData?.email || "";
       dispatch(setUserEmail(userEmail));
@@ -77,7 +74,9 @@ const Login = () => {
       // && userData.kyc_status === "pendingxxx"
     ) {
       toast.error("User not verified");
-      dispatch(setUserEmail(userData.email));
+      if (userData.email) {
+        dispatch(setUserEmail(userData.email));
+      }
       setTimeout(() => {
         navigate("/otp");
       }, 3000);

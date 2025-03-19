@@ -61,11 +61,11 @@ export const triggerUserLogin = createAsyncThunk<
     const response = await axios.post(apiUrl.login, loginData);
     localStorage.setItem(
       "accessToken",
-      JSON.stringify(response.data.results?.access_credentials.access_token)
+      response.data.results?.access_credentials.access_token
     );
     localStorage.setItem(
       "refreshToken",
-      JSON.stringify(response.data.results?.access_credentials.refresh_token)
+      response.data.results?.access_credentials.refresh_token
     );
     return response.data;
   } catch (error: any) {
@@ -164,10 +164,11 @@ export const triggerForgotPasswordOtp = createAsyncThunk<
       apiUrl.forgotPasswordOtp,
       otpData
     );
-    localStorage.setItem(
-      "otpToken",
-      JSON.stringify(response.data.results?.access_credentials.token)
-    );
+
+    const token = response.data.results?.access_credentials.token;
+    if (token) {
+      localStorage.setItem("otpToken", token);
+    }
     return response.data;
   } catch (error: any) {
     if (error.response) {
@@ -193,15 +194,9 @@ export const triggerResetPassword = createAsyncThunk<
 >("user/resetPassword", async (resetPasswordData, thunkAPI) => {
   try {
     const token = localStorage.getItem("otpToken");
-    console.log("token>>>>>>", token);
     const response = await axios.put<DefaultResponse>(
       `${apiUrl.resetPassword}`,
       resetPasswordData,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // }
       {
         headers: {
           Authorization: `Bearer ${token}`,
