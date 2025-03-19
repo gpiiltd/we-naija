@@ -40,55 +40,50 @@ const Login = () => {
       .trim(),
   });
 
+  const handleLogin = (values: any) => {
+    const payload = {
+      email: values.email.trim().toLowerCase(),
+      password: values.password.trim(),
+    };
 
-
-const handleLogin = (values:any) => {
-  const payload = {
-    email: values.email.trim().toLowerCase(),
-    password: values.password.trim(),
-    user_type: "customer",
+    dispatch(triggerUserLogin(payload));
   };
 
-  dispatch(triggerUserLogin(payload));
-};
+  useEffect(() => {
+    if (userData || error) {
+      checkLoginStatus();
+    }
+  });
 
-useEffect(() => {
-  if (userData || error) {
-    checkLoginStatus();
-  }
-}, [userData, error]);
+  const checkLoginStatus = () => {
+    if (error) {
+      toast.error(message);
+      dispatch(resetState());
+      return;
+    }
+    if (
+      Object.keys(userData).length > 0 &&
+      userData.kyc_status === "pending"
+    ) {
+      toast.success("Login successful");
+      const userEmail = userData?.email || "";
+      dispatch(setUserEmail(userEmail));
+      setTimeout(() => {
+        navigate("/verified-agent-dashboard");
+        dispatch(resetState());
+      }, 3000);
+    } else if (
+      Object.keys(userData).length > 0
+      // && userData.kyc_status === "pendingxxx"
+    ) {
+      toast.error("User not verified");
+      dispatch(setUserEmail(userData.email));
+      setTimeout(() => {
+        navigate("/otp");
+      }, 3000);
+    }
+  };
 
-const checkLoginStatus = () => {
-  console.log("userdata", userData);
-  if (error) {
-    toast.error(message);
-    dispatch(resetState())
-    return;
-  }
-  if (
-    Object.keys(userData).length > 0 &&
-    userData.user.email.verified === true
-  ) {
-    toast.success("Login successful");
-    const userEmail = userData?.user?.email?.address.address || "";
-    dispatch(setUserEmail(userEmail));
-    setTimeout(() => {
-      navigate("/verified-agent-dashboard");
-      dispatch(resetState())
-
-    }, 3000);
-  } else if (
-    Object.keys(userData).length > 0 &&
-    userData.user.email.verified === false
-  ) {
-    toast.error("User not verified");
-    dispatch(setUserEmail(userData.user.email.address));
-    setTimeout(() => {
-      navigate("/otp");
-    }, 3000);
-  }
-};
-  
   return (
     <AuthPages>
       <ToastContainer />

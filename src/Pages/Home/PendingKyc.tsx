@@ -6,14 +6,16 @@ import backgroundImage from "../../Assets/svgImages/reportCardBg.svg";
 import { useNavigate } from "react-router-dom";
 import { PiPaperPlaneTiltFill } from "react-icons/pi";
 import woman from "../../Assets/svgImages/woman_green.svg";
+import { useSelector } from "react-redux";
 
 const PendingKyc = () => {
   const navigate = useNavigate();
+  const userData = useSelector((state: any) => state.user.userData);
 
   return (
     <div>
       <p className="font-normal text-[#5E5959] text-lg">
-        Hello, <span className="font-bold text-black">Blessing</span> 👋
+        Hello, <span className="font-bold text-black">{userData.first_name}</span> 👋
       </p>
       <p className="font-light text-[#5E5959] text-sm">
         Let’s improve health care service together.

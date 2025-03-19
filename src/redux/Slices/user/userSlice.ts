@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   ForgotPasswordResponse,
-  SignupResponse,
+  SignupResponse,DefaultResponse
 } from "../../Services/user/types";
 import {
   triggerForgotPassword,
+  triggerForgotPasswordOtp,
   triggerOTPRequest,
   triggerOTPValidation,
   triggerResetPassword,
@@ -18,6 +19,7 @@ interface UserState {
   error: string | null;
   message: string | null;
   email: string;
+  otpToken: string;
 }
 
 const initialState: UserState = {
@@ -26,6 +28,7 @@ const initialState: UserState = {
   error: null,
   message: null,
   email: "",
+  otpToken: "",
 };
 
 const userSlice = createSlice({
@@ -56,19 +59,20 @@ const userSlice = createSlice({
       .addCase(triggerUserSignup.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.userData = {};
+        state.message = '';
       })
       .addCase(
         triggerUserSignup.fulfilled,
         (state, action: PayloadAction<SignupResponse>) => {
           state.loading = false;
-          state.userData = action.payload.data;
-          state.message = action.payload.data.message;
+          state.message = action.payload.message;
         }
       )
       .addCase(triggerUserSignup.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.error = action.payload; 
-        state.message = typeof action.payload === "string" ? action.payload : action.payload.data;
+        state.message = action.payload.message;
       })
       
       .addCase(triggerForgotPassword.pending, (state) => {
@@ -77,16 +81,16 @@ const userSlice = createSlice({
       })
       .addCase(
         triggerForgotPassword.fulfilled,
-        (state, action: PayloadAction<ForgotPasswordResponse>) => {
+        (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
-          state.message = action.payload.data || null;
+          state.message = action.payload.message;
         }
       )
       .addCase(
         triggerForgotPassword.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.error = action.payload.data;
+          state.error = action.payload.message;
         }
       )
       .addCase(triggerOTPValidation.pending, (state) => {
@@ -109,15 +113,36 @@ const userSlice = createSlice({
 
         }
       )
+      .addCase(triggerForgotPasswordOtp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        triggerForgotPasswordOtp.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.message = action.payload.message;
+          state.otpToken = action.payload.results?.access_credentials.token || "";
+        }
+      )
+      .addCase(
+        triggerForgotPasswordOtp.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.status_code;
+          state.message =  action.payload.message ;
+
+        }
+      )
       .addCase(triggerOTPRequest.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(
         triggerOTPRequest.fulfilled,
-        (state, action: PayloadAction<ForgotPasswordResponse>) => {
+        (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
-          state.message = action.payload.data || null;
+          state.message = action.payload.message;
         }
       )
       .addCase(
@@ -133,16 +158,16 @@ const userSlice = createSlice({
       })
       .addCase(
         triggerResetPassword.fulfilled,
-        (state, action: PayloadAction<ForgotPasswordResponse>) => {
+        (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
-          state.message = action.payload.data || null;
+          state.message = action.payload.message;
         }
       )
       .addCase(
         triggerResetPassword.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.error = action.payload.data;
+          state.error = action.payload.message;
         }
       )
 
@@ -153,10 +178,10 @@ const userSlice = createSlice({
       })
       .addCase(
         triggerUserLogin.fulfilled,
-        (state, action: PayloadAction<SignupResponse>) => {
+        (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.userData = action.payload.data;
-          state.message = action.payload.data.message;
+          state.userData = action.payload.results;
+          state.message = action.payload.message;
         }
       )
       .addCase(
@@ -164,8 +189,7 @@ const userSlice = createSlice({
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
-          state.message = typeof action.payload === "string" ? action.payload : action.payload.data;
-          console.log("MESSAGE", state.message);
+          state.message = action.payload.message;
         }
       );
   },
