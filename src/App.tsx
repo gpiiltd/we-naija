@@ -37,7 +37,9 @@ import { Provider } from "react-redux";
 import store from "../src/redux/Store/store";
 import "react-toastify/dist/ReactToastify.css"; // Ensure this CSS is imported
 import { ToastContainer } from "react-toastify";
-
+import ForgotPasswordOtp from "./Pages/ForgotPasswordOtp";
+import EmailSent from "./Pages/EmailSent";
+import EmailVerification from "./Pages/EmailVerification";
 function App() {
   return (
     <>
@@ -50,7 +52,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/otp" element={<OTP />} />
+            <Route path="/email-sent" element={<EmailSent />} />
+            <Route path="/email-verification/:uid/:email_token" element={<EmailVerification />} />
             <Route path="/reset-password" element={<CreateNewPassword />} />
+            <Route path="/forgot-password-otp" element={<ForgotPasswordOtp />} />
             <Route path="/kyc/*" Component={Kyc} />
             <Route path="/kyc/validate-phone" Component={KycPhonenumber} />
             <Route path="/kyc/enter-otp" Component={EnterOtp} />

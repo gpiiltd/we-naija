@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/Store/store";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  triggerOTPValidation,
   triggerOTPRequest,
+  triggerForgotPasswordOtp,
 } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
@@ -28,7 +28,7 @@ const borderStyle = {
   margin: "3px",
 };
 
-const OTP = () => {
+const ForgotPasswordOtp = () => {
   const [OTP, setOTP] = useState("");
   const [countdown, setCountdown] = useState(30);
   const [canResend, setCanResend] = useState(false);
@@ -42,9 +42,9 @@ const OTP = () => {
 
   const sendOtp = () => {
     const payload = {
-      otp: OTP,
+      otp: OTP
     };
-    dispatch(triggerOTPValidation(payload));
+    dispatch(triggerForgotPasswordOtp(payload));
   };
 
   useEffect(() => {
@@ -52,36 +52,12 @@ const OTP = () => {
       toast.error(message);
     } else if (!error && message) {
       toast(message);
-      if (message.includes("Email verification successful")) {
         setTimeout(() => {
-          navigate("/login");
+          navigate("/reset-password");
         }, 1000);
-      }
     }
     dispatch(resetState());
-  }, [error, message, navigate, dispatch]);
-
-
-  // const handleVerificationMessage = (lastScreen: "forgot-password" | "login") => {
-  //   if (error) {
-  //     toast.error(message);
-  //   } else if (!error && message) {
-  //     toast(message);
-  //     if (message.includes("Email verification successful")) {
-  //       setTimeout(() => {
-  //         const nextScreen =
-  //           lastScreen === "forgot-password" ? "/reset-password" : "/login";
-  //         navigate(nextScreen);
-  //       }, 1000);
-  //     }
-  //   }
-  //   dispatch(resetState());
-  // };
-
-  // useEffect(() => {
-  //   handleVerificationMessage("forgot-password");
-  // }, [error, message, navigate, dispatch]);
-
+  }, [error, message, navigate, dispatch ]);
 
   const handleResendOTP = () => {
     const payload = {
@@ -212,4 +188,4 @@ const OTP = () => {
   );
 };
 
-export default OTP;
+export default ForgotPasswordOtp;

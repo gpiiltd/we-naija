@@ -22,7 +22,6 @@ const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const { email } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
@@ -49,9 +48,8 @@ const CreateNewPassword = () => {
 
   const handleNewPassword = (values: any) => {
     const payload = {
-      password: values.passwordReset.trim(),
-      repeat_password: values.confirmPassword.trim(),
-      email: email,
+      new_password: values.passwordReset.trim(),
+      confirm_new_password: values.confirmPassword.trim(),
     };
     dispatch(triggerResetPassword(payload));
   };
