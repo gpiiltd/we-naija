@@ -6,6 +6,8 @@ interface ApiUrls {
   requestOtp: string;
   validateOtp: string;
   resetPassword: string;
+  emailVerificationResend: string;
+  emailVerification: string;
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
@@ -20,4 +22,6 @@ export const apiUrl: ApiUrls = {
   forgotPassword: `${BASE_URL}request/password-reset-token`,
   forgotPasswordOtp: `${BASE_URL}verify/password-reset-token`,
   resetPassword: `${BASE_URL}process/password-reset`,
+  emailVerificationResend: `${BASE_URL}request/resend/verification-email`,
+  emailVerification: `${BASE_URL}verify/email`,
 };

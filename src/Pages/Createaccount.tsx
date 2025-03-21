@@ -69,10 +69,10 @@ const SignUp = () => {
     dispatch(triggerUserSignup(payload));
     dispatch(setUserEmail(values.email));
   };
-  
+
   const navigateToLogin = () => {
     setShowModal(false);
-    navigate("/otp");
+    navigate("/email-sent");
   };
 
   useEffect(() => {

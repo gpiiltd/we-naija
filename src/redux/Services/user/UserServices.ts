@@ -1,4 +1,4 @@
-import { DefaultResponse } from "./../user/types";
+import { DefaultResponse, EmailVerificationData } from "./../user/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiUrl } from "../../../config";
@@ -211,6 +211,54 @@ export const triggerResetPassword = createAsyncThunk<
       error.response?.message ||
         error.response?.data ||
         "Failed to reset password"
+    );
+  }
+});
+
+export const triggerEmailVerificationResend = createAsyncThunk<
+  DefaultResponse,
+  ForgotPasswordData,
+  { rejectValue: string }
+>("user/EmailVerificationResend", async (forgotPasswordData, thunkAPI) => {
+  try {
+    const response = await axios.post<DefaultResponse>(
+      apiUrl.emailVerificationResend,
+      forgotPasswordData
+    );
+    console.log("EMAIL VERIFICATION RESEND response>>>>>>", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to resend email verification link"
+    );
+  }
+});
+
+export const triggerEmailVerification = createAsyncThunk<
+  DefaultResponse,
+  EmailVerificationData,
+  { rejectValue: string }
+>("user/EmailVerification", async (EmailVerificationData, thunkAPI) => {
+  try {
+    const { uid, email_token } = EmailVerificationData;
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.emailVerification}/${uid}/${email_token}`,
+      // {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Accept: "application/json",
+      //   },
+      // }
+    );
+    console.log("EMAIL VERIFICATION response>>>>>>", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to resend email verification link"
     );
   }
 });

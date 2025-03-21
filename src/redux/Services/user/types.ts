@@ -34,6 +34,11 @@
   export interface ForgotPasswordData {
     email: string;
   }
+
+  export interface EmailVerificationData {
+    uid: string;
+    email_token: string;
+  }
   
   export interface ForgotPasswordResponse {
     code: number;
