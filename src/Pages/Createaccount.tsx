@@ -17,7 +17,7 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { resetState, resetUserData } from "../redux/Slices/user/userSlice";
+import { resetState, resetUserData, setUserEmail } from "../redux/Slices/user/userSlice";
 import CustomModal from "../Components/Modal";
 import Icon from "../Assets/SvgImagesAndIcons";
 
@@ -64,19 +64,21 @@ const SignUp = () => {
       email: values.email.trim().toLowerCase(),
       full_name: values.fullName.trim(),
       password: values.password.trim(),
-      user_type: "customer",
+      confirm_password: values.confirmPassword.trim(),
     };
     dispatch(triggerUserSignup(payload));
+    dispatch(setUserEmail(values.email));
   };
+
   const navigateToLogin = () => {
     setShowModal(false);
-    navigate("/otp");
+    navigate("/email-sent");
   };
 
   useEffect(() => {
-    if (message) {
+    if (error) {
       toast.error(message);
-    } else if (!error && Object.keys(userData).length > 0) {
+    } else if (!error && message) {
       setShowModal(true);
     }
     dispatch(resetState());

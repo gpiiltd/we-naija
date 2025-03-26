@@ -13,7 +13,7 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
-import { setUserEmail } from "../redux/Slices/user/userSlice";
+import { resetState, setUserEmail } from "../redux/Slices/user/userSlice";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -38,10 +38,10 @@ const ForgotPassword = () => {
     } else if(!error && message) {
       toast(message);
       setTimeout(() => {
-        navigate("/otp");
+        navigate("/forgot-password-otp");
       }, 1000);
     }
-    // dispatch(resetState());
+    dispatch(resetState());
   }, [error, message, navigate, dispatch]);
 
   return (
