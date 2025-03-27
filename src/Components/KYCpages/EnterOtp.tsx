@@ -4,15 +4,23 @@ import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { triggerPhoneNumberVerificationOtp } from "../../redux/Services/user/UserServices";
+import { toast } from "react-toastify";
+import { RootState } from "../../redux/Store/store";
 
 
 const EnterOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [error, setError] = useState("");
+  const [Errors, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const { error, message, email, kycPhoneNumber } = useSelector(
+    (state: RootState) => state.user
+  );
 
-
-  const phoneNumber = "08104201433";
+  // const kycPhoneNumber = useSelector((state: RootState) => state.user.kyckycPhoneNumber);
 
   const handleChange = (index: number, value: string) => {
     if (/^[0-9]*$/.test(value)) {
@@ -45,11 +53,24 @@ const EnterOtp = () => {
       return;
     }
     const otpCode = otp.join("");
-    navigate('/kyc/personal-information')
+    // navigate('/kyc/personal-information')
     console.log("Entered OTP:", otpCode);
+    const payload = {
+      mobile_number: kycPhoneNumber,
+      otp: otpCode,
+    };
+    dispatch(triggerPhoneNumberVerificationOtp(payload) as any);
+    if (error) {
+      toast.error(error);
+    } else if (!error && message) {
+      toast(message);
+      setTimeout(() => {
+        navigate("/kyc/personal-information");
+      }, 3000);
+    }
   };
 
-  const isSubmitDisabled = otp.some((digit) => digit === "") || error !== "";
+  const isSubmitDisabled = otp.some((digit) => digit === "") || Errors !== "";
 
   return (
     <>
@@ -64,7 +85,7 @@ const EnterOtp = () => {
             className=" mb-6 text-gray-500"
           >
             Enter the 6-digit code sent to{" "}
-            <span className="font-bold text-primary_green">{phoneNumber}</span>
+            <span className="font-bold text-primary_green">{kycPhoneNumber}</span>
           </Typography>
 
           <div className="flex mb-6 gap-1 pt-4 items-center justify-center">
@@ -81,14 +102,14 @@ const EnterOtp = () => {
               />
             ))}
           </div>
-          {error && (
+          {/* {error && (
             <Typography
               variant={TypographyVariant.NORMAL}
               className="text-red-500 text-center"
             >
               {error}
             </Typography>
-          )}
+          )} */}
 
           <Typography
             variant={TypographyVariant.NORMAL}

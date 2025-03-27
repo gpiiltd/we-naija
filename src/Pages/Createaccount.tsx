@@ -79,7 +79,9 @@ const SignUp = () => {
     if (error) {
       toast.error(message);
     } else if (!error && message) {
-      setShowModal(true);
+      // setShowModal(true);
+      toast.success(message);
+      navigate("/email-sent");
     }
     dispatch(resetState());
     dispatch(resetUserData())

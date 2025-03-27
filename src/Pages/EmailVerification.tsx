@@ -66,6 +66,10 @@ const EmailSent = () => {
       toast(message);
       setShowModal(true);
     }
+
+    setTimeout(() => {
+      setShowModal(true);
+    }, 3000);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, uid, email_token]);
 

@@ -76,7 +76,7 @@ const BasicInfo = () => {
             />
             <FloatingSelect
               label="Gender"
-              options={genderOptions}
+              options={genderOptions.map((option) => option.name)}
               value={gender}
               onChange={setGender}
               error={gender === "" && error ? "Gender is required." : ""}

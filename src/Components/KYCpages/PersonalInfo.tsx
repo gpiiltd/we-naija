@@ -10,6 +10,9 @@ import FloatingInput from "../Input/FloatingInput";
 import FloatingSelect from "../Input/FloatingSelect";
 import { genderOptions } from "../../utils/selectOptions";
 import { nationalityOptions } from "../../utils/selectOptions";
+import { setKycPersonalInfo } from "../../redux/Slices/user/userSlice";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/Store/store";
 
 const PersonalInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +21,7 @@ const PersonalInfo = () => {
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const dispatch: AppDispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -42,6 +46,16 @@ const PersonalInfo = () => {
       gender,
       dateOfBirth,
     });
+
+    dispatch(
+      setKycPersonalInfo({
+        address,
+        nationality,
+        gender,
+        dateOfBirth,
+      })
+    );
+
     navigate("/kyc/id-verification");
   };
 
@@ -83,21 +97,27 @@ const PersonalInfo = () => {
             />
             <FloatingSelect
               label="Gender"
-              options={genderOptions}
-              value={gender}
-              onChange={setGender}
+              options={genderOptions.map((option) => option.name)}
+              value={genderOptions.find((option) => option.value === gender)?.name || ""}
+              onChange={(selectedOption) => {
+                const selectedGender = genderOptions.find((option) => option.name === selectedOption);
+                if (selectedGender) {
+                  setGender(selectedGender.value);
+                }
+              }}
               error={gender === "" && error ? "Gender is required." : ""}
             />
             <FloatingInput
               label="Date of birth"
-              // type="date"
+              type="date"
               value={dateOfBirth}
               onChange={setDateOfBirth}
               error={
                 dateOfBirth === "" && error ? "Date of birth is required." : ""
               }
-              readOnly={true}
-              onClick={() => setIsModalOpen(true)}
+              // readOnly={true}
+              // onClick={() => setIsModalOpen(true)}
+              
               icon={<Icon type="calendar" className="w-6 h-6" />}
             />
             <button

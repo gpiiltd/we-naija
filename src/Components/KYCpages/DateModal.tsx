@@ -17,17 +17,22 @@ const DateModal: React.FC<DateModalProps> = ({
 
   const handleApply = () => {
     if (selectedDate) {
-      // Format date as DD-MM-YYYY
-      const formattedDate = `${String(selectedDate.getDate()).padStart(
-        2,
-        "0"
-      )}-${String(selectedDate.getMonth() + 1).padStart(
-        2,
-        "0"
-      )}-${selectedDate.getFullYear()}`;
+      // Format date as YYYY-MM-DD
+      const formattedDate = `${selectedDate.getFullYear()}-${String(
+        selectedDate.getMonth() + 1
+      ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`;
       onDateSelect(formattedDate);
       onClose();
+      console.log("formattedDate", formattedDate);
     }
+    // // Format date as DD-MM-YYYY
+    // const formattedDate = `${String(selectedDate.getDate()).padStart(
+    //   2,
+    //   "0"
+    // )}-${String(selectedDate.getMonth() + 1).padStart(
+    //   2,
+    //   "0"
+    // )}-${selectedDate.getFullYear()}`;
   };
 
   if (!isOpen) return null;

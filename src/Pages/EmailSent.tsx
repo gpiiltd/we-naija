@@ -85,7 +85,7 @@ const EmailSent = () => {
             >
               A verification link has been sent to{" "}
               <span className="font-bold text-[#007A61]">
-                blessing@gmail.com{email}
+                {email}
               </span>
             </Typography>
           </div>

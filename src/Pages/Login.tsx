@@ -61,7 +61,7 @@ const Login = () => {
       dispatch(resetState());
       return;
     }
-    if (Object.keys(userData).length > 0 && userData.kyc_status === "pending") {
+    if (Object.keys(userData).length > 0 && userData.kyc_status === "approved") {
       toast.success("Login successful");
       const userEmail = userData?.email || "";
       dispatch(setUserEmail(userEmail));
@@ -71,7 +71,18 @@ const Login = () => {
       }, 3000);
     } else if (
       Object.keys(userData).length > 0
-      // && userData.kyc_status === "pendingxxx"
+      && userData.kyc_status === "pending"
+    ) {
+      toast.error("Kindly complete your KYC to continue");
+      if (userData.email) {
+        dispatch(setUserEmail(userData.email));
+      }
+      setTimeout(() => {
+        navigate("/kyc/*");
+      }, 3000);
+    } else if (
+      Object.keys(userData).length > 0
+      && userData.kyc_status === "pending"
     ) {
       toast.error("User not verified");
       if (userData.email) {
@@ -81,6 +92,7 @@ const Login = () => {
         navigate("/otp");
       }, 3000);
     }
+    
   };
 
   return (
