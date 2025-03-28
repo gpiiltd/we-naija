@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/Store/store";
 import { triggerKycInfoSubmit } from "../../redux/Services/user/UserServices";
 import { toast } from "react-toastify";
+import { resetState } from "../../redux/Slices/user/userSlice";
 
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
@@ -66,13 +67,17 @@ const IDVerification = () => {
       mobile_number: kycPhoneNumber || "08130966935",
       id_type: idType,
       id_number: idNumber,
-      id_front: frontFile?.name || "",
-      id_back: backFile?.name || "",
+      id_front: "12345678903",
+      id_back: "12345678906",
     };
     console.log("payload>>>", payload);
 
     dispatch(triggerKycInfoSubmit(payload) as any);
 
+
+  };
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       setLoading(false);
@@ -81,9 +86,10 @@ const IDVerification = () => {
       setTimeout(() => {
         setLoading(false);
         setShowModal(true);
-      }, 3000);
+      }, 2000);
     }
-  };
+    dispatch(resetState());
+  }, [error, message, dispatch]);
 
   return (
     <>
@@ -110,9 +116,9 @@ const IDVerification = () => {
             </Typography>
             {[
               { name: "National ID", value: "national_id" },
-              { name: "International passport", value: "international_passport" },
-              { name: "Drivers licence", value: "drivers_licence" },
-              { name: "Permanent voter card", value: "permanent_voter_card" },
+              { name: "International passport", value: "passport" },
+              { name: "Drivers licence", value: "driver_license" },
+              { name: "Permanent voter card", value: "permanent_voters_card" },
             ].map((type) => (
               <label key={type.value} className="flex items-center mb-4">
                 <input
@@ -210,12 +216,16 @@ const IDVerification = () => {
             />
           </div>
 
-          <button
-            onClick={handleSubmit}
-            className="w-full bg-teal-700 text-white rounded-xl h-14 mt-8"
-          >
-            Submit
-          </button>
+      
+
+          <Button
+              text="Submit"
+              active={true}
+              bg_color="#007A61"
+              text_color="white"
+              loading={loading}
+              onClick={handleSubmit}
+            />
 
           <div className="flex pt-4 items-center justify-center">
             <SkipButton />

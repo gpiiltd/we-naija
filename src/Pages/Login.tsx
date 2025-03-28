@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const dispatch: AppDispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(true);
+  const [inputEmail, setInputEmail] = useState(""); 
   const navigate = useNavigate();
   const { error, userData, message, loading } = useSelector(
     (state: RootState) => state.user
@@ -46,13 +47,17 @@ const Login = () => {
       password: values.password.trim(),
     };
 
+    setInputEmail(values.email.trim().toLowerCase()); 
     dispatch(triggerUserLogin(payload));
+
+    
   };
 
   useEffect(() => {
     if (userData || error) {
       checkLoginStatus();
     }
+    dispatch(resetState());
   });
 
   const checkLoginStatus = () => {
@@ -61,7 +66,7 @@ const Login = () => {
       dispatch(resetState());
       return;
     }
-    if (Object.keys(userData).length > 0 && userData.kyc_status === "approved") {
+    if (Object.keys(userData).length > 0 && userData.kyc_step === "completed") {
       toast.success("Login successful");
       const userEmail = userData?.email || "";
       dispatch(setUserEmail(userEmail));
@@ -73,26 +78,28 @@ const Login = () => {
       Object.keys(userData).length > 0
       && userData.kyc_status === "pending"
     ) {
-      toast.error("Kindly complete your KYC to continue");
+      toast.success("Kindly complete your KYC to continue");
+      console.log("userData Pending KYC" , userData);
       if (userData.email) {
         dispatch(setUserEmail(userData.email));
       }
       setTimeout(() => {
         navigate("/kyc/*");
+        // navigate("/verified-agent-dashboard");
       }, 3000);
-    } else if (
-      Object.keys(userData).length > 0
-      && userData.kyc_status === "pending"
-    ) {
-      toast.error("User not verified");
-      if (userData.email) {
-        dispatch(setUserEmail(userData.email));
+      dispatch(resetState());
+    } else if(message?.includes("Email not verified. Please verify your email to proceed")){
+      // toast.error("Email not verified. Please verify your email to proceed");
+      toast.error(message);
+      console.log("userData", userData);
+      if (inputEmail) {
+        dispatch(setUserEmail(inputEmail));
       }
       setTimeout(() => {
-        navigate("/otp");
+        navigate("/email-sent");
       }, 3000);
+      dispatch(resetState());
     }
-    
   };
 
   return (

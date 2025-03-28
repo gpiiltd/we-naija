@@ -62,14 +62,15 @@ export const triggerUserLogin = createAsyncThunk<
     const response = await axios.post(apiUrl.login, loginData);
     localStorage.setItem(
       "accessToken",
-      response.data.results?.access_credentials.access_token
+      response?.data?.results?.access_credentials?.access_token
     );
     localStorage.setItem(
       "refreshToken",
-      response.data.results?.access_credentials.refresh_token
+      response?.data?.results?.access_credentials?.refresh_token
     );
     return response.data;
   } catch (error: any) {
+    console.log("error>>>", error);
     if (error.response) {
       return thunkAPI.rejectWithValue(error.response.data);
     } else if (error.request) {
@@ -246,12 +247,16 @@ export const triggerEmailVerification = createAsyncThunk<
     const { uid, email_token } = EmailVerificationData;
     const response = await axios.get<DefaultResponse>(
       `${apiUrl.emailVerification}/${uid}/${email_token}`,
-      // {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Accept: "application/json",
-      //   },
-      // }
+      // 
+      {
+        headers: {
+          "access-control-allow-origin": "*",
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          'Access-Control-Allow-Methods': '*',
+          
+        },
+        withCredentials: true,
+      }
     );
     console.log("EMAIL VERIFICATION response>>>>>>", response.data);
     return response.data;

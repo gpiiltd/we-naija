@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TypographyVariant } from "../../Components/types";
 import Typography from "../../Components/Typography";
 import FloatingSelect from "../../Components/Input/FloatingSelect";
@@ -7,13 +7,24 @@ import { nigerianAddresses } from "../../utils/selectOptions";
 import { useNavigate } from "react-router-dom";
 
 import Icon from "../../Assets/SvgImagesAndIcons";
+import { RootState } from "../../redux/Store/store";
+import { useSelector } from "react-redux";
 const ContactInfo = () => {
   const [email, setEmail] = useState("jellygrande@gmail.com");
   const [phoneNumber, setPhoneNumber] = useState("081042001438");
   const [address, setAddress] = useState("123 Lagos Street, Lagos");
   const [error] = useState("");
   const navigate = useNavigate();
+  const userData = useSelector((state: RootState) => state.user.userData);
 
+  useEffect(() => {
+    if (userData) {
+      setEmail(userData.email || "");
+      setPhoneNumber(userData.mobile_number || "");
+      setAddress(userData.address || "");
+    }
+  }, [userData]);
+  
   const isFormComplete = address !== "" && email !== "" && phoneNumber !== "";
 
   const handleSubmit = (e: React.FormEvent) => {

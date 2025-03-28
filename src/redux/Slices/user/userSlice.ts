@@ -219,6 +219,7 @@ const userSlice = createSlice({
       .addCase(
         triggerUserLogin.rejected,
         (state, action: PayloadAction<any>) => {
+          console.log("action", action);
           state.loading = false;
           state.error = action.payload;
           state.message = action.payload.message;

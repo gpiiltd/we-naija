@@ -54,9 +54,7 @@ export const nationalityOptions = [
 export const genderOptions = [
   { name: "Male", value: "male" },
   { name: "Female", value: "female" },
-  { name: "Non-binary", value: "non-binary" },
-  { name: "Bigender", value: "bigender" },
-  { name: "Prefer not to say", value: "prefer not to say" }
+  { name: "Other", value: "other" },
 ];
 
 export const nigerianAddresses = [

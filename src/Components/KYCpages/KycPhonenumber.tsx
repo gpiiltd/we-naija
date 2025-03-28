@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
 import SkipButton from "./SkipButton";
@@ -12,11 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { triggerPhoneNumberVerification } from "../../redux/Services/user/UserServices";  
 import { toast } from "react-toastify";
 import { RootState } from "../../redux/Store/store";
-import { setKycPhoneNumber } from "../../redux/Slices/user/userSlice";
+import { setKycPhoneNumber, resetState } from "../../redux/Slices/user/userSlice";
+
 const KycPhonenumber = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, message, email } = useSelector(
+  const { error, message, email, loading } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -28,17 +29,20 @@ const KycPhonenumber = () => {
     console.log("Proceed with phone number:", values.phoneNumber);
     dispatch(setKycPhoneNumber(values.phoneNumber));
     dispatch(triggerPhoneNumberVerification(payload) as any);
+  };
 
+  useEffect(() => {
     if (error) {
       toast.error(error);
     } else if (!error && message) {
-      toast(message);
+      // toast.success(message);
+      toast.success("Otp has been sent to the provided phone number");
       setTimeout(() => {
         navigate("/kyc/enter-otp");
-      }, 3000);
+      }, 1000);
     }
-   
-  };
+    dispatch(resetState());
+  }, [error, message, navigate, dispatch]);
 
   const initialValues = {
     phoneNumber: "",
@@ -110,6 +114,7 @@ const KycPhonenumber = () => {
                   active={isValid && dirty}
                   bg_color="#007A61"
                   text_color="white"
+                  loading={loading}
                   // onClick={handleProceed}
                 />
               </Form>
