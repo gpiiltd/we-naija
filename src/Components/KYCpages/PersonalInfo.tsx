@@ -13,6 +13,10 @@ import { nationalityOptions } from "../../utils/selectOptions";
 import { setKycPersonalInfo } from "../../redux/Slices/user/userSlice";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../redux/Store/store";
+import DatePicker from "react-datepicker"; // Import the DatePicker
+// import "react-datepicker/dist/react-datepicker.css"; // Import the CSS for styling
+// import "./datepicker.css";
+import Calendar from "react-calendar"; // Import the Calendar component
 
 const PersonalInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,17 +24,26 @@ const PersonalInfo = () => {
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+  // const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null); // Change to Date type
+
   const dispatch: AppDispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const handleDateSelect = (date: string) => {
+  // const handleDateSelect = (date: string) => {
+  //   setDateOfBirth(new Date(date));
+  // };
+
+  const handleDateSelect = (date: Date | null) => {
     setDateOfBirth(date);
   };
 
   const isFormComplete =
-    address !== "" && nationality !== "" && gender !== "" && dateOfBirth !== "";
+    address !== "" &&
+    nationality !== "" &&
+    gender !== "" &&
+    dateOfBirth !== null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,11 +53,18 @@ const PersonalInfo = () => {
       return;
     }
 
+
+    const formattedDate = `${dateOfBirth?.getFullYear()}/${String(dateOfBirth?.getMonth() + 1).padStart(2, "0")}/${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
+    setDateOfBirth(new Date(formattedDate));
+    console.log("dateOfBirth", dateOfBirth);
+    console.log("formattedDate", formattedDate);
+
+
     console.log("Form submitted:", {
       address,
       nationality,
       gender,
-      dateOfBirth,
+      dateOfBirth: formattedDate,
     });
 
     dispatch(
@@ -52,7 +72,7 @@ const PersonalInfo = () => {
         address,
         nationality,
         gender,
-        dateOfBirth,
+        dateOfBirth: formattedDate,
       })
     );
 
@@ -98,16 +118,21 @@ const PersonalInfo = () => {
             <FloatingSelect
               label="Gender"
               options={genderOptions.map((option) => option.name)}
-              value={genderOptions.find((option) => option.value === gender)?.name || ""}
+              value={
+                genderOptions.find((option) => option.value === gender)?.name ||
+                ""
+              }
               onChange={(selectedOption) => {
-                const selectedGender = genderOptions.find((option) => option.name === selectedOption);
+                const selectedGender = genderOptions.find(
+                  (option) => option.name === selectedOption
+                );
                 if (selectedGender) {
                   setGender(selectedGender.value);
                 }
               }}
               error={gender === "" && error ? "Gender is required." : ""}
             />
-            <FloatingInput
+             {/* <FloatingInput
               label="Date of birth"
               type="date"
               value={dateOfBirth}
@@ -119,7 +144,17 @@ const PersonalInfo = () => {
               // onClick={() => setIsModalOpen(true)}
               
               icon={<Icon type="calendar" className="w-6 h-6" />}
-            />
+            /> */}
+            {/* <div className="mb-4 w-full"> */}
+            <DatePicker
+                selected={dateOfBirth}
+                onChange={handleDateSelect}
+                dateFormat="dd/MM/yyyy"
+                className="border rounded-md p-2 w-full"
+                placeholderText="Date of Birth"
+                showPopperArrow={false}
+              />
+            {/* </div> */}
             <button
               type="submit"
               className={`mt-4 w-full py-4 rounded-md bg-primary_green  text-white ${
@@ -138,11 +173,11 @@ const PersonalInfo = () => {
           </div>
         </div>
       </div>
-      <DateModal
+      {/* <DateModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onDateSelect={handleDateSelect}
-      />
+      /> */}
     </>
   );
 };
