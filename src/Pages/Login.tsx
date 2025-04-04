@@ -61,6 +61,7 @@ const Login = () => {
   });
 
   const checkLoginStatus = () => {
+    console.log("userData>>>", userData);
     if (error) {
       toast.error(message);
       dispatch(resetState());

@@ -60,13 +60,14 @@ export const triggerUserLogin = createAsyncThunk<
 >("user/login", async (loginData, thunkAPI) => {
   try {
     const response = await axios.post(apiUrl.login, loginData);
+    console.log("LOGIN response>>>", response.data);
     localStorage.setItem(
       "accessToken",
-      response?.data?.results?.access_credentials?.access_token
+      response?.data?.data?.access_credentials?.access_token
     );
     localStorage.setItem(
       "refreshToken",
-      response?.data?.results?.access_credentials?.refresh_token
+      response?.data?.data?.access_credentials?.refresh_token
     );
     return response.data;
   } catch (error: any) {
@@ -288,7 +289,7 @@ export const triggerPhoneNumberVerification = createAsyncThunk<
         },
       }
     );
-    console.log("PHONE NUMBER VERIFICATION response>>>>>>", response.data);
+    console.log("PHONE NUMBER VERIFICATION response>>>>>>", response);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(

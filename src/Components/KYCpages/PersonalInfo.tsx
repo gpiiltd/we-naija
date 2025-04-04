@@ -3,7 +3,6 @@ import Typography from "../Typography";
 import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
 import Icon from "../../Assets/SvgImagesAndIcons";
-import DateModal from "./DateModal";
 import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import FloatingInput from "../Input/FloatingInput";
@@ -13,30 +12,21 @@ import { nationalityOptions } from "../../utils/selectOptions";
 import { setKycPersonalInfo } from "../../redux/Slices/user/userSlice";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../redux/Store/store";
-import DatePicker from "react-datepicker"; // Import the DatePicker
-// import "react-datepicker/dist/react-datepicker.css"; // Import the CSS for styling
-// import "./datepicker.css";
-import Calendar from "react-calendar"; // Import the Calendar component
+import CustomDatePicker from "./CustomDatePicker";
 
 const PersonalInfo = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [address, setAddress] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
-  // const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null); // Change to Date type
 
   const dispatch: AppDispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  // const handleDateSelect = (date: string) => {
-  //   setDateOfBirth(new Date(date));
-  // };
-
-  const handleDateSelect = (date: Date | null) => {
-    setDateOfBirth(date);
+  const handleDateChange = (date: Date | null) => {
+    setDateOfBirth(date || new Date());
   };
 
   const isFormComplete =
@@ -53,12 +43,10 @@ const PersonalInfo = () => {
       return;
     }
 
-
-    const formattedDate = `${dateOfBirth?.getFullYear()}/${String(dateOfBirth?.getMonth() + 1).padStart(2, "0")}/${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
+    const formattedDate = `${dateOfBirth?.getFullYear()}/${String(
+      dateOfBirth?.getMonth() + 1
+    ).padStart(2, "0")}/${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
     setDateOfBirth(new Date(formattedDate));
-    console.log("dateOfBirth", dateOfBirth);
-    console.log("formattedDate", formattedDate);
-
 
     console.log("Form submitted:", {
       address,
@@ -82,7 +70,7 @@ const PersonalInfo = () => {
   return (
     <>
       <KycHeader />
-      <div className="flex flex-col items-center justify-center mt-12 md:mt-24 ">
+      <div className="flex flex-col items-center justify-center mt-12  ">
         <div className="bg-white w-full p-4 md:p-8 rounded-lg md:w-2/4 ">
           <div className="flex  mb-4">
             <Icon type="person" className="w-6 h-6 mr-4" />
@@ -132,32 +120,13 @@ const PersonalInfo = () => {
               }}
               error={gender === "" && error ? "Gender is required." : ""}
             />
-             {/* <FloatingInput
-              label="Date of birth"
-              type="date"
-              value={dateOfBirth}
-              onChange={setDateOfBirth}
-              error={
-                dateOfBirth === "" && error ? "Date of birth is required." : ""
-              }
-              // readOnly={true}
-              // onClick={() => setIsModalOpen(true)}
-              
-              icon={<Icon type="calendar" className="w-6 h-6" />}
-            /> */}
-            {/* <div className="mb-4 w-full"> */}
-            <DatePicker
-                selected={dateOfBirth}
-                onChange={handleDateSelect}
-                dateFormat="dd/MM/yyyy"
-                className="border rounded-md p-2 w-full"
-                placeholderText="Date of Birth"
-                showPopperArrow={false}
-              />
-            {/* </div> */}
+            <CustomDatePicker
+              selectedDate={dateOfBirth}
+              onChange={handleDateChange}
+            />
             <button
               type="submit"
-              className={`mt-4 w-full py-4 rounded-md bg-primary_green  text-white ${
+              className={`mt-12 w-full py-4 rounded-md bg-primary_green  text-white ${
                 isFormComplete
                   ? "hover:bg-[#015443]"
                   : "cursor-not-allowed opacity-50"
@@ -173,11 +142,6 @@ const PersonalInfo = () => {
           </div>
         </div>
       </div>
-      {/* <DateModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onDateSelect={handleDateSelect}
-      /> */}
     </>
   );
 };

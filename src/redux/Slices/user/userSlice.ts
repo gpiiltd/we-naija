@@ -212,7 +212,7 @@ const userSlice = createSlice({
         triggerUserLogin.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.userData = action.payload.results;
+          state.userData = action.payload.data;
           state.message = action.payload.message;
         }
       )
@@ -267,9 +267,9 @@ const userSlice = createSlice({
       })
       .addCase(
         triggerPhoneNumberVerification.fulfilled,
-        (state, action: PayloadAction<DefaultResponse>) => {
+        (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.message = action.payload.message;
+          state.message = action.payload;
         }
       )
       .addCase(

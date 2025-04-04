@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 interface DateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onDateSelect: (date: string) => void;
+  onDateSelect?: (date: string) => void;
 }
 
 const DateModal: React.FC<DateModalProps> = ({
@@ -21,7 +21,7 @@ const DateModal: React.FC<DateModalProps> = ({
       const formattedDate = `${selectedDate.getFullYear()}-${String(
         selectedDate.getMonth() + 1
       ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`;
-      onDateSelect(formattedDate);
+      onDateSelect?.(formattedDate);
       onClose();
       console.log("formattedDate", formattedDate);
     }

@@ -67,8 +67,10 @@ const IDVerification = () => {
       mobile_number: kycPhoneNumber || "08130966935",
       id_type: idType,
       id_number: idNumber,
-      id_front: "12345678903",
-      id_back: "12345678906",
+      // id_front: frontFile as File,
+      // id_back: backFile as File,
+      id_front: frontFile?.name || "",
+      id_back: backFile?.name || "",
     };
     console.log("payload>>>", payload);
 
