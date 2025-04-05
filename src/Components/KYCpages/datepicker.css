@@ -1,0 +1,32 @@
+.react-datepicker__year-dropdown {
+    max-height: 50px !important; /* ✅ Limits dropdown height */
+    overflow-y: auto !important; /* ✅ Enables vertical scrolling */
+    border: 1px solid #ddd !important;
+    border-radius: 5px !important;
+    background-color: white !important;
+  }
+  
+
+/* Target the select element directly */
+.react-datepicker__year-dropdown select {
+    max-height: 50px; /* Set max height for the select */
+    overflow-y: auto; /* Enable scrolling */
+  }
+
+  .react-datepicker__year-select {
+    max-height: 50px; /* Set max height for the select */
+    overflow-y: auto; /* Enable scrolling */
+  }
+
+  .react-datepicker__year-dropdown-container {
+    max-height: 50px; /* Set max height for the select */
+    overflow-y: auto; /* Enable scrolling */
+  }
+
+  .react-datepicker__year-dropdown-container--select {
+    max-height: 50px; /* Set max height for the select */
+    overflow-y: auto; /* Enable scrolling */
+  }
+
+  
+  

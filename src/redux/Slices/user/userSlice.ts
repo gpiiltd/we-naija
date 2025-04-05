@@ -14,6 +14,9 @@ import {
   triggerUserSignup,
   triggerEmailVerificationResend,
   triggerEmailVerification,
+  triggerPhoneNumberVerification,
+  triggerPhoneNumberVerificationOtp,
+  triggerKycInfoSubmit,
 } from "../../Services/user/UserServices";
 
 interface UserState {
@@ -23,6 +26,8 @@ interface UserState {
   message: string | null;
   email: string;
   otpToken: string;
+  kycPhoneNumber: string;
+  kycPersonalInfo: Record<string, any>;
 }
 
 const initialState: UserState = {
@@ -32,6 +37,8 @@ const initialState: UserState = {
   message: null,
   email: "",
   otpToken: "",
+  kycPhoneNumber: "",
+  kycPersonalInfo: {},
 };
 
 const userSlice = createSlice({
@@ -51,6 +58,23 @@ const userSlice = createSlice({
     setUserEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
       console.log("Email in state", state.email);
+    },
+    setKycPhoneNumber: (state, action: PayloadAction<string>) => {
+      state.kycPhoneNumber = action.payload;
+      console.log("KYC phone number in state", state.kycPhoneNumber);
+    },
+    setKycPersonalInfo: (state, action: PayloadAction<Record<string, any>>) => {
+      state.kycPersonalInfo.name = action.payload.name;
+      state.kycPersonalInfo.address = action.payload.address;
+      state.kycPersonalInfo.nationality = action.payload.nationality;
+      state.kycPersonalInfo.gender = action.payload.gender;
+      state.kycPersonalInfo.dateOfBirth = action.payload.dateOfBirth;
+      state.kycPersonalInfo.idType = action.payload.idType;
+      state.kycPersonalInfo.idNumber = action.payload.idNumber; 
+      state.kycPersonalInfo.frontFile = action.payload.frontFile;
+      state.kycPersonalInfo.backFile = action.payload.backFile;
+      state.kycPersonalInfo.mobileNumber = action.payload.mobileNumber;
+      console.log("KYC personal info in state", state.kycPersonalInfo);
     },
     // setLastScreenTime: (state, action: PayloadAction<string>) => {
     //   state.lastScreenTime = action.payload;
@@ -188,13 +212,14 @@ const userSlice = createSlice({
         triggerUserLogin.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
-          state.userData = action.payload.results;
+          state.userData = action.payload.data;
           state.message = action.payload.message;
         }
       )
       .addCase(
         triggerUserLogin.rejected,
         (state, action: PayloadAction<any>) => {
+          console.log("action", action);
           state.loading = false;
           state.error = action.payload;
           state.message = action.payload.message;
@@ -235,11 +260,60 @@ const userSlice = createSlice({
           state.loading = false;
           state.error = action.payload.message;
         }
-      );
+      )
+      .addCase(triggerPhoneNumberVerification.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        triggerPhoneNumberVerification.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.message = action.payload;
+        }
+      )
+      .addCase(
+        triggerPhoneNumberVerification.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.message;
+        }
+      )
+      .addCase(triggerPhoneNumberVerificationOtp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        triggerPhoneNumberVerificationOtp.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.message = action.payload.message;
+        }
+      )
+      .addCase(
+        triggerPhoneNumberVerificationOtp.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.message;
+        }
+      )
+      .addCase(triggerKycInfoSubmit.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(triggerKycInfoSubmit.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerKycInfoSubmit.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })  
+      
   },
 });
 
-export const { clearData, resetState, setUserEmail, resetUserData } =
+export const { clearData, resetState, setUserEmail, resetUserData, setKycPhoneNumber, setKycPersonalInfo } =
   userSlice.actions;
 
 export default userSlice.reducer;

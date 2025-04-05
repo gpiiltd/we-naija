@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TypographyVariant } from "../../Components/types";
 import Typography from "../../Components/Typography";
 import Icon from "../../Assets/SvgImagesAndIcons";
@@ -7,6 +7,8 @@ import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
 import { genderOptions, nationalityOptions } from "../../utils/selectOptions";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../redux/Store/store";
+import { useSelector } from "react-redux";
 
 const BasicInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +19,17 @@ const BasicInfo = () => {
   const [error,] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("26-06-1991");
   const navigate = useNavigate();
+  const userData = useSelector((state: RootState) => state.user.userData);
+
+  // useEffect(() => {
+  //   if (userData) {
+  //     setFullName(userData.first_name + " " + userData.last_name || "");
+  //     setUsername(userData.first_name || "");
+  //     setNationality(userData.nationality || "");
+  //     setGender(userData.gender || "");
+  //     setDateOfBirth(userData.date_of_birth || "");
+  //   }
+  // }, [userData]);
 
   const isFormComplete =
     nationality !== "" && gender !== "" && dateOfBirth !== "";
@@ -76,7 +89,7 @@ const BasicInfo = () => {
             />
             <FloatingSelect
               label="Gender"
-              options={genderOptions}
+              options={genderOptions.map((option) => option.name)}
               value={gender}
               onChange={setGender}
               error={gender === "" && error ? "Gender is required." : ""}

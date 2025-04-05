@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
 import SkipButton from "./SkipButton";
@@ -8,15 +8,41 @@ import InputField from "../../Components/Input/InputField";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useNavigate } from "react-router-dom";
 import KycHeader from "./KycHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { triggerPhoneNumberVerification } from "../../redux/Services/user/UserServices";  
+import { toast } from "react-toastify";
+import { RootState } from "../../redux/Store/store";
+import { setKycPhoneNumber, resetState } from "../../redux/Slices/user/userSlice";
 
 const KycPhonenumber = () => {
-  const [phoneNumber] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { error, message, email, loading } = useSelector(
+    (state: RootState) => state.user
+  );
 
-  const handleProceed = () => {
-    console.log("Proceed with phone number:", phoneNumber);
-    navigate("/kyc/enter-otp");
+
+  const handleProceed = (values: any) => {
+    const payload = {
+      mobile_number: values.phoneNumber,
+    };
+    console.log("Proceed with phone number:", values.phoneNumber);
+    dispatch(setKycPhoneNumber(values.phoneNumber));
+    dispatch(triggerPhoneNumberVerification(payload) as any);
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    } else if (!error && message) {
+      // toast.success(message);
+      toast.success("Otp has been sent to the provided phone number");
+      setTimeout(() => {
+        navigate("/kyc/enter-otp");
+      }, 1000);
+    }
+    dispatch(resetState());
+  }, [error, message, navigate, dispatch]);
 
   const initialValues = {
     phoneNumber: "",
@@ -52,12 +78,13 @@ const KycPhonenumber = () => {
             initialValues={initialValues}
             validateOnChange={true}
             validateOnBlur={true}
-            onSubmit={(values) => {
-              console.log("Form values:", values);
-            }}
+            // onSubmit={(values) => {
+            //   console.log("Form values:", values);
+            // }}
+            onSubmit={handleProceed}
             validationSchema={validationSchema}
           >
-            {({ isValid, dirty }) => (
+            {({ isValid, dirty, setFieldValue, setFieldTouched  }) => (
               <Form>
                 <div className="flex items-start mb-8">
                   <div className=" flex items-center justify-center w-[40%] h-[58px]  -mr-1  border border-primary_color rounded-l-xl border-r-0">
@@ -76,7 +103,10 @@ const KycPhonenumber = () => {
                     focusStyle="green"
                     label="Phone number"
                     name="phoneNumber"
+                    setFieldValue={setFieldValue}
+                  setFieldTouched={setFieldTouched}
                   />
+                     
                 </div>
 
                 <Button
@@ -84,7 +114,8 @@ const KycPhonenumber = () => {
                   active={isValid && dirty}
                   bg_color="#007A61"
                   text_color="white"
-                  onClick={handleProceed}
+                  loading={loading}
+                  // onClick={handleProceed}
                 />
               </Form>
             )}

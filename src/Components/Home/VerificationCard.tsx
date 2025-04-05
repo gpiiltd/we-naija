@@ -20,7 +20,7 @@ const VerificationCard: React.FC<VerificationCardProps> = ({
         <Icon type="home-kyc-verification" className="pr-2" />
         <p>KYC Verification Status</p>
       </section>
-      <p className="font-bold text-[#AA161D] text-sm pt-3">{statusMessage}</p>
+      <p className="font-bold text-[#007A61] text-sm pt-3">{statusMessage}</p>
       <p className="font-normal text-[#5E5959] text-sm">{responseTimeMessage}</p>
       <ProgressBar percentage={progressPercentage} />
     </div>

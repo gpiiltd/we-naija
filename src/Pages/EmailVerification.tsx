@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import CustomModal from "../Components/Modal";
-
+import { resetState } from "../redux/Slices/user/userSlice";
 const EmailSent = () => {
   const dispatch: AppDispatch = useDispatch();
   const [countdown, setCountdown] = useState(30);
@@ -22,26 +22,28 @@ const EmailSent = () => {
   const [showModal, setShowModal] = useState(false);
   const { uid, email_token } = useParams();
   const navigate = useNavigate();
-  const { error, message, email } = useSelector(
+  const { error, message, email, loading } = useSelector(
     (state: RootState) => state.user
   );
 
-//   console.log("uid: ", uid);
-//   console.log("email_token: ", email_token);
-//   console.log("Email: ", email);
+  const emailverification = localStorage.getItem("emailverification");
+
+  let emailToSend = email ? email : (emailverification as string);
 
   const handleResendOTP = () => {
     const payload = {
-      //   email: email,
-      email: "newuser@yopmail.com",
+      email: emailToSend,
+      //   email: "newuser@yopmail.com",
     };
     if (canResend) {
       dispatch(triggerEmailVerificationResend(payload));
+
       if (error) {
         toast.error(error);
       } else if (!error && message) {
-        toast(message);
+        toast.success(message);
       }
+      dispatch(resetState());
       setCountdown(30);
       setCanResend(false);
     }
@@ -50,23 +52,30 @@ const EmailSent = () => {
   const navigateToLogin = () => {
     setShowModal(false);
     navigate("/login");
+    // navigate("/verified-agent-dashboard");
   };
 
   useEffect(() => {
-    console.log("uid: ", uid);
-    console.log("email_token: ", email_token);
     const payload = {
       uid: uid as string,
       email_token: email_token as string,
     };
+
     dispatch(triggerEmailVerification(payload));
-    if (error) {
-      toast.error(error);
-    } else if (!error && message) {
-      toast(message);
-      setShowModal(true);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("i dispatched triggerEmailVerification");
+
+    setTimeout(() => {  
+      if (error) {
+        toast.error(error);
+      } else if (!error && message) {
+        toast.success(message);
+        setShowModal(true);
+      }
+    }, 2000);
+
+    setShowModal(true);
+    dispatch(resetState());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, uid, email_token]);
 
   useEffect(() => {
@@ -120,9 +129,7 @@ const EmailSent = () => {
               className="text-light_gray md:text-center "
             >
               A verification link has been sent to{" "}
-              <span className="font-bold text-[#007A61]">
-                blessing@gmail.com{email}
-              </span>
+              <span className="font-bold text-[#007A61]">{emailToSend}</span>
             </Typography>
           </div>
 

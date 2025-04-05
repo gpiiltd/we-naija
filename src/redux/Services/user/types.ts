@@ -69,3 +69,22 @@
       };
     };
   }
+
+  export interface PhoneNumberVerificationData {
+    mobile_number: string;
+    otp?: string;
+  }
+
+  export interface KycInfoSubmitData {
+    address: string;
+    nationality: string;
+    gender: string;
+    date_of_birth: string;
+    mobile_number: string;
+    id_type: string;
+    id_number: string;
+    // id_front: File;
+    // id_back: File;
+    id_front: string;
+    id_back: string;
+  }

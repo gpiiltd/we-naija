@@ -8,7 +8,7 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { resetState } from "../redux/Slices/user/userSlice";
 const EmailSent = () => {
   const dispatch: AppDispatch = useDispatch();
   const [countdown, setCountdown] = useState(30);
@@ -17,21 +17,30 @@ const EmailSent = () => {
     (state: RootState) => state.user
   );
 
+  localStorage.setItem("emailverification", email);
+
   const handleResendOTP = () => {
     const payload = {
       email: email,
     };
     if (canResend) {
       dispatch(triggerEmailVerificationResend(payload));
-      if (error) {
-        toast.error(error);
-      } else if (!error && message) {
-        toast(message);
-      }
+     
       setCountdown(30);
       setCanResend(false);
     }
+    dispatch(resetState());
   };
+
+  useEffect(() => {
+    if (error) {
+        toast.error(error);
+      } else if (!error && message) {
+        toast.success(message);
+      }
+      dispatch(resetState());
+  }, [error, message, dispatch]);
+
 
   useEffect(() => {
     const timer =
@@ -85,7 +94,7 @@ const EmailSent = () => {
             >
               A verification link has been sent to{" "}
               <span className="font-bold text-[#007A61]">
-                blessing@gmail.com{email}
+                {email}
               </span>
             </Typography>
           </div>

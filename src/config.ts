@@ -8,6 +8,9 @@ interface ApiUrls {
   resetPassword: string;
   emailVerificationResend: string;
   emailVerification: string;
+  phoneNumberVerification: string;
+  phoneNumberVerificationOtp: string;
+  kycInfoSubmit: string;
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
@@ -24,4 +27,7 @@ export const apiUrl: ApiUrls = {
   resetPassword: `${BASE_URL}process/password-reset`,
   emailVerificationResend: `${BASE_URL}request/resend/verification-email`,
   emailVerification: `${BASE_URL}verify/email`,
+  phoneNumberVerification: `${BASE_URL}request/mobile-token`,
+  phoneNumberVerificationOtp: `${BASE_URL}verify/mobile-token`,
+  kycInfoSubmit: `${BASE_URL}process/kyc-submit`,
 };

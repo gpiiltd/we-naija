@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../types";
 import { Errors } from "../types";
@@ -8,6 +8,13 @@ import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import CustomModal from "../Modal";
+import { RootState } from "../../redux/Store/store";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { AppDispatch } from "../../redux/Store/store";
+import { triggerKycInfoSubmit } from "../../redux/Services/user/UserServices";
+import { toast } from "react-toastify";
+import { resetState } from "../../redux/Slices/user/userSlice";
 
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
@@ -27,6 +34,14 @@ const IDVerification = () => {
     setErrors({ ...errors, idType: "" });
   };
 
+  const dispatch: AppDispatch = useDispatch();
+
+  const { kycPersonalInfo, kycPhoneNumber, error, message } = useSelector(
+    (state: RootState) => state.user
+  );
+
+  console.log("kycPersonalInfo from state:>>>>>", kycPersonalInfo);
+
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdNumber(e.target.value);
     setErrors({ ...errors, idNumber: "" });
@@ -41,12 +56,42 @@ const IDVerification = () => {
   };
 
   const handleSubmit = () => {
+    console.log({"idType": idType, "idNumber": idNumber, "frontFile": frontFile, "backFile": backFile});
     setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      setShowModal(true);
-    }, 3000);
+
+    const payload = {
+      address: kycPersonalInfo.address,
+      nationality: kycPersonalInfo.nationality,
+      gender: kycPersonalInfo.gender,
+      date_of_birth: kycPersonalInfo.dateOfBirth,
+      mobile_number: kycPhoneNumber || "08130966935",
+      id_type: idType,
+      id_number: idNumber,
+      // id_front: frontFile as File,
+      // id_back: backFile as File,
+      id_front: frontFile?.name || "",
+      id_back: backFile?.name || "",
+    };
+    console.log("payload>>>", payload);
+
+    dispatch(triggerKycInfoSubmit(payload) as any);
+
+
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      setLoading(false);
+    } else if (!error && message) {
+      toast.success(message);
+      setTimeout(() => {
+        setLoading(false);
+        setShowModal(true);
+      }, 2000);
+    }
+    dispatch(resetState());
+  }, [error, message, dispatch]);
 
   return (
     <>
@@ -72,31 +117,31 @@ const IDVerification = () => {
               Choose ID card type
             </Typography>
             {[
-              "National ID",
-              "International passport",
-              "Drivers licence",
-              "Permanent voter card",
+              { name: "National ID", value: "national_id" },
+              { name: "International passport", value: "passport" },
+              { name: "Drivers licence", value: "driver_license" },
+              { name: "Permanent voter card", value: "permanent_voters_card" },
             ].map((type) => (
-              <label key={type} className="flex items-center mb-4">
+              <label key={type.value} className="flex items-center mb-4">
                 <input
                   type="radio"
-                  value={type}
-                  checked={idType === type}
+                  value={type.value}
+                  checked={idType === type.value}
                   onChange={handleIdTypeChange}
                   className="hidden"
                 />
                 <span
                   className={`inline-block w-6 h-6 border-2 border-gray-300 rounded-full mr-2 cursor-pointer  ${
-                    idType === type ? "bg-green-700 border-green-700" : ""
+                    idType === type.value ? "bg-green-700 border-green-700" : ""
                   }`}
                 ></span>
                 <Typography
                   variant={TypographyVariant.NORMAL}
                   className={`${
-                    idType === type ? "text-black" : "text-gray-500"
+                    idType === type.value ? "text-black" : "text-gray-500"
                   }`}
                 >
-                  {type}
+                  {type.name}
                 </Typography>
               </label>
             ))}
@@ -153,6 +198,7 @@ const IDVerification = () => {
             </Typography>
 
             {/* File Uploads */}
+
             <FileUpload
               label="Kindly upload it as an image or pdf"
               onChange={(file) => handleFileChange(file, true)}
@@ -172,12 +218,16 @@ const IDVerification = () => {
             />
           </div>
 
-          <button
-            onClick={handleSubmit}
-            className="w-full bg-teal-700 text-white rounded-xl h-14 mt-8"
-          >
-            Submit
-          </button>
+      
+
+          <Button
+              text="Submit"
+              active={true}
+              bg_color="#007A61"
+              text_color="white"
+              loading={loading}
+              onClick={handleSubmit}
+            />
 
           <div className="flex pt-4 items-center justify-center">
             <SkipButton />
