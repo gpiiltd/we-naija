@@ -24,11 +24,11 @@ const KycPhonenumber = () => {
 
   const handleProceed = (values: any) => {
     const payload = {
-      mobile_number: values.phoneNumber,
+      mobile_number: `+234${values.phoneNumber}`,
     };
-    console.log("Proceed with phone number:", values.phoneNumber);
-    dispatch(setKycPhoneNumber(values.phoneNumber));
-    dispatch(triggerPhoneNumberVerification(payload) as any);
+    console.log("Proceed with phone number:", payload);
+    // dispatch(setKycPhoneNumber(values.phoneNumber));
+    // dispatch(triggerPhoneNumberVerification(payload) as any);
   };
 
   useEffect(() => {
@@ -51,7 +51,8 @@ const KycPhonenumber = () => {
   const validationSchema = Yup.object().shape({
     phoneNumber: Yup.number()
       .required("Phone number is required")
-      .min(10, "Phone number must be at least 10 characters long")
+      .min(10, "Phone number must be 10 characters long")
+      // .max(11, "Phone number must be at most 11 characters long")
       .typeError("Phone number must be a number"),
   });
 

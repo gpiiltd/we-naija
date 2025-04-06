@@ -43,9 +43,9 @@ const PersonalInfo = () => {
       return;
     }
 
-    const formattedDate = `${dateOfBirth?.getFullYear()}/${String(
+    const formattedDate = `${dateOfBirth?.getFullYear()}-${String(
       dateOfBirth?.getMonth() + 1
-    ).padStart(2, "0")}/${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
+    ).padStart(2, "0")}-${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
     setDateOfBirth(new Date(formattedDate));
 
     console.log("Form submitted:", {

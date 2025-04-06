@@ -24,6 +24,32 @@ interface LoginData {
   password: string;
 }
 
+export  const uploadFile = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch("http://ec2-44-196-252-114.compute-1.amazonaws.com/api/v1/common/file-upload", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`, // Add token to the header
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("File upload failed");
+    }
+
+    const data = await response.json();
+    return data.results.file_name;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    return "";
+  }
+};
+
+
 export const triggerUserSignup = createAsyncThunk<
   SignupResponse,
   SignupData,

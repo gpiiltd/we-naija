@@ -12,7 +12,10 @@ import { RootState } from "../../redux/Store/store";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/Store/store";
-import { triggerKycInfoSubmit } from "../../redux/Services/user/UserServices";
+import {
+  triggerKycInfoSubmit,
+  uploadFile,
+} from "../../redux/Services/user/UserServices";
 import { toast } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
 
@@ -55,9 +58,18 @@ const IDVerification = () => {
     }
   };
 
-  const handleSubmit = () => {
-    console.log({"idType": idType, "idNumber": idNumber, "frontFile": frontFile, "backFile": backFile});
+  const handleFileUploads = async () => {
+    const frontFileName = frontFile ? await uploadFile(frontFile) : "";
+    const backFileName = backFile ? await uploadFile(backFile) : "";
+
+    return { frontFileName, backFileName };
+  };
+
+  const handleSubmit = async () => {
+   
     setLoading(!loading);
+
+    const { frontFileName, backFileName } = await handleFileUploads();
 
     const payload = {
       address: kycPersonalInfo.address,
@@ -67,16 +79,12 @@ const IDVerification = () => {
       mobile_number: kycPhoneNumber || "08130966935",
       id_type: idType,
       id_number: idNumber,
-      // id_front: frontFile as File,
-      // id_back: backFile as File,
-      id_front: frontFile?.name || "",
-      id_back: backFile?.name || "",
+      id_front: frontFileName,
+      id_back: backFileName,
     };
     console.log("payload>>>", payload);
 
     dispatch(triggerKycInfoSubmit(payload) as any);
-
-
   };
 
   useEffect(() => {
@@ -218,16 +226,14 @@ const IDVerification = () => {
             />
           </div>
 
-      
-
           <Button
-              text="Submit"
-              active={true}
-              bg_color="#007A61"
-              text_color="white"
-              loading={loading}
-              onClick={handleSubmit}
-            />
+            text="Submit"
+            active={true}
+            bg_color="#007A61"
+            text_color="white"
+            loading={loading}
+            onClick={handleSubmit}
+          />
 
           <div className="flex pt-4 items-center justify-center">
             <SkipButton />
@@ -271,3 +277,4 @@ const IDVerification = () => {
 };
 
 export default IDVerification;
+
