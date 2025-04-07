@@ -17,6 +17,7 @@ import {
   triggerPhoneNumberVerification,
   triggerPhoneNumberVerificationOtp,
   triggerKycInfoSubmit,
+  triggerGetInstitute,
 } from "../../Services/user/UserServices";
 
 interface UserState {
@@ -28,6 +29,7 @@ interface UserState {
   otpToken: string;
   kycPhoneNumber: string;
   kycPersonalInfo: Record<string, any>;
+  instituteData: Record<string, any>;
 }
 
 const initialState: UserState = {
@@ -39,6 +41,7 @@ const initialState: UserState = {
   otpToken: "",
   kycPhoneNumber: "",
   kycPersonalInfo: {},
+  instituteData: {},
 };
 
 const userSlice = createSlice({
@@ -309,7 +312,20 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload.message;
       })  
-      
+      .addCase(triggerGetInstitute.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(triggerGetInstitute.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
+        state.loading = false;
+        state.instituteData = action.payload.results as Record<string, any>;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerGetInstitute.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.instituteData = {} as Record<string, any>; // Fix: Ensure instituteData is set to undefined on rejection
+        state.error = action.payload.message;
+      })
   },
 });
 

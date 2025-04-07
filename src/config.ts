@@ -11,23 +11,25 @@ interface ApiUrls {
   phoneNumberVerification: string;
   phoneNumberVerificationOtp: string;
   kycInfoSubmit: string;
+  allInstitute: string;
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
 const BASE_URL =
-  "http://ec2-44-196-252-114.compute-1.amazonaws.com/api/v1/agent/";
+  "http://ec2-44-196-252-114.compute-1.amazonaws.com/api/v1/";
 
 export const apiUrl: ApiUrls = {
-  signUp: `${BASE_URL}process/signup`,
-  login: `${BASE_URL}request/login`,
-  validateOtp: `${BASE_URL}otp/validate`,
-  requestOtp: `${BASE_URL}request/resend/verification-email`,
-  forgotPassword: `${BASE_URL}request/password-reset-token`,
-  forgotPasswordOtp: `${BASE_URL}verify/password-reset-token`,
-  resetPassword: `${BASE_URL}process/password-reset`,
-  emailVerificationResend: `${BASE_URL}request/resend/verification-email`,
-  emailVerification: `${BASE_URL}verify/email`,
-  phoneNumberVerification: `${BASE_URL}request/mobile-token`,
-  phoneNumberVerificationOtp: `${BASE_URL}verify/mobile-token`,
-  kycInfoSubmit: `${BASE_URL}process/kyc-submit`,
+  signUp: `${BASE_URL}agent/process/signup`,
+  login: `${BASE_URL}agent/request/login`,
+  validateOtp: `${BASE_URL}agent/otp/validate`,
+  requestOtp: `${BASE_URL}agent/request/resend/verification-email`,
+  forgotPassword: `${BASE_URL}agent/request/password-reset-token`,
+  forgotPasswordOtp: `${BASE_URL}agent/verify/password-reset-token`,
+  resetPassword: `${BASE_URL}agent/process/password-reset`,
+  emailVerificationResend: `${BASE_URL}agent/request/resend/verification-email`,
+  emailVerification: `${BASE_URL}agent/verify/email`,
+  phoneNumberVerification: `${BASE_URL}agent/request/mobile-token`,
+  phoneNumberVerificationOtp: `${BASE_URL}agent/verify/mobile-token`,
+  kycInfoSubmit: `${BASE_URL}agent/process/kyc-submit`,
+  allInstitute: `${BASE_URL}get-institutions`,
 };

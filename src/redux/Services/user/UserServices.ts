@@ -386,3 +386,31 @@ export const triggerKycInfoSubmit = createAsyncThunk<
 });
 
 
+export const triggerGetInstitute = createAsyncThunk<
+  DefaultResponse,
+  any,
+  { rejectValue: string }
+>("user/GetInstitute", async (any, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.allInstitute}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    console.log("GET INSTITUTE response>>>>>>", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to reset password"
+    );
+  }
+});
+
