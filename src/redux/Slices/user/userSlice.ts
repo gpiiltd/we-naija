@@ -17,7 +17,8 @@ import {
   triggerPhoneNumberVerification,
   triggerPhoneNumberVerificationOtp,
   triggerKycInfoSubmit,
-  triggerGetInstitute,
+  triggerGetAllInstitute,
+  triggerGetInstituteById,
 } from "../../Services/user/UserServices";
 
 interface UserState {
@@ -73,7 +74,7 @@ const userSlice = createSlice({
       state.kycPersonalInfo.gender = action.payload.gender;
       state.kycPersonalInfo.dateOfBirth = action.payload.dateOfBirth;
       state.kycPersonalInfo.idType = action.payload.idType;
-      state.kycPersonalInfo.idNumber = action.payload.idNumber; 
+      state.kycPersonalInfo.idNumber = action.payload.idNumber;
       state.kycPersonalInfo.frontFile = action.payload.frontFile;
       state.kycPersonalInfo.backFile = action.payload.backFile;
       state.kycPersonalInfo.mobileNumber = action.payload.mobileNumber;
@@ -304,32 +305,70 @@ const userSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(triggerKycInfoSubmit.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
-        state.loading = false;
-        state.message = action.payload.message;
-      })
-      .addCase(triggerKycInfoSubmit.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false;
-        state.error = action.payload.message;
-      })  
-      .addCase(triggerGetInstitute.pending, (state) => {
+      .addCase(
+        triggerKycInfoSubmit.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.message = action.payload.message;
+        }
+      )
+      .addCase(
+        triggerKycInfoSubmit.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.message;
+        }
+      )
+      .addCase(triggerGetAllInstitute.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(triggerGetInstitute.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
-        state.loading = false;
-        state.instituteData = action.payload.results as Record<string, any>;
-        state.message = action.payload.message;
+      .addCase(
+        triggerGetAllInstitute.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.instituteData = action.payload.results as Record<string, any>;
+          state.message = action.payload.message;
+        }
+      )
+      .addCase(
+        triggerGetAllInstitute.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.instituteData = {} as Record<string, any>; // Fix: Ensure instituteData is set to undefined on rejection
+          state.error = action.payload.message;
+        }
+      )
+      .addCase(triggerGetInstituteById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(triggerGetInstitute.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false;
-        state.instituteData = {} as Record<string, any>; // Fix: Ensure instituteData is set to undefined on rejection
-        state.error = action.payload.message;
-      })
+      .addCase(
+        triggerGetInstituteById.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.instituteData = action.payload as Record<string, any>;
+          state.message = action.payload.message;
+        }
+      )
+      .addCase(
+        triggerGetInstituteById.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.instituteData = {} as Record<string, any>;
+          state.error = action.payload.message;
+        }
+      );
   },
 });
 
-export const { clearData, resetState, setUserEmail, resetUserData, setKycPhoneNumber, setKycPersonalInfo } =
-  userSlice.actions;
+export const {
+  clearData,
+  resetState,
+  setUserEmail,
+  resetUserData,
+  setKycPhoneNumber,
+  setKycPersonalInfo,
+} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -12,6 +12,7 @@ interface ApiUrls {
   phoneNumberVerificationOtp: string;
   kycInfoSubmit: string;
   allInstitute: string;
+  getInstituteById: string;
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
@@ -32,4 +33,5 @@ export const apiUrl: ApiUrls = {
   phoneNumberVerificationOtp: `${BASE_URL}agent/verify/mobile-token`,
   kycInfoSubmit: `${BASE_URL}agent/process/kyc-submit`,
   allInstitute: `${BASE_URL}get-institutions`,
+  getInstituteById: `${BASE_URL}institutions`,
 };

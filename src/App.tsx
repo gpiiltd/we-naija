@@ -65,7 +65,7 @@ function App() {
               <Route index element={<Navigate to="home" />} />
               <Route path="home" Component={PendingKyc} />
               <Route
-                path="/verified-agent-dashboard/home/hospital-details"
+                path="/verified-agent-dashboard/home/hospital-details/:id"
                 Component={HospitalDetail}
               />
               <Route path="reports" Component={Reports} />

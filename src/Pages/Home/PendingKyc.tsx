@@ -8,7 +8,7 @@ import { PiPaperPlaneTiltFill } from "react-icons/pi";
 import woman from "../../Assets/svgImages/woman_green.svg";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { triggerGetInstitute } from "../../redux/Services/user/UserServices";
+import { triggerGetAllInstitute } from "../../redux/Services/user/UserServices";
 import { toast } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
 import { RootState } from "../../redux/Store/store";
@@ -20,7 +20,7 @@ const PendingKyc = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(triggerGetInstitute({}) as any);
+    dispatch(triggerGetAllInstitute({}) as any);
   }, [dispatch]);
 
   const { instituteData, error, message } = useSelector(
@@ -29,7 +29,7 @@ const PendingKyc = () => {
 
   useEffect(() => {
     if (instituteData.length > 0 && !error) {
-      const userData = (instituteData as any);
+      const userData = instituteData as any;
       setInstitutionsData(userData);
     }
 
@@ -67,17 +67,25 @@ const PendingKyc = () => {
       </p>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-        {institutionsData?.map((institution: any) => (
-          <InstitutionsCard
-            key={institution.identifier}
-            icon={institution.logo}
-            name={institution.name}
-            abbreviation={institution.abbreviation}
-            address={institution.address}
-            hours={institution.operation_days}
-            onClick={() => navigate("hospital-details")}
-          />
-        ))}
+        {institutionsData?.length > 0 ? (
+          institutionsData?.map((institution: any) => (
+            <InstitutionsCard
+              key={institution.identifier}
+              icon={institution.logo}
+              name={institution.name}
+              abbreviation={institution.abbreviation}
+              address={institution.address}
+              hours={institution.operation_days}
+              onClick={() =>
+                navigate(`hospital-details/${institution?.identifier}`)
+              }
+            />
+          ))
+        ) : (
+          <div>
+            <p>Loading...</p>
+          </div>
+        )}
       </div>
 
       <div className="h-fit rounded-xl items-center flex  flex-col text-black tracking-wide self-center pt-8 md:pt-24 md:col-span-2">
