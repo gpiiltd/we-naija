@@ -47,9 +47,10 @@ export const uploadFile = async (file: File): Promise<string> => {
     if (!response.ok) {
       throw new Error("File upload failed");
     }
-
     const data = await response.json();
+    console.log("data>>>>>>", data);
     return data.results.file_name;
+    // return data.results.file_url;
   } catch (error) {
     console.error("Error uploading file:", error);
     return "";
@@ -414,7 +415,7 @@ export const triggerGetAllInstitute = createAsyncThunk<
         },
       }
     );
-    console.log("GET INSTITUTE response>>>>>>", response.data);
+    // console.log("GET INSTITUTE response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
@@ -449,6 +450,36 @@ export const triggerGetInstituteById = createAsyncThunk<
       error.response?.message ||
         error.response?.data ||
         "Failed to get institute by ID"
+    );
+  }
+});
+
+
+
+export const triggerGetAllSurveyCategories = createAsyncThunk<
+  DefaultResponse,
+  any,
+  { rejectValue: string }
+>("user/GetAllSurveyCategories", async (_, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getAllCategories}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    console.log("GET ALL SURVEY CATEGORIES response>>>>>>", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error.response?.message ||
+        error.response?.data ||
+        "Failed to reset password"
     );
   }
 });

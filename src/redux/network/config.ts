@@ -3,7 +3,7 @@ interface ApiUrls {
 }
 
 const apiRoutes: ApiUrls = {
-  allInstitute:"/api/v1/institutions",
+  allInstitute:"/api/v1/get-institutions",
 };
 
 export default apiRoutes;

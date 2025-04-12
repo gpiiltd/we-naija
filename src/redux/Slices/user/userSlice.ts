@@ -31,6 +31,7 @@ interface UserState {
   kycPhoneNumber: string;
   kycPersonalInfo: Record<string, any>;
   instituteData: Record<string, any>;
+  surveyCategories: Record<string, any>;
 }
 
 const initialState: UserState = {
@@ -43,6 +44,7 @@ const initialState: UserState = {
   kycPhoneNumber: "",
   kycPersonalInfo: {},
   instituteData: {},
+  surveyCategories: {},
 };
 
 const userSlice = createSlice({

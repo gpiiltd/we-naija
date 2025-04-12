@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Typography from "../../../../Components/Typography";
@@ -7,14 +7,43 @@ import SearchBar from "../../../../Components/Searchbar";
 import ButtonComponent from "../../../../Components/ButtonComponent";
 import { CiLocationOn } from "react-icons/ci";
 import Icon from "../../../../Assets/SvgImagesAndIcons";
-import { hospitalData } from "./hospitaldata";
 import CustomModal from "../../../../Components/Modal";
 import { AiOutlineDown } from "react-icons/ai";
 import Breadcrumb from "../BreadCrum";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../redux/Store/store";
+import { triggerGetAllInstitution } from "../../../../redux/Services/institute/instituteServices";
+import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
 
 const Hospitals = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [institutions, setInstitutions] = useState([]);
+  const { institution } = useSelector((state: RootState) => state.institute);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(triggerGetAllInstitution({}) as any);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (institution.statusCode === 200 || institution.data) {
+      console.log("List all INSTITUTION", institution.data);
+      setInstitutions(Array.from(institution.data));
+    }
+    if (institution.error && institution.message) {
+      console.log("Error fetching user");
+    }
+    dispatch(resetInstitutionState());
+  }, [
+    institution.statusCode,
+    institution.message,
+    institution.data,
+    institution.error,
+    dispatch,
+  ]);
+
+  console.log("FINALL INSTITUTION", institutions);
   const suggestions = [
     "Quotient Specialist Hospital",
     "Lagos University Teaching Hospital",
@@ -33,7 +62,6 @@ const Hospitals = () => {
   ];
   const [buttonText, setButtonText] = useState("Location");
   const [loading, setLoading] = useState(false);
-
 
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
@@ -100,7 +128,6 @@ const Hospitals = () => {
           >
             Health institutes survey
           </Typography>
-
         </div>
         <Breadcrumb />
 
@@ -141,7 +168,7 @@ const Hospitals = () => {
           Search result:
         </Typography>
       )}
-      {hospitalData.filter((hospital) =>
+      {institutions.filter((hospital: any) =>
         hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
       ).length === 0 ? (
         <div className="flex justify-center items-center pt-4">
@@ -172,45 +199,84 @@ const Hospitals = () => {
       ) : (
         <>
           <div className="grid gap-6 pb-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {hospitalData
-              .filter((hospital) =>
-                hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
-              )
-              .map((hospital, index) => (
-                <div
-                  key={index}
-                  className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer"
-                >
-                  <div className="py-4 px-6 mr-4">
-                    <section className="flex justify-start">
-                      <Icon type="homeAvatar" className="pr-2" />
-                      <div>
-                        <p className="font-bold text-black">{hospital.name}</p>
-                        <p className="font-normal text-[#5E5959]">
-                          {hospital.abbreviation}
+            {Array.isArray(institutions) && institutions.length > 0 ? (
+              institutions
+                .filter((hospital: any) =>
+                  hospital.name
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                )
+                .map((hospital: any, index: number) => (
+                  <div
+                    key={index}
+                    className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer"
+                  >
+                    <div className="py-4 px-6 mr-4">
+                      <section className="flex justify-start">
+                        {/* <Icon type="homeAvatar" className="pr-2" /> */}
+                        {hospital.logo ? (
+                          <img
+                            src={hospital.logo}
+                            alt="Institution Icon"
+                            className="pr-2"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
+                            <span className="text-white p-2">
+                              {hospital.name
+                                ?.split(" ")
+                                .map((word: string) => word[0])
+                                .join("")}
+                            </span>
+                          </div>
+                        )}
+                        <div>
+                          <p className="ml-2 font-bold text-black">
+                            {hospital.name}
+                          </p>
+                          <p className="ml-2 font-normal text-[#5E5959]">
+                            {/* {hospital.abbreviation} */}
+                            {hospital.name
+                              ?.split(" ")
+                              .map((word: string) => word[0])
+                              .join("")}
+                          </p>
+                        </div>
+                      </section>
+                      <p className="font-normal text-sm pt-3">
+                        {hospital.address}
+                      </p>
+                      <div className="flex items-center justify-start pt-2">
+                        <Icon type="timeClocKSvg" className="pr-2" />
+                        <p className="font-normal text-sm text-[#5E5959] pr-1">
+                          {hospital.operation_days}
+                        </p>
+                        <p className="font-normal text-sm">
+                          ({hospital.hours})
                         </p>
                       </div>
-                    </section>
-                    <p className="font-normal text-sm pt-3">
-                      {hospital.address}
-                    </p>
-                    <div className="flex items-center justify-start pt-2">
-                      <Icon type="timeClocKSvg" className="pr-2" />
-                      <p className="font-normal text-sm text-[#5E5959] pr-1">
-                        {hospital.schedule}
+                    </div>
+                    <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
+                    <div
+                      className="flex items-center justify-end pr-4 pt-2 mb-1"
+                      onClick={() =>
+                        navigate(
+                          `/verified-agent-dashboard/reports/hospitals/survey-list/${hospital.identifier}`
+                        )
+                      }
+                    >
+                      <p className="font-bold text-sm text-[#007A61] pr-1">
+                        Give report
                       </p>
-                      <p className="font-normal text-sm">({hospital.hours})</p>
+                      <Icon type="arrowUpSvg" className="pr-2" />
                     </div>
                   </div>
-                  <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
-                  <div className="flex items-center justify-end pr-4 pt-2 mb-1" onClick={()=>navigate('/verified-agent-dashboard/reports/hospitals/survey-list')}>
-                    <p className="font-bold text-sm text-[#007A61] pr-1">
-                      Give report
-                    </p>
-                    <Icon type="arrowUpSvg" className="pr-2" />
-                  </div>
-                </div>
-              ))}
+                ))
+            ) : (
+              <div>
+                <p>Loading...</p>
+              </div>
+            )}
           </div>
           <div className="flex justify-center  ">
             <ButtonComponent

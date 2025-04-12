@@ -90,11 +90,11 @@ function App() {
                 Component={Hospitals}
               />
               <Route
-                path="/verified-agent-dashboard/reports/hospitals/survey-list"
+                path="/verified-agent-dashboard/reports/hospitals/survey-list/:id"
                 Component={SurveyList}
               />
               <Route
-                path="/verified-agent-dashboard/reports/hospitals/give-report"
+                path="/verified-agent-dashboard/reports/hospitals/give-report/:id"
                 Component={GiveReport}
               />
               <Route path="leaderboard" Component={Leaderboard} />

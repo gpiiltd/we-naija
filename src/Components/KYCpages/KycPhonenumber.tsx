@@ -23,12 +23,13 @@ const KycPhonenumber = () => {
 
 
   const handleProceed = (values: any) => {
+    const phoneNumberWithCountryCode = `+234${values.phoneNumber}`;
     const payload = {
-      mobile_number: `+234${values.phoneNumber}`,
+      mobile_number: phoneNumberWithCountryCode,
     };
     console.log("Proceed with phone number:", payload);
-    // dispatch(setKycPhoneNumber(values.phoneNumber));
-    // dispatch(triggerPhoneNumberVerification(payload) as any);
+    dispatch(setKycPhoneNumber(phoneNumberWithCountryCode));
+    dispatch(triggerPhoneNumberVerification(payload) as any);
   };
 
   useEffect(() => {

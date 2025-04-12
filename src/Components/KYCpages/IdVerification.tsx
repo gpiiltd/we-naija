@@ -81,6 +81,8 @@ const IDVerification = () => {
       id_number: idNumber,
       id_front: frontFileName,
       id_back: backFileName,
+      // id_front: frontFile as File,
+      // id_back: backFile as File,
     };
     console.log("payload>>>", payload);
 

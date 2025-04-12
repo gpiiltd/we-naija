@@ -40,7 +40,7 @@ const PendingKyc = () => {
     dispatch(resetState());
   }, [error, message, instituteData, dispatch]);
 
-  console.log("institutionsData*****", institutionsData);
+  // console.log("institutionsData*****", institutionsData);
 
   return (
     <div>
@@ -77,7 +77,10 @@ const PendingKyc = () => {
               address={institution.address}
               hours={institution.operation_days}
               onClick={() =>
-                navigate(`hospital-details/${institution?.identifier}`)
+                // navigate(`hospital-details/${institution?.identifier}`)
+                navigate(
+                  `/verified-agent-dashboard/reports/hospitals/survey-list/${institution?.identifier}`
+                )
               }
             />
           ))

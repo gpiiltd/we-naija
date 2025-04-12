@@ -16,8 +16,9 @@ interface IAjax {
   formErrors: boolean;
   axiosProps: Record<string, string>;
 }
-
-const URL = "http://ec2-44-196-252-114.compute-1.amazonaws.com";
+// http://api.test.nssf.ng/api/v1/
+// const URL = "http://ec2-44-196-252-114.compute-1.amazonaws.com";
+const URL = "http://api.test.nssf.ng";
 // const URL = process.env.REACT_APP_NODE_ENV === 'development' ? process.env.REACT_APP_URL_PROD : process.env.REACT_APP_URL;
 
 // Axios instance
