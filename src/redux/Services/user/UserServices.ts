@@ -27,6 +27,11 @@ interface LoginData {
   email: string;
   password: string;
 }
+interface ErroResponseData {
+  message: string;
+  status_code?: number;
+  results?: Record<string, string[]>;
+}
 
 export const uploadFile = async (file: File): Promise<string> => {
   const formData = new FormData();
@@ -371,8 +376,8 @@ export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
 
 export const triggerKycInfoSubmit = createAsyncThunk<
   DefaultResponse,
-  KycInfoSubmitData,
-  { rejectValue: string }
+  any,
+  { rejectValue: ErroResponseData }
 >("user/KycInfoSubmit", async (KycInfoSubmitData, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -390,11 +395,11 @@ export const triggerKycInfoSubmit = createAsyncThunk<
     console.log("KYC INFO SUBMIT response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to reset password"
-    );
+    return thunkAPI.rejectWithValue({
+      message: error.message ?? "Something went wrong",
+      status_code: error.status_code,
+      results: error.results, 
+    });
   }
 });
 

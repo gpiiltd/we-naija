@@ -83,8 +83,8 @@
     mobile_number: string;
     id_type: string;
     id_number: string;
-    // id_front: File;
-    // id_back: File;
-    id_front: string;
-    id_back: string;
+    id_front: File;
+    id_back: File;
+    // id_front: string;
+    // id_back: string;
   }

@@ -43,7 +43,7 @@ const IDVerification = () => {
     (state: RootState) => state.user
   );
 
-  console.log("kycPersonalInfo from state:>>>>>", kycPersonalInfo);
+  // console.log("kycPersonalInfo from state:>>>>>", kycPersonalInfo);
 
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdNumber(e.target.value);
@@ -58,33 +58,48 @@ const IDVerification = () => {
     }
   };
 
-  const handleFileUploads = async () => {
-    const frontFileName = frontFile ? await uploadFile(frontFile) : "";
-    const backFileName = backFile ? await uploadFile(backFile) : "";
+  // const handleFileUploads = async () => {
+  //   const frontFileName = frontFile ? await uploadFile(frontFile) : "";
+  //   const backFileName = backFile ? await uploadFile(backFile) : "";
 
-    return { frontFileName, backFileName };
-  };
+  //   return { frontFileName, backFileName };
+  // };
 
   const handleSubmit = async () => {
    
     setLoading(!loading);
 
-    const { frontFileName, backFileName } = await handleFileUploads();
+    // const { frontFileName, backFileName } = await handleFileUploads();
 
-    const payload = {
-      address: kycPersonalInfo.address,
-      nationality: kycPersonalInfo.nationality,
-      gender: kycPersonalInfo.gender,
-      date_of_birth: kycPersonalInfo.dateOfBirth,
-      mobile_number: kycPhoneNumber || "08130966935",
-      id_type: idType,
-      id_number: idNumber,
-      id_front: frontFileName,
-      id_back: backFileName,
-      // id_front: frontFile as File,
-      // id_back: backFile as File,
-    };
+    // const payloadxxx = {
+    //   address: kycPersonalInfo.address,
+    //   nationality: kycPersonalInfo.nationality,
+    //   gender: kycPersonalInfo.gender,
+    //   date_of_birth: kycPersonalInfo.dateOfBirth,
+    //   mobile_number: kycPhoneNumber || "08130966935",
+    //   id_type: idType,
+    //   id_number: idNumber,
+    //   id_front: frontFileName,
+    //   id_back: backFileName,
+    //   // id_front: frontFile as File,
+    //   // id_back: backFile as File,
+    // };
+
+    const payload = new FormData();
+    payload.append("address", kycPersonalInfo.address);
+    payload.append("nationality", kycPersonalInfo.nationality);
+    payload.append("gender", kycPersonalInfo.gender);
+    payload.append("date_of_birth", kycPersonalInfo.dateOfBirth);
+    payload.append("mobile_number", kycPhoneNumber);
+    payload.append("id_type", idType);
+    payload.append("id_number", idNumber);
+    payload.append("id_front", frontFile as File);
+    payload.append("id_back", backFile as File);
     console.log("payload>>>", payload);
+    for (let pair of Array.from(payload.entries())) {
+      console.log(`kye: ${pair[0]} value: ${pair[1]}`);
+    }
+    console.log("Payload (FormData):.........", payload);
 
     dispatch(triggerKycInfoSubmit(payload) as any);
   };

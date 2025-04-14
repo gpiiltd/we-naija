@@ -16,6 +16,7 @@ interface ApiUrls {
   getAllCategories: string;
   getSurveyIndicatorById: string;
   getSurveyIndicatorQuestions: string;
+  submitSurveyReport: string;
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
@@ -30,7 +31,7 @@ export const apiUrl: ApiUrls = {
   forgotPassword: `${BASE_URL}agent/request/password-reset-token`,
   forgotPasswordOtp: `${BASE_URL}agent/verify/password-reset-token`,
   resetPassword: `${BASE_URL}agent/process/password-reset`,
-  emailVerificationResend: `${BASE_URL}agent/reque  st/resend/verification-email`,
+  emailVerificationResend: `${BASE_URL}agent/request/resend/verification-email`,
   emailVerification: `${BASE_URL}agent/verify/email`,
   phoneNumberVerification: `${BASE_URL}agent/request/mobile-token`,
   phoneNumberVerificationOtp: `${BASE_URL}agent/verify/mobile-token`,
@@ -40,4 +41,5 @@ export const apiUrl: ApiUrls = {
   getAllCategories: `${BASE_URL}categories?category_type=survey`,
   getSurveyIndicatorById: `${BASE_URL}categories`,
   getSurveyIndicatorQuestions: `${BASE_URL}survey/indicators`,
+  submitSurveyReport: `${BASE_URL}survey/institutions`,
 };

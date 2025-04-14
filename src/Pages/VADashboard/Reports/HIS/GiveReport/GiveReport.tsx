@@ -19,6 +19,7 @@ const GiveReport = () => {
   );
   const [surveyIndicatorQuestionsData, setSurveyIndicatorQuestionsData] =
     useState<any>([]);
+
   useEffect(() => {
     dispatch(
       triggerSurveyIndicatorQuestions({ indicatorId: id as string }) as any
@@ -41,7 +42,11 @@ const GiveReport = () => {
     surveyIndicatorQuestions.error,
     surveyIndicatorQuestions.message,
   ]);
-  console.log("SURVEY INDICATOR QUESTIONS DATA in give report", surveyIndicatorQuestionsData);
+  console.log(
+    "SURVEY INDICATOR QUESTIONS DATA in give report",
+    surveyIndicatorQuestionsData
+  );
+ 
   return (
     <div className=" flex flex-col items-center justify-center">
       <section className="w-full">
@@ -61,7 +66,7 @@ const GiveReport = () => {
       <section className="py-6 pb-16 w-full flex justify-center">
         <Card titleLeft={undefined} titleRight={undefined} width="48.61%">
           <div className=" px-16 pt-8 pb-10">
-            <Survey />
+            <Survey surveyQuestions={surveyIndicatorQuestionsData} />
           </div>
         </Card>
       </section>

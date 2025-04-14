@@ -92,7 +92,7 @@ export const triggerGetAllSurveyCategories = createAsyncThunk<
 });
 
 export const triggerSurveyIndicatorById = createAsyncThunk<
-  DefaultResponse,
+  any,
   { categoryId: string },
   { rejectValue: ErroResponseData }
 >("user/GetSurveyIndicatorById", async (categoryId, thunkAPI) => {
@@ -109,7 +109,7 @@ export const triggerSurveyIndicatorById = createAsyncThunk<
         },
       }
     );
-    console.log("GET SURVEY INDICATOR BY ID respons>>>>>", response.data);
+    // console.log("GET SURVEY INDICATOR BY ID respons>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -138,8 +138,42 @@ export const triggerSurveyIndicatorQuestions = createAsyncThunk<
         },
       }
     );
-    console.log("GET SURVEY INDICATOR QUESTIONS respons>>>>>", response.data.results);
+    // console.log("GET SURVEY INDICATOR QUESTIONS respons>>>>>", response.data.results);
     return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.message ?? "Something went wrong",
+      status_code: error.status_code,
+      results: error.results, 
+    });
+  }
+});
+
+
+export const triggerSubmitSurveyReport = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: any }
+>("user/submitSurveyReport", async (surveyReportData, thunkAPI) => {
+  try {
+    console.log("SUBMIT SURVEY REPORT DATAaaaaSERVICE", surveyReportData);
+    const institution_id = localStorage.getItem("institutionIdentifier");
+    const surveyQuestionIdentifier = localStorage.getItem("surveyQuestionIdentifier");
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      `${apiUrl.submitSurveyReport}/${institution_id}/questions/${surveyQuestionIdentifier}`,
+      surveyReportData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    console.log("SUBMIT SURVEY REPORT response>>>", response.data);
+    return response.data;
+   
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
       message: error.message ?? "Something went wrong",

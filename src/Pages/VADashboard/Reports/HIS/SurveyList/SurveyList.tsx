@@ -18,25 +18,31 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   triggerGetAllSurveyCategories,
   triggerGetInstitutionById,
-  triggerSurveyIndicatorById
+  triggerSurveyIndicatorById,
 } from "../../../../../redux/Services/institute/instituteServices";
 import { RootState } from "../../../../../redux/Store/store";
 
 const SurveyList = () => {
+  const [genericIndicators, setGenericIndicators] = useState<any[]>([]);
+  const [pediatricIndicators, setPediatricIndicators] = useState<any[]>([]);
+  const [sexualHealthIndicators, setSexualHealthIndicators] = useState<any[]>(
+    []
+  );
+
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [institutionDetails, setInstitutionDetails] = useState<any>({});
   const [categories, setSurveyCategories] = useState<any[]>([]);
-  const [surveyIndicatorData, setSurveyIndicatorData] = useState<any[]>([]);
   const { surveyCategories, institutionById, surveyIndicator } = useSelector(
     (state: RootState) => state.institute
   );
   useEffect(() => {
     if (institutionDetails?.name) {
       localStorage.setItem("institutionName", institutionDetails.name);
+      localStorage.setItem("institutionIdentifier", institutionDetails.identifier);
     }
-  }, [institutionDetails?.name]);
+  }, [institutionDetails?.name, institutionDetails?.identifier]);
 
   useEffect(() => {
     dispatch(triggerGetAllSurveyCategories({}) as any);
@@ -46,7 +52,6 @@ const SurveyList = () => {
   useEffect(() => {
     if (institutionById.statusCode === 200 || institutionById.data) {
       setInstitutionDetails(institutionById.data.data);
-      
     }
     if (institutionById.error && institutionById.message) {
       console.log("Error fetching institution by id");
@@ -69,7 +74,6 @@ const SurveyList = () => {
     surveyCategories.data,
   ]);
 
-  console.log("surveyCategories@@@@***", categories);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (surveyCategories.statusCode === 200 && surveyCategories.data) {
@@ -94,7 +98,6 @@ const SurveyList = () => {
             ? sexualReproductiveHealthCategory.identifier
             : null;
 
-
         if (genericCategoryId) {
           localStorage.setItem("genericCategoryId", genericCategoryId);
         }
@@ -113,46 +116,52 @@ const SurveyList = () => {
     return () => clearTimeout(timer);
   }, [surveyCategories.statusCode, surveyCategories.data, categories]);
 
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      const genericCategoryId = localStorage.getItem('genericCategoryId');
+      const genericCategoryId = localStorage.getItem("genericCategoryId");
+      const pediatricCategoryId = localStorage.getItem("pediatricCategoryId");
+      const sexualHealthCategoryId = localStorage.getItem(
+        "sexualReproductiveHealthCategoryId"
+      );
+
       if (genericCategoryId) {
-        const payload = {
-          categoryId: genericCategoryId as string,
-        };
-        dispatch(triggerSurveyIndicatorById(payload) as any);
+        dispatch(
+          triggerSurveyIndicatorById({ categoryId: genericCategoryId }) as any
+        );
       }
-
-      // const pediatricCategoryId = localStorage.getItem('pediatricCategoryId');
-      // if (pediatricCategoryId) {
-      //   const payload = {
-      //     categoryId: pediatricCategoryId as string,
-      //   };
-      //   dispatch(triggerSurveyIndicatorById(payload) as any);
-      // }
-
-      // const sexualReproductiveHealthCategoryId = localStorage.getItem('sexualReproductiveHealthCategoryId');
-      // if (sexualReproductiveHealthCategoryId) {
-      //   const payload = {
-      //     categoryId: sexualReproductiveHealthCategoryId as string,
-      //   };
-      //   dispatch(triggerSurveyIndicatorById(payload) as any);
-      // }
+      if (pediatricCategoryId) {
+        dispatch(
+          triggerSurveyIndicatorById({ categoryId: pediatricCategoryId }) as any
+        );
+      }
+      if (sexualHealthCategoryId) {
+        dispatch(
+          triggerSurveyIndicatorById({
+            categoryId: sexualHealthCategoryId,
+          }) as any
+        );
+      }
     }, 1000);
 
     return () => clearTimeout(timer);
   }, [dispatch]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-    if (surveyIndicator.statusCode === 200 && surveyIndicator.data) {
-      console.log("SURVEY INDICATOR DATA in useEffect", surveyIndicator.data.data.indicators);
-      setSurveyIndicatorData(surveyIndicator.data.data.indicators);
-      }
-    }, 3000);
+  // console.log("AALLLLLLsurveyIndicator@@@@***", surveyIndicator);
 
-    return () => clearTimeout(timer);
-  }, [surveyIndicator.statusCode, surveyIndicator.data]);
+  useEffect(() => {
+    if (surveyIndicator.statusCode === 200) {
+      if (surveyIndicator.genericData?.indicators) {
+        setGenericIndicators(surveyIndicator.genericData.indicators);
+      }
+      if (surveyIndicator.pediatricData?.indicators) {
+        setPediatricIndicators(surveyIndicator.pediatricData.indicators);
+      }
+      if (surveyIndicator.sexualHealthData?.indicators) {
+        setSexualHealthIndicators(surveyIndicator.sexualHealthData.indicators);
+      }
+    }
+  }, [surveyIndicator]);
 
   const navLinks = [
     {
@@ -172,13 +181,13 @@ const SurveyList = () => {
 
   const componentMap: { [key: string]: React.ReactNode } = {
     "/verified-agent-dashboard/reports/hospitals/survey-list/generic": (
-      <GenericComponent surveyIndicatorData={surveyIndicatorData} />
+      <GenericComponent surveyIndicatorData={genericIndicators} />
     ),
     "/verified-agent-dashboard/reports/hospitals/survey-list/pediatric": (
-      <PediatricComponent />
+      <PediatricComponent surveyIndicatorData={pediatricIndicators} />
     ),
     "/verified-agent-dashboard/reports/hospitals/survey-list/health": (
-      <SexualReproductiveHealthComponent />
+      <SexualReproductiveHealthComponent surveyIndicatorData={sexualHealthIndicators} />
     ),
   };
 
