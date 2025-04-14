@@ -387,8 +387,10 @@ export const triggerKycInfoSubmit = createAsyncThunk<
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          // "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
+
+          // Accept: "application/json",
         },
       }
     );

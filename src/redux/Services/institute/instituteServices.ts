@@ -138,7 +138,7 @@ export const triggerSurveyIndicatorQuestions = createAsyncThunk<
         },
       }
     );
-    // console.log("GET SURVEY INDICATOR QUESTIONS respons>>>>>", response.data.results);
+    console.log("GET SURVEY INDICATOR QUESTIONS respons>>>>>", response.data.results);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -161,13 +161,13 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
     const surveyQuestionIdentifier = localStorage.getItem("surveyQuestionIdentifier");
     const token = localStorage.getItem("accessToken");
     const response = await axios.post(
-      `${apiUrl.submitSurveyReport}/${institution_id}/questions/${surveyQuestionIdentifier}`,
+      `${apiUrl.submitSurveyReport}/${institution_id}/questions/${surveyQuestionIdentifier}/`,
       surveyReportData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+          // Accept: "application/json",
         },
       }
     );

@@ -214,7 +214,23 @@ const SurveyList = () => {
                 <div onClick={() => navigate(-1)}>
                   <AiOutlineArrowLeft size={24} className="cursor-pointer" />
                 </div>
-                <Icon type="homeAvatar" className="pr-2" />
+                {/* <Icon type="homeAvatar" className="pr-2" /> */}
+                {institutionDetails?.logo ? (
+                          <img
+                            src={institutionDetails?.logo}
+                            alt="Institution Icon"
+                            className="pr-2"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
+                            <span className="text-white p-2">
+                              {institutionDetails?.name
+                                ?.split(" ")
+                                .map((word: string) => word[0])
+                                .join("")}
+                            </span>
+                          </div>
+                        )}
 
                 <Typography
                   variant={TypographyVariant.SUBTITLE}

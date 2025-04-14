@@ -39,6 +39,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const dispatch = useDispatch();
   const { surveyReport } = useSelector((state: RootState) => state.institute);
 
+  console.log("SURVEY REPORT>>>", surveyReport);  
   const handleNext = () => {
     setCurrentQuestion((prev) => prev + 1);
   };
@@ -84,7 +85,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
     const payload = new FormData();
     payload.append("selected_option", selectedFirstAnswer);
     payload.append("images", uploadedFile as File);
-    payload.append("comments", comments); 
+    payload.append("comment", comments); 
     
     console.log("payload>>>", payload);
     for (let pair of Array.from(payload.entries())) {

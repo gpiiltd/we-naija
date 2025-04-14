@@ -17,13 +17,18 @@ interface ApiUrls {
   getSurveyIndicatorById: string;
   getSurveyIndicatorQuestions: string;
   submitSurveyReport: string;
+  getAllCommunityTasks: string;
+  getCommunityTaskById: string;
+  getAllIndicators: string;
+  getAllCommunityTaskCategories: string;
+  getCommunityTaskCategoryById: string;
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
 const BASE_URL =
   "http://api.test.nssf.ng/api/v1/";
 
-export const apiUrl: ApiUrls = {
+export const apiUrl: ApiUrls = {  
   signUp: `${BASE_URL}agent/process/signup`,
   login: `${BASE_URL}agent/request/login`,
   validateOtp: `${BASE_URL}agent/otp/validate`,
@@ -42,4 +47,9 @@ export const apiUrl: ApiUrls = {
   getSurveyIndicatorById: `${BASE_URL}categories`,
   getSurveyIndicatorQuestions: `${BASE_URL}survey/indicators`,
   submitSurveyReport: `${BASE_URL}survey/institutions`,
+  getAllCommunityTasks: `${BASE_URL}task`,
+  getCommunityTaskById: `${BASE_URL}task`,
+  getAllIndicators: `${BASE_URL}indicators`,
+  getAllCommunityTaskCategories: `${BASE_URL}categories?category_type=community_task`,
+  getCommunityTaskCategoryById: `${BASE_URL}categories`,
 };

@@ -74,11 +74,11 @@ function App() {
                 Component={CommunityTasks}
               />
               <Route
-                path="/verified-agent-dashboard/reports/NCD-prevention"
+                path="/verified-agent-dashboard/reports/community-tasks/:title/:id"
                 Component={NCDPrevention}
               />
               <Route
-                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+                path="/verified-agent-dashboard/reports/community-tasks/indicator/:title/:id"
                 Component={MentalHeaalth}
               />
               <Route

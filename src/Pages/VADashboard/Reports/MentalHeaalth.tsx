@@ -19,6 +19,9 @@ const questions = [
 const MentalHeaalth = () => {
   const navigate = useNavigate();
 
+  const indicatorTasks = JSON.parse(localStorage.getItem("indicatorTasks") || "[]");
+  const indicatorName = localStorage.getItem("indicatorName");
+  console.log("indicatorTasks GOTTEN>>>", indicatorTasks); 
   return (
     <div>
    <div className="flex gap-3 items-center">
@@ -26,7 +29,7 @@ const MentalHeaalth = () => {
     <AiOutlineArrowLeft size={24} className="cursor-pointer" />
   </div>
   <Typography variant={TypographyVariant.SUBTITLE}>
-    Mental health promotion
+    {indicatorName}
   </Typography>
 
 </div>
@@ -44,7 +47,7 @@ const MentalHeaalth = () => {
         <div className="rounded-lg self-center shadow-lg px-3 py-4 md:px-16 md:py-12 flex flex-col justify-start mb-16">
           <div className="flex flex-col justify-start ">
             <Typography variant={TypographyVariant.SUBTITLE}>
-              Mental health promotion
+              {indicatorName}
             </Typography>
             <Typography
   variant={TypographyVariant.SMALL}
@@ -78,42 +81,51 @@ const MentalHeaalth = () => {
 
           {/* New Cards */}
         <div className="flex flex-col gap-4">
-      {questions.map((question, index) => (
-        <div key={index} className="flex gap-3 w-full items-center">
-          <div className="border border-d_red rounded-full h-5 w-5 flex items-center justify-center pb-1">
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="pt-1 text-d_red"
-            >
-              {index + 1}
-            </Typography>
-          </div>
-          <div
-            className="w-full flex justify-between items-center py-4 px-6 gap-6 cursor-pointer shadow rounded-lg bg-white"
-            onClick={() =>
-              navigate(
-                "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
-              )
-            }
-          >
-            <div>
+      {indicatorTasks && indicatorTasks.length > 0 ? (
+        indicatorTasks.map((task: any, index: any) => (
+          <div key={index} className="flex gap-3 w-full items-center">
+            <div className="border border-d_red rounded-full h-5 w-5 flex items-center justify-center pb-1">
               <Typography
-                variant={TypographyVariant.NORMAL}
-                className="font-bold tracking-wide"
+                variant={TypographyVariant.SMALL}
+                className="pt-1 text-d_red"
               >
-                {question}
+                {index + 1}
               </Typography>
             </div>
-            <div className="bg-effect_green p-1 rounded-full">
-              <IoIosArrowForward
-                className="font-extrabold"
-                size={24}
-                color="#007A61"
-              />
+            <div
+              className="w-full flex justify-between items-center py-4 px-6 gap-6 cursor-pointer shadow rounded-lg bg-white"
+              onClick={() =>
+                navigate(
+                  "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+                )
+              }
+            >
+              <div>
+                <Typography
+                  variant={TypographyVariant.NORMAL}
+                  className="font-bold tracking-wide"
+                >
+                  {task.task_question}
+                </Typography>
+              </div>
+              <div className="bg-effect_green p-1 rounded-full">
+                <IoIosArrowForward
+                  className="font-extrabold"
+                  size={24}
+                  color="#007A61"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <Typography
+          variant={TypographyVariant.NORMAL}
+          className="text-center text-light_gray"
+        >
+          No tasks available
+        </Typography>
+      )}
     </div>
         </div>
       </div>
