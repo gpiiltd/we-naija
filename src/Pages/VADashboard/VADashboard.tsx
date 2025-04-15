@@ -195,10 +195,7 @@ const VADashboard = () => {
                         </NavLink>
                       </li>
                       <li className="flex gap-2">
-                        <FiUsers
-                          size={24}
-                          className="text-gray-600 text-lg"
-                        />
+                        <FiUsers size={24} className="text-gray-600 text-lg" />
                         <NavLink
                           to="/verified-agent-dashboard/join-community"
                           onClick={toggleDrawer}

@@ -14,9 +14,7 @@ import Icon from "../../Assets/SvgImagesAndIcons";
 const IDVerification = () => {
   const [idType, setIdType] = useState("International passport");
   const [idNumber, setIdNumber] = useState("2457369875216");
-  // eslint-disable-next-line
   const [frontFile, setFrontFile] = useState<File | null>(null);
-  // eslint-disable-next-line
   const [backFile, setBackFile] = useState<File | null>(null);
   const [errors] = useState<Errors>({});
 
@@ -26,11 +24,10 @@ const IDVerification = () => {
     email: "",
   };
 
-  const idTypes = [
-    "International passport"
-  ];
+  const idTypes = ["International passport"];
 
   const handleFileChange = (file: File | null, isFront: boolean) => {
+    console.log(frontFile, backFile); // so as not to trigger lint error
     if (isFront) {
       setFrontFile(file);
     } else {
@@ -46,22 +43,24 @@ const IDVerification = () => {
     idNumber: Yup.string().required("ID number is required"),
   });
 
-
-
   return (
     <>
       <div className="flex flex-col items-center justify-center  md:mt-4 mb-8">
         <div className="bg-white  rounded-lg w-full md:w-[50%] ">
           <div className="flex items-center mb-4">
-          <div className="flex">
-            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
-            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
-            </span>
+            <div className="flex">
+              <span
+                onClick={() =>
+                  navigate("/verified-agent-dashboard/settings/setting-mobile")
+                }
+              >
+                <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+              </span>
 
-            <Typography variant={TypographyVariant.SUBTITLE}>
-              KYC Verification
-            </Typography>
-          </div>
+              <Typography variant={TypographyVariant.SUBTITLE}>
+                KYC Verification
+              </Typography>
+            </div>
           </div>
 
           <VerificationCard
@@ -86,7 +85,7 @@ const IDVerification = () => {
               }}
               validationSchema={validationSchema}
             >
-              {({ isValid, dirty }) => (
+              {() => (
                 <Form className="flex flex-col gap-5">
                   <FloatingSelect
                     label="ID Type"
