@@ -16,11 +16,9 @@ const EnterOtp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
-  const { error, message, email, kycPhoneNumber, loading } = useSelector(
+  const { error, message, kycPhoneNumber, loading } = useSelector(
     (state: RootState) => state.user
   );
-
-  // const kycPhoneNumber = useSelector((state: RootState) => state.user.kyckycPhoneNumber);
 
   const handleChange = (index: number, value: string) => {
     if (/^[0-9]*$/.test(value)) {
@@ -53,7 +51,6 @@ const EnterOtp = () => {
       return;
     }
     const otpCode = otp.join("");
-    // navigate('/kyc/personal-information')
     console.log("Entered OTP:", otpCode);
     const payload = {
       mobile_number: kycPhoneNumber,
@@ -125,16 +122,6 @@ const EnterOtp = () => {
               Re-send code via SMS
             </p>
           </Typography>
-
-          {/* <button
-            onClick={handleSubmit}
-            className={`w-full text-white bg-primary_green py-4 rounded-xl mt-4 ${
-              isSubmitDisabled ? "opacity-50" : ""
-            }`}
-            disabled={isSubmitDisabled}
-          >
-            {loading ? "Loading..." : "Proceed"}
-          </button> */}
 
           <Button
               text="Proceed"

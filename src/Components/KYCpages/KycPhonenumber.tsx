@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Button, Typography } from "@gpiiltd/gpi-ui-library";
-import { TypographyVariant } from "../../Components/types";
+import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -17,7 +17,7 @@ import { setKycPhoneNumber, resetState } from "../../redux/Slices/user/userSlice
 const KycPhonenumber = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, message, email, loading } = useSelector(
+  const { error, message, loading } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -35,7 +35,6 @@ const KycPhonenumber = () => {
     if (error) {
       toast.error(error);
     } else if (!error && message) {
-      // toast.success(message);
       toast.success("Otp has been sent to the provided phone number");
       setTimeout(() => {
         navigate("/kyc/enter-otp");
@@ -78,9 +77,6 @@ const KycPhonenumber = () => {
             initialValues={initialValues}
             validateOnChange={true}
             validateOnBlur={true}
-            // onSubmit={(values) => {
-            //   console.log("Form values:", values);
-            // }}
             onSubmit={handleProceed}
             validationSchema={validationSchema}
           >
@@ -115,7 +111,6 @@ const KycPhonenumber = () => {
                   bg_color="#007A61"
                   text_color="white"
                   loading={loading}
-                  // onClick={handleProceed}
                 />
               </Form>
             )}
