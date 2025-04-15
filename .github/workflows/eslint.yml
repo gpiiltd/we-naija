@@ -13,7 +13,6 @@ on:
   push:
     branches: [ "staging" ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "staging" ]
   schedule:
     - cron: '35 14 * * 1'
@@ -25,10 +24,15 @@ jobs:
     permissions:
       contents: read
       security-events: write
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+      actions: read
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Configure npm for authentication
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Install ESLint
         run: |
