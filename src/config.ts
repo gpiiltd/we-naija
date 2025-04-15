@@ -22,6 +22,7 @@ interface ApiUrls {
   getAllIndicators: string;
   getAllCommunityTaskCategories: string;
   getCommunityTaskCategoryById: string;
+  answerTaskQuestion: string;
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
@@ -52,4 +53,5 @@ export const apiUrl: ApiUrls = {
   getAllIndicators: `${BASE_URL}indicators`,
   getAllCommunityTaskCategories: `${BASE_URL}categories?category_type=community_task`,
   getCommunityTaskCategoryById: `${BASE_URL}categories`,
+  answerTaskQuestion: `${BASE_URL}task/submit`,
 };

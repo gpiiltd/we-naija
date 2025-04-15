@@ -22,7 +22,6 @@ import { RootState } from "../../../../redux/Store/store";
 import { toast } from "react-toastify";
 import { resetSurveyReportState } from "../../../../redux/Services/institute/instituteSlice";
 
-
 const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(1);
@@ -39,7 +38,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const dispatch = useDispatch();
   const { surveyReport } = useSelector((state: RootState) => state.institute);
 
-  console.log("SURVEY REPORT>>>", surveyReport);  
+  console.log("SURVEY REPORT>>>", surveyReport);
   const handleNext = () => {
     setCurrentQuestion((prev) => prev + 1);
   };
@@ -59,7 +58,10 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   // };
 
   if (surveyQuestions?.[0]?.identifier) {
-    localStorage.setItem("surveyQuestionIdentifier", surveyQuestions[0].identifier);
+    localStorage.setItem(
+      "surveyQuestionIdentifier",
+      surveyQuestions[0].identifier
+    );
   }
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,21 +82,22 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const deleteImage = () => {
     setUploadedFileName(null);
   };
-  const submitReport = () => {
-
+  const submitReport = (values: any) => {
     const payload = new FormData();
     payload.append("selected_option", selectedFirstAnswer);
     payload.append("images", uploadedFile as File);
-    payload.append("comment", comments); 
-    
+    payload.append("comment", values.textArea);
+
     console.log("payload>>>", payload);
     for (let pair of Array.from(payload.entries())) {
       console.log(`kye: ${pair[0]} value: ${pair[1]}`);
     }
     dispatch(triggerSubmitSurveyReport(payload) as any);
   };
+  console.log("SURVEY REPORT final>>>", surveyReport);
   useEffect(() => {
     if (surveyReport?.statusCode === 200 && surveyReport?.data) {
+
       setTimeout(() => {
         setLoading(false);
         setShowModal(true);
@@ -111,7 +114,6 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
     surveyReport?.statusCode,
     dispatch,
   ]);
- 
 
   return (
     <div className="  flex flex-col gap-10">
@@ -278,7 +280,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
               </label>
             )}
           </section>
-          
+
           <div>
             <Typography
               variant={TypographyVariant.NORMAL}
@@ -289,10 +291,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
             <Formik
               initialValues={{ textArea: "" }}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log("Form submitted with values:", values);
-                setComments(values.textArea);
-              }}
+              onSubmit={submitReport}
             >
               {({ handleSubmit, isValid, dirty }) => (
                 <Form onSubmit={handleSubmit}>
@@ -316,10 +315,10 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
                       text_color="#FFFFFF"
                       bg_color="#007A61"
                       active={isValid && dirty}
-                      onClick={() => {
-                        handleSubmit();
-                        submitReport();
-                      }} 
+                      // onClick={() => {
+                      //   handleSubmit();
+                      //   submitReport();
+                      // }}
                     />
                   </div>
                 </Form>

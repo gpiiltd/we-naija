@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Typography from "../../../Components/Typography";
 import { TypographyVariant } from "../../../Components/types";
 import Icon from "../../../Assets/SvgImagesAndIcons";
@@ -10,27 +10,55 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import CustomModal from "../../../Components/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { triggerAnswerTaskQuestion } from "../../../redux/Services/community/communityServices";
+import { toast } from "react-toastify";
+import { resetAnswerTaskQuestionState } from "../../../redux/Services/community/communitySlice";
 
 const validationSchema = Yup.object({
   textArea: Yup.string().max(20, "You are allowed a maximum of 20 characters"),
 });
+
 const ReportForm = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [answer, setAnswer] = useState("");
 
+  const queryParams = new URLSearchParams(window.location.search);
+  let taskQuestion = queryParams.get("question");
+  if (taskQuestion) {
+    taskQuestion = taskQuestion.replace(/-/g, " ");
+  }
   const closeModal = () => setIsModalOpen(false);
 
+  const dispatch = useDispatch();
+  const { answerTaskQuestion } = useSelector((state: any) => state.community);
+
   const giveReport = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      setIsModalOpen(false);
-      navigate(
-        "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
-      );
-    }, 3000);
+    const payload = {
+      task: taskQuestion,
+      answer: answer,
+    };
+    // console.log("Payload:", payload);
+
+    dispatch(triggerAnswerTaskQuestion(payload) as any);
   };
+  useEffect(() => {
+    if (answerTaskQuestion?.statusCode === 200 && answerTaskQuestion?.data) {
+      setTimeout(() => {
+        setLoading(false);
+        setIsModalOpen(false);
+        navigate(
+          "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+        );
+      }, 3000);
+    }
+    if (answerTaskQuestion?.error && answerTaskQuestion?.message) {
+      toast.error(`${answerTaskQuestion.message}`);
+    }
+    dispatch(resetAnswerTaskQuestionState());
+  }, [answerTaskQuestion, dispatch, navigate]);
 
   return (
     <div className="flex mt-8  flex-col md:px-32 ">
@@ -71,7 +99,7 @@ const ReportForm = () => {
           variant={TypographyVariant.NORMAL}
           className="font-bold pt-5"
         >
-          What do you understand by mental health?
+          {taskQuestion}
         </Typography>
         <Icon type="response" className="w-full" />
 
@@ -88,7 +116,7 @@ const ReportForm = () => {
           initialValues={{ textArea: "" }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            console.log("Form submitted with values:", values);
+            setAnswer(values.textArea);
           }}
         >
           {({ handleSubmit, isValid, dirty }) => (

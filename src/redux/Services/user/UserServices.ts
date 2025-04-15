@@ -310,7 +310,7 @@ export const triggerEmailVerification = createAsyncThunk<
 export const triggerPhoneNumberVerification = createAsyncThunk<
   DefaultResponse,
   PhoneNumberVerificationData,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >(
   "user/PhoneNumberVerification",
   async (PhoneNumberVerificationData, thunkAPI) => {
@@ -330,11 +330,11 @@ export const triggerPhoneNumberVerification = createAsyncThunk<
       console.log("PHONE NUMBER VERIFICATION response>>>>>>", response);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.message ||
-          error.response?.data ||
-          "Failed to reset password"
-      );
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message ?? "Something went wrong",
+        status_code: error.response.data.status_code,
+        results: error.response.data.results,
+      });
     }
   }
 );
@@ -342,7 +342,7 @@ export const triggerPhoneNumberVerification = createAsyncThunk<
 export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
   DefaultResponse,
   PhoneNumberVerificationData,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >(
   "user/PhoneNumberVerificationOtp",
   async (PhoneNumberVerificationData, thunkAPI) => {
@@ -365,11 +365,11 @@ export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
       );
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.message ||
-          error.response?.data ||
-          "Failed to reset password"
-      );
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message ?? "Something went wrong",
+        status_code: error.response.data.status_code,
+        results: error.response.data.results,
+      });
     }
   }
 );
@@ -398,9 +398,9 @@ export const triggerKycInfoSubmit = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results, 
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
@@ -408,7 +408,7 @@ export const triggerKycInfoSubmit = createAsyncThunk<
 export const triggerGetAllInstitute = createAsyncThunk<
   DefaultResponse,
   any,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >("user/GetAllInstitute", async (_, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -425,18 +425,18 @@ export const triggerGetAllInstitute = createAsyncThunk<
     // console.log("GET INSTITUTE response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to reset password"
-    );
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message ?? "Something went wrong",
+        status_code: error.response.data.status_code,
+        results: error.response.data.results,
+      });
   }
 });
 
 export const triggerGetInstituteById = createAsyncThunk<
   DefaultResponse,
   string,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >("user/GetInstituteById", async (id, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -453,20 +453,18 @@ export const triggerGetInstituteById = createAsyncThunk<
     console.log("GET INSTITUTE BY ID response********", response.data);
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to get institute by ID"
-    );
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
   }
 });
-
-
 
 export const triggerGetAllSurveyCategories = createAsyncThunk<
   DefaultResponse,
   any,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >("user/GetAllSurveyCategories", async (_, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -483,10 +481,10 @@ export const triggerGetAllSurveyCategories = createAsyncThunk<
     console.log("GET ALL SURVEY CATEGORIES response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to reset password"
-    );
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
   }
 });

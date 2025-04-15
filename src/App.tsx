@@ -82,7 +82,8 @@ function App() {
                 Component={MentalHeaalth}
               />
               <Route
-                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+                // path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form/"
                 Component={ReportForm}
               />
               <Route

@@ -30,9 +30,9 @@ export const triggerGetAllCommunityCategories = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results,
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
@@ -54,13 +54,16 @@ export const triggerGetCommunityTaskCategoryById = createAsyncThunk<
         },
       }
     );
-    console.log("GET COMMUNITY TASK CATEGORY BY ID in SERVICE>>>", response.data);
+    console.log(
+      "GET COMMUNITY TASK CATEGORY BY ID in SERVICE>>>",
+      response.data
+    );
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results,
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
@@ -86,9 +89,38 @@ export const triggerGetAllIndicators = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results,
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerAnswerTaskQuestion = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("community/AnswerTaskQuestion", async (data, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post<DefaultResponse>(
+      `${apiUrl.answerTaskQuestion}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    console.log("Answer Task Question RESPONSE in SERVICE>>>", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });

@@ -29,9 +29,9 @@ export const triggerGetAllInstitution = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results, 
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
@@ -57,9 +57,9 @@ export const triggerGetInstitutionById = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results,
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
@@ -84,9 +84,9 @@ export const triggerGetAllSurveyCategories = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results, 
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
@@ -113,9 +113,9 @@ export const triggerSurveyIndicatorById = createAsyncThunk<
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results, 
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
@@ -138,17 +138,19 @@ export const triggerSurveyIndicatorQuestions = createAsyncThunk<
         },
       }
     );
-    console.log("GET SURVEY INDICATOR QUESTIONS respons>>>>>", response.data.results);
+    console.log(
+      "GET SURVEY INDICATOR QUESTIONS respons>>>>>",
+      response.data.results
+    );
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results, 
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });
-
 
 export const triggerSubmitSurveyReport = createAsyncThunk<
   any,
@@ -158,7 +160,9 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
   try {
     console.log("SUBMIT SURVEY REPORT DATAaaaaSERVICE", surveyReportData);
     const institution_id = localStorage.getItem("institutionIdentifier");
-    const surveyQuestionIdentifier = localStorage.getItem("surveyQuestionIdentifier");
+    const surveyQuestionIdentifier = localStorage.getItem(
+      "surveyQuestionIdentifier"
+    );
     const token = localStorage.getItem("accessToken");
     const response = await axios.post(
       `${apiUrl.submitSurveyReport}/${institution_id}/questions/${surveyQuestionIdentifier}/`,
@@ -173,12 +177,12 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
     );
     console.log("SUBMIT SURVEY REPORT response>>>", response.data);
     return response.data;
-   
   } catch (error: any) {
+    console.log("SUBMIT SURVEY REPORT ERRORsssssssss>>>", error);
     return thunkAPI.rejectWithValue({
-      message: error.message ?? "Something went wrong",
-      status_code: error.status_code,
-      results: error.results, 
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
     });
   }
 });

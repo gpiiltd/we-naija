@@ -3,6 +3,7 @@ import {
   triggerGetAllCommunityCategories,
   triggerGetAllIndicators,
   triggerGetCommunityTaskCategoryById,
+  triggerAnswerTaskQuestion,
 } from "./communityServices";
 interface IinitialState {
   communityCategories: {
@@ -26,6 +27,13 @@ interface IinitialState {
     message: string | undefined;
     statusCode?: number | null;
   };
+  answerTaskQuestion: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };  
 }
 
 const initialState: IinitialState = {
@@ -44,6 +52,13 @@ const initialState: IinitialState = {
     statusCode: null,
   },
   communityIndicators: {
+    data: [],
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
+  answerTaskQuestion: {
     data: [],
     loading: false,
     error: false,
@@ -73,6 +88,11 @@ const communitySlice = createSlice({
       state.communityTaskCategoryById.message = initialState.communityTaskCategoryById.message;
       state.communityTaskCategoryById.statusCode =
         initialState.communityTaskCategoryById.statusCode;
+    },
+    resetAnswerTaskQuestionState: (state) => {
+      state.answerTaskQuestion.error = initialState.answerTaskQuestion.error;
+      state.answerTaskQuestion.message = initialState.answerTaskQuestion.message;
+      state.answerTaskQuestion.statusCode = initialState.answerTaskQuestion.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -155,6 +175,30 @@ const communitySlice = createSlice({
       state.communityIndicators.statusCode = action.payload
         ?.status_code as unknown as number;
     });
+
+    //ANSWER TASK QUESTION
+    builder.addCase(triggerAnswerTaskQuestion.pending, (state) => {
+      state.answerTaskQuestion.loading = true;
+      state.answerTaskQuestion.error = false;
+      state.answerTaskQuestion.data = {};
+      state.answerTaskQuestion.message = "";  
+    });
+    builder.addCase(triggerAnswerTaskQuestion.fulfilled, (state, action) => {
+      state.answerTaskQuestion.loading = false;
+      state.answerTaskQuestion.data = action.payload;
+      state.answerTaskQuestion.error = false;
+      state.answerTaskQuestion.message = action.payload
+        ?.message as unknown as string;
+      state.answerTaskQuestion.statusCode = action.payload
+        ?.status_code as unknown as number;
+    });
+    builder.addCase(triggerAnswerTaskQuestion.rejected, (state, action) => {
+      console.log("REJECTED ACTION PAYLOAD in ANSWER TASK QUESTION>>>", action.payload);
+      state.answerTaskQuestion.loading = false;
+      state.answerTaskQuestion.error = true;
+      state.answerTaskQuestion.message = action.payload?.message as unknown as string;
+      state.answerTaskQuestion.statusCode = action.payload?.status_code as unknown as number;
+    }); 
   },
 });
 
@@ -162,6 +206,7 @@ export const {
   resetCommunityState,
   resetCommunityIndicatorsState,
   resetCommunityTaskCategoryByIdState,
+  resetAnswerTaskQuestionState,
 } = communitySlice.actions;
 
 export default communitySlice.reducer;
