@@ -35,7 +35,7 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Install ESLint & dependencies
-        run: npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-prettier eslint-config-prettier @microsoft/eslint-formatter-sarif --legacy-peer-deps
+        run: npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-prettier eslint-config-prettier prettier @microsoft/eslint-formatter-sarif --legacy-peer-deps
 
       - name: Run ESLint
         env:
