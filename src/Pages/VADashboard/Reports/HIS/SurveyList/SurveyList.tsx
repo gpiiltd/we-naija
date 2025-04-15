@@ -8,7 +8,11 @@ import { CiLocationOn } from "react-icons/ci";
 import { CiClock2 } from "react-icons/ci";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineEnvelope } from "react-icons/hi2";
-import { GenericComponent, PediatricComponent, SexualReproductiveHealthComponent } from "./SurveyCategories";
+import {
+  GenericComponent,
+  PediatricComponent,
+  SexualReproductiveHealthComponent,
+} from "./SurveyCategories";
 import ButtonComponent from "../../../../../Components/ButtonComponent";
 
 const SurveyList = () => {
@@ -123,58 +127,58 @@ const SurveyList = () => {
               this institution.
             </Typography>
             <nav className="flex space-x-4">
-          {navLinks.map((navlink) => (
-            <button
-              key={navlink.href}
-              className={`${
-                activeLink === navlink.href
-                  ? "text-primary_green border-b-2 border-primary_green font-bold py-2"
-                  : "text-gray-500 py-2"
-              } hover:text-primary_green`}
-              onClick={() => setActiveLink(navlink.href)}
-            >
-              {navlink.label}
-            </button>
-          ))}
-        </nav>
+              {navLinks.map((navlink) => (
+                <button
+                  key={navlink.href}
+                  className={`${
+                    activeLink === navlink.href
+                      ? "text-primary_green border-b-2 border-primary_green font-bold py-2"
+                      : "text-gray-500 py-2"
+                  } hover:text-primary_green`}
+                  onClick={() => setActiveLink(navlink.href)}
+                >
+                  {navlink.label}
+                </button>
+              ))}
+            </nav>
           </section>
         </div>
         <div className="place-self-center py-3 cursor-pointer">
           <Icon type="watch" />
         </div>
-      
+
         <div className="mt-4">
           {componentMap[activeLink] || <div>Component not found</div>}
         </div>
         <div className="border h-50 bg-white py-10 flex justify-between px-10 rounded-lg">
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="pt-1 font-bold"
-        >
-          Have generic feedback or reports on this facility?
-        </Typography>
-    
-        <div className="flex gap-2">
-          {" "}
-          <ButtonComponent
-            text="Upload images"
-            border_color="#5E5959"
-            text_color="#17191C"
-            active={true}
-          />
-          <ButtonComponent
-            text="Write a report"
-            text_color="#FFFFFF"
-            bg_color="#007A61"
-            active={true}
-            onClick={() =>
-              navigate(
-                "/verified-agent-dashboard/reports/hospitals/give-report"
-              )
-            }
-          />
+          <Typography
+            variant={TypographyVariant.NORMAL}
+            className="pt-1 font-bold"
+          >
+            Have generic feedback or reports on this facility?
+          </Typography>
+
+          <div className="flex gap-2">
+            {" "}
+            <ButtonComponent
+              text="Upload images"
+              border_color="#5E5959"
+              text_color="#17191C"
+              active={true}
+            />
+            <ButtonComponent
+              text="Write a report"
+              text_color="#FFFFFF"
+              bg_color="#007A61"
+              active={true}
+              onClick={() =>
+                navigate(
+                  "/verified-agent-dashboard/reports/hospitals/give-report",
+                )
+              }
+            />
+          </div>
         </div>
-      </div>
       </div>
     </>
   );

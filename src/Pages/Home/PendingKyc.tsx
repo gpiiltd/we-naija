@@ -15,7 +15,8 @@ const PendingKyc = () => {
   return (
     <div>
       <p className="font-normal text-[#5E5959] text-lg">
-        Hello, <span className="font-bold text-black">{userData.first_name}</span> 👋
+        Hello,{" "}
+        <span className="font-bold text-black">{userData.first_name}</span> 👋
       </p>
       <p className="font-light text-[#5E5959] text-sm">
         Let’s improve health care service together.

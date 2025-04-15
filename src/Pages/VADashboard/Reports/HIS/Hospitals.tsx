@@ -34,7 +34,6 @@ const Hospitals = () => {
   const [buttonText, setButtonText] = useState("Location");
   const [loading, setLoading] = useState(false);
 
-
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
     console.log("*****", searchQuery);
@@ -100,7 +99,6 @@ const Hospitals = () => {
           >
             Health institutes survey
           </Typography>
-
         </div>
         <Breadcrumb />
 
@@ -142,7 +140,7 @@ const Hospitals = () => {
         </Typography>
       )}
       {hospitalData.filter((hospital) =>
-        hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
+        hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ).length === 0 ? (
         <div className="flex justify-center items-center pt-4">
           <div className="rounded-lg border border-gray-300 shadow-md p-4 w-full flex flex-col gap-4 justify-center items-center py-32">
@@ -174,7 +172,7 @@ const Hospitals = () => {
           <div className="grid gap-6 pb-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {hospitalData
               .filter((hospital) =>
-                hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
+                hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
               )
               .map((hospital, index) => (
                 <div
@@ -203,7 +201,14 @@ const Hospitals = () => {
                     </div>
                   </div>
                   <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
-                  <div className="flex items-center justify-end pr-4 pt-2 mb-1" onClick={()=>navigate('/verified-agent-dashboard/reports/hospitals/survey-list')}>
+                  <div
+                    className="flex items-center justify-end pr-4 pt-2 mb-1"
+                    onClick={() =>
+                      navigate(
+                        "/verified-agent-dashboard/reports/hospitals/survey-list",
+                      )
+                    }
+                  >
                     <p className="font-bold text-sm text-[#007A61] pr-1">
                       Give report
                     </p>

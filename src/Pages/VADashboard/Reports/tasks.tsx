@@ -21,12 +21,12 @@ const Tasks: React.FC = () => {
       <div className="grid gap-6 py-3 pb-48 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <Card titleLeft={undefined} titleRight={undefined}>
           <div
-            className="bg-[#F5F4FE] flex gap-2 items-center py-12 px-6 gap-2 cursor-pointer"
+            className="bg-[#F5F4FE] flex items-center py-12 px-6 gap-2 cursor-pointer"
             onClick={() =>
               handleBreadCrumbNavigate(
                 "/verified-agent-dashboard/reports/NCD-prevention",
                 "NCD prevention",
-                navigate
+                navigate,
               )
             }
           >

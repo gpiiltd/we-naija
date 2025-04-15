@@ -12,12 +12,12 @@ export const validatePassword = (password: string): string | undefined => {
 };
 
 export const validateEmail = (email: string): string | undefined => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
-    if (!email) {
-      return "Email cannot be empty.";
-    }
-    if (!emailRegex.test(email)) {
-      return "Invalid email format.";
-    }
-    return ""; // No errors
-  };
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+  if (!email) {
+    return "Email cannot be empty.";
+  }
+  if (!emailRegex.test(email)) {
+    return "Invalid email format.";
+  }
+  return ""; // No errors
+};

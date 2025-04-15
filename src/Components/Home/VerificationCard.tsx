@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import Icon from "../../Assets/SvgImagesAndIcons";
-import ProgressBar from './ProgressBar';
+import ProgressBar from "./ProgressBar";
 
 // Define the props interface
 interface VerificationCardProps {
@@ -21,7 +21,9 @@ const VerificationCard: React.FC<VerificationCardProps> = ({
         <p>KYC Verification Status</p>
       </section>
       <p className="font-bold text-[#007A61] text-sm pt-3">{statusMessage}</p>
-      <p className="font-normal text-[#5E5959] text-sm">{responseTimeMessage}</p>
+      <p className="font-normal text-[#5E5959] text-sm">
+        {responseTimeMessage}
+      </p>
       <ProgressBar percentage={progressPercentage} />
     </div>
   );

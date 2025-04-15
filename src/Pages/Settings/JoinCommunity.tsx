@@ -12,15 +12,19 @@ const JoinCommunity = () => {
 
   return (
     <div className="flex flex-col  md:mt-4">
-        <div className="flex md:hidden mb-8">
-            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
-            <Icon type="arrowBackSvg" className="mr-8 " />
-            </span>
+      <div className="flex md:hidden mb-8">
+        <span
+          onClick={() =>
+            navigate("/verified-agent-dashboard/settings/setting-mobile")
+          }
+        >
+          <Icon type="arrowBackSvg" className="mr-8 " />
+        </span>
 
-            <Typography variant={TypographyVariant.SUBTITLE}>
-              Join Community
-            </Typography>
-          </div>
+        <Typography variant={TypographyVariant.SUBTITLE}>
+          Join Community
+        </Typography>
+      </div>
       <div
         className="relative w-full md:w-[50%] h-[300px] rounded-xl flex flex-col items-center justify-center bg-[#007A61] "
         style={{

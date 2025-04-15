@@ -11,11 +11,11 @@ name: ESLint
 
 on:
   push:
-    branches: [ "staging" ]
+    branches: ["staging"]
   pull_request:
-    branches: [ "staging" ]
+    branches: ["staging"]
   schedule:
-    - cron: '35 14 * * 1'
+    - cron: "35 14 * * 1"
 
 jobs:
   eslint:
@@ -34,23 +34,14 @@ jobs:
       - name: Configure npm for authentication
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
-      - name: Install ESLint
-        run: |
-          npm install eslint@8.10.0
-          npm install @microsoft/eslint-formatter-sarif@3.1.0
+      - name: Install ESLint & dependencies
+        run: npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-prettier eslint-config-prettier prettier @microsoft/eslint-formatter-sarif --legacy-peer-deps
 
-      - name: Run ESLint
+      - name: Run ESLint and print results
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        run: npx eslint .
-          --config .eslintrc.js
-          --ext .js,.jsx,.ts,.tsx
-          --format @microsoft/eslint-formatter-sarif
-          --output-file eslint-results.sarif
+        run: |
+          npx eslint . \
+            --ext .js,.jsx,.ts,.tsx \
+            --format @microsoft/eslint-formatter-sarif
         continue-on-error: true
-
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true

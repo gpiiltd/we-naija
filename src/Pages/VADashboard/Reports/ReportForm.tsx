@@ -27,7 +27,7 @@ const ReportForm = () => {
       setLoading(false);
       setIsModalOpen(false);
       navigate(
-        "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+        "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion",
       );
     }, 3000);
   };

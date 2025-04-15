@@ -10,7 +10,7 @@ const ButtonComponent: FC<ButtonProps> = ({
   bg_color,
   text_color,
   border_color,
-  icon,  
+  icon,
 }) => {
   return (
     <div
@@ -29,8 +29,8 @@ const ButtonComponent: FC<ButtonProps> = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "fit-content", 
-        minWidth: "120px", 
+        width: "fit-content",
+        minWidth: "120px",
       }}
     >
       <button
@@ -76,6 +76,5 @@ const ButtonComponent: FC<ButtonProps> = ({
     </div>
   );
 };
-
 
 export default ButtonComponent;

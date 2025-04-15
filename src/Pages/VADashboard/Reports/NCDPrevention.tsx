@@ -54,7 +54,7 @@ const NCDPrevention = () => {
                 handleBreadCrumbNavigate(
                   "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion",
                   "Mental Health Promotion",
-                  navigate
+                  navigate,
                 )
               }
             >

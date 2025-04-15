@@ -24,13 +24,9 @@ const Survey = () => {
   const [uploadedFileSize, setUploadedFileSize] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedFirstAnswer, setSelectedFirstAnswer] = useState<string>("")
-  const [selectedSecondAnswer, setSelectedSecondAnswer] = useState<string>("")
-  const [selectedthirdAnswer, setSelectedThirdAnswer] = useState<string>("")
-
-
- 
-
+  const [selectedFirstAnswer, setSelectedFirstAnswer] = useState<string>("");
+  const [selectedSecondAnswer, setSelectedSecondAnswer] = useState<string>("");
+  const [selectedthirdAnswer, setSelectedThirdAnswer] = useState<string>("");
 
   const handleNext = () => {
     setCurrentQuestion((prev) => prev + 1);
@@ -49,7 +45,6 @@ const Survey = () => {
   const handleThirdQuestion = (value: any) => {
     setSelectedThirdAnswer(value);
   };
- 
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -61,7 +56,7 @@ const Survey = () => {
   const validationSchema = Yup.object({
     textArea: Yup.string().max(
       20,
-      "You are allowed a maximum of 20 characters"
+      "You are allowed a maximum of 20 characters",
     ),
   });
 
@@ -142,7 +137,7 @@ const Survey = () => {
                   value={option.value}
                   selectedValue={selectedFirstAnswer}
                   onChange={handleFirstQuestion}
-                  />
+                />
               ))}
             </section>
           </form>
@@ -309,7 +304,7 @@ const Survey = () => {
                   value={option.value}
                   selectedValue={selectedSecondAnswer}
                   onChange={handleSecondQuestion}
-                  />
+                />
               ))}
             </section>
           </form>
@@ -326,7 +321,7 @@ const Survey = () => {
               text="Proceed"
               text_color="#FFFFFF"
               bg_color="#007A61"
-              active={selectedSecondAnswer !== ''}
+              active={selectedSecondAnswer !== ""}
               onClick={handleNext}
             />
           </div>
@@ -363,7 +358,7 @@ const Survey = () => {
                   value={option.value}
                   selectedValue={selectedSecondAnswer}
                   onChange={handleThirdQuestion}
-                  />
+                />
               ))}
             </section>
           </form>
@@ -487,7 +482,7 @@ const Survey = () => {
               active={true}
               onClick={() =>
                 navigate(
-                  "/verified-agent-dashboard/reports/hospitals/survey-list"
+                  "/verified-agent-dashboard/reports/hospitals/survey-list",
                 )
               }
             />

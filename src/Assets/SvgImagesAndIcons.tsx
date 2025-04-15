@@ -317,13 +317,13 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         );
       case "starIcon":
         return <img src={starIcon} alt="starIcon icon" className={className} />;
-        case "noData":
-          return <img src={no_data} alt="starIcon icon" className={className} />;
-          case "line":
-            return <img src={line} alt="starIcon icon" className={className} />;
-            case "watch":
-              return <img src={video} alt="starIcon icon" className={className} />;
-     case "plusCircle":
+      case "noData":
+        return <img src={no_data} alt="starIcon icon" className={className} />;
+      case "line":
+        return <img src={line} alt="starIcon icon" className={className} />;
+      case "watch":
+        return <img src={video} alt="starIcon icon" className={className} />;
+      case "plusCircle":
         return (
           <img src={plusCircle} alt="plusCircle icon" className={className} />
         );
@@ -390,17 +390,11 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
           <img src={arrowRight} alt="arrowRight icon" className={className} />
         );
       case "medal1":
-        return (
-          <img src={medal1} alt="medal1 icon" className={className} />
-        );
+        return <img src={medal1} alt="medal1 icon" className={className} />;
       case "medal2":
-        return (
-          <img src={medal2} alt="medal2 icon" className={className} />
-        );
+        return <img src={medal2} alt="medal2 icon" className={className} />;
       case "medal3":
-        return (
-          <img src={medal3} alt="medal3 icon" className={className} />
-        );
+        return <img src={medal3} alt="medal3 icon" className={className} />;
       case "lineGuardian":
         return (
           <img
@@ -421,15 +415,14 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return (
           <img src={lineLegend} alt="lineLegend icon" className={className} />
         );
-        case "response":
-          return (
-            <img src={response} alt="lineLegend icon" className={className} />
-          );
-          case "sentEmail":
-            return (
-              <img src={sentEmail} alt="sentEmail icon" className={className} />
-            );
-
+      case "response":
+        return (
+          <img src={response} alt="lineLegend icon" className={className} />
+        );
+      case "sentEmail":
+        return (
+          <img src={sentEmail} alt="sentEmail icon" className={className} />
+        );
       default:
         return null;
     }

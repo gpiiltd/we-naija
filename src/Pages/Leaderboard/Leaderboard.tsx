@@ -15,14 +15,14 @@ const Leaderboard = () => {
     leaderboardData[timeFrame as keyof typeof leaderboardData];
 
   const sortedLeaderboardData = [...selectedTimeFrame].sort(
-    (a, b) => b.points - a.points
+    (a, b) => b.points - a.points,
   );
 
   const displayedItems = sortedLeaderboardData.slice(0, visibleCount);
 
   const handleShowMore = () => {
     setVisibleCount((prevCount) =>
-      Math.min(prevCount + 10, selectedTimeFrame.length)
+      Math.min(prevCount + 10, selectedTimeFrame.length),
     );
   };
 

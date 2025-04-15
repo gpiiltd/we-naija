@@ -7,7 +7,6 @@ import { TypographyVariant } from "../../../../../Components/types";
 import { Card } from "@gpiiltd/gpi-ui-library";
 import Survey from "../SurveyReport";
 
-
 const GiveReport = () => {
   const navigate = useNavigate();
 
@@ -29,9 +28,9 @@ const GiveReport = () => {
       </section>
       <section className="py-6 pb-16 w-full flex justify-center">
         <Card titleLeft={undefined} titleRight={undefined} width="48.61%">
-        <div className=" px-16 pt-8 pb-10">
-        <Survey />
-        </div>
+          <div className=" px-16 pt-8 pb-10">
+            <Survey />
+          </div>
         </Card>
       </section>
     </div>

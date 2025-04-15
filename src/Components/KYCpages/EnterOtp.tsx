@@ -15,9 +15,9 @@ const EnterOtp = () => {
   const [Errors, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const { error, message, kycPhoneNumber, loading } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   const handleChange = (index: number, value: string) => {
@@ -35,7 +35,7 @@ const EnterOtp = () => {
 
   const handleKeyDown = (
     index: number,
-    event: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === "Backspace" && !otp[index]) {
       // If the current input is empty and backspace is pressed, focus the previous input
@@ -57,7 +57,6 @@ const EnterOtp = () => {
       otp: otpCode,
     };
     dispatch(triggerPhoneNumberVerificationOtp(payload) as any);
-    
   };
 
   useEffect(() => {
@@ -70,7 +69,7 @@ const EnterOtp = () => {
       }, 1000);
     }
     dispatch(resetState());
-  }, [error, message, navigate, dispatch]); 
+  }, [error, message, navigate, dispatch]);
 
   const isSubmitDisabled = otp.some((digit) => digit === "") || Errors !== "";
 
@@ -87,7 +86,9 @@ const EnterOtp = () => {
             className=" mb-6 text-gray-500"
           >
             Enter the 6-digit code sent to{" "}
-            <span className="font-bold text-primary_green">{kycPhoneNumber}</span>
+            <span className="font-bold text-primary_green">
+              {kycPhoneNumber}
+            </span>
           </Typography>
 
           <div className="flex mb-6 gap-1 pt-4 items-center justify-center">
@@ -104,33 +105,24 @@ const EnterOtp = () => {
               />
             ))}
           </div>
-          {/* {error && (
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="text-red-500 text-center"
-            >
-              {error}
-            </Typography>
-          )} */}
-
           <Typography
             variant={TypographyVariant.NORMAL}
             className="text-center mt-12 flex flex-col items-center justify-center"
           >
             Didn’t receive a code?{" "}
-            <p  className=" mt-4" style={{ color: "#ED7D31" }}>
+            <p className=" mt-4" style={{ color: "#ED7D31" }}>
               Re-send code via SMS
             </p>
           </Typography>
 
           <Button
-              text="Proceed"
-              active={!isSubmitDisabled}
-              bg_color="#007A61"
-              text_color="white"
-              loading={loading}
-              onClick={handleSubmit}
-            />
+            text="Proceed"
+            active={!isSubmitDisabled}
+            bg_color="#007A61"
+            text_color="white"
+            loading={loading}
+            onClick={handleSubmit}
+          />
 
           <div className="flex pt-4 items-center justify-center">
             <SkipButton />

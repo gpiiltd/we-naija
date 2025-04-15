@@ -11,7 +11,10 @@ const Kyc = () => {
 
       <div className="flex flex-col p-4 md:p-8 items-center justify-center min-h-screen mt-14 lg:mt-2">
         <div className="text-center">
-          <Typography variant={TypographyVariant.SUBTITLE} className="font-bold text-[#17191C]">
+          <Typography
+            variant={TypographyVariant.SUBTITLE}
+            className="font-bold text-[#17191C]"
+          >
             You’re almost there!
           </Typography>
           <Typography

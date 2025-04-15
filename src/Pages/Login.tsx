@@ -19,10 +19,10 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const dispatch: AppDispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(true);
-  const [inputEmail, setInputEmail] = useState(""); 
+  const [inputEmail, setInputEmail] = useState("");
   const navigate = useNavigate();
   const { error, userData, message, loading } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   const initialValues = {
@@ -47,10 +47,8 @@ const Login = () => {
       password: values.password.trim(),
     };
 
-    setInputEmail(values.email.trim().toLowerCase()); 
+    setInputEmail(values.email.trim().toLowerCase());
     dispatch(triggerUserLogin(payload));
-
-    
   };
 
   useEffect(() => {
@@ -76,11 +74,11 @@ const Login = () => {
         dispatch(resetState());
       }, 3000);
     } else if (
-      Object.keys(userData).length > 0
-      && userData.kyc_status === "pending"
+      Object.keys(userData).length > 0 &&
+      userData.kyc_status === "pending"
     ) {
       toast.success("Kindly complete your KYC to continue");
-      console.log("userData Pending KYC" , userData);
+      console.log("userData Pending KYC", userData);
       if (userData.email) {
         dispatch(setUserEmail(userData.email));
       }
@@ -89,7 +87,11 @@ const Login = () => {
         // navigate("/verified-agent-dashboard");
       }, 3000);
       dispatch(resetState());
-    } else if(message?.includes("Email not verified. Please verify your email to proceed")){
+    } else if (
+      message?.includes(
+        "Email not verified. Please verify your email to proceed",
+      )
+    ) {
       // toast.error("Email not verified. Please verify your email to proceed");
       toast.error(message);
       console.log("userData", userData);

@@ -35,14 +35,14 @@ const ForgotPasswordOtp = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const { error, message, loading, email } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   console.log("Email: ", email);
 
   const sendOtp = () => {
     const payload = {
-      otp: OTP
+      otp: OTP,
     };
     dispatch(triggerForgotPasswordOtp(payload));
   };
@@ -52,12 +52,12 @@ const ForgotPasswordOtp = () => {
       toast.error(message);
     } else if (!error && message) {
       toast(message);
-        setTimeout(() => {
-          navigate("/reset-password");
-        }, 1000);
+      setTimeout(() => {
+        navigate("/reset-password");
+      }, 1000);
     }
     dispatch(resetState());
-  }, [error, message, navigate, dispatch ]);
+  }, [error, message, navigate, dispatch]);
 
   const handleResendOTP = () => {
     const payload = {

@@ -8,9 +8,6 @@ const TextAreaField: FC<TextInputProps & { rows?: number }> = ({
   label,
   helperText,
   placeholder,
-  icon,
-  type,
-  onClick,
   focusStyle,
   rows = 5,
   ...props
@@ -52,7 +49,7 @@ const TextAreaField: FC<TextInputProps & { rows?: number }> = ({
       </div>
       {meta.touched && meta.error ? (
         <div className="flex gap-1">
-          <RiErrorWarningLine size={24} color={"#007A61"} className="pt-1"/>
+          <RiErrorWarningLine size={24} color={"#007A61"} className="pt-1" />
 
           <Typography
             variant={TypographyVariant.SMALL}

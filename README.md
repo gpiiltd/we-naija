@@ -11,10 +11,9 @@ See more about the [we-naija](https://gpixyz.atlassian.net/wiki/spaces/IRS/pages
 - [Usage](#usage)
 - [Authorization](#authorization)
 - [Contributing](#contributing)
-- [License](#license)
-
 
 ## Technologies Used
+
 This project is built using the following technologies:
 
 - **React**: A JavaScript library for building user interfaces.
@@ -22,30 +21,34 @@ This project is built using the following technologies:
 - **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
 - **gpi-ui-library**: A custom GPI npm package used for UI components (requires authorization).
 
-
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/gpiiltd/we-naija.git
    ```
 
 2. Navigate to the project directory:
+
    ```bash
    cd we-naija
    ```
 
 3. Create a `.npmrc` file in the home directory:
+
    ```bash
    nano .npmrc
    ```
 
 4. Add the following lines to the `.npmrc` file:
+
    ```
    registry=https://registry.npmjs.org/
    @gpiiltd:registry=https://npm.pkg.github.com/
    //npm.pkg.github.com/:_authToken=YOUR_AUTH_TOKEN
    ```
+
    Replace `YOUR_AUTH_TOKEN` with your actual GitHub token.
 
 5. Install the dependencies:
@@ -56,6 +59,7 @@ This project is built using the following technologies:
 ## Usage
 
 1. Start the development server:
+
    ```bash
    npm start
    ```
@@ -84,4 +88,3 @@ Contributions are welcome! Please follow these steps to contribute:
    git push origin -u <JIRACODE>
    ```
 5. Open a pull request.
-

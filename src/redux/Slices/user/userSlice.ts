@@ -70,7 +70,7 @@ const userSlice = createSlice({
       state.kycPersonalInfo.gender = action.payload.gender;
       state.kycPersonalInfo.dateOfBirth = action.payload.dateOfBirth;
       state.kycPersonalInfo.idType = action.payload.idType;
-      state.kycPersonalInfo.idNumber = action.payload.idNumber; 
+      state.kycPersonalInfo.idNumber = action.payload.idNumber;
       state.kycPersonalInfo.frontFile = action.payload.frontFile;
       state.kycPersonalInfo.backFile = action.payload.backFile;
       state.kycPersonalInfo.mobileNumber = action.payload.mobileNumber;
@@ -94,7 +94,7 @@ const userSlice = createSlice({
         (state, action: PayloadAction<SignupResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerUserSignup.rejected,
@@ -102,7 +102,7 @@ const userSlice = createSlice({
           state.loading = false;
           state.error = action.payload;
           state.message = action.payload.message;
-        }
+        },
       )
 
       .addCase(triggerForgotPassword.pending, (state) => {
@@ -114,14 +114,14 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerForgotPassword.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;
-        }
+        },
       )
       .addCase(triggerOTPValidation.pending, (state) => {
         state.loading = true;
@@ -132,7 +132,7 @@ const userSlice = createSlice({
         (state, action: PayloadAction<ForgotPasswordResponse>) => {
           state.loading = false;
           state.message = action.payload.data || null;
-        }
+        },
       )
       .addCase(
         triggerOTPValidation.rejected,
@@ -143,7 +143,7 @@ const userSlice = createSlice({
             typeof action.payload === "string"
               ? action.payload
               : action.payload.data;
-        }
+        },
       )
       .addCase(triggerForgotPasswordOtp.pending, (state) => {
         state.loading = true;
@@ -156,7 +156,7 @@ const userSlice = createSlice({
           state.message = action.payload.message;
           state.otpToken =
             action.payload.results?.access_credentials.token || "";
-        }
+        },
       )
       .addCase(
         triggerForgotPasswordOtp.rejected,
@@ -164,7 +164,7 @@ const userSlice = createSlice({
           state.loading = false;
           state.error = action.payload.status_code;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(triggerOTPRequest.pending, (state) => {
         state.loading = true;
@@ -175,14 +175,14 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerOTPRequest.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;
-        }
+        },
       )
       .addCase(triggerResetPassword.pending, (state) => {
         state.loading = true;
@@ -193,14 +193,14 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerResetPassword.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;
-        }
+        },
       )
 
       //login
@@ -214,7 +214,7 @@ const userSlice = createSlice({
           state.loading = false;
           state.userData = action.payload.data;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerUserLogin.rejected,
@@ -223,7 +223,7 @@ const userSlice = createSlice({
           state.loading = false;
           state.error = action.payload;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(triggerEmailVerificationResend.pending, (state) => {
         state.loading = true;
@@ -234,14 +234,14 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerEmailVerificationResend.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;
-        }
+        },
       )
       .addCase(triggerEmailVerification.pending, (state) => {
         state.loading = true;
@@ -252,14 +252,14 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerEmailVerification.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;
-        }
+        },
       )
       .addCase(triggerPhoneNumberVerification.pending, (state) => {
         state.loading = true;
@@ -270,14 +270,14 @@ const userSlice = createSlice({
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.message = action.payload;
-        }
+        },
       )
       .addCase(
         triggerPhoneNumberVerification.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;
-        }
+        },
       )
       .addCase(triggerPhoneNumberVerificationOtp.pending, (state) => {
         state.loading = true;
@@ -288,32 +288,43 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        }
+        },
       )
       .addCase(
         triggerPhoneNumberVerificationOtp.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload.message;
-        }
+        },
       )
       .addCase(triggerKycInfoSubmit.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(triggerKycInfoSubmit.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
-        state.loading = false;
-        state.message = action.payload.message;
-      })
-      .addCase(triggerKycInfoSubmit.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false;
-        state.error = action.payload.message;
-      })  
-      
+      .addCase(
+        triggerKycInfoSubmit.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.message = action.payload.message;
+        },
+      )
+      .addCase(
+        triggerKycInfoSubmit.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload.message;
+        },
+      );
   },
 });
 
-export const { clearData, resetState, setUserEmail, resetUserData, setKycPhoneNumber, setKycPersonalInfo } =
-  userSlice.actions;
+export const {
+  clearData,
+  resetState,
+  setUserEmail,
+  resetUserData,
+  setKycPhoneNumber,
+  setKycPersonalInfo,
+} = userSlice.actions;
 
 export default userSlice.reducer;

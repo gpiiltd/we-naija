@@ -32,7 +32,6 @@ const AuthPages: FC<AuthProps> = ({ children }) => {
       </div>
     </div>
   );
-  
 };
 
 export default AuthPages;
