@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 interface LevelBarProps {
-  level: number; 
+  level: number;
 }
 
 const LevelBar: React.FC<LevelBarProps> = ({ level }) => {
@@ -10,9 +10,9 @@ const LevelBar: React.FC<LevelBarProps> = ({ level }) => {
       <div className="w-full bg-gray-200 rounded-full h-3">
         <div
           className="bg-[#ED7D31] h-3 rounded-full"
-          style={{ 
-            width: `${level}%`, 
-            minWidth: '50px' 
+          style={{
+            width: `${level}%`,
+            minWidth: "50px",
           }}
         ></div>
       </div>
@@ -24,4 +24,3 @@ const LevelBar: React.FC<LevelBarProps> = ({ level }) => {
 };
 
 export default LevelBar;
-

@@ -12,7 +12,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [searchTerm, setSearchTerm] = useState(value);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedPlaceholder, setSelectedPlaceholder] = useState(placeholder);
-  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
+  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(
+    null,
+  );
   useEffect(() => {
     setSearchTerm(value);
   }, [value]);
@@ -37,7 +39,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   const filteredSuggestions = suggestions.filter((suggestion) =>
-    suggestion.toLowerCase().includes(searchTerm.toLowerCase())
+    suggestion.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -87,7 +89,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 {suggestion}
               </li>
 
-              {selectedSuggestion === suggestion && <IoMdCheckmark color="#007A61" />}
+              {selectedSuggestion === suggestion && (
+                <IoMdCheckmark color="#007A61" />
+              )}
             </div>
           ))}
         </ul>

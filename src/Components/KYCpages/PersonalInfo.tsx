@@ -44,7 +44,7 @@ const PersonalInfo = () => {
     }
 
     const formattedDate = `${dateOfBirth?.getFullYear()}/${String(
-      dateOfBirth?.getMonth() + 1
+      dateOfBirth?.getMonth() + 1,
     ).padStart(2, "0")}/${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
     setDateOfBirth(new Date(formattedDate));
 
@@ -61,7 +61,7 @@ const PersonalInfo = () => {
         nationality,
         gender,
         dateOfBirth: formattedDate,
-      })
+      }),
     );
 
     navigate("/kyc/id-verification");
@@ -112,7 +112,7 @@ const PersonalInfo = () => {
               }
               onChange={(selectedOption) => {
                 const selectedGender = genderOptions.find(
-                  (option) => option.name === selectedOption
+                  (option) => option.name === selectedOption,
                 );
                 if (selectedGender) {
                   setGender(selectedGender.value);

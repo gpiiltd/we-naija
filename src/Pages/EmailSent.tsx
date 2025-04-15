@@ -14,7 +14,7 @@ const EmailSent = () => {
   const [countdown, setCountdown] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const { error, message, email } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   localStorage.setItem("emailverification", email);
@@ -25,7 +25,7 @@ const EmailSent = () => {
     };
     if (canResend) {
       dispatch(triggerEmailVerificationResend(payload));
-     
+
       setCountdown(30);
       setCanResend(false);
     }
@@ -34,13 +34,12 @@ const EmailSent = () => {
 
   useEffect(() => {
     if (error) {
-        toast.error(error);
-      } else if (!error && message) {
-        toast.success(message);
-      }
-      dispatch(resetState());
+      toast.error(error);
+    } else if (!error && message) {
+      toast.success(message);
+    }
+    dispatch(resetState());
   }, [error, message, dispatch]);
-
 
   useEffect(() => {
     const timer =
@@ -93,9 +92,7 @@ const EmailSent = () => {
               className="text-light_gray md:text-center "
             >
               A verification link has been sent to{" "}
-              <span className="font-bold text-[#007A61]">
-                {email}
-              </span>
+              <span className="font-bold text-[#007A61]">{email}</span>
             </Typography>
           </div>
 

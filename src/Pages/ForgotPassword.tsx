@@ -12,16 +12,18 @@ import { triggerForgotPassword } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 import { resetState, setUserEmail } from "../redux/Slices/user/userSlice";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, message,loading} = useSelector((state: RootState) => state.user);
+  const { error, message, loading } = useSelector(
+    (state: RootState) => state.user,
+  );
 
   const initialValues = {
-    email: ""
+    email: "",
   };
 
   const handleForgotPassword = (values: any) => {
@@ -33,9 +35,9 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    if(error) {
+    if (error) {
       toast.error(error);
-    } else if(!error && message) {
+    } else if (!error && message) {
       toast(message);
       setTimeout(() => {
         navigate("/forgot-password-otp");

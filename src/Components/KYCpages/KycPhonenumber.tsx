@@ -9,18 +9,20 @@ import Icon from "../../Assets/SvgImagesAndIcons";
 import { useNavigate } from "react-router-dom";
 import KycHeader from "./KycHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { triggerPhoneNumberVerification } from "../../redux/Services/user/UserServices";  
+import { triggerPhoneNumberVerification } from "../../redux/Services/user/UserServices";
 import { toast } from "react-toastify";
 import { RootState } from "../../redux/Store/store";
-import { setKycPhoneNumber, resetState } from "../../redux/Slices/user/userSlice";
+import {
+  setKycPhoneNumber,
+  resetState,
+} from "../../redux/Slices/user/userSlice";
 
 const KycPhonenumber = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { error, message, loading } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
-
 
   const handleProceed = (values: any) => {
     const payload = {
@@ -80,7 +82,7 @@ const KycPhonenumber = () => {
             onSubmit={handleProceed}
             validationSchema={validationSchema}
           >
-            {({ isValid, dirty, setFieldValue, setFieldTouched  }) => (
+            {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
               <Form>
                 <div className="flex items-start mb-8">
                   <div className=" flex items-center justify-center w-[40%] h-[58px]  -mr-1  border border-primary_color rounded-l-xl border-r-0">
@@ -100,9 +102,8 @@ const KycPhonenumber = () => {
                     label="Phone number"
                     name="phoneNumber"
                     setFieldValue={setFieldValue}
-                  setFieldTouched={setFieldTouched}
+                    setFieldTouched={setFieldTouched}
                   />
-                     
                 </div>
 
                 <Button

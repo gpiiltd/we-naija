@@ -23,12 +23,12 @@ const EmailSent = () => {
   const { uid, email_token } = useParams();
   const navigate = useNavigate();
   const { error, message, email } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   const emailverification = localStorage.getItem("emailverification");
 
-  let emailToSend = email ? email : (emailverification as string);
+  const emailToSend = email ? email : (emailverification as string);
 
   const handleResendOTP = () => {
     const payload = {
@@ -64,7 +64,7 @@ const EmailSent = () => {
     dispatch(triggerEmailVerification(payload));
     console.log("i dispatched triggerEmailVerification");
 
-    setTimeout(() => {  
+    setTimeout(() => {
       if (error) {
         toast.error(error);
       } else if (!error && message) {
@@ -75,7 +75,6 @@ const EmailSent = () => {
 
     setShowModal(true);
     dispatch(resetState());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, uid, email_token]);
 
   useEffect(() => {

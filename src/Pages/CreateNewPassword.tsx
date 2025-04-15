@@ -14,9 +14,8 @@ import { triggerResetPassword } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 // import { resetState } from "../redux/Slices/user/userSlice";
-
 
 const CreateNewPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
@@ -25,7 +24,9 @@ const CreateNewPassword = () => {
 
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, message,loading} = useSelector((state: RootState) => state.user);
+  const { error, message, loading } = useSelector(
+    (state: RootState) => state.user,
+  );
 
   const initialValues = {
     passwordReset: "",
@@ -38,7 +39,7 @@ const CreateNewPassword = () => {
       .max(20, "Password must not exceed 20 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character"
+        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character",
       ),
     confirmPassword: Yup.string()
       .required("Confirm password is required")
@@ -55,9 +56,9 @@ const CreateNewPassword = () => {
   };
 
   useEffect(() => {
-    if(error) {
+    if (error) {
       toast.error(error);
-    } else if(!error && message) {
+    } else if (!error && message) {
       toast(message);
       setTimeout(() => {
         navigate("/login");
@@ -65,8 +66,6 @@ const CreateNewPassword = () => {
     }
     // dispatch(resetState());
   }, [error, message, navigate, dispatch]);
-
-  
 
   return (
     <div className="w-full flex flex-col h-screen lg:flex-row">
@@ -113,7 +112,6 @@ const CreateNewPassword = () => {
               validateOnBlur={true}
               validationSchema={validationSchema}
               onSubmit={handleNewPassword}
-
             >
               {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
                 <Form className="flex flex-col gap-5">
@@ -153,18 +151,14 @@ const CreateNewPassword = () => {
                 </Form>
               )}
             </Formik>
-           
           </div>
         </div>
       </div>
 
-      <CustomModal
-        isOpen={showModal}
-        onClose={()=>setShowModal(false)}
-      >
-        <div className='flex flex-col gap-6 pb-6'>
+      <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <div className="flex flex-col gap-6 pb-6">
           <div className="flex flex-col justify-center items-center pt-6">
-          <Icon type='success' />
+            <Icon type="success" />
 
             <Typography
               variant={TypographyVariant.NORMAL}

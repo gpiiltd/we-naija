@@ -48,7 +48,7 @@ export const nationalityOptions = [
   "Irish",
   "Portuguese",
   "Romanian",
-  "Bulgarian"
+  "Bulgarian",
 ];
 
 export const genderOptions = [
@@ -67,9 +67,8 @@ export const nigerianAddresses = [
   "404 Benin City Drive, Benin City",
   "505 Jos Close, Jos",
   "606 Kaduna Street, Kaduna",
-  "707 Warri Road, Warri"
+  "707 Warri Road, Warri",
 ];
-
 
 export const notifications = [
   {

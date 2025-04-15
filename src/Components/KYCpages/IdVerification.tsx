@@ -37,7 +37,7 @@ const IDVerification = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const { kycPersonalInfo, kycPhoneNumber, error, message } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   console.log("kycPersonalInfo from state:>>>>>", kycPersonalInfo);
@@ -56,7 +56,12 @@ const IDVerification = () => {
   };
 
   const handleSubmit = () => {
-    console.log({"idType": idType, "idNumber": idNumber, "frontFile": frontFile, "backFile": backFile});
+    console.log({
+      idType: idType,
+      idNumber: idNumber,
+      frontFile: frontFile,
+      backFile: backFile,
+    });
     setLoading(!loading);
 
     const payload = {
@@ -75,8 +80,6 @@ const IDVerification = () => {
     console.log("payload>>>", payload);
 
     dispatch(triggerKycInfoSubmit(payload) as any);
-
-
   };
 
   useEffect(() => {
@@ -218,16 +221,14 @@ const IDVerification = () => {
             />
           </div>
 
-      
-
           <Button
-              text="Submit"
-              active={true}
-              bg_color="#007A61"
-              text_color="white"
-              loading={loading}
-              onClick={handleSubmit}
-            />
+            text="Submit"
+            active={true}
+            bg_color="#007A61"
+            text_color="white"
+            loading={loading}
+            onClick={handleSubmit}
+          />
 
           <div className="flex pt-4 items-center justify-center">
             <SkipButton />

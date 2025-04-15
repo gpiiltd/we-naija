@@ -24,7 +24,7 @@ const ContactInfo = () => {
       setAddress(userData.address || "");
     }
   }, [userData]);
-  
+
   const isFormComplete = address !== "" && email !== "" && phoneNumber !== "";
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -42,8 +42,12 @@ const ContactInfo = () => {
       <div className="w-full md:w-[50%]">
         <div className="flex flex-col gap-2">
           <div className="flex">
-            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
-            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+            <span
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/setting-mobile")
+              }
+            >
+              <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
             </span>
 
             <Typography variant={TypographyVariant.SUBTITLE}>

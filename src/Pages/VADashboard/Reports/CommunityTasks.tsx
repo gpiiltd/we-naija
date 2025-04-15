@@ -18,11 +18,13 @@ const CommunityTasks = () => {
         </div>
 
         <Typography variant={TypographyVariant.SUBTITLE}>
-        Community Task
+          Community Task
         </Typography>
       </div>
       <Breadcrumb />
-      {currentPath === "/verified-agent-dashboard/reports/community-tasks" && <Tasks />}
+      {currentPath === "/verified-agent-dashboard/reports/community-tasks" && (
+        <Tasks />
+      )}
       {currentPath === "/verified-agent-dashboard/reports/NCD-prevention" && (
         <NCDPrevention />
       )}

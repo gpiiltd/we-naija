@@ -12,7 +12,6 @@ import { handleBreadCrumbNavigate } from "../../../utils/handleBreadCrumb";
 const Reports = () => {
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const originalBreadCrumb = [
       {
@@ -53,7 +52,7 @@ const Reports = () => {
                   knowledge, provide valuable data, and{" "}
                   <span className="font-extrabold">earn star points.</span>
                 </p>
-                <div className="flex mt-3  h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
+                <div className="flex h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
                   <Button
                     text="View"
                     active={true}
@@ -62,7 +61,7 @@ const Reports = () => {
                       handleBreadCrumbNavigate(
                         "/verified-agent-dashboard/reports/community-tasks",
                         "Community task",
-                        navigate
+                        navigate,
                       )
                     }
                   />
@@ -85,7 +84,7 @@ const Reports = () => {
                   provide feedback on key indicators, and{" "}
                   <span className="font-extrabold">earn star points.</span>
                 </p>
-                <div className="flex mt-3  h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
+                <div className="flex h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
                   <Button
                     text="View"
                     active={true}
@@ -94,7 +93,7 @@ const Reports = () => {
                       handleBreadCrumbNavigate(
                         "/verified-agent-dashboard/reports/hospitals",
                         "Health inst. survey",
-                        navigate
+                        navigate,
                       )
                     }
                   />

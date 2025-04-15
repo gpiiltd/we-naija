@@ -87,7 +87,11 @@ const VADashboard = () => {
           <div className="flex items-center gap-4">
             <nav className="flex justify-center items-center gap-4 text-gray-700">
               <NavLink
-                to={isDrawerOpen ? "/verified-agent-dashboard/leaderboard" : "/verified-agent-dashboard/settings"}
+                to={
+                  isDrawerOpen
+                    ? "/verified-agent-dashboard/leaderboard"
+                    : "/verified-agent-dashboard/settings"
+                }
                 className={({ isActive }) =>
                   isActive
                     ? " px-2 py-2 text-primary_green bg-effect_green font-normal rounded-md"
@@ -193,7 +197,7 @@ const VADashboard = () => {
                       <li className="flex gap-2">
                         <FiUsers
                           size={24}
-                          className="text-gray-600 text-primary_green text-lg"
+                          className="text-gray-600 text-lg"
                         />
                         <NavLink
                           to="/verified-agent-dashboard/join-community"
@@ -210,7 +214,7 @@ const VADashboard = () => {
                       <li className="flex gap-2">
                         <FiBell
                           size={24}
-                          className="text-gray-600 text-primary_green text-lg"
+                          className="text-primary_green text-lg"
                         />
                         <NavLink
                           to="/verified-agent-dashboard/notifications"
@@ -227,7 +231,7 @@ const VADashboard = () => {
                       <li className="flex gap-2">
                         <FiSettings
                           size={24}
-                          className="text-gray-600 text-primary_green text-lg"
+                          className="text-primary_green text-lg"
                         />
                         <NavLink
                           to="/verified-agent-dashboard/settings/setting-mobile"
@@ -253,7 +257,7 @@ const VADashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-error font-bold"
-                        : "text-error font-bold font-thin hover:text-error transition duration-300"
+                        : "text-error font-thin hover:text-error transition duration-300"
                     }
                   >
                     Logout
@@ -271,9 +275,11 @@ const VADashboard = () => {
       <Footer bg_color="black" className="px-8 md:px-6  lg:px-16 py-20 md:py-0">
         <div className="border-b border-gray-800 md:mb-8 pb-4">
           <div className="flex flex-col gap-4  md:flex-row md:justify-between">
-            <Icon type="wenaija"
+            <Icon
+              type="wenaija"
               className="w-fit cursor-pointer"
-              click={() => (window.location.href = "/verified-agent-dashboard")} />
+              click={() => (window.location.href = "/verified-agent-dashboard")}
+            />
             <div className="text-cream  ">
               <ul className="flex md:space-x-6">
                 <li className="cursor-pointer">
@@ -374,4 +380,3 @@ const VADashboard = () => {
 };
 
 export default VADashboard;
-

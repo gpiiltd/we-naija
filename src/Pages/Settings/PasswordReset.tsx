@@ -27,14 +27,14 @@ const PasswordReset = () => {
       .max(20, "Password must not exceed 20 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character"
+        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character",
       ),
     newPassword: Yup.string()
       .required("Password cannot be empty")
       .max(20, "Password must not exceed 20 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character"
+        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character",
       ),
     confirmNewPassword: Yup.string()
       .required("Confirm password is required")
@@ -54,15 +54,19 @@ const PasswordReset = () => {
       <div className="flex w-full md:w-[50%] px-4  justify-center items-center ">
         <div className="w-full  ">
           <div className="flex flex-col ">
-          <div className="flex">
-            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
-            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
-            </span>
+            <div className="flex">
+              <span
+                onClick={() =>
+                  navigate("/verified-agent-dashboard/settings/setting-mobile")
+                }
+              >
+                <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+              </span>
 
-            <Typography variant={TypographyVariant.SUBTITLE}>
-              Password reset
-            </Typography>
-          </div>
+              <Typography variant={TypographyVariant.SUBTITLE}>
+                Password reset
+              </Typography>
+            </div>
             <Typography
               variant={TypographyVariant.NORMAL}
               className="text-light_gray mt-2"

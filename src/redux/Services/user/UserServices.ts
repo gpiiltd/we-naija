@@ -1,4 +1,8 @@
-import { DefaultResponse, EmailVerificationData, PhoneNumberVerificationData } from "./../user/types";
+import {
+  DefaultResponse,
+  EmailVerificationData,
+  PhoneNumberVerificationData,
+} from "./types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiUrl } from "../../../config";
@@ -32,7 +36,7 @@ export const triggerUserSignup = createAsyncThunk<
   try {
     const response = await axios.post<SignupResponse>(
       apiUrl.signUp,
-      signupData
+      signupData,
     );
     console.log("response>>>>>>", response.data);
     return response.data;
@@ -63,11 +67,11 @@ export const triggerUserLogin = createAsyncThunk<
     console.log("LOGIN response>>>", response.data);
     localStorage.setItem(
       "accessToken",
-      response?.data?.data?.access_credentials?.access_token
+      response?.data?.data?.access_credentials?.access_token,
     );
     localStorage.setItem(
       "refreshToken",
-      response?.data?.data?.access_credentials?.refresh_token
+      response?.data?.data?.access_credentials?.refresh_token,
     );
     return response.data;
   } catch (error: any) {
@@ -96,7 +100,7 @@ export const triggerForgotPassword = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.forgotPassword,
-      forgotPasswordData
+      forgotPasswordData,
     );
     console.log("FORGOT PASSWORD response>>>>>>", response.data);
     return response.data;
@@ -104,7 +108,7 @@ export const triggerForgotPassword = createAsyncThunk<
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to send forgot password email"
+        "Failed to send forgot password email",
     );
   }
 });
@@ -117,14 +121,14 @@ export const triggerOTPRequest = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.requestOtp,
-      OTPRequestData
+      OTPRequestData,
     );
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to validate OTP"
+        "Failed to validate OTP",
     );
   }
 });
@@ -137,7 +141,7 @@ export const triggerOTPValidation = createAsyncThunk<
   try {
     const response = await axios.post<ForgotPasswordResponse>(
       apiUrl.validateOtp,
-      otpData
+      otpData,
     );
     return response.data;
   } catch (error: any) {
@@ -165,7 +169,7 @@ export const triggerForgotPasswordOtp = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.forgotPasswordOtp,
-      otpData
+      otpData,
     );
 
     const token = response.data.results?.access_credentials.token;
@@ -206,14 +210,14 @@ export const triggerResetPassword = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to reset password"
+        "Failed to reset password",
     );
   }
 });
@@ -226,7 +230,7 @@ export const triggerEmailVerificationResend = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.emailVerificationResend,
-      forgotPasswordData
+      forgotPasswordData,
     );
     console.log("EMAIL VERIFICATION RESEND response>>>>>>", response.data);
     return response.data;
@@ -234,7 +238,7 @@ export const triggerEmailVerificationResend = createAsyncThunk<
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to resend email verification link"
+        "Failed to resend email verification link",
     );
   }
 });
@@ -248,16 +252,15 @@ export const triggerEmailVerification = createAsyncThunk<
     const { uid, email_token } = EmailVerificationData;
     const response = await axios.get<DefaultResponse>(
       `${apiUrl.emailVerification}/${uid}/${email_token}`,
-      // 
+      //
       {
         headers: {
           "access-control-allow-origin": "*",
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          'Access-Control-Allow-Methods': '*',
-          
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Methods": "*",
         },
         withCredentials: true,
-      }
+      },
     );
     console.log("EMAIL VERIFICATION response>>>>>>", response.data);
     return response.data;
@@ -265,70 +268,77 @@ export const triggerEmailVerification = createAsyncThunk<
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to resend email verification link"
+        "Failed to resend email verification link",
     );
   }
 });
-
 
 export const triggerPhoneNumberVerification = createAsyncThunk<
   DefaultResponse,
   PhoneNumberVerificationData,
   { rejectValue: string }
->("user/PhoneNumberVerification", async (PhoneNumberVerificationData, thunkAPI) => {
-  try {
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post<DefaultResponse>(
-      `${apiUrl.phoneNumberVerification}`,
-      PhoneNumberVerificationData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
+>(
+  "user/PhoneNumberVerification",
+  async (PhoneNumberVerificationData, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.post<DefaultResponse>(
+        `${apiUrl.phoneNumberVerification}`,
+        PhoneNumberVerificationData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         },
-      }
-    );
-    console.log("PHONE NUMBER VERIFICATION response>>>>>>", response);
-    return response.data;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to reset password"
-    );
-  }
-});
+      );
+      console.log("PHONE NUMBER VERIFICATION response>>>>>>", response);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.message ||
+          error.response?.data ||
+          "Failed to reset password",
+      );
+    }
+  },
+);
 
 export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
   DefaultResponse,
   PhoneNumberVerificationData,
   { rejectValue: string }
->("user/PhoneNumberVerificationOtp", async (PhoneNumberVerificationData, thunkAPI) => {
-  try {
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post<DefaultResponse>(
-      `${apiUrl.phoneNumberVerificationOtp}`,
-      PhoneNumberVerificationData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
+>(
+  "user/PhoneNumberVerificationOtp",
+  async (PhoneNumberVerificationData, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.post<DefaultResponse>(
+        `${apiUrl.phoneNumberVerificationOtp}`,
+        PhoneNumberVerificationData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         },
-      }
-    );
-    console.log("PHONE NUMBER VERIFICATION OTP response>>>>>>", response.data);
-    return response.data;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to reset password"
-    );
-  }
-});
-
+      );
+      console.log(
+        "PHONE NUMBER VERIFICATION OTP response>>>>>>",
+        response.data,
+      );
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.message ||
+          error.response?.data ||
+          "Failed to reset password",
+      );
+    }
+  },
+);
 
 export const triggerKycInfoSubmit = createAsyncThunk<
   DefaultResponse,
@@ -346,7 +356,7 @@ export const triggerKycInfoSubmit = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
     console.log("KYC INFO SUBMIT response>>>>>>", response.data);
     return response.data;
@@ -354,9 +364,7 @@ export const triggerKycInfoSubmit = createAsyncThunk<
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to reset password"
+        "Failed to reset password",
     );
   }
 });
-
-
