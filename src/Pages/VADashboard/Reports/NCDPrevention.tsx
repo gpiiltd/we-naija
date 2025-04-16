@@ -30,6 +30,8 @@ const NCDPrevention = () => {
     (state: RootState) => state.community
   );
 
+
+  console.log("communityTaskCategory^^^^^^^^", communityTaskCategory);
   console.log("communityTaskCategoryById>>>", communityTaskCategoryById);
   useEffect(() => {
     // dispatch(triggerGetAllIndicators({}) as any);
@@ -110,14 +112,14 @@ const NCDPrevention = () => {
 
                 onClick={() => {
                   console.log("indicator.tasks>>>", indicator.tasks);
-                  localStorage.setItem(
-                    "indicatorTasks",
-                    JSON.stringify(indicator.tasks)
-                  );
-                  localStorage.setItem(
-                    "indicatorName",
-                    indicator.name
-                  );
+                  // localStorage.setItem(
+                  //   "indicatorTasks",
+                  //   JSON.stringify(indicator.tasks)
+                  // );
+                  // localStorage.setItem(
+                  //   "indicatorName",
+                  //   indicator.name
+                  // );
                   handleBreadCrumbNavigate(
                     `/verified-agent-dashboard/reports/community-tasks/indicator/${indicator.name.replace(/\s+/g, "")}/${indicator.identifier}`,
                     indicator.name,
@@ -155,7 +157,8 @@ const NCDPrevention = () => {
                       variant={TypographyVariant.SMALL}
                       className="pt-2 text-light_gray"
                     >
-                      {indicator.tasks.length} tasks
+                      {/* {indicator.tasks.length} tasks */}
+                      7 tasks
                     </Typography>
                   </div>
                   <div className="flex gap-2 items-center">
