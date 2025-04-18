@@ -94,8 +94,9 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
     }
     dispatch(triggerSubmitSurveyReport(payload) as any);
   };
-  console.log("SURVEY REPORT final>>>", surveyReport);
+  // console.log("SURVEY REPORT final>>>", surveyReport);
   useEffect(() => {
+    console.log("SURVEY REPORT final>>>", surveyReport);
     if (surveyReport?.statusCode === 200 && surveyReport?.data) {
 
       setTimeout(() => {
@@ -104,10 +105,12 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
       }, 3000);
     }
     if (surveyReport?.error && surveyReport?.message) {
+      console.log("SURVEY REPORT error>>>", surveyReport.message);
       toast.error(`${surveyReport.message}`);
     }
     dispatch(resetSurveyReportState());
   }, [
+    surveyReport,
     surveyReport.data,
     surveyReport?.error,
     surveyReport.message,

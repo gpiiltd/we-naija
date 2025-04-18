@@ -102,24 +102,17 @@ const NCDPrevention = () => {
                 //   );
                 // }}
 
-                // onClick={() =>
-                //   handleBreadCrumbNavigate(
-                //     "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion",
-                //     "Mental Health Promotion",
-                //     navigate
-                //   )
-                // }
-
                 onClick={() => {
-                  console.log("indicator.tasks>>>", indicator.tasks);
-                  // localStorage.setItem(
-                  //   "indicatorTasks",
-                  //   JSON.stringify(indicator.tasks)
-                  // );
-                  // localStorage.setItem(
-                  //   "indicatorName",
-                  //   indicator.name
-                  // );
+                  const indicatorDetails = {
+                    name: indicator.name,
+                    description: indicator.description,
+                    taskCount: indicator.task_count,
+                    totalPoints: indicator.total_points,
+                    identifier: indicator.identifier
+                  };
+                  localStorage.setItem("indicatorDetails", JSON.stringify(indicatorDetails));
+                  // localStorage.setItem("indicatorName", indicator.name);
+                  // localStorage.setItem("indicatorDescription", indicator.description);
                   handleBreadCrumbNavigate(
                     `/verified-agent-dashboard/reports/community-tasks/indicator/${indicator.name.replace(/\s+/g, "")}/${indicator.identifier}`,
                     indicator.name,
@@ -151,23 +144,22 @@ const NCDPrevention = () => {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center justify-center">
                     <Icon type="kyc" />
                     <Typography
                       variant={TypographyVariant.SMALL}
-                      className="pt-2 text-light_gray"
+                      className=" text-light_gray"
                     >
-                      {/* {indicator.tasks.length} tasks */}
-                      7 tasks
+                      {indicator.task_count} tasks
                     </Typography>
                   </div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex items-center justify-center gap-2   ">
                     <Icon type="starPoints" />
                     <Typography
                       variant={TypographyVariant.SMALL}
-                      className="pt-2 text-light_gray"
+                      className=" text-light_gray"
                     >
-                      {indicator.points} points
+                      {indicator.total_points} points
                     </Typography>
                   </div>
                 </div>

@@ -124,3 +124,61 @@ export const triggerAnswerTaskQuestion = createAsyncThunk<
     });
   }
 });
+
+export const triggerGetTaskQuestions = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+  >("community/GetTaskQuestions", async (indicatorId, thunkAPI) => {
+  try {
+    // console.log("Indicator Id for TASK QUESTIONS in SERVICE>>>", indicatorId);
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getTaskQuestions}?indicator=${indicatorId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    console.log("Get Task Questions RESPONSE in SERVICE>>>", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerGetTaskQuestionById = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("community/GetTaskQuestionById", async (id, thunkAPI) => {
+  try {
+    console.log("Indicator Id for TASK QUESTIONS in SERVICE>>>", id);
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getTaskQuestions}/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    console.log("Get Task Question By Id RESPONSE in SERVICE>>>", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});

@@ -3,7 +3,7 @@ import Typography from "../../../Components/Typography";
 import { TypographyVariant } from "../../../Components/types";
 import Icon from "../../../Assets/SvgImagesAndIcons";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LuBookMinus } from "react-icons/lu";
 import TextAreaField from "../../../Components/Input/TextArea";
 import { Formik, Form } from "formik";
@@ -11,7 +11,10 @@ import * as Yup from "yup";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import CustomModal from "../../../Components/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { triggerAnswerTaskQuestion } from "../../../redux/Services/community/communityServices";
+import {
+  triggerAnswerTaskQuestion,
+  triggerGetTaskQuestionById,
+} from "../../../redux/Services/community/communityServices";
 import { toast } from "react-toastify";
 import { resetAnswerTaskQuestionState } from "../../../redux/Services/community/communitySlice";
 
@@ -22,37 +25,46 @@ const validationSchema = Yup.object({
 const ReportForm = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [taskQuestion, setTaskQuestion] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState("");
-
-  const queryParams = new URLSearchParams(window.location.search);
-  let taskQuestion = queryParams.get("question");
-  if (taskQuestion) {
-    taskQuestion = taskQuestion.replace(/-/g, " ");
-  }
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const closeModal = () => setIsModalOpen(false);
 
-  const dispatch = useDispatch();
-  const { answerTaskQuestion } = useSelector((state: any) => state.community);
+  const { taskQuestionById, answerTaskQuestion } = useSelector(
+    (state: any) => state.community
+  );
+
+  useEffect(() => {
+    dispatch(triggerGetTaskQuestionById(id as string) as any);
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (taskQuestionById?.statusCode === 200 && taskQuestionById?.data) {
+      setTaskQuestion(taskQuestionById.data);
+    }
+  }, [taskQuestionById]);
+
+  console.log("FINAL Task Question", taskQuestion);
 
   const giveReport = () => {
     const payload = {
-      task: taskQuestion,
+      task: taskQuestion?.identifier,
       answer: answer,
     };
-    // console.log("Payload:", payload);
 
     dispatch(triggerAnswerTaskQuestion(payload) as any);
   };
+
   useEffect(() => {
     if (answerTaskQuestion?.statusCode === 200 && answerTaskQuestion?.data) {
+      toast.success("Report submitted successfully");
       setTimeout(() => {
         setLoading(false);
         setIsModalOpen(false);
-        navigate(
-          "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
-        );
-      }, 3000);
+        navigate(-1);
+      }, 1000);
     }
     if (answerTaskQuestion?.error && answerTaskQuestion?.message) {
       toast.error(`${answerTaskQuestion.message}`);
@@ -89,7 +101,7 @@ const ReportForm = () => {
               variant={TypographyVariant.SMALL}
               className="pt-2 text-orange"
             >
-              15 star points
+              {taskQuestion?.max_points} star points
             </Typography>
           </div>
         </div>
@@ -99,7 +111,7 @@ const ReportForm = () => {
           variant={TypographyVariant.NORMAL}
           className="font-bold pt-5"
         >
-          {taskQuestion}
+          {taskQuestion?.title}
         </Typography>
         <Icon type="response" className="w-full" />
 

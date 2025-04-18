@@ -83,7 +83,7 @@ function App() {
               />
               <Route
                 // path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
-                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form/"
+                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form/:id"
                 Component={ReportForm}
               />
               <Route
