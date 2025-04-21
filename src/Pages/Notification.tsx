@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Icon from "../Assets/SvgImagesAndIcons";
 import { notifications } from "../utils/selectOptions";
 
-
 const Notification: React.FC = () => {
   const [activeTab, setActiveTab] = useState("All");
 
@@ -60,14 +59,20 @@ const Notification: React.FC = () => {
                     } mr-2`}
                   />
                   <div className="flex flex-col">
-                     <section className="flex justify-start ">
+                    <section className="flex justify-start ">
                       <Icon type="championIcon" className="pr-2 w-10 h-10" />
                       <div className="">
-                        <p className=" text-black text-sm">{notification.user}</p>
-                        <p className="text-gray-500 text-sm">{notification.handle}</p>
+                        <p className=" text-black text-sm">
+                          {notification.user}
+                        </p>
+                        <p className="text-gray-500 text-sm">
+                          {notification.handle}
+                        </p>
                       </div>
                     </section>
-                    <p className="text-gray-700 text-sm md:text-base">{notification.message}</p>
+                    <p className="text-gray-700 text-sm md:text-base">
+                      {notification.message}
+                    </p>
                   </div>
                 </div>
 
@@ -86,4 +91,3 @@ const Notification: React.FC = () => {
 };
 
 export default Notification;
-

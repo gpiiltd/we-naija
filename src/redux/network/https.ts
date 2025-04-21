@@ -81,27 +81,26 @@ const responseInterceptorErrorCB = async (error: any) => {
   //   }
   return await Promise.reject(error.response.data);
   // return await Promise.reject(error.response?.message || error.message || "An unknown error occurred");
-
 };
 
 (() => {
   // Request interceptor
   axiosInstance.interceptors.request.use(
     requestInterceptorSuccessCB,
-    requestInterceptorErrorCB
+    requestInterceptorErrorCB,
   );
 
   // Response interceptor
   axiosInstance.interceptors.response.use(
     responseInterceptorSuccessCB,
-    responseInterceptorErrorCB
+    responseInterceptorErrorCB,
   );
 })();
 
 // Handle Response Data
 const handleHttpResponse = (
   response: Record<string, any>,
-  success: (arg: Record<string, any>) => void
+  success: (arg: Record<string, any>) => void,
 ) => {
   // No Data Was Returned
   if (!response.data) {
@@ -109,7 +108,6 @@ const handleHttpResponse = (
   }
   //altered
   if (!response.data) {
-
     success(response);
   }
 };
@@ -185,19 +183,19 @@ async function ajax({
 }: IAjax) {
   // Request Response And Error
   interface Result {
-  status_code: number | null;
-  status: string;
-  message: string;
-  results?:Record<string,any>;
-  timeStamp?: string;
+    status_code: number | null;
+    status: string;
+    message: string;
+    results?: Record<string, any>;
+    timeStamp?: string;
   }
 
   let result: Result = {
     status_code: null,
-    status:"",
+    status: "",
     message: "",
-    results:{},
-    timeStamp: '',
+    results: {},
+    timeStamp: "",
   };
   // Call Before Function
   before();
@@ -223,8 +221,7 @@ async function ajax({
       result.results = response.data.results || response.data.data;
       result.message = response.data.message;
       result.status = response.data.status;
-      result.timeStamp=response.data.timestamp
-console.log('resulkt',response.data.status_code);
+      result.timeStamp = response.data.timestamp;
       // Handle Responses
       handleHttpResponse(response, success);
     })

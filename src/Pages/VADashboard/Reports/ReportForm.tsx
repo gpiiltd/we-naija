@@ -33,7 +33,7 @@ const ReportForm = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const { taskQuestionById, answerTaskQuestion } = useSelector(
-    (state: any) => state.community
+    (state: any) => state.community,
   );
 
   useEffect(() => {
@@ -45,8 +45,6 @@ const ReportForm = () => {
       setTaskQuestion(taskQuestionById.data);
     }
   }, [taskQuestionById]);
-
-  console.log("FINAL Task Question", taskQuestion);
 
   const giveReport = () => {
     const payload = {

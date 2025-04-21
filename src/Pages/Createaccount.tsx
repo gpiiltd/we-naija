@@ -17,7 +17,11 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { resetState, resetUserData, setUserEmail } from "../redux/Slices/user/userSlice";
+import {
+  resetState,
+  resetUserData,
+  setUserEmail,
+} from "../redux/Slices/user/userSlice";
 import CustomModal from "../Components/Modal";
 import Icon from "../Assets/SvgImagesAndIcons";
 
@@ -27,8 +31,8 @@ const SignUp = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, userData, message, loading} = useSelector(
-    (state: RootState) => state.user
+  const { error, userData, message, loading } = useSelector(
+    (state: RootState) => state.user,
   );
 
   const initialValues = {
@@ -51,7 +55,7 @@ const SignUp = () => {
       .max(20, "Password must not exceed 20 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character"
+        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character",
       ),
     confirmPassword: Yup.string()
       .required("Confirm password is required")
@@ -84,7 +88,7 @@ const SignUp = () => {
       navigate("/email-sent");
     }
     dispatch(resetState());
-    dispatch(resetUserData())
+    dispatch(resetUserData());
   }, [error, userData, message, loading]);
 
   return (
@@ -211,5 +215,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-

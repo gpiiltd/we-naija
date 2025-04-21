@@ -28,11 +28,9 @@ const Hospitals = () => {
 
   useEffect(() => {
     if (institution.statusCode === 200 || institution.data) {
-      console.log("List all INSTITUTION", institution.data);
       setInstitutions(Array.from(institution.data));
     }
     if (institution.error && institution.message) {
-      console.log("Error fetching user");
     }
     dispatch(resetInstitutionState());
   }, [
@@ -43,7 +41,6 @@ const Hospitals = () => {
     dispatch,
   ]);
 
-  console.log("FINALL INSTITUTION", institutions);
   const suggestions = [
     "Quotient Specialist Hospital",
     "Lagos University Teaching Hospital",
@@ -65,7 +62,6 @@ const Hospitals = () => {
 
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
-    console.log("*****", searchQuery);
   };
 
   const handleSearchSubmit = (query: string) => {
@@ -97,7 +93,6 @@ const Hospitals = () => {
     if (cityDropdown.selected && stateDropdown.selected) {
       setLoading(!loading);
       setTimeout(() => {
-        console.log("Updating button text...");
         setLoading(false);
         setButtonText(`${cityDropdown.selected}, ${stateDropdown.selected}`);
         setShowModal(false);
@@ -169,7 +164,7 @@ const Hospitals = () => {
         </Typography>
       )}
       {institutions.filter((hospital: any) =>
-        hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
+        hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ).length === 0 ? (
         <div className="flex justify-center items-center pt-4">
           <div className="rounded-lg border border-gray-300 shadow-md p-4 w-full flex flex-col gap-4 justify-center items-center py-32">
@@ -204,7 +199,7 @@ const Hospitals = () => {
                 .filter((hospital: any) =>
                   hospital.name
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase())
+                    .includes(searchQuery.toLowerCase()),
                 )
                 .map((hospital: any, index: number) => (
                   <div
@@ -261,7 +256,7 @@ const Hospitals = () => {
                       className="flex items-center justify-end pr-4 pt-2 mb-1"
                       onClick={() =>
                         navigate(
-                          `/verified-agent-dashboard/reports/hospitals/survey-list/${hospital.identifier}`
+                          `/verified-agent-dashboard/reports/hospitals/survey-list/${hospital.identifier}`,
                         )
                       }
                     >

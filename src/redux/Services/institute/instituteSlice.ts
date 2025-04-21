@@ -202,7 +202,7 @@ const instituteSlice = createSlice({
           ?.message as unknown as string;
         state.surveyCategories.statusCode = action.payload
           ?.status_code as unknown as number;
-      }
+      },
     );
     builder.addCase(triggerGetAllSurveyCategories.rejected, (state, action) => {
       state.surveyCategories.loading = false;
@@ -229,7 +229,7 @@ const instituteSlice = createSlice({
       const genericCategoryId = localStorage.getItem("genericCategoryId");
       const pediatricCategoryId = localStorage.getItem("pediatricCategoryId");
       const sexualHealthCategoryId = localStorage.getItem(
-        "sexualReproductiveHealthCategoryId"
+        "sexualReproductiveHealthCategoryId",
       );
 
       if (categoryId === genericCategoryId) {
@@ -260,7 +260,6 @@ const instituteSlice = createSlice({
     builder.addCase(
       triggerSurveyIndicatorQuestions.fulfilled,
       (state, action) => {
-        console.log("FULFILLED ACTION PAYLOAD in SURVEY INDICATOR QUESTIONS>>>", action.payload);
         state.surveyIndicatorQuestions.loading = false;
         state.surveyIndicatorQuestions.data = action.payload.results;
         state.surveyIndicatorQuestions.error = false;
@@ -268,19 +267,18 @@ const instituteSlice = createSlice({
           ?.message as unknown as string;
         state.surveyIndicatorQuestions.statusCode = action.payload
           ?.status_code as unknown as number;
-      }
+      },
     );
     builder.addCase(
       triggerSurveyIndicatorQuestions.rejected,
       (state, action) => {
-        console.log("REJECTED ACTION PAYLOAD in SURVEY INDICATOR QUESTIONS>>>", action.payload);
         state.surveyIndicatorQuestions.loading = false;
         state.surveyIndicatorQuestions.error = true;
         state.surveyIndicatorQuestions.message = action.payload
           ?.message as unknown as string;
         state.surveyIndicatorQuestions.statusCode = action.payload
           ?.status_code as unknown as number;
-      }
+      },
     );
 
     //SUBMIT SURVEY REPORT
@@ -290,7 +288,6 @@ const instituteSlice = createSlice({
       state.surveyReport.message = "";
     });
     builder.addCase(triggerSubmitSurveyReport.fulfilled, (state, action) => {
-      console.log("FULFILLED ACTION PAYLOAD in SUBMIT SURVEY REPORT>>>", action.payload);
       state.surveyReport.loading = false;
       state.surveyReport.data = action.payload;
       state.surveyReport.error = false;
@@ -299,7 +296,6 @@ const instituteSlice = createSlice({
         ?.status_code as unknown as number;
     });
     builder.addCase(triggerSubmitSurveyReport.rejected, (state, action) => {
-      console.log("REJECTED ACTION PAYLOAD in SUBMIT SURVEY REPORT>>>", action.payload);
       state.surveyReport.loading = false;
       state.surveyReport.error = true;
       state.surveyReport.message = action.payload?.message as unknown as string;

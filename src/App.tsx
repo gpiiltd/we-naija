@@ -53,9 +53,15 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/otp" element={<OTP />} />
             <Route path="/email-sent" element={<EmailSent />} />
-            <Route path="/email-verification/:uid/:email_token" element={<EmailVerification />} />
+            <Route
+              path="/email-verification/:uid/:email_token"
+              element={<EmailVerification />}
+            />
             <Route path="/reset-password" element={<CreateNewPassword />} />
-            <Route path="/forgot-password-otp" element={<ForgotPasswordOtp />} />
+            <Route
+              path="/forgot-password-otp"
+              element={<ForgotPasswordOtp />}
+            />
             <Route path="/kyc/*" Component={Kyc} />
             <Route path="/kyc/validate-phone" Component={KycPhonenumber} />
             <Route path="/kyc/enter-otp" Component={EnterOtp} />

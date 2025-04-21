@@ -8,9 +8,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 //   }
 
 // export const triggerListAllInstitute = createAsyncThunk<
-//   any, 
-//   Record<string, string>, 
-//   { rejectValue: ErroResponseData } 
+//   any,
+//   Record<string, string>,
+//   { rejectValue: ErroResponseData }
 // >(
 //   "institute/list_all_institute",
 //   async (params, thunkAPI) => {
@@ -20,7 +20,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 //       return thunkAPI.rejectWithValue({
 //         message: e.message ?? "Something went wrong",
 //         status_code: e.status_code,
-//         results: e.results, 
+//         results: e.results,
 //       });
 //     }
 //   }

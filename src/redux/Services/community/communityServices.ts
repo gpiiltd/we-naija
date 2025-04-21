@@ -24,9 +24,8 @@ export const triggerGetAllCommunityCategories = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("response in SERVICE>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -52,12 +51,9 @@ export const triggerGetCommunityTaskCategoryById = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log(
-      "GET COMMUNITY TASK CATEGORY BY ID in SERVICE>>>",
-      response.data
-    );
+
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -83,9 +79,8 @@ export const triggerGetAllIndicators = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    // console.log("GetAllIndicators in SERVICE>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -112,9 +107,8 @@ export const triggerAnswerTaskQuestion = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("Answer Task Question RESPONSE in SERVICE>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -129,9 +123,8 @@ export const triggerGetTaskQuestions = createAsyncThunk<
   any,
   any,
   { rejectValue: ErroResponseData }
-  >("community/GetTaskQuestions", async (indicatorId, thunkAPI) => {
+>("community/GetTaskQuestions", async (indicatorId, thunkAPI) => {
   try {
-    // console.log("Indicator Id for TASK QUESTIONS in SERVICE>>>", indicatorId);
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
       `${apiUrl.getTaskQuestions}?indicator=${indicatorId}`,
@@ -141,9 +134,8 @@ export const triggerGetTaskQuestions = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("Get Task Questions RESPONSE in SERVICE>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -160,7 +152,6 @@ export const triggerGetTaskQuestionById = createAsyncThunk<
   { rejectValue: ErroResponseData }
 >("community/GetTaskQuestionById", async (id, thunkAPI) => {
   try {
-    console.log("Indicator Id for TASK QUESTIONS in SERVICE>>>", id);
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
       `${apiUrl.getTaskQuestions}/${id}`,
@@ -170,9 +161,8 @@ export const triggerGetTaskQuestionById = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("Get Task Question By Id RESPONSE in SERVICE>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({

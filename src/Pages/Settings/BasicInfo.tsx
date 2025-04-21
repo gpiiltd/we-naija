@@ -16,7 +16,7 @@ const BasicInfo = () => {
   const [userName, setUsername] = useState("G- Jelly");
   const [nationality, setNationality] = useState("Nigerian");
   const [gender, setGender] = useState("Female");
-  const [error,] = useState("");
+  const [error] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("26-06-1991");
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.user.userData);
@@ -36,14 +36,6 @@ const BasicInfo = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log("Form submitted:", {
-      nationality,
-      gender,
-      dateOfBirth,
-      fullName,
-      userName,
-    });
   };
 
   const handleDateSelect = (date: string) => {
@@ -57,9 +49,13 @@ const BasicInfo = () => {
       </div>
       <div className="w-full md:w-[60%] lg:mr-80">
         <div className="flex flex-col gap-2">
-        <div className="flex">
-            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
-            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+          <div className="flex">
+            <span
+              onClick={() =>
+                navigate("/verified-agent-dashboard/settings/setting-mobile")
+              }
+            >
+              <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
             </span>
 
             <Typography variant={TypographyVariant.SUBTITLE}>

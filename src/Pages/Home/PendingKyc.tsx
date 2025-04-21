@@ -24,7 +24,7 @@ const PendingKyc = () => {
   }, [dispatch]);
 
   const { instituteData, error, message } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   useEffect(() => {
@@ -39,8 +39,6 @@ const PendingKyc = () => {
     }
     dispatch(resetState());
   }, [error, message, instituteData, dispatch]);
-
-  // console.log("institutionsData*****", institutionsData);
 
   return (
     <div>
@@ -79,7 +77,7 @@ const PendingKyc = () => {
               onClick={() =>
                 // navigate(`hospital-details/${institution?.identifier}`)
                 navigate(
-                  `/verified-agent-dashboard/reports/hospitals/survey-list/${institution?.identifier}`
+                  `/verified-agent-dashboard/reports/hospitals/survey-list/${institution?.identifier}`,
                 )
               }
             />

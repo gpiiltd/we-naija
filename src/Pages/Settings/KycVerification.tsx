@@ -26,9 +26,7 @@ const IDVerification = () => {
     email: "",
   };
 
-  const idTypes = [
-    "International passport"
-  ];
+  const idTypes = ["International passport"];
 
   const handleFileChange = (file: File | null, isFront: boolean) => {
     if (isFront) {
@@ -46,22 +44,24 @@ const IDVerification = () => {
     idNumber: Yup.string().required("ID number is required"),
   });
 
-
-
   return (
     <>
       <div className="flex flex-col items-center justify-center  md:mt-4 mb-8">
         <div className="bg-white  rounded-lg w-full md:w-[50%] ">
           <div className="flex items-center mb-4">
-          <div className="flex">
-            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
-            <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
-            </span>
+            <div className="flex">
+              <span
+                onClick={() =>
+                  navigate("/verified-agent-dashboard/settings/setting-mobile")
+                }
+              >
+                <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
+              </span>
 
-            <Typography variant={TypographyVariant.SUBTITLE}>
-              KYC Verification
-            </Typography>
-          </div>
+              <Typography variant={TypographyVariant.SUBTITLE}>
+                KYC Verification
+              </Typography>
+            </div>
           </div>
 
           <VerificationCard

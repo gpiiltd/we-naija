@@ -46,14 +46,13 @@ export const uploadFile = async (file: File): Promise<string> => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // Add token to the header
         },
-      }
+      },
     );
 
     if (!response.ok) {
       throw new Error("File upload failed");
     }
     const data = await response.json();
-    console.log("data>>>>>>", data);
     return data.results.file_name;
     // return data.results.file_url;
   } catch (error) {
@@ -70,9 +69,8 @@ export const triggerUserSignup = createAsyncThunk<
   try {
     const response = await axios.post<SignupResponse>(
       apiUrl.signUp,
-      signupData
+      signupData,
     );
-    console.log("response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     if (error.response) {
@@ -98,18 +96,16 @@ export const triggerUserLogin = createAsyncThunk<
 >("user/login", async (loginData, thunkAPI) => {
   try {
     const response = await axios.post(apiUrl.login, loginData);
-    console.log("LOGIN response>>>", response.data);
     localStorage.setItem(
       "accessToken",
-      response?.data?.data?.access_credentials?.access_token
+      response?.data?.data?.access_credentials?.access_token,
     );
     localStorage.setItem(
       "refreshToken",
-      response?.data?.data?.access_credentials?.refresh_token
+      response?.data?.data?.access_credentials?.refresh_token,
     );
     return response.data;
   } catch (error: any) {
-    console.log("error>>>", error);
     if (error.response) {
       return thunkAPI.rejectWithValue(error.response.data);
     } else if (error.request) {
@@ -134,15 +130,14 @@ export const triggerForgotPassword = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.forgotPassword,
-      forgotPasswordData
+      forgotPasswordData,
     );
-    console.log("FORGOT PASSWORD response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to send forgot password email"
+        "Failed to send forgot password email",
     );
   }
 });
@@ -155,14 +150,14 @@ export const triggerOTPRequest = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.requestOtp,
-      OTPRequestData
+      OTPRequestData,
     );
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to validate OTP"
+        "Failed to validate OTP",
     );
   }
 });
@@ -175,7 +170,7 @@ export const triggerOTPValidation = createAsyncThunk<
   try {
     const response = await axios.post<ForgotPasswordResponse>(
       apiUrl.validateOtp,
-      otpData
+      otpData,
     );
     return response.data;
   } catch (error: any) {
@@ -203,7 +198,7 @@ export const triggerForgotPasswordOtp = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.forgotPasswordOtp,
-      otpData
+      otpData,
     );
 
     const token = response.data.results?.access_credentials.token;
@@ -244,14 +239,14 @@ export const triggerResetPassword = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to reset password"
+        "Failed to reset password",
     );
   }
 });
@@ -264,15 +259,14 @@ export const triggerEmailVerificationResend = createAsyncThunk<
   try {
     const response = await axios.post<DefaultResponse>(
       apiUrl.emailVerificationResend,
-      forgotPasswordData
+      forgotPasswordData,
     );
-    console.log("EMAIL VERIFICATION RESEND response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to resend email verification link"
+        "Failed to resend email verification link",
     );
   }
 });
@@ -294,15 +288,14 @@ export const triggerEmailVerification = createAsyncThunk<
           "Access-Control-Allow-Methods": "*",
         },
         withCredentials: true,
-      }
+      },
     );
-    console.log("EMAIL VERIFICATION response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error.response?.message ||
         error.response?.data ||
-        "Failed to resend email verification link"
+        "Failed to resend email verification link",
     );
   }
 });
@@ -325,9 +318,8 @@ export const triggerPhoneNumberVerification = createAsyncThunk<
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-        }
+        },
       );
-      console.log("PHONE NUMBER VERIFICATION response>>>>>>", response);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({
@@ -336,7 +328,7 @@ export const triggerPhoneNumberVerification = createAsyncThunk<
         results: error.response.data.results,
       });
     }
-  }
+  },
 );
 
 export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
@@ -357,12 +349,9 @@ export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-        }
+        },
       );
-      console.log(
-        "PHONE NUMBER VERIFICATION OTP response>>>>>>",
-        response.data
-      );
+
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({
@@ -371,7 +360,7 @@ export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
         results: error.response.data.results,
       });
     }
-  }
+  },
 );
 
 export const triggerKycInfoSubmit = createAsyncThunk<
@@ -392,9 +381,8 @@ export const triggerKycInfoSubmit = createAsyncThunk<
 
           // Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("KYC INFO SUBMIT response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -420,16 +408,15 @@ export const triggerGetAllInstitute = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    // console.log("GET INSTITUTE response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
-      return thunkAPI.rejectWithValue({
-        message: error.response.data.message ?? "Something went wrong",
-        status_code: error.response.data.status_code,
-        results: error.response.data.results,
-      });
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
   }
 });
 
@@ -448,9 +435,8 @@ export const triggerGetInstituteById = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("GET INSTITUTE BY ID response********", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -476,9 +462,8 @@ export const triggerGetAllSurveyCategories = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("GET ALL SURVEY CATEGORIES response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({

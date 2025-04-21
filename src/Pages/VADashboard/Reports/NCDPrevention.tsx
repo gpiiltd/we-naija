@@ -27,12 +27,9 @@ const NCDPrevention = () => {
   const [communityTaskCategory, setCommunityTaskCategory] = useState<any>({});
   const [indicators, setIndicators] = useState<any>({});
   const { communityTaskCategoryById, communityIndicators } = useSelector(
-    (state: RootState) => state.community
+    (state: RootState) => state.community,
   );
 
-
-  console.log("communityTaskCategory^^^^^^^^", communityTaskCategory);
-  console.log("communityTaskCategoryById>>>", communityTaskCategoryById);
   useEffect(() => {
     // dispatch(triggerGetAllIndicators({}) as any);
     dispatch(triggerGetCommunityTaskCategoryById(id as string) as any);
@@ -48,17 +45,6 @@ const NCDPrevention = () => {
     dispatch(resetCommunityTaskCategoryByIdState());
   }, [communityTaskCategoryById, dispatch]);
 
-  // useEffect(() => {
-  //   if (communityIndicators?.statusCode === 200 && communityIndicators) {
-  //     setIndicators(communityIndicators.data);
-  //   }
-  //   dispatch(resetCommunityIndicatorsState());
-  // }, [communityIndicators, dispatch]);
-
-  console.log(
-    " FINAL communityTaskCategory in NCD PREVENTION>>>",
-    communityTaskCategory
-  );
   return (
     <div>
       <div className="flex gap-3 items-center mb-2">
@@ -108,15 +94,18 @@ const NCDPrevention = () => {
                     description: indicator.description,
                     taskCount: indicator.task_count,
                     totalPoints: indicator.total_points,
-                    identifier: indicator.identifier
+                    identifier: indicator.identifier,
                   };
-                  localStorage.setItem("indicatorDetails", JSON.stringify(indicatorDetails));
+                  localStorage.setItem(
+                    "indicatorDetails",
+                    JSON.stringify(indicatorDetails),
+                  );
                   // localStorage.setItem("indicatorName", indicator.name);
                   // localStorage.setItem("indicatorDescription", indicator.description);
                   handleBreadCrumbNavigate(
                     `/verified-agent-dashboard/reports/community-tasks/indicator/${indicator.name.replace(/\s+/g, "")}/${indicator.identifier}`,
                     indicator.name,
-                    navigate
+                    navigate,
                   );
                 }}
               >
@@ -166,7 +155,7 @@ const NCDPrevention = () => {
                 <ProgressBar percentage={50} />
               </div>
             </Card>
-              ))
+          ))
         ) : (
           <Typography
             variant={TypographyVariant.NORMAL}

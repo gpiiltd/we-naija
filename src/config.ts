@@ -28,10 +28,9 @@ interface ApiUrls {
 }
 
 // const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
-const BASE_URL =
-  "http://api.test.nssf.ng/api/v1/";
+const BASE_URL = "http://api.test.nssf.ng/api/v1/";
 
-export const apiUrl: ApiUrls = {  
+export const apiUrl: ApiUrls = {
   signUp: `${BASE_URL}agent/process/signup`,
   login: `${BASE_URL}agent/request/login`,
   validateOtp: `${BASE_URL}agent/otp/validate`,

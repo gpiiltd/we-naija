@@ -18,7 +18,7 @@ const Leaderboard = () => {
   const dispatch = useDispatch();
 
   const { leaderboardData } = useSelector(
-    (state: RootState) => state.leaderboard
+    (state: RootState) => state.leaderboard,
   );
 
   useEffect(() => {
@@ -32,20 +32,19 @@ const Leaderboard = () => {
 
     if (leaderboardData.error && leaderboardData.message) {
       toast.error(leaderboardData.message);
-      console.log("Error fetching leaderboard data", leaderboardData.message);
     }
     dispatch(resetLeaderboardState());
   }, [leaderboardData, dispatch]);
 
   const handleShowMore = () => {
     setVisibleCount((prevCount) =>
-      Math.min(prevCount + 3, allLeaderboardData.length)
+      Math.min(prevCount + 3, allLeaderboardData.length),
     );
   };
 
   const handleTimeFrameChange = (frame: string) => {
     setTimeFrame(frame);
-    setVisibleCount(3); 
+    setVisibleCount(3);
   };
   const getInitials = (name: string) => {
     const names = name.split(" ");

@@ -34,7 +34,7 @@ const MentalHeaalth = () => {
   }, [taskQuestions]);
 
   const indicatorDetails = JSON.parse(
-    localStorage.getItem("indicatorDetails") || "{}"
+    localStorage.getItem("indicatorDetails") || "{}",
   );
   return (
     <div>
@@ -108,7 +108,7 @@ const MentalHeaalth = () => {
                     onClick={() =>
                       navigate(
                         // "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
-                        `/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form/${task.identifier}`
+                        `/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form/${task.identifier}`,
                       )
                     }
                   >

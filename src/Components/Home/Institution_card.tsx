@@ -39,13 +39,21 @@ const InstitutionsCard: React.FC<InstitutionsCardProps> = ({
             ) : (
               <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
                 <span className="text-white p-2">
-                  {name?.split(" ").map((word) => word[0]).join("")}
+                  {name
+                    ?.split(" ")
+                    .map((word) => word[0])
+                    .join("")}
                 </span>
               </div>
             )}
             <div className="ml-2">
               <p className="font-bold text-black">{name}</p>
-              <p className="font-normal text-[#5E5959]">{name?.split(" ").map((word) => word[0]).join("")}</p>
+              <p className="font-normal text-[#5E5959]">
+                {name
+                  ?.split(" ")
+                  .map((word) => word[0])
+                  .join("")}
+              </p>
             </div>
           </section>
           <p className="font-normal text-sm pt-3">{address}</p>

@@ -35,10 +35,8 @@ const OTP = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const { error, message, loading, email } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
-
-  console.log("Email: ", email);
 
   const sendOtp = () => {
     const payload = {
@@ -61,7 +59,6 @@ const OTP = () => {
     dispatch(resetState());
   }, [error, message, navigate, dispatch]);
 
-
   // const handleVerificationMessage = (lastScreen: "forgot-password" | "login") => {
   //   if (error) {
   //     toast.error(message);
@@ -81,7 +78,6 @@ const OTP = () => {
   // useEffect(() => {
   //   handleVerificationMessage("forgot-password");
   // }, [error, message, navigate, dispatch]);
-
 
   const handleResendOTP = () => {
     const payload = {

@@ -15,7 +15,6 @@ export const triggerGetAllLeaderboardData = createAsyncThunk<
   { rejectValue: ErroResponseData }
 >("leaderboard/GetAllLeaderboardData", async (query, thunkAPI) => {
   try {
-    console.log("Query in SERVICE>>>", query);
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
       `${apiUrl.getAllLeaderboardData}?timeframe=${query}`,
@@ -25,7 +24,7 @@ export const triggerGetAllLeaderboardData = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {

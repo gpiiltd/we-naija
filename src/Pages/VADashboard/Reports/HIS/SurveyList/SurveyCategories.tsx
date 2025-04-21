@@ -24,10 +24,9 @@ export const GenericComponent = ({
                 onClick={() => {
                   localStorage.setItem("surveyIndicatorName", indicator.name);
                   navigate(
-                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`
+                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,
                   );
                 }}
-                
               >
                 <div className="flex gap-2 items-center justify-between cursor-pointer">
                   <div>
@@ -96,7 +95,7 @@ export const PediatricComponent = ({
                 className="py-8 px-6"
                 onClick={() =>
                   navigate(
-                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`
+                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,
                   )
                 }
               >
@@ -139,9 +138,9 @@ export const PediatricComponent = ({
           ))
         ) : (
           <div className="border h-50 bg-white py-10 flex justify-between  px-10 rounded-lg mb-8">
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="pt-1 font-bold "
+            <Typography
+              variant={TypographyVariant.NORMAL}
+              className="pt-1 font-bold "
             >
               No Pediatric indicators found
             </Typography>
@@ -169,7 +168,7 @@ export const SexualReproductiveHealthComponent = ({
                 className="py-8 px-6"
                 onClick={() =>
                   navigate(
-                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`
+                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,
                   )
                 }
               >
@@ -212,9 +211,9 @@ export const SexualReproductiveHealthComponent = ({
           ))
         ) : (
           <div className="border h-50 bg-white py-10 flex justify-between  px-10 rounded-lg mb-8">
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="pt-1 font-bold "
+            <Typography
+              variant={TypographyVariant.NORMAL}
+              className="pt-1 font-bold "
             >
               No Sexual & reproductive health indicators found
             </Typography>

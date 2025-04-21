@@ -26,7 +26,7 @@ const SurveyList = () => {
   const [genericIndicators, setGenericIndicators] = useState<any[]>([]);
   const [pediatricIndicators, setPediatricIndicators] = useState<any[]>([]);
   const [sexualHealthIndicators, setSexualHealthIndicators] = useState<any[]>(
-    []
+    [],
   );
 
   const { id } = useParams();
@@ -35,12 +35,15 @@ const SurveyList = () => {
   const [institutionDetails, setInstitutionDetails] = useState<any>({});
   const [categories, setSurveyCategories] = useState<any[]>([]);
   const { surveyCategories, institutionById, surveyIndicator } = useSelector(
-    (state: RootState) => state.institute
+    (state: RootState) => state.institute,
   );
   useEffect(() => {
     if (institutionDetails?.name) {
       localStorage.setItem("institutionName", institutionDetails.name);
-      localStorage.setItem("institutionIdentifier", institutionDetails.identifier);
+      localStorage.setItem(
+        "institutionIdentifier",
+        institutionDetails.identifier,
+      );
     }
   }, [institutionDetails?.name, institutionDetails?.identifier]);
 
@@ -54,7 +57,6 @@ const SurveyList = () => {
       setInstitutionDetails(institutionById.data.data);
     }
     if (institutionById.error && institutionById.message) {
-      console.log("Error fetching institution by id");
     }
   }, [
     institutionById.statusCode,
@@ -65,7 +67,6 @@ const SurveyList = () => {
 
   useEffect(() => {
     if (surveyCategories.statusCode === 200 && surveyCategories.data) {
-      console.log("SURVEY CATEGORIES", surveyCategories.data);
       setSurveyCategories(surveyCategories.data);
     }
   }, [
@@ -78,13 +79,13 @@ const SurveyList = () => {
     const timer = setTimeout(() => {
       if (surveyCategories.statusCode === 200 && surveyCategories.data) {
         const genericCategory = surveyCategories.data.find(
-          (category: any) => category.name === "Generic"
+          (category: any) => category.name === "Generic",
         );
         const pediatricCategory = categories?.find(
-          (category) => category?.name === "Pediatric"
+          (category) => category?.name === "Pediatric",
         );
         const sexualReproductiveHealthCategory = categories?.find(
-          (category) => category?.name === "Sexual reproduction and health"
+          (category) => category?.name === "Sexual reproduction and health",
         );
 
         const genericCategoryId = genericCategory
@@ -107,7 +108,7 @@ const SurveyList = () => {
         if (sexualReproductiveHealthCategoryId) {
           localStorage.setItem(
             "sexualReproductiveHealthCategoryId",
-            sexualReproductiveHealthCategoryId
+            sexualReproductiveHealthCategoryId,
           );
         }
       }
@@ -116,38 +117,37 @@ const SurveyList = () => {
     return () => clearTimeout(timer);
   }, [surveyCategories.statusCode, surveyCategories.data, categories]);
 
-
   useEffect(() => {
     const timer = setTimeout(() => {
       const genericCategoryId = localStorage.getItem("genericCategoryId");
       const pediatricCategoryId = localStorage.getItem("pediatricCategoryId");
       const sexualHealthCategoryId = localStorage.getItem(
-        "sexualReproductiveHealthCategoryId"
+        "sexualReproductiveHealthCategoryId",
       );
 
       if (genericCategoryId) {
         dispatch(
-          triggerSurveyIndicatorById({ categoryId: genericCategoryId }) as any
+          triggerSurveyIndicatorById({ categoryId: genericCategoryId }) as any,
         );
       }
       if (pediatricCategoryId) {
         dispatch(
-          triggerSurveyIndicatorById({ categoryId: pediatricCategoryId }) as any
+          triggerSurveyIndicatorById({
+            categoryId: pediatricCategoryId,
+          }) as any,
         );
       }
       if (sexualHealthCategoryId) {
         dispatch(
           triggerSurveyIndicatorById({
             categoryId: sexualHealthCategoryId,
-          }) as any
+          }) as any,
         );
       }
     }, 1000);
 
     return () => clearTimeout(timer);
   }, [dispatch]);
-
-  // console.log("AALLLLLLsurveyIndicator@@@@***", surveyIndicator);
 
   useEffect(() => {
     if (surveyIndicator.statusCode === 200) {
@@ -187,7 +187,9 @@ const SurveyList = () => {
       <PediatricComponent surveyIndicatorData={pediatricIndicators} />
     ),
     "/verified-agent-dashboard/reports/hospitals/survey-list/health": (
-      <SexualReproductiveHealthComponent surveyIndicatorData={sexualHealthIndicators} />
+      <SexualReproductiveHealthComponent
+        surveyIndicatorData={sexualHealthIndicators}
+      />
     ),
   };
 
@@ -216,21 +218,21 @@ const SurveyList = () => {
                 </div>
                 {/* <Icon type="homeAvatar" className="pr-2" /> */}
                 {institutionDetails?.logo ? (
-                          <img
-                            src={institutionDetails?.logo}
-                            alt="Institution Icon"
-                            className="pr-2"
-                          />
-                        ) : (
-                          <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
-                            <span className="text-white p-2">
-                              {institutionDetails?.name
-                                ?.split(" ")
-                                .map((word: string) => word[0])
-                                .join("")}
-                            </span>
-                          </div>
-                        )}
+                  <img
+                    src={institutionDetails?.logo}
+                    alt="Institution Icon"
+                    className="pr-2"
+                  />
+                ) : (
+                  <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
+                    <span className="text-white p-2">
+                      {institutionDetails?.name
+                        ?.split(" ")
+                        .map((word: string) => word[0])
+                        .join("")}
+                    </span>
+                  </div>
+                )}
 
                 <Typography
                   variant={TypographyVariant.SUBTITLE}
@@ -356,7 +358,7 @@ const SurveyList = () => {
               active={true}
               onClick={() =>
                 navigate(
-                  "/verified-agent-dashboard/reports/hospitals/give-report"
+                  "/verified-agent-dashboard/reports/hospitals/give-report",
                 )
               }
             />

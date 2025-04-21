@@ -15,14 +15,14 @@ const GiveReport = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { surveyIndicatorQuestions } = useSelector(
-    (state: RootState) => state.institute
+    (state: RootState) => state.institute,
   );
   const [surveyIndicatorQuestionsData, setSurveyIndicatorQuestionsData] =
     useState<any>([]);
 
   useEffect(() => {
     dispatch(
-      triggerSurveyIndicatorQuestions({ indicatorId: id as string }) as any
+      triggerSurveyIndicatorQuestions({ indicatorId: id as string }) as any,
     );
   }, [dispatch, id]);
 
@@ -34,7 +34,6 @@ const GiveReport = () => {
       setSurveyIndicatorQuestionsData(surveyIndicatorQuestions.data);
     }
     if (surveyIndicatorQuestions.error && surveyIndicatorQuestions.message) {
-      console.log("Error fetching survey indicator questions");
     }
   }, [
     surveyIndicatorQuestions.statusCode,
@@ -42,11 +41,7 @@ const GiveReport = () => {
     surveyIndicatorQuestions.error,
     surveyIndicatorQuestions.message,
   ]);
-  console.log(
-    "SURVEY INDICATOR QUESTIONS DATA in give report",
-    surveyIndicatorQuestionsData
-  );
- 
+
   return (
     <div className=" flex flex-col items-center justify-center">
       <section className="w-full">

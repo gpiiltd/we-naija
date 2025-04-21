@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useField} from "formik";
+import { useField } from "formik";
 import { TextInputProps, TypographyVariant } from "../types";
 import Typography from "../Typography";
 import Icon from "../../Assets/SvgImagesAndIcons";
@@ -28,7 +28,6 @@ const InputField: React.FC<TextInputProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    console.log('values', value, name);
     setFieldValue!(props.name, value);
     setFieldTouched!(props.name, true, false);
   };
@@ -63,22 +62,23 @@ const InputField: React.FC<TextInputProps> = ({
         <Typography variant={TypographyVariant.NORMAL}>{label}</Typography>
       </label>
       {meta.touched && meta.error ? (
-        <div className='w-full md:w-[350px] lg:w-[500px] overflow-hidden'> <Typography
-        variant={TypographyVariant.SMALL}
-        className="text-error mt-1 text-left"
-      >
-        {meta.error}
-      </Typography></div>
-       
+        <div className="w-full md:w-[350px] lg:w-[500px] overflow-hidden">
+          {" "}
+          <Typography
+            variant={TypographyVariant.SMALL}
+            className="text-error mt-1 text-left"
+          >
+            {meta.error}
+          </Typography>
+        </div>
       ) : (
         helperText &&
         !meta.error &&
         meta.touched &&
-       isFocused && (
+        isFocused && (
           <div className="flex gap-2 items-center">
-            
             <Icon type="check" className="pt-1" />
-            <div className='flex gap-2'>
+            <div className="flex gap-2">
               <Typography
                 variant={TypographyVariant.SMALL}
                 className="mt-1 text-left text-green-700"

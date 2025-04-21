@@ -25,8 +25,6 @@ const KycHeader = () => {
             className="w-fit cursor-pointer"
             click={() => (window.location.href = "/verified-agent-dashboard")}
           />
-
-        
         </div>
 
         <div className="flex items-center gap-4">
@@ -107,8 +105,7 @@ const KycHeader = () => {
                         Home
                       </NavLink>
                     </li>
-                    
-                   
+
                     <li className="flex gap-2">
                       <FiBell
                         size={24}

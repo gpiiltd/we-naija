@@ -1,12 +1,12 @@
-declare module 'otp-input-react' {
+declare module "otp-input-react" {
   const OTPInput: any;
   const ResendOTP: any;
   export { OTPInput, ResendOTP };
   export default OTPInput;
 }
 
-declare module 'react-radio-buttons' {
-  import React from 'react';
+declare module "react-radio-buttons" {
+  import React from "react";
 
   export interface RadioGroupProps {
     children: React.ReactNode;

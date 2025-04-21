@@ -49,7 +49,7 @@ const SettingsMobile = () => {
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
               onClick={() =>
                 navigate(
-                  "/verified-agent-dashboard/settings/contact-information"
+                  "/verified-agent-dashboard/settings/contact-information",
                 )
               }
             >
@@ -119,7 +119,9 @@ const SettingsMobile = () => {
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
               onClick={() =>
-                navigate("/verified-agent-dashboard/settings/help-and-support/faq")
+                navigate(
+                  "/verified-agent-dashboard/settings/help-and-support/faq",
+                )
               }
             >
               <div className="flex items-center gap-2">
@@ -131,7 +133,9 @@ const SettingsMobile = () => {
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
               onClick={() =>
-                navigate("/verified-agent-dashboard/settings/help-and-support/contact-us")
+                navigate(
+                  "/verified-agent-dashboard/settings/help-and-support/contact-us",
+                )
               }
             >
               <div className="flex items-center gap-2">
@@ -158,10 +162,7 @@ const SettingsMobile = () => {
 
       <div className="flex gap-2 justify-center mt-8 mb-12">
         <CiLogout size={24} className="text-error" />
-        <NavLink
-          to="/login"
-          className="text-error font-semibold"
-        >
+        <NavLink to="/login" className="text-error font-semibold">
           Logout
         </NavLink>
       </div>

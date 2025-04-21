@@ -1,16 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 
 interface Modalprops {
-isOpen: boolean;
-onClose: () => void;
-children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
 }
-const CustomModal : FC<Modalprops> = ({ isOpen, onClose, children }) => {
+const CustomModal: FC<Modalprops> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
   return (
     <div
       className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 ${
-        isOpen ? 'block' : 'hidden'
+        isOpen ? "block" : "hidden"
       }`}
       onClick={onClose}
     >

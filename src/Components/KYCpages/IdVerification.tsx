@@ -40,10 +40,8 @@ const IDVerification = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const { kycPersonalInfo, kycPhoneNumber, error, message } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
-
-  // console.log("kycPersonalInfo from state:>>>>>", kycPersonalInfo);
 
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdNumber(e.target.value);
@@ -66,7 +64,6 @@ const IDVerification = () => {
   // };
 
   const handleSubmit = async () => {
-   
     setLoading(!loading);
 
     // const { frontFileName, backFileName } = await handleFileUploads();
@@ -95,11 +92,9 @@ const IDVerification = () => {
     payload.append("id_number", idNumber);
     payload.append("id_front", frontFile as File);
     payload.append("id_back", backFile as File);
-    console.log("payload>>>", payload);
-    for (let pair of Array.from(payload.entries())) {
-      console.log(`kye: ${pair[0]} value: ${pair[1]}`);
-    }
-    console.log("Payload (FormData):.........", payload);
+    // for (let pair of Array.from(payload.entries())) {
+    //   console.log(`kye: ${pair[0]} value: ${pair[1]}`);
+    // }
 
     dispatch(triggerKycInfoSubmit(payload) as any);
   };
@@ -294,4 +289,3 @@ const IDVerification = () => {
 };
 
 export default IDVerification;
-

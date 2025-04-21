@@ -23,7 +23,7 @@ const EmailSent = () => {
   const { uid, email_token } = useParams();
   const navigate = useNavigate();
   const { error, message, email, loading } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   const emailverification = localStorage.getItem("emailverification");
@@ -62,9 +62,8 @@ const EmailSent = () => {
     };
 
     dispatch(triggerEmailVerification(payload));
-    console.log("i dispatched triggerEmailVerification");
 
-    setTimeout(() => {  
+    setTimeout(() => {
       if (error) {
         toast.error(error);
       } else if (!error && message) {

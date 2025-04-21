@@ -152,7 +152,6 @@ const communitySlice = createSlice({
     builder.addCase(
       triggerGetAllCommunityCategories.fulfilled,
       (state, action) => {
-        // console.log("action.payload>>>", action.payload);
         state.communityCategories.loading = false;
         state.communityCategories.data = action.payload?.results;
         state.communityCategories.error = false;
@@ -160,7 +159,7 @@ const communitySlice = createSlice({
           ?.message as unknown as string;
         state.communityCategories.statusCode = action.payload
           ?.status_code as unknown as number;
-      }
+      },
     );
     builder.addCase(
       triggerGetAllCommunityCategories.rejected,
@@ -171,7 +170,7 @@ const communitySlice = createSlice({
           ?.message as unknown as string;
         state.communityCategories.statusCode =
           action.payload?.status_code ?? null;
-      }
+      },
     );
 
     //LIST COMMUNITY TASK CATEGORY BY ID
@@ -184,10 +183,6 @@ const communitySlice = createSlice({
     builder.addCase(
       triggerGetCommunityTaskCategoryById.fulfilled,
       (state, action) => {
-        console.log(
-          "ACTION PAYLOAD in COMMUNITY TASK CATEGORY BY ID>>>",
-          action.payload
-        );
         state.communityTaskCategoryById.loading = false;
         state.communityTaskCategoryById.data = action.payload;
         state.communityTaskCategoryById.error = false;
@@ -195,7 +190,7 @@ const communitySlice = createSlice({
           ?.message as unknown as string;
         state.communityTaskCategoryById.statusCode = action.payload
           ?.status_code as unknown as number;
-      }
+      },
     );
     builder.addCase(
       triggerGetCommunityTaskCategoryById.rejected,
@@ -206,7 +201,7 @@ const communitySlice = createSlice({
           ?.message as unknown as string;
         state.communityTaskCategoryById.statusCode = action.payload
           ?.status_code as unknown as number;
-      }
+      },
     );
 
     //LIST ALL INDICATORS
@@ -217,7 +212,6 @@ const communitySlice = createSlice({
       state.communityIndicators.message = "";
     });
     builder.addCase(triggerGetAllIndicators.fulfilled, (state, action) => {
-      // console.log("ACTION PAYLOAD in INDICATORS>>>", action.payload);
       state.communityIndicators.loading = false;
       state.communityIndicators.data = action.payload?.results;
       state.communityIndicators.error = false;
@@ -293,7 +287,6 @@ const communitySlice = createSlice({
       state.taskQuestionById.message = "";
     });
     builder.addCase(triggerGetTaskQuestionById.fulfilled, (state, action) => {
-      console.log("ACTION PAYLOAD in TASK QUESTION BY ID>>>", action.payload);
       state.taskQuestionById.loading = false;
       state.taskQuestionById.data = action.payload?.data;
       state.taskQuestionById.error = false;

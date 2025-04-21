@@ -24,7 +24,7 @@ export const triggerGetAllInstitution = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
@@ -51,9 +51,8 @@ export const triggerGetInstitutionById = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    // console.log("GET INSTITUTION BY ID response********", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -79,7 +78,7 @@ export const triggerGetAllSurveyCategories = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
     return response.data;
   } catch (error: any) {
@@ -97,7 +96,6 @@ export const triggerSurveyIndicatorById = createAsyncThunk<
   { rejectValue: ErroResponseData }
 >("user/GetSurveyIndicatorById", async (categoryId, thunkAPI) => {
   try {
-    console.log("Indicator Id", categoryId);
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
       `${apiUrl.getSurveyIndicatorById}/${categoryId.categoryId}`,
@@ -107,9 +105,8 @@ export const triggerSurveyIndicatorById = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    // console.log("GET SURVEY INDICATOR BY ID respons>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -126,7 +123,6 @@ export const triggerSurveyIndicatorQuestions = createAsyncThunk<
   { rejectValue: ErroResponseData }
 >("user/GetSurveyIndicatorQuestions", async (indicatorId, thunkAPI) => {
   try {
-    console.log("Indicator Id", indicatorId);
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
       `${apiUrl.getSurveyIndicatorQuestions}/${indicatorId.indicatorId}/questions`,
@@ -136,12 +132,9 @@ export const triggerSurveyIndicatorQuestions = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      }
+      },
     );
-    console.log(
-      "GET SURVEY INDICATOR QUESTIONS respons>>>>>",
-      response.data.results
-    );
+
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -158,10 +151,9 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
   { rejectValue: any }
 >("user/submitSurveyReport", async (surveyReportData, thunkAPI) => {
   try {
-    console.log("SUBMIT SURVEY REPORT DATAaaaaSERVICE", surveyReportData);
     const institution_id = localStorage.getItem("institutionIdentifier");
     const surveyQuestionIdentifier = localStorage.getItem(
-      "surveyQuestionIdentifier"
+      "surveyQuestionIdentifier",
     );
     const token = localStorage.getItem("accessToken");
     const response = await axios.post(
@@ -173,12 +165,10 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
           "Content-Type": "multipart/form-data",
           // Accept: "application/json",
         },
-      }
+      },
     );
-    console.log("SUBMIT SURVEY REPORT response>>>", response.data);
     return response.data;
   } catch (error: any) {
-    console.log("SUBMIT SURVEY REPORT ERRORsssssssss>>>", error);
     return thunkAPI.rejectWithValue({
       message: error.response.data.message ?? "Something went wrong",
       status_code: error.response.data.status_code,

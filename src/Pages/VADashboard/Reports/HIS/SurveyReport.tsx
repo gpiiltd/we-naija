@@ -38,7 +38,6 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const dispatch = useDispatch();
   const { surveyReport } = useSelector((state: RootState) => state.institute);
 
-  console.log("SURVEY REPORT>>>", surveyReport);
   const handleNext = () => {
     setCurrentQuestion((prev) => prev + 1);
   };
@@ -60,7 +59,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   if (surveyQuestions?.[0]?.identifier) {
     localStorage.setItem(
       "surveyQuestionIdentifier",
-      surveyQuestions[0].identifier
+      surveyQuestions[0].identifier,
     );
   }
 
@@ -75,7 +74,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const validationSchema = Yup.object({
     textArea: Yup.string().max(
       20,
-      "You are allowed a maximum of 20 characters"
+      "You are allowed a maximum of 20 characters",
     ),
   });
 
@@ -88,24 +87,19 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
     payload.append("images", uploadedFile as File);
     payload.append("comment", values.textArea);
 
-    console.log("payload>>>", payload);
     for (let pair of Array.from(payload.entries())) {
       console.log(`kye: ${pair[0]} value: ${pair[1]}`);
     }
     dispatch(triggerSubmitSurveyReport(payload) as any);
   };
-  // console.log("SURVEY REPORT final>>>", surveyReport);
   useEffect(() => {
-    console.log("SURVEY REPORT final>>>", surveyReport);
     if (surveyReport?.statusCode === 200 && surveyReport?.data) {
-
       setTimeout(() => {
         setLoading(false);
         setShowModal(true);
       }, 3000);
     }
     if (surveyReport?.error && surveyReport?.message) {
-      console.log("SURVEY REPORT error>>>", surveyReport.message);
       toast.error(`${surveyReport.message}`);
     }
     dispatch(resetSurveyReportState());

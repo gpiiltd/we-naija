@@ -15,7 +15,7 @@ function HospitalDetail() {
   const dispatch = useDispatch();
 
   const { instituteData, error, message } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   useEffect(() => {
@@ -34,8 +34,6 @@ function HospitalDetail() {
     }
     dispatch(resetState());
   }, [error, message, instituteData, dispatch]);
-
-  console.log("instituteDetails*****", instituteDetails);
 
   return (
     <div className="w-full h-[160vh] overscroll-contain">

@@ -15,7 +15,9 @@ const Tasks: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [communityTasks, setCommunityTasks] = useState<any[]>([]);
-  const { communityCategories } = useSelector((state: RootState) => state.community);
+  const { communityCategories } = useSelector(
+    (state: RootState) => state.community,
+  );
 
   useEffect(() => {
     dispatch(triggerGetAllCommunityCategories({}) as any);
@@ -23,13 +25,15 @@ const Tasks: React.FC = () => {
 
   useEffect(() => {
     if (communityCategories?.statusCode === 200 && communityCategories) {
-      console.log("community TASKSin UseEffect>>>", communityCategories.data);
       setCommunityTasks(communityCategories.data);
     }
 
     if (communityCategories?.error && communityCategories?.message) {
-      console.error("Error fetching community tasks:", communityCategories.message);
-        toast.error(communityCategories.message);
+      console.error(
+        "Error fetching community tasks:",
+        communityCategories.message,
+      );
+      toast.error(communityCategories.message);
     }
   }, [
     communityCategories?.statusCode,
@@ -38,8 +42,6 @@ const Tasks: React.FC = () => {
     communityCategories,
     dispatch,
   ]);
-
-  console.log("community TASKS READY>>>", communityTasks);
 
   return (
     <>
@@ -60,17 +62,17 @@ const Tasks: React.FC = () => {
                   index % 3 === 0
                     ? "bg-[#F5F4FE]"
                     : index % 3 === 1
-                    ? "bg-[#FEF8F4]"
-                    : "bg-[#F4FEF5]"
+                      ? "bg-[#FEF8F4]"
+                      : "bg-[#F4FEF5]"
                 } flex items-center justify-between py-12 px-6 gap-2 cursor-pointer`}
                 onClick={() =>
                   handleBreadCrumbNavigate(
                     `/verified-agent-dashboard/reports/community-tasks/${task.name.replace(
                       /\s+/g,
-                      ""
+                      "",
                     )}/${task.identifier}`,
                     task.name,
-                    navigate
+                    navigate,
                   )
                 }
               >

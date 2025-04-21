@@ -5,7 +5,6 @@ import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
 
 const SettingsHeader = () => {
-
   return (
     <div className="min-h-screen flex flex-col w-full">
       <Typography
@@ -16,8 +15,6 @@ const SettingsHeader = () => {
       </Typography>
       <Header className="">
         <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
-         
-
           <div className="flex items-center gap-4">
             <nav className="hidden md:block pt-2 pb-4">
               <ul className="flex justify-center items-center text-sm md:text-xs lg:text-base lg:gap-4">

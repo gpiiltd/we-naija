@@ -16,9 +16,8 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
   const handleDateChange = (date: Date | null) => {
     onChange(date);
-    setIsOpen(false); 
+    setIsOpen(false);
   };
-
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -65,11 +64,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               popperPlacement="bottom-start"
               showMonthDropdown
               showYearDropdown
-            //   dropdownMode="scroll"
+              //   dropdownMode="scroll"
               dropdownMode="select"
               inline
-             
-
             />
             <div className="mt-4 flex justify-between">
               <button
@@ -88,8 +85,6 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           </div>
         </div>
       )}
-
-
     </div>
   );
 };
