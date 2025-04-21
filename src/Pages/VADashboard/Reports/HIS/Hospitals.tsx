@@ -13,42 +13,118 @@ import Breadcrumb from "../BreadCrum";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/Store/store";
 import { triggerGetAllInstitution } from "../../../../redux/Services/institute/instituteServices";
-import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
+// import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
 
 const Hospitals = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [institutions, setInstitutions] = useState([]);
+  const [institutions, setInstitutions] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { institution } = useSelector((state: RootState) => state.institute);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(triggerGetAllInstitution({}) as any);
-  }, [dispatch]);
+    setIsLoading(true);
+    dispatch(triggerGetAllInstitution({ page: currentPage }) as any);
+  }, [dispatch, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
-    if (institution.statusCode === 200 || institution.data) {
-      setInstitutions(Array.from(institution.data));
+    if (institution) {
+      if (currentPage === 1) {
+        setInstitutions(institution.data?.results?.results || []);
+      } else {
+        setInstitutions((prevInstitutions) => [
+          ...prevInstitutions,
+          ...(institution.data?.results?.results || []),
+        ]);
+      }
+
+      const isHasMore = institution.data?.next ? true : false;
+      setHasMore(isHasMore);
+      setIsLoading(false);
     }
     if (institution.error && institution.message) {
+      setIsLoading(false);
     }
-    dispatch(resetInstitutionState());
-  }, [
-    institution.statusCode,
-    institution.message,
-    institution.data,
-    institution.error,
-    dispatch,
-  ]);
+    // dispatch(resetInstitutionState());
+  }, [institution, dispatch, currentPage]);
 
-  const suggestions = [
-    "Quotient Specialist Hospital",
-    "Lagos University Teaching Hospital",
-    "Grace Neurology Center",
-    "Quotient Hospital",
-  ];
+  const formatOperationalDays = (operationalDays: string): string => {
+    const daysMap: { [key: string]: string } = {
+      monday_to_friday: "Monday - Friday",
+      monday_to_saturday: "Monday - Saturday",
+      monday_to_sunday: "Monday - Sunday",
+      saturday_only: "Saturday only",
+      sunday_only: "Sunday only",
+      saturday_to_sunday: "Saturday - Sunday",
+      friday_to_saturday: "Friday - Saturday",
+      friday_to_sunday: "Friday - Sunday",
+      thursday_to_friday: "Thursday - Friday",
+      thursday_to_saturday: "Thursday - Saturday",
+      thursday_to_sunday: "Thursday - Sunday",
+    };
+
+    return daysMap[operationalDays.toLowerCase()] || operationalDays;
+  };
+
+  const getRandomItems = (arr: string[], num: number) => {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, num);
+  };
+
+  const suggestions = Array.isArray(institutions)
+    ? getRandomItems(
+        institutions.map((institution: any) => institution.name),
+        3,
+      )
+    : [];
+
   const [showModal, setShowModal] = useState(false);
-  const states = ["Lagos", "Abuja", "Kano", "Rivers", "Kaduna", "Oyo"];
+  const states = [
+    "Abia",
+    "Adamawa",
+    "Akwa Ibom",
+    "Anambra",
+    "Bauchi",
+    "Bayelsa",
+    "Benue",
+    "Borno",
+    "Cross River",
+    "Delta",
+    "Ebonyi",
+    "Edo",
+    "Ekiti",
+    "Enugu",
+    "Gombe",
+    "Imo",
+    "Jigawa",
+    "Kaduna",
+    "Kano",
+    "Katsina",
+    "Kebbi",
+    "Kogi",
+    "Kwara",
+    "Lagos",
+    "Nasarawa",
+    "Niger",
+    "Ogun",
+    "Ondo",
+    "Osun",
+    "Oyo",
+    "Plateau",
+    "Rivers",
+    "Sokoto",
+    "Taraba",
+    "Yobe",
+    "Zamfara",
+  ];
   const cities = [
     "Ikeja",
     "Maitama",
@@ -58,7 +134,6 @@ const Hospitals = () => {
     "Ibadan",
   ];
   const [buttonText, setButtonText] = useState("Location");
-  const [loading, setLoading] = useState(false);
 
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
@@ -91,9 +166,9 @@ const Hospitals = () => {
   };
   const handleFilter = () => {
     if (cityDropdown.selected && stateDropdown.selected) {
-      setLoading(!loading);
+      setIsLoading(!isLoading);
       setTimeout(() => {
-        setLoading(false);
+        setIsLoading(false);
         setButtonText(`${cityDropdown.selected}, ${stateDropdown.selected}`);
         setShowModal(false);
       }, 3000);
@@ -163,7 +238,7 @@ const Hospitals = () => {
           Search result:
         </Typography>
       )}
-      {institutions.filter((hospital: any) =>
+      {institutions?.filter((hospital: any) =>
         hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ).length === 0 ? (
         <div className="flex justify-center items-center pt-4">
@@ -244,10 +319,12 @@ const Hospitals = () => {
                       <div className="flex items-center justify-start pt-2">
                         <Icon type="timeClocKSvg" className="pr-2" />
                         <p className="font-normal text-sm text-[#5E5959] pr-1">
-                          {hospital.operation_days}
+                          {formatOperationalDays(
+                            hospital?.operation_days || "",
+                          )}
                         </p>
                         <p className="font-normal text-sm">
-                          ({hospital.hours})
+                          ({hospital.closing_time} - {hospital.opening_time})
                         </p>
                       </div>
                     </div>
@@ -273,14 +350,17 @@ const Hospitals = () => {
               </div>
             )}
           </div>
-          <div className="flex justify-center  ">
-            <ButtonComponent
-              text="Show more"
-              bg_color="transparent"
-              active={true}
-              text_color="#5E5959"
-              border_color="#5E5959"
-            />
+          <div className="flex justify-center">
+            {hasMore && (
+              <ButtonComponent
+                text={isLoading ? "Loading..." : "Show more"}
+                bg_color="transparent"
+                active={!isLoading}
+                text_color="#5E5959"
+                border_color="#5E5959"
+                onClick={() => !isLoading && handlePageChange(currentPage + 1)}
+              />
+            )}
           </div>
         </>
       )}
@@ -396,7 +476,7 @@ const Hospitals = () => {
                   active={true}
                   text_color="#FFFFFF"
                   onClick={handleFilter}
-                  loading={loading}
+                  loading={isLoading}
                 />
               </div>
             </div>

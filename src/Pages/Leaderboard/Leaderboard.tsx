@@ -18,7 +18,7 @@ const Leaderboard = () => {
   const dispatch = useDispatch();
 
   const { leaderboardData } = useSelector(
-    (state: RootState) => state.leaderboard
+    (state: RootState) => state.leaderboard,
   );
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Leaderboard = () => {
 
   const handleShowMore = () => {
     setVisibleCount((prevCount) =>
-      Math.min(prevCount + 3, allLeaderboardData.length)
+      Math.min(prevCount + 3, allLeaderboardData.length),
     );
   };
 
@@ -93,7 +93,7 @@ const Leaderboard = () => {
               <img
                 src={
                   allBadges?.find(
-                    (badge: any) => badge.name === userProfileData?.badge
+                    (badge: any) => badge.name === userProfileData?.badge,
                   )?.logo || ""
                 }
                 alt={`Badge ${userProfileData?.badge}`}
@@ -151,7 +151,7 @@ const Leaderboard = () => {
                   />
                 </div>
                 {allBadges?.findIndex(
-                  (b: any) => b.name === userProfileData?.badge
+                  (b: any) => b.name === userProfileData?.badge,
                 ) < index && (
                   <div className="relative group">
                     <Icon
@@ -250,7 +250,7 @@ const Leaderboard = () => {
                     <img
                       src={
                         allBadges?.find(
-                          (badge: any) => badge.name === player.badge
+                          (badge: any) => badge.name === player.badge,
                         )?.logo || ""
                       }
                       alt={`Badge ${player.badge}`}

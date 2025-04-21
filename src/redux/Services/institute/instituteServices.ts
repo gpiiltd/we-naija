@@ -10,14 +10,15 @@ interface ErroResponseData {
 }
 
 export const triggerGetAllInstitution = createAsyncThunk<
-  DefaultResponse,
+  any,
   any,
   { rejectValue: ErroResponseData }
->("user/GetAllInstitution", async (_, thunkAPI) => {
+>("user/GetAllInstitution", async (params: any, thunkAPI) => {
   try {
+    const pageNumber = params.page || 1;
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
-      `${apiUrl.allInstitute}`,
+      `${apiUrl.allInstitute}?page=${pageNumber}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -26,7 +27,6 @@ export const triggerGetAllInstitution = createAsyncThunk<
         },
       },
     );
-    console.log("GET ALL INSTITUTION response********", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({

@@ -9,7 +9,8 @@ import {
 } from "./instituteServices";
 interface IinitialState {
   institution: {
-    data: Record<string, string>[] | any;
+    // data: Record<string, string>[] | any;
+    data: Record<string, any>;
     loading: boolean;
     error: boolean;
     message: string | undefined;
@@ -56,7 +57,7 @@ interface IinitialState {
 
 const initialState: IinitialState = {
   institution: {
-    data: [],
+    data: {},
     loading: false,
     error: false,
     message: "",
@@ -147,11 +148,12 @@ const instituteSlice = createSlice({
     });
     builder.addCase(triggerGetAllInstitution.fulfilled, (state, action) => {
       state.institution.loading = false;
-      state.institution.data = action.payload?.results!;
+      state.institution.data = action.payload;
       state.institution.error = false;
-      state.institution.message = action.payload?.message as unknown as string;
-      state.institution.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.institution.message = action.payload.results
+        .message as unknown as string;
+      state.institution.statusCode = action.payload.results
+        .status_code as unknown as number;
     });
     builder.addCase(triggerGetAllInstitution.rejected, (state, action) => {
       state.institution.loading = false;
