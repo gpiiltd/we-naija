@@ -57,13 +57,6 @@ const Leaderboard = () => {
       .join(" ");
   };
 
-  const badgeIconMap: { [key: string]: string } = {
-    "Scout level": "lineScout",
-    "Guardian level": "lineGuardian",
-    "Champion level": "lineChampion",
-    "Legend level": "lineLegend",
-  };
-
   const tableData = allLeaderboardData;
   const displayedTableData = tableData.slice(0, visibleCount);
   const userProfileData = leaderboardData.data.user_profile;
@@ -100,7 +93,15 @@ const Leaderboard = () => {
           </div>
           <div className="flex items-center justify-center mt-2">
             <div className="flex items-center justify-center">
-              <Icon type="lineScout" className="w-10 pt-2" />
+              <img
+                src={
+                  allBadges?.find(
+                    (badge: any) => badge.name === userProfileData?.badge
+                  )?.logo || ""
+                }
+                alt={`Badge ${userProfileData?.badge}`}
+                className="w-10 h-10"
+              />
               <span className=" pl-1 text-sm font-semibold">
                 {userProfileData?.badge || "NA"}
               </span>
@@ -245,9 +246,18 @@ const Leaderboard = () => {
                     <span className="text-sm">SP</span>
                   </td>
                   <td className=" px-4 py-2 flex items-center text-gray-500 w-64">
-                    <Icon
+                    {/* <Icon
                       type={badgeIconMap[player.badge] || "lineScout"}
                       className="w-6 h-6 mr-2 "
+                    /> */}
+                    <img
+                      src={
+                        allBadges?.find(
+                          (badge: any) => badge.name === player.badge
+                        )?.logo || ""
+                      }
+                      alt={`Badge ${player.badge}`}
+                      className="w-8 h-8 mr-2"
                     />
                     {player.badge}
                   </td>
