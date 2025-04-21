@@ -18,7 +18,7 @@ const Leaderboard = () => {
   const dispatch = useDispatch();
 
   const { leaderboardData } = useSelector(
-    (state: RootState) => state.leaderboard,
+    (state: RootState) => state.leaderboard
   );
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Leaderboard = () => {
 
   const handleShowMore = () => {
     setVisibleCount((prevCount) =>
-      Math.min(prevCount + 3, allLeaderboardData.length),
+      Math.min(prevCount + 3, allLeaderboardData.length)
     );
   };
 
@@ -49,6 +49,12 @@ const Leaderboard = () => {
   const getInitials = (name: string) => {
     const names = name.split(" ");
     return names.map((n) => n.charAt(0).toUpperCase()).join("");
+  };
+  const capitalizeName = (name: string) => {
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
   const badgeIconMap: { [key: string]: string } = {
@@ -61,6 +67,10 @@ const Leaderboard = () => {
   const tableData = allLeaderboardData;
   const displayedTableData = tableData.slice(0, visibleCount);
   const userProfileData = leaderboardData.data.user_profile;
+  const allBadges = leaderboardData.data.badges;
+
+  console.log("BADGE", allBadges);
+  console.log("USER PROFILE", userProfileData);
 
   return (
     <div className="p-6 bg-white rounded-lg  w-full mx-auto mb-12">
@@ -85,8 +95,8 @@ const Leaderboard = () => {
           <div className="text-lg font-semibold bg-white rounded-full px-5 py-4 text-[#007A61]  mb-2">
             {getInitials(userProfileData?.full_name || "")}
           </div>
-          <div className="text-lg font-semibold">
-            {userProfileData?.full_name}
+          <div className="text-2xl font-semibold">
+            {capitalizeName(userProfileData?.full_name || "")}
           </div>
           <div className="flex items-center justify-center mt-2">
             <div className="flex items-center justify-center">
@@ -125,31 +135,51 @@ const Leaderboard = () => {
               Badges
             </Typography>
           </div>
-          <div className="flex space-x-2 mt-1">
-            <div className=" ">
-              <Icon type="scoutIcon" className="w-32 h-36" />
-            </div>
-            <div className="relative ">
-              <Icon type="guardianIcon" className="w-32 h-36 opacity-50" />
-              <Icon
-                type="lockIcon"
-                className="w-10 h-10 absolute bottom-0 left-0"
-              />
-            </div>
-            <div className="relative ">
-              <Icon type="championIcon" className="w-32 h-36 opacity-50" />
-              <Icon
-                type="lockIcon"
-                className="w-10 h-10 absolute bottom-0 left-0"
-              />
-            </div>
-            <div className="relative ">
-              <Icon type="legendIcon" className="w-32 h-36 opacity-50" />
-              <Icon
-                type="lockIcon"
-                className="w-10 h-10 absolute bottom-0 left-0"
-              />
-            </div>
+          <div className="flex space-x-4 mt-1">
+            {allBadges?.map((badge: any, index: any) => (
+              <div className="relative bg-white  rounded-3xl p-4 border border-gray-200">
+                <div className="">
+                  <Typography
+                    variant={TypographyVariant.NORMAL}
+                    className="text-black text-center"
+                  >
+                    {badge.name}
+                  </Typography>
+                  <img
+                    key={index}
+                    src={badge.logo}
+                    alt={`Badge ${index}`}
+                    className="w-24 h-28"
+                  />
+                </div>
+                {allBadges?.findIndex(
+                  (b: any) => b.name === userProfileData?.badge
+                ) < index && (
+                  <div className="relative group">
+                    <Icon
+                      type="lockIcon"
+                      className="w-10 h-10 absolute bottom-0 left-0"
+                    />
+                    <div className="absolute bottom-90 left-0 hidden group-hover:block bg-black text-white text-xs rounded-2xl p-4 w-64 z-10">
+                      <div className="absolute -top-2 left-4 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-black"></div>
+                      <span className="font-bold">
+                        {`Unlock ${badge.name} badge`}
+                      </span>
+                      <h2 className="my-2">
+                        Earn
+                        <span className="text-[#ED7D31] font-bold">
+                          {` ${badge.minimum_sp} star points `}
+                        </span>
+                        <span>
+                          by completing reports to unlock the
+                          {badge.name} badge
+                        </span>
+                      </h2>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -208,7 +238,7 @@ const Leaderboard = () => {
                     <div className="text-xs md:text-lg font-semibold bg-[#F0FEFB] rounded-full px-2 py-2 md:px-6 md:py-4  text-[#007A61] mr-2">
                       {getInitials(player.full_name)}
                     </div>
-                    {player.full_name}
+                    {capitalizeName(player.full_name)}
                   </td>
                   <td className=" px-4 py-2  text-[#ED7D31] font-semibold w-64  gap-2">
                     <span className="text-sm mr-2">{player.total_sp}</span>
