@@ -22,7 +22,7 @@ const EmailSent = () => {
   const [showModal, setShowModal] = useState(false);
   const { uid, email_token } = useParams();
   const navigate = useNavigate();
-  const { error, message, email, loading } = useSelector(
+  const { error, message, email } = useSelector(
     (state: RootState) => state.user,
   );
 

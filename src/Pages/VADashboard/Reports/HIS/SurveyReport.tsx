@@ -29,9 +29,9 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const [uploadedFileSize, setUploadedFileSize] = useState<number | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [selectedFirstAnswer, setSelectedFirstAnswer] = useState<string>("");
-  const [comments, setComments] = useState("");
+  // const [loading, setLoading] = useState(false);
+  // const [comments, setComments] = useState("");
   // const [selectedSecondAnswer, setSelectedSecondAnswer] = useState<string>("");
   // const [selectedthirdAnswer, setSelectedThirdAnswer] = useState<string>("");
 
@@ -95,7 +95,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   useEffect(() => {
     if (surveyReport?.statusCode === 200 && surveyReport?.data) {
       setTimeout(() => {
-        setLoading(false);
+        // setLoading(false);
         setShowModal(true);
       }, 3000);
     }

@@ -92,9 +92,6 @@ const IDVerification = () => {
     payload.append("id_number", idNumber);
     payload.append("id_front", frontFile as File);
     payload.append("id_back", backFile as File);
-    // for (let pair of Array.from(payload.entries())) {
-    //   console.log(`kye: ${pair[0]} value: ${pair[1]}`);
-    // }
 
     dispatch(triggerKycInfoSubmit(payload) as any);
   };

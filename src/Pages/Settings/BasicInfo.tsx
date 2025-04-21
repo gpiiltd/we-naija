@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TypographyVariant } from "../../Components/types";
 import Typography from "../../Components/Typography";
 import Icon from "../../Assets/SvgImagesAndIcons";
@@ -7,8 +7,8 @@ import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
 import { genderOptions, nationalityOptions } from "../../utils/selectOptions";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../redux/Store/store";
-import { useSelector } from "react-redux";
+// import { RootState } from "../../redux/Store/store";
+// import { useSelector } from "react-redux";
 
 const BasicInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +19,7 @@ const BasicInfo = () => {
   const [error] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("26-06-1991");
   const navigate = useNavigate();
-  const userData = useSelector((state: RootState) => state.user.userData);
+  // const userData = useSelector((state: RootState) => state.user.userData);
 
   // useEffect(() => {
   //   if (userData) {

@@ -20,7 +20,7 @@ import {
 const KycPhonenumber = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, message, email, loading } = useSelector(
+  const { error, message, loading } = useSelector(
     (state: RootState) => state.user,
   );
 

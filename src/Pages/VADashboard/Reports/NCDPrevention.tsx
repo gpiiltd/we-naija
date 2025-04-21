@@ -10,23 +10,18 @@ import ProgressBar from "../../../Components/Home/ProgressBar";
 import { handleBreadCrumbNavigate } from "../../../utils/handleBreadCrumb";
 import Breadcrumb from "./BreadCrum";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  triggerGetCommunityTaskCategoryById,
-  triggerGetAllIndicators,
-} from "../../../redux/Services/community/communityServices";
+import { triggerGetCommunityTaskCategoryById } from "../../../redux/Services/community/communityServices";
 import { useEffect, useState } from "react";
 import { RootState } from "../../../redux/Store/store";
-import {
-  resetCommunityIndicatorsState,
-  resetCommunityTaskCategoryByIdState,
-} from "../../../redux/Services/community/communitySlice";
+import { resetCommunityTaskCategoryByIdState } from "../../../redux/Services/community/communitySlice";
+
 const NCDPrevention = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
   const [communityTaskCategory, setCommunityTaskCategory] = useState<any>({});
-  const [indicators, setIndicators] = useState<any>({});
-  const { communityTaskCategoryById, communityIndicators } = useSelector(
+  // const [indicators, setIndicators] = useState<any>({});
+  const { communityTaskCategoryById } = useSelector(
     (state: RootState) => state.community,
   );
 
@@ -103,7 +98,10 @@ const NCDPrevention = () => {
                   // localStorage.setItem("indicatorName", indicator.name);
                   // localStorage.setItem("indicatorDescription", indicator.description);
                   handleBreadCrumbNavigate(
-                    `/verified-agent-dashboard/reports/community-tasks/indicator/${indicator.name.replace(/\s+/g, "")}/${indicator.identifier}`,
+                    `/verified-agent-dashboard/reports/community-tasks/indicator/${indicator.name.replace(
+                      /\s+/g,
+                      "",
+                    )}/${indicator.identifier}`,
                     indicator.name,
                     navigate,
                   );

@@ -27,7 +27,7 @@ const InputField: React.FC<TextInputProps> = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
+    const { value } = e.target;
     setFieldValue!(props.name, value);
     setFieldTouched!(props.name, true, false);
   };
