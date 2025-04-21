@@ -27,8 +27,8 @@ interface ApiUrls {
   getTaskQuestions: string;
 }
 
-// const BASE_URL = 'https://nssf-backend-b65295a32eec.herokuapp.com/api/';
-const BASE_URL = "http://api.test.nssf.ng/api/v1/";
+// const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://api.test.nssf.ng/api/v1/";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const apiUrl: ApiUrls = {
   signUp: `${BASE_URL}agent/process/signup`,

@@ -26,6 +26,7 @@ export const triggerGetAllInstitution = createAsyncThunk<
         },
       },
     );
+    console.log("GET ALL INSTITUTION response********", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({

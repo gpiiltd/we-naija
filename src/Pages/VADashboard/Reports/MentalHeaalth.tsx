@@ -107,8 +107,7 @@ const MentalHeaalth = () => {
                     className="w-full flex justify-between items-center py-4 px-6 gap-6 cursor-pointer shadow rounded-lg bg-white"
                     onClick={() =>
                       navigate(
-                        // "/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
-                        `/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form/${task.identifier}`,
+                        `/verified-agent-dashboard/reports/community-tasks/task/report-form/${task.identifier}`,
                       )
                     }
                   >

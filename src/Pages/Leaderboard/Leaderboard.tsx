@@ -62,9 +62,6 @@ const Leaderboard = () => {
   const userProfileData = leaderboardData.data.user_profile;
   const allBadges = leaderboardData.data.badges;
 
-  console.log("BADGE", allBadges);
-  console.log("USER PROFILE", userProfileData);
-
   return (
     <div className="p-6 bg-white rounded-lg  w-full mx-auto mb-12">
       <Typography

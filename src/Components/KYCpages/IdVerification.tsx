@@ -12,10 +12,7 @@ import { RootState } from "../../redux/Store/store";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/Store/store";
-import {
-  triggerKycInfoSubmit,
-  uploadFile,
-} from "../../redux/Services/user/UserServices";
+import { triggerKycInfoSubmit } from "../../redux/Services/user/UserServices";
 import { toast } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
 
