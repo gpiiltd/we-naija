@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
+// import { Formik, Form } from "formik";
+// import * as Yup from "yup";
 import { TypographyVariant } from "../../../../Components/types";
 import Typography from "../../../../Components/Typography";
 import Icon from "../../../../Assets/SvgImagesAndIcons";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import CustomModal from "../../../../Components/Modal";
-import TextAreaField from "../../../../Components/Input/TextArea";
+// import TextAreaField from "../../../../Components/Input/TextArea";
 import RadioButton from "../../../../Components/Input/SelectOption";
 import { useNavigate } from "react-router-dom";
-import imageUploadIcon from "../../../../Assets/svgImages/upload.svg";
+// import imageUploadIcon from "../../../../Assets/svgImages/upload.svg";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { triggerSubmitSurveyReport } from "../../../../redux/Services/institute/instituteServices";
 import { RootState } from "../../../../redux/Store/store";
@@ -40,7 +40,7 @@ const SurveyCopy = ({
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<string, string>
   >({});
-  const [showCommentSection, setShowCommentSection] = useState(false);
+  // const [showCommentSection, setShowCommentSection] = useState(false);
   const [selectedOption, setSelectedOption] = useState<{
     identifier: string;
     requires_comment: boolean;
@@ -53,6 +53,7 @@ const SurveyCopy = ({
   const { surveyReport } = useSelector((state: RootState) => state.institute);
 
   console.log("SURVEY QUESTIONS", surveyQuestions);
+
   const handleNext = async () => {
     if (!surveyQuestions || surveyQuestions.length === 0) return;
 
@@ -145,21 +146,21 @@ const SurveyCopy = ({
     }
   };
 
-  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentText(e.target.value);
-  };
+  // const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   setCommentText(e.target.value);
+  // };
 
-  const isCommentValid = () => {
-    if (!selectedOption?.requires_comment) return true;
-    return commentText.length > 0 && commentText.length <= 20;
-  };
+  // const isCommentValid = () => {
+  //   if (!selectedOption?.requires_comment) return true;
+  //   return commentText.length > 0 && commentText.length <= 20;
+  // };
 
-  const validationSchema = Yup.object({
-    textArea: Yup.string().max(
-      20,
-      "You are allowed a maximum of 20 characters",
-    ),
-  });
+  // const validationSchema = Yup.object({
+  //   textArea: Yup.string().max(
+  //     20,
+  //     "You are allowed a maximum of 20 characters",
+  //   ),
+  // });
 
   const deleteImage = () => {
     setUploadedFileName(null);
