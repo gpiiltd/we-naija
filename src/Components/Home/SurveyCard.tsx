@@ -17,7 +17,7 @@ const SurveysCard: React.FC<SurveysCardProps> = ({
   return (
     <div className="">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-4">
-        {[1, 2, 3, 4].map((map, i) => (
+        {[1, 2, 3, 4].map(() => (
           // <div className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4">
           <div className="border-[1px] border-solid border[#D0D5DD] rounded-lg bg-white shadow-md mt-3">
             <div className="w-full">

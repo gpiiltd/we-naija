@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 //input component will be replaced with UI library input component aster testing
 import React, { useEffect, useState } from "react";
 import AuthPages from "../Components/AuthPages";

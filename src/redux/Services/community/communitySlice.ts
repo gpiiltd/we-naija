@@ -263,11 +263,11 @@ const communitySlice = createSlice({
     });
     builder.addCase(triggerGetTaskQuestions.fulfilled, (state, action) => {
       state.taskQuestions.loading = false;
-      state.taskQuestions.data = action.payload?.results?.results;
+      state.taskQuestions.data = action.payload?.data?.results;
       state.taskQuestions.error = false;
-      state.taskQuestions.message = action.payload?.results
+      state.taskQuestions.message = action.payload
         ?.message as unknown as string;
-      state.taskQuestions.statusCode = action.payload?.results
+      state.taskQuestions.statusCode = action.payload
         ?.status_code as unknown as number;
     });
     builder.addCase(triggerGetTaskQuestions.rejected, (state, action) => {

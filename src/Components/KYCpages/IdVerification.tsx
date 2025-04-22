@@ -53,31 +53,8 @@ const IDVerification = () => {
     }
   };
 
-  // const handleFileUploads = async () => {
-  //   const frontFileName = frontFile ? await uploadFile(frontFile) : "";
-  //   const backFileName = backFile ? await uploadFile(backFile) : "";
-
-  //   return { frontFileName, backFileName };
-  // };
-
   const handleSubmit = async () => {
     setLoading(!loading);
-
-    // const { frontFileName, backFileName } = await handleFileUploads();
-
-    // const payloadxxx = {
-    //   address: kycPersonalInfo.address,
-    //   nationality: kycPersonalInfo.nationality,
-    //   gender: kycPersonalInfo.gender,
-    //   date_of_birth: kycPersonalInfo.dateOfBirth,
-    //   mobile_number: kycPhoneNumber || "08130966935",
-    //   id_type: idType,
-    //   id_number: idNumber,
-    //   id_front: frontFileName,
-    //   id_back: backFileName,
-    //   // id_front: frontFile as File,
-    //   // id_back: backFile as File,
-    // };
 
     const payload = new FormData();
     payload.append("address", kycPersonalInfo.address);

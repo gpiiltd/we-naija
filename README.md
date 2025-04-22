@@ -11,7 +11,6 @@ See more about the [we-naija](https://gpixyz.atlassian.net/wiki/spaces/IRS/pages
 - [Usage](#usage)
 - [Authorization](#authorization)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Technologies Used
 

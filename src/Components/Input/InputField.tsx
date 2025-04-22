@@ -7,15 +7,12 @@ import Icon from "../../Assets/SvgImagesAndIcons";
 const InputField: React.FC<TextInputProps> = ({
   label,
   helperText,
-  placeHolder,
   icon,
   type,
-  value,
   onClick,
   focusStyle,
   setFieldValue,
   setFieldTouched,
-  setValues,
   ...props
 }) => {
   const [field, meta] = useField(props.name);

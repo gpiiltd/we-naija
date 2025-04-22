@@ -195,10 +195,7 @@ const VADashboard = () => {
                         </NavLink>
                       </li>
                       <li className="flex gap-2">
-                        <FiUsers
-                          size={24}
-                          className="text-gray-600 text-primary_green text-lg"
-                        />
+                        <FiUsers size={24} className="text-gray-600 text-lg" />
                         <NavLink
                           to="/verified-agent-dashboard/join-community"
                           onClick={toggleDrawer}
@@ -214,7 +211,7 @@ const VADashboard = () => {
                       <li className="flex gap-2">
                         <FiBell
                           size={24}
-                          className="text-gray-600 text-primary_green text-lg"
+                          className="text-primary_green text-lg"
                         />
                         <NavLink
                           to="/verified-agent-dashboard/notifications"
@@ -231,7 +228,7 @@ const VADashboard = () => {
                       <li className="flex gap-2">
                         <FiSettings
                           size={24}
-                          className="text-gray-600 text-primary_green text-lg"
+                          className="text-primary_green text-lg"
                         />
                         <NavLink
                           to="/verified-agent-dashboard/settings/setting-mobile"
@@ -257,7 +254,7 @@ const VADashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-error font-bold"
-                        : "text-error font-bold font-thin hover:text-error transition duration-300"
+                        : "text-error font-thin hover:text-error transition duration-300"
                     }
                   >
                     Logout

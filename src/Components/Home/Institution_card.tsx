@@ -18,14 +18,8 @@ interface InstitutionsCardProps {
 
 const InstitutionsCard: React.FC<InstitutionsCardProps> = ({
   name,
-  abbreviation,
   address,
   hours,
-  phone,
-  email,
-  website,
-  status,
-  statusMessage,
   icon,
   onClick,
 }) => {

@@ -36,6 +36,9 @@ const MentalHeaalth = () => {
   const indicatorDetails = JSON.parse(
     localStorage.getItem("indicatorDetails") || "{}",
   );
+
+  console.log("taskQuestions------", taskQuestions);
+  console.log("tasks****", tasks);
   return (
     <div>
       <div className="flex gap-3 items-center">

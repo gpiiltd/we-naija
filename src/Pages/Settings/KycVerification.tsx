@@ -14,9 +14,7 @@ import Icon from "../../Assets/SvgImagesAndIcons";
 const IDVerification = () => {
   const [idType, setIdType] = useState("International passport");
   const [idNumber, setIdNumber] = useState("2457369875216");
-  // eslint-disable-next-line
   const [frontFile, setFrontFile] = useState<File | null>(null);
-  // eslint-disable-next-line
   const [backFile, setBackFile] = useState<File | null>(null);
   const [errors] = useState<Errors>({});
 
@@ -29,6 +27,7 @@ const IDVerification = () => {
   const idTypes = ["International passport"];
 
   const handleFileChange = (file: File | null, isFront: boolean) => {
+    console.log(frontFile, backFile); // so as not to trigger lint error
     if (isFront) {
       setFrontFile(file);
     } else {
@@ -86,7 +85,7 @@ const IDVerification = () => {
               }}
               validationSchema={validationSchema}
             >
-              {({ isValid, dirty }) => (
+              {() => (
                 <Form className="flex flex-col gap-5">
                   <FloatingSelect
                     label="ID Type"

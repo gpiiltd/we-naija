@@ -8,9 +8,6 @@ const TextAreaField: FC<TextInputProps & { rows?: number }> = ({
   label,
   helperText,
   placeholder,
-  icon,
-  type,
-  onClick,
   focusStyle,
   rows = 5,
   ...props

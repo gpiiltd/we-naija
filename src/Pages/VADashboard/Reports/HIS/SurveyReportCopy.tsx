@@ -76,10 +76,6 @@ const SurveyCopy = ({
     if (commentText) {
       formData.append("comment", commentText);
     }
-    console.log("FORM DATA", formData);
-    for (let pair of Array.from(formData.entries())) {
-      console.log(`kye: ${pair[0]} value: ${pair[1]}`);
-    }
 
     try {
       await dispatch(triggerSubmitSurveyReport(formData) as any);

@@ -423,7 +423,6 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return (
           <img src={sentEmail} alt="sentEmail icon" className={className} />
         );
-
       default:
         return null;
     }
