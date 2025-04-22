@@ -127,7 +127,7 @@ const SurveyCopy = ({
   const handleAnswerSelect = (
     questionId: string,
     answerId: string,
-    option: any
+    option: any,
   ) => {
     setSelectedAnswers((prev) => ({
       ...prev,
@@ -157,7 +157,7 @@ const SurveyCopy = ({
   const validationSchema = Yup.object({
     textArea: Yup.string().max(
       20,
-      "You are allowed a maximum of 20 characters"
+      "You are allowed a maximum of 20 characters",
     ),
   });
 
@@ -240,7 +240,7 @@ const SurveyCopy = ({
                     handleAnswerSelect(
                       currentQuestionId,
                       option.identifier,
-                      option
+                      option,
                     )
                   }
                 />
@@ -273,7 +273,10 @@ const SurveyCopy = ({
         </section>
       ) : (
         <section className="flex flex-col gap-6">
-          <Typography variant={TypographyVariant.NORMAL} className="text-center mb-4">
+          <Typography
+            variant={TypographyVariant.NORMAL}
+            className="text-center mb-4"
+          >
             {currentQuestion?.title}
           </Typography>
           <Typography
