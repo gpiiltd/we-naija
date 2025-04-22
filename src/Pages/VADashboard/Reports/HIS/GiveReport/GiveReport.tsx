@@ -35,6 +35,7 @@ const GiveReport = () => {
       setSurveyIndicatorQuestionsData(surveyIndicatorQuestions.data);
     }
     if (surveyIndicatorQuestions.error && surveyIndicatorQuestions.message) {
+      console.log("surveyIndicatorQuestions.error");
     }
   }, [
     surveyIndicatorQuestions.statusCode,

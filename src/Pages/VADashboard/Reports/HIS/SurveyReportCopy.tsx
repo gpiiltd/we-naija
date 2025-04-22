@@ -52,8 +52,6 @@ const SurveyCopy = ({
   const dispatch = useDispatch();
   const { surveyReport } = useSelector((state: RootState) => state.institute);
 
-  console.log("SURVEY QUESTIONS", surveyQuestions);
-
   const handleNext = async () => {
     if (!surveyQuestions || surveyQuestions.length === 0) return;
 
