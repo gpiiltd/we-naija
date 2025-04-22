@@ -17,6 +17,8 @@ import {
   triggerPhoneNumberVerification,
   triggerPhoneNumberVerificationOtp,
   triggerKycInfoSubmit,
+  triggerGetAllInstitute,
+  triggerGetInstituteById,
 } from "../../Services/user/UserServices";
 
 interface UserState {
@@ -28,6 +30,8 @@ interface UserState {
   otpToken: string;
   kycPhoneNumber: string;
   kycPersonalInfo: Record<string, any>;
+  instituteData: Record<string, any>;
+  surveyCategories: Record<string, any>;
 }
 
 const initialState: UserState = {
@@ -39,6 +43,8 @@ const initialState: UserState = {
   otpToken: "",
   kycPhoneNumber: "",
   kycPersonalInfo: {},
+  instituteData: {},
+  surveyCategories: {},
 };
 
 const userSlice = createSlice({
@@ -57,11 +63,9 @@ const userSlice = createSlice({
     },
     setUserEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
-      console.log("Email in state", state.email);
     },
     setKycPhoneNumber: (state, action: PayloadAction<string>) => {
       state.kycPhoneNumber = action.payload;
-      console.log("KYC phone number in state", state.kycPhoneNumber);
     },
     setKycPersonalInfo: (state, action: PayloadAction<Record<string, any>>) => {
       state.kycPersonalInfo.name = action.payload.name;
@@ -74,7 +78,6 @@ const userSlice = createSlice({
       state.kycPersonalInfo.frontFile = action.payload.frontFile;
       state.kycPersonalInfo.backFile = action.payload.backFile;
       state.kycPersonalInfo.mobileNumber = action.payload.mobileNumber;
-      console.log("KYC personal info in state", state.kycPersonalInfo);
     },
     // setLastScreenTime: (state, action: PayloadAction<string>) => {
     //   state.lastScreenTime = action.payload;
@@ -219,7 +222,6 @@ const userSlice = createSlice({
       .addCase(
         triggerUserLogin.rejected,
         (state, action: PayloadAction<any>) => {
-          console.log("action", action);
           state.loading = false;
           state.error = action.payload;
           state.message = action.payload.message;
@@ -312,6 +314,46 @@ const userSlice = createSlice({
         triggerKycInfoSubmit.rejected,
         (state, action: PayloadAction<any>) => {
           state.loading = false;
+          state.error = action.payload.message;
+        },
+      )
+      .addCase(triggerGetAllInstitute.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        triggerGetAllInstitute.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.instituteData = action.payload.results as Record<string, any>;
+          state.message = action.payload.message;
+        },
+      )
+      .addCase(
+        triggerGetAllInstitute.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.instituteData = {} as Record<string, any>; // Fix: Ensure instituteData is set to undefined on rejection
+          state.error = action.payload.message;
+        },
+      )
+      .addCase(triggerGetInstituteById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        triggerGetInstituteById.fulfilled,
+        (state, action: PayloadAction<DefaultResponse>) => {
+          state.loading = false;
+          state.instituteData = action.payload as Record<string, any>;
+          state.message = action.payload.message;
+        },
+      )
+      .addCase(
+        triggerGetInstituteById.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.instituteData = {} as Record<string, any>;
           state.error = action.payload.message;
         },
       );

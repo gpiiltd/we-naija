@@ -20,7 +20,7 @@ import PendingKyc from "./Pages/Home/PendingKyc";
 import HospitalDetail from "./Pages/Home/HospitalDetail";
 import Leaderboard from "./Pages/Leaderboard/Leaderboard";
 import Hospitals from "./Pages/VADashboard/Reports/HIS/Hospitals";
-import SurveyList from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyList";
+// import SurveyList from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyList";
 import GiveReport from "./Pages/VADashboard/Reports/HIS/GiveReport/GiveReport";
 import BasicInfo from "./Pages/Settings/BasicInfo";
 import SettingsHeader from "./Pages/Settings/SettingsHeader";
@@ -40,6 +40,7 @@ import { ToastContainer } from "react-toastify";
 import ForgotPasswordOtp from "./Pages/ForgotPasswordOtp";
 import EmailSent from "./Pages/EmailSent";
 import EmailVerification from "./Pages/EmailVerification";
+import SurveyListCopy from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyListCopy";
 function App() {
   return (
     <>
@@ -71,7 +72,7 @@ function App() {
               <Route index element={<Navigate to="home" />} />
               <Route path="home" Component={PendingKyc} />
               <Route
-                path="/verified-agent-dashboard/home/hospital-details"
+                path="/verified-agent-dashboard/home/hospital-details/:id"
                 Component={HospitalDetail}
               />
               <Route path="reports" Component={Reports} />
@@ -80,15 +81,16 @@ function App() {
                 Component={CommunityTasks}
               />
               <Route
-                path="/verified-agent-dashboard/reports/NCD-prevention"
+                path="/verified-agent-dashboard/reports/community-tasks/:title/:id"
                 Component={NCDPrevention}
               />
               <Route
-                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/mental-health-promotion"
+                path="/verified-agent-dashboard/reports/community-tasks/indicator/:title/:id"
                 Component={MentalHeaalth}
               />
               <Route
-                path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+                // path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+                path="/verified-agent-dashboard/reports/community-tasks/task/report-form/:id"
                 Component={ReportForm}
               />
               <Route
@@ -96,11 +98,12 @@ function App() {
                 Component={Hospitals}
               />
               <Route
-                path="/verified-agent-dashboard/reports/hospitals/survey-list"
-                Component={SurveyList}
+                path="/verified-agent-dashboard/reports/hospitals/survey-list/:id"
+                // Component={SurveyList}
+                Component={SurveyListCopy}
               />
               <Route
-                path="/verified-agent-dashboard/reports/hospitals/give-report"
+                path="/verified-agent-dashboard/reports/hospitals/give-report/:id"
                 Component={GiveReport}
               />
               <Route path="leaderboard" Component={Leaderboard} />

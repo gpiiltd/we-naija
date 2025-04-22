@@ -23,7 +23,6 @@ const DateModal: React.FC<DateModalProps> = ({
       ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`;
       onDateSelect?.(formattedDate);
       onClose();
-      console.log("formattedDate", formattedDate);
     }
     // // Format date as DD-MM-YYYY
     // const formattedDate = `${String(selectedDate.getDate()).padStart(

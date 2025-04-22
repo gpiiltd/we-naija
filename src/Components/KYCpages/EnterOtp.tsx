@@ -51,7 +51,7 @@ const EnterOtp = () => {
       return;
     }
     const otpCode = otp.join("");
-    console.log("Entered OTP:", otpCode);
+    // navigate('/kyc/personal-information')
     const payload = {
       mobile_number: kycPhoneNumber,
       otp: otpCode,
@@ -105,6 +105,7 @@ const EnterOtp = () => {
               />
             ))}
           </div>
+
           <Typography
             variant={TypographyVariant.NORMAL}
             className="text-center mt-12 flex flex-col items-center justify-center"

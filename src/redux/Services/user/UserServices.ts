@@ -2,7 +2,7 @@ import {
   DefaultResponse,
   EmailVerificationData,
   PhoneNumberVerificationData,
-} from "./types";
+} from "./../user/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiUrl } from "../../../config";
@@ -13,9 +13,7 @@ import {
   OTPRequestData,
   ResetPasswordData,
   SignupResponse,
-  KycInfoSubmitData,
 } from "./types";
-
 interface SignupData {
   email: string;
   full_name: string;
@@ -27,6 +25,39 @@ interface LoginData {
   email: string;
   password: string;
 }
+interface ErroResponseData {
+  message: string;
+  status_code?: number;
+  results?: Record<string, string[]>;
+}
+
+export const uploadFile = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch(
+      "http://ec2-44-196-252-114.compute-1.amazonaws.com/api/v1/common/file-upload",
+      {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // Add token to the header
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("File upload failed");
+    }
+    const data = await response.json();
+    return data.results.file_name;
+    // return data.results.file_url;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    return "";
+  }
+};
 
 export const triggerUserSignup = createAsyncThunk<
   SignupResponse,
@@ -38,7 +69,6 @@ export const triggerUserSignup = createAsyncThunk<
       apiUrl.signUp,
       signupData,
     );
-    console.log("response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     if (error.response) {
@@ -64,7 +94,6 @@ export const triggerUserLogin = createAsyncThunk<
 >("user/login", async (loginData, thunkAPI) => {
   try {
     const response = await axios.post(apiUrl.login, loginData);
-    console.log("LOGIN response>>>", response.data);
     localStorage.setItem(
       "accessToken",
       response?.data?.data?.access_credentials?.access_token,
@@ -75,7 +104,6 @@ export const triggerUserLogin = createAsyncThunk<
     );
     return response.data;
   } catch (error: any) {
-    console.log("error>>>", error);
     if (error.response) {
       return thunkAPI.rejectWithValue(error.response.data);
     } else if (error.request) {
@@ -102,7 +130,6 @@ export const triggerForgotPassword = createAsyncThunk<
       apiUrl.forgotPassword,
       forgotPasswordData,
     );
-    console.log("FORGOT PASSWORD response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
@@ -232,7 +259,6 @@ export const triggerEmailVerificationResend = createAsyncThunk<
       apiUrl.emailVerificationResend,
       forgotPasswordData,
     );
-    console.log("EMAIL VERIFICATION RESEND response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
@@ -262,7 +288,6 @@ export const triggerEmailVerification = createAsyncThunk<
         withCredentials: true,
       },
     );
-    console.log("EMAIL VERIFICATION response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
@@ -276,7 +301,7 @@ export const triggerEmailVerification = createAsyncThunk<
 export const triggerPhoneNumberVerification = createAsyncThunk<
   DefaultResponse,
   PhoneNumberVerificationData,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >(
   "user/PhoneNumberVerification",
   async (PhoneNumberVerificationData, thunkAPI) => {
@@ -293,14 +318,13 @@ export const triggerPhoneNumberVerification = createAsyncThunk<
           },
         },
       );
-      console.log("PHONE NUMBER VERIFICATION response>>>>>>", response);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.message ||
-          error.response?.data ||
-          "Failed to reset password",
-      );
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message ?? "Something went wrong",
+        status_code: error.response.data.status_code,
+        results: error.response.data.results,
+      });
     }
   },
 );
@@ -308,7 +332,7 @@ export const triggerPhoneNumberVerification = createAsyncThunk<
 export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
   DefaultResponse,
   PhoneNumberVerificationData,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >(
   "user/PhoneNumberVerificationOtp",
   async (PhoneNumberVerificationData, thunkAPI) => {
@@ -325,25 +349,22 @@ export const triggerPhoneNumberVerificationOtp = createAsyncThunk<
           },
         },
       );
-      console.log(
-        "PHONE NUMBER VERIFICATION OTP response>>>>>>",
-        response.data,
-      );
+
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.message ||
-          error.response?.data ||
-          "Failed to reset password",
-      );
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message ?? "Something went wrong",
+        status_code: error.response.data.status_code,
+        results: error.response.data.results,
+      });
     }
   },
 );
 
 export const triggerKycInfoSubmit = createAsyncThunk<
   DefaultResponse,
-  KycInfoSubmitData,
-  { rejectValue: string }
+  any,
+  { rejectValue: ErroResponseData }
 >("user/KycInfoSubmit", async (KycInfoSubmitData, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
@@ -353,18 +374,100 @@ export const triggerKycInfoSubmit = createAsyncThunk<
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          // "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
+
+          // Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerGetAllInstitute = createAsyncThunk<
+  DefaultResponse,
+  any,
+  { rejectValue: ErroResponseData }
+>("user/GetAllInstitute", async (_, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.allInstitute}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
           Accept: "application/json",
         },
       },
     );
-    console.log("KYC INFO SUBMIT response>>>>>>", response.data);
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to reset password",
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerGetInstituteById = createAsyncThunk<
+  DefaultResponse,
+  string,
+  { rejectValue: ErroResponseData }
+>("user/GetInstituteById", async (id, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getInstituteById}/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
     );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerGetAllSurveyCategories = createAsyncThunk<
+  DefaultResponse,
+  any,
+  { rejectValue: ErroResponseData }
+>("user/GetAllSurveyCategories", async (_, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getAllCategories}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
   }
 });

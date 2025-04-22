@@ -59,7 +59,6 @@ const Login = () => {
   });
 
   const checkLoginStatus = () => {
-    console.log("userData>>>", userData);
     if (error) {
       toast.error(message);
       dispatch(resetState());
@@ -78,7 +77,6 @@ const Login = () => {
       userData.kyc_status === "pending"
     ) {
       toast.success("Kindly complete your KYC to continue");
-      console.log("userData Pending KYC", userData);
       if (userData.email) {
         dispatch(setUserEmail(userData.email));
       }
@@ -94,7 +92,6 @@ const Login = () => {
     ) {
       // toast.error("Email not verified. Please verify your email to proceed");
       toast.error(message);
-      console.log("userData", userData);
       if (inputEmail) {
         dispatch(setUserEmail(inputEmail));
       }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { SearchBarProps } from "./types";
 import { IoMdCheckmark } from "react-icons/io";
 
@@ -15,9 +15,27 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(
     null,
   );
+  const searchBarRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     setSearchTerm(value);
   }, [value]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchBarRef.current &&
+        !searchBarRef.current.contains(event.target as Node)
+      ) {
+        setIsFocused(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;
@@ -43,14 +61,14 @@ const SearchBar: React.FC<SearchBarProps> = ({
   );
 
   return (
-    <div className="relative ">
+    <div className="relative" ref={searchBarRef}>
       <form onSubmit={handleSubmit} className="flex items-center">
         <input
           type="text"
           value={searchTerm}
           onChange={handleInputChange}
           placeholder={selectedPlaceholder}
-          className="py-2 pl-10 text-sm text-text-black  border border-primary_color rounded-lg focus:outline-none focus:ring-1 focus:ring-primary_color w-[20rem]"
+          className="py-2 pl-10 text-sm text-text-black border border-primary_color rounded-lg focus:outline-none focus:ring-1 focus:ring-primary_color w-[20rem]"
           onFocus={() => setIsFocused(true)}
         />
         <button
@@ -83,7 +101,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
               }`}
             >
               <li
-                className=" text-black  cursor-pointer"
+                className="text-black cursor-pointer"
                 onMouseDown={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion}

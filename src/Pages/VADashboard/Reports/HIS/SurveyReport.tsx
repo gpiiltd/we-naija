@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TypographyVariant } from "../../../../Components/types";
@@ -11,22 +12,31 @@ import RadioButton from "../../../../Components/Input/SelectOption";
 import { useNavigate } from "react-router-dom";
 import imageUploadIcon from "../../../../Assets/svgImages/upload.svg";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import {
-  firstSetQuestions,
-  secondSetQuestions,
-  thirdSetQuestions,
-} from "./questions";
+// import {
+//   firstSetQuestions,
+//   secondSetQuestions,
+//   thirdSetQuestions,
+// } from "./questions";
+import { triggerSubmitSurveyReport } from "../../../../redux/Services/institute/instituteServices";
+import { RootState } from "../../../../redux/Store/store";
+import { toast } from "react-toastify";
+import { resetSurveyReportState } from "../../../../redux/Services/institute/instituteSlice";
 
-const Survey = () => {
+const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [uploadedFileSize, setUploadedFileSize] = useState<number | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [selectedFirstAnswer, setSelectedFirstAnswer] = useState<string>("");
-  const [selectedSecondAnswer, setSelectedSecondAnswer] = useState<string>("");
-  const [selectedthirdAnswer, setSelectedThirdAnswer] = useState<string>("");
+  // const [loading, setLoading] = useState(false);
+  // const [comments, setComments] = useState("");
+  // const [selectedSecondAnswer, setSelectedSecondAnswer] = useState<string>("");
+  // const [selectedthirdAnswer, setSelectedThirdAnswer] = useState<string>("");
+
+  const dispatch = useDispatch();
+  const { surveyReport } = useSelector((state: RootState) => state.institute);
 
   const handleNext = () => {
     setCurrentQuestion((prev) => prev + 1);
@@ -39,18 +49,26 @@ const Survey = () => {
   const handleFirstQuestion = (value: any) => {
     setSelectedFirstAnswer(value);
   };
-  const handleSecondQuestion = (value: any) => {
-    setSelectedSecondAnswer(value);
-  };
-  const handleThirdQuestion = (value: any) => {
-    setSelectedThirdAnswer(value);
-  };
+  // const handleSecondQuestion = (value: any) => {
+  //   setSelectedSecondAnswer(value);
+  // };
+  // const handleThirdQuestion = (value: any) => {
+  //   setSelectedThirdAnswer(value);
+  // };
+
+  if (surveyQuestions?.[0]?.identifier) {
+    localStorage.setItem(
+      "surveyQuestionIdentifier",
+      surveyQuestions[0].identifier,
+    );
+  }
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setUploadedFileName(file.name);
       setUploadedFileSize(file.size);
+      setUploadedFile(file);
     }
   };
   const validationSchema = Yup.object({
@@ -63,13 +81,37 @@ const Survey = () => {
   const deleteImage = () => {
     setUploadedFileName(null);
   };
-  const submitReport = () => {
-    setLoading(!loading);
-    setTimeout(() => {
-      setLoading(false);
-      setShowModal(true);
-    }, 3000);
+  const submitReport = (values: any) => {
+    const payload = new FormData();
+    payload.append("selected_option", selectedFirstAnswer);
+    payload.append("images", uploadedFile as File);
+    payload.append("comment", values.textArea);
+
+    for (let pair of Array.from(payload.entries())) {
+      console.log(`kye: ${pair[0]} value: ${pair[1]}`);
+    }
+    dispatch(triggerSubmitSurveyReport(payload) as any);
   };
+  useEffect(() => {
+    if (surveyReport?.statusCode === 200 && surveyReport?.data) {
+      setTimeout(() => {
+        // setLoading(false);
+        setShowModal(true);
+      }, 3000);
+    }
+    if (surveyReport?.error && surveyReport?.message) {
+      toast.error(`${surveyReport.message}`);
+    }
+    dispatch(resetSurveyReportState());
+  }, [
+    surveyReport,
+    surveyReport.data,
+    surveyReport?.error,
+    surveyReport.message,
+    surveyReport?.statusCode,
+    dispatch,
+  ]);
+
   return (
     <div className="  flex flex-col gap-10">
       {currentQuestion === 1 && (
@@ -80,7 +122,7 @@ const Survey = () => {
           >
             This survey is about the{" "}
             <span className="text-primary_green">
-              “Accessibility of service”
+              {localStorage.getItem("surveyIndicatorName")}
             </span>{" "}
             for the above institute. Your response is vital for improving
             healthcare in Nigeria. By honestly assessing our health
@@ -106,60 +148,68 @@ const Survey = () => {
         </section>
       )}
 
-      {currentQuestion === 2 && (
-        <section className="flex flex-col gap-4">
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="font-bold tracking-wide text-center"
-          >
-            Acceptability of service
-          </Typography>
-          <div className="flex flex-col gap-1">
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="tracking-wide text-center text-light_gray font-thin"
-            >
-              QUESTION 1 OF 3
-            </Typography>
+      {currentQuestion === 2 &&
+        (surveyQuestions?.[0] ? (
+          <section className="flex flex-col gap-4">
             <Typography
               variant={TypographyVariant.NORMAL}
-              className="tracking-wide text-center"
+              className="font-bold tracking-wide text-center"
             >
-              Was the outside of the facility clean?
+              {localStorage.getItem("surveyIndicatorName")}
             </Typography>
-          </div>
-          <form>
-            <section className="flex flex-col gap-5 w-full">
-              {firstSetQuestions.map((option) => (
-                <RadioButton
-                  key={option.value}
-                  label={option.label}
-                  value={option.value}
-                  selectedValue={selectedFirstAnswer}
-                  onChange={handleFirstQuestion}
-                />
-              ))}
-            </section>
-          </form>
-          <div className="flex flex-row gap-3">
-            <Button
-              text="Prev. question"
-              text_color="#17191C"
-              bg_color="transparent"
-              border_color="#17191C"
-              active={true}
-              onClick={handlePrev}
-            />
-            <Button
-              text="Proceed"
-              text_color="#FFFFFF"
-              bg_color="#007A61"
-              active={selectedFirstAnswer !== ""}
-              onClick={handleNext}
-            />
-          </div>
-        </section>
-      )}
+            <div className="flex flex-col gap-1">
+              <Typography
+                variant={TypographyVariant.SMALL}
+                className="tracking-wide text-center text-light_gray font-thin"
+              >
+                QUESTION 1 OF 3
+              </Typography>
+              <Typography
+                variant={TypographyVariant.NORMAL}
+                className="tracking-wide text-center"
+              >
+                {surveyQuestions?.[0]?.title}
+              </Typography>
+            </div>
+            <form>
+              <section className="flex flex-col gap-5 w-full">
+                {surveyQuestions?.[0]?.options.map((option: any) => (
+                  <RadioButton
+                    key={option.identifier}
+                    label={option.text}
+                    value={option.identifier}
+                    selectedValue={selectedFirstAnswer}
+                    onChange={handleFirstQuestion}
+                  />
+                ))}
+              </section>
+            </form>
+            <div className="flex flex-row gap-3">
+              <Button
+                text="Prev. question"
+                text_color="#17191C"
+                bg_color="transparent"
+                border_color="#17191C"
+                active={true}
+                onClick={handlePrev}
+              />
+              <Button
+                text="Proceed"
+                text_color="#FFFFFF"
+                bg_color="#007A61"
+                active={selectedFirstAnswer !== ""}
+                onClick={handleNext}
+              />
+            </div>
+          </section>
+        ) : (
+          <Typography
+            variant={TypographyVariant.NORMAL}
+            className="tracking-wide text-center text-light_gray"
+          >
+            No questions for this indicator
+          </Typography>
+        ))}
 
       {currentQuestion === 3 && (
         <section className="flex flex-col gap-4">
@@ -167,7 +217,7 @@ const Survey = () => {
             variant={TypographyVariant.NORMAL}
             className="font-bold tracking-wide text-center"
           >
-            Acceptability of service
+            {surveyQuestions?.[0]?.title}
           </Typography>
           <Typography
             variant={TypographyVariant.NORMAL}
@@ -227,6 +277,7 @@ const Survey = () => {
               </label>
             )}
           </section>
+
           <div>
             <Typography
               variant={TypographyVariant.NORMAL}
@@ -237,9 +288,7 @@ const Survey = () => {
             <Formik
               initialValues={{ textArea: "" }}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                console.log("Form submitted with values:", values);
-              }}
+              onSubmit={submitReport}
             >
               {({ handleSubmit, isValid, dirty }) => (
                 <Form onSubmit={handleSubmit}>
@@ -263,7 +312,10 @@ const Survey = () => {
                       text_color="#FFFFFF"
                       bg_color="#007A61"
                       active={isValid && dirty}
-                      onClick={handleNext}
+                      // onClick={() => {
+                      //   handleSubmit();
+                      //   submitReport();
+                      // }}
                     />
                   </div>
                 </Form>
@@ -273,7 +325,7 @@ const Survey = () => {
         </section>
       )}
 
-      {currentQuestion === 4 && (
+      {/* {currentQuestion === 4 && (
         <section className="flex flex-col gap-4">
           <Typography
             variant={TypographyVariant.NORMAL}
@@ -376,13 +428,13 @@ const Survey = () => {
               text_color="#FFFFFF"
               bg_color="#007A61"
               active={selectedthirdAnswer !== ""}
-              onClick={handleNext}
+              onClick={submitReport}
             />
           </div>
         </section>
-      )}
+      )} */}
 
-      {currentQuestion === 6 && (
+      {/* {currentQuestion === 6 && (
         <section className="flex flex-col gap-4 w-full">
           <div className="flex flex-col gap-3 px-16">
             <Typography
@@ -445,7 +497,7 @@ const Survey = () => {
             </Formik>{" "}
           </div>
         </section>
-      )}
+      )} */}
 
       <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="py-3 pb-6 px-5 gap-2 flex flex-col items-center">
@@ -480,11 +532,7 @@ const Survey = () => {
               text_color="#FFFFFF"
               bg_color="#007A61"
               active={true}
-              onClick={() =>
-                navigate(
-                  "/verified-agent-dashboard/reports/hospitals/survey-list",
-                )
-              }
+              onClick={() => navigate(-1)}
             />
           </div>
         </div>

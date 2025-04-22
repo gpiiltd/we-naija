@@ -111,10 +111,7 @@ const Reports = () => {
                   Be the Change. Connect with Fellow Health Champions.
                 </p>
                 <div className="flex pt-2 md:pt-4 ">
-                  <button
-                    onClick={() => console.log("successful")}
-                    className=" flex items-center gap-2 px-3 py-2 rounded bg-orange text-white  focus:outline-none"
-                  >
+                  <button className=" flex items-center gap-2 px-3 py-2 rounded bg-orange text-white  focus:outline-none">
                     <span className="text-xs font-thin md:text-base md:font-bold">
                       Join Community
                     </span>

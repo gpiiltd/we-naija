@@ -62,7 +62,6 @@ const EmailSent = () => {
     };
 
     dispatch(triggerEmailVerification(payload));
-    console.log("i dispatched triggerEmailVerification");
 
     setTimeout(() => {
       if (error) {

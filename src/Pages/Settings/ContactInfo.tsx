@@ -29,12 +29,6 @@ const ContactInfo = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log("Form submitted:", {
-      email,
-      phoneNumber,
-      address,
-    });
   };
 
   return (

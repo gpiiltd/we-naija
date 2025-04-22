@@ -22,8 +22,8 @@ const generateLeaderboardData = (count: number) => {
   return data;
 };
 
-export const leaderboardData = {
-  daily: generateLeaderboardData(70),
-  weekly: generateLeaderboardData(35),
-  monthly: generateLeaderboardData(42),
+export const demoleaderboardData = {
+  today: generateLeaderboardData(70),
+  this_week: generateLeaderboardData(35),
+  all_time: generateLeaderboardData(42),
 };

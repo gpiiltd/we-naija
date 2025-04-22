@@ -1,5 +1,6 @@
 import React from "react";
 import Icon from "../../Assets/SvgImagesAndIcons";
+import { useNavigate } from "react-router-dom";
 
 interface HomeGoToReportCardProps {
   backgroundImage?: string;
@@ -8,6 +9,7 @@ interface HomeGoToReportCardProps {
 const HomeGoToReportCard: React.FC<HomeGoToReportCardProps> = ({
   backgroundImage,
 }) => {
+  const navigate = useNavigate();
   return (
     <div
       className="w-full border-[1px] border-solid border-[#D0D5DD] py-6 px-8 rounded-lg mr-4"
@@ -16,6 +18,7 @@ const HomeGoToReportCard: React.FC<HomeGoToReportCardProps> = ({
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
+      onClick={() => navigate(`/verified-agent-dashboard/reports`)}
     >
       <section className="flex justify-between items-center">
         <p>

@@ -40,8 +40,6 @@ const IDVerification = () => {
     (state: RootState) => state.user,
   );
 
-  console.log("kycPersonalInfo from state:>>>>>", kycPersonalInfo);
-
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdNumber(e.target.value);
     setErrors({ ...errors, idNumber: "" });
@@ -55,29 +53,19 @@ const IDVerification = () => {
     }
   };
 
-  const handleSubmit = () => {
-    console.log({
-      idType: idType,
-      idNumber: idNumber,
-      frontFile: frontFile,
-      backFile: backFile,
-    });
+  const handleSubmit = async () => {
     setLoading(!loading);
 
-    const payload = {
-      address: kycPersonalInfo.address,
-      nationality: kycPersonalInfo.nationality,
-      gender: kycPersonalInfo.gender,
-      date_of_birth: kycPersonalInfo.dateOfBirth,
-      mobile_number: kycPhoneNumber || "08130966935",
-      id_type: idType,
-      id_number: idNumber,
-      // id_front: frontFile as File,
-      // id_back: backFile as File,
-      id_front: frontFile?.name || "",
-      id_back: backFile?.name || "",
-    };
-    console.log("payload>>>", payload);
+    const payload = new FormData();
+    payload.append("address", kycPersonalInfo.address);
+    payload.append("nationality", kycPersonalInfo.nationality);
+    payload.append("gender", kycPersonalInfo.gender);
+    payload.append("date_of_birth", kycPersonalInfo.dateOfBirth);
+    payload.append("mobile_number", kycPhoneNumber);
+    payload.append("id_type", idType);
+    payload.append("id_number", idNumber);
+    payload.append("id_front", frontFile as File);
+    payload.append("id_back", backFile as File);
 
     dispatch(triggerKycInfoSubmit(payload) as any);
   };

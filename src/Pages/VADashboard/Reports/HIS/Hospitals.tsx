@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Typography from "../../../../Components/Typography";
@@ -7,22 +7,124 @@ import SearchBar from "../../../../Components/Searchbar";
 import ButtonComponent from "../../../../Components/ButtonComponent";
 import { CiLocationOn } from "react-icons/ci";
 import Icon from "../../../../Assets/SvgImagesAndIcons";
-import { hospitalData } from "./hospitaldata";
 import CustomModal from "../../../../Components/Modal";
 import { AiOutlineDown } from "react-icons/ai";
 import Breadcrumb from "../BreadCrum";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../redux/Store/store";
+import { triggerGetAllInstitution } from "../../../../redux/Services/institute/instituteServices";
+// import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
 
 const Hospitals = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const suggestions = [
-    "Quotient Specialist Hospital",
-    "Lagos University Teaching Hospital",
-    "Grace Neurology Center",
-    "Quotient Hospital",
-  ];
+  const [institutions, setInstitutions] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { institution } = useSelector((state: RootState) => state.institute);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsLoading(true);
+    dispatch(triggerGetAllInstitution({ page: currentPage }) as any);
+  }, [dispatch, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    if (institution) {
+      if (currentPage === 1) {
+        setInstitutions(institution.data?.results || []);
+      } else {
+        setInstitutions((prevInstitutions) => [
+          ...prevInstitutions,
+          ...(institution.data?.results || []),
+        ]);
+      }
+
+      const isHasMore = institution.data?.next ? true : false;
+      setHasMore(isHasMore);
+      setIsLoading(false);
+    }
+    if (institution.error && institution.message) {
+      setIsLoading(false);
+    }
+    // dispatch(resetInstitutionState());
+  }, [institution, dispatch, currentPage]);
+
+  const formatOperationalDays = (operationalDays: string): string => {
+    const daysMap: { [key: string]: string } = {
+      monday_to_friday: "Monday - Friday",
+      monday_to_saturday: "Monday - Saturday",
+      monday_to_sunday: "Monday - Sunday",
+      saturday_only: "Saturday only",
+      sunday_only: "Sunday only",
+      saturday_to_sunday: "Saturday - Sunday",
+      friday_to_saturday: "Friday - Saturday",
+      friday_to_sunday: "Friday - Sunday",
+      thursday_to_friday: "Thursday - Friday",
+      thursday_to_saturday: "Thursday - Saturday",
+      thursday_to_sunday: "Thursday - Sunday",
+    };
+
+    return daysMap[operationalDays.toLowerCase()] || operationalDays;
+  };
+
+  const getRandomItems = (arr: string[], num: number) => {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, num);
+  };
+
+  const suggestions = Array.isArray(institutions)
+    ? getRandomItems(
+        institutions.map((institution: any) => institution.name),
+        3,
+      )
+    : [];
+
   const [showModal, setShowModal] = useState(false);
-  const states = ["Lagos", "Abuja", "Kano", "Rivers", "Kaduna", "Oyo"];
+  const states = [
+    "Abia",
+    "Adamawa",
+    "Akwa Ibom",
+    "Anambra",
+    "Bauchi",
+    "Bayelsa",
+    "Benue",
+    "Borno",
+    "Cross River",
+    "Delta",
+    "Ebonyi",
+    "Edo",
+    "Ekiti",
+    "Enugu",
+    "Gombe",
+    "Imo",
+    "Jigawa",
+    "Kaduna",
+    "Kano",
+    "Katsina",
+    "Kebbi",
+    "Kogi",
+    "Kwara",
+    "Lagos",
+    "Nasarawa",
+    "Niger",
+    "Ogun",
+    "Ondo",
+    "Osun",
+    "Oyo",
+    "Plateau",
+    "Rivers",
+    "Sokoto",
+    "Taraba",
+    "Yobe",
+    "Zamfara",
+  ];
   const cities = [
     "Ikeja",
     "Maitama",
@@ -32,11 +134,9 @@ const Hospitals = () => {
     "Ibadan",
   ];
   const [buttonText, setButtonText] = useState("Location");
-  const [loading, setLoading] = useState(false);
 
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
-    console.log("*****", searchQuery);
   };
 
   const handleSearchSubmit = (query: string) => {
@@ -66,10 +166,9 @@ const Hospitals = () => {
   };
   const handleFilter = () => {
     if (cityDropdown.selected && stateDropdown.selected) {
-      setLoading(!loading);
+      setIsLoading(!isLoading);
       setTimeout(() => {
-        console.log("Updating button text...");
-        setLoading(false);
+        setIsLoading(false);
         setButtonText(`${cityDropdown.selected}, ${stateDropdown.selected}`);
         setShowModal(false);
       }, 3000);
@@ -139,7 +238,7 @@ const Hospitals = () => {
           Search result:
         </Typography>
       )}
-      {hospitalData.filter((hospital) =>
+      {institutions?.filter((hospital: any) =>
         hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ).length === 0 ? (
         <div className="flex justify-center items-center pt-4">
@@ -170,61 +269,98 @@ const Hospitals = () => {
       ) : (
         <>
           <div className="grid gap-6 pb-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {hospitalData
-              .filter((hospital) =>
-                hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
-              )
-              .map((hospital, index) => (
-                <div
-                  key={index}
-                  className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer"
-                >
-                  <div className="py-4 px-6 mr-4">
-                    <section className="flex justify-start">
-                      <Icon type="homeAvatar" className="pr-2" />
-                      <div>
-                        <p className="font-bold text-black">{hospital.name}</p>
-                        <p className="font-normal text-[#5E5959]">
-                          {hospital.abbreviation}
+            {Array.isArray(institutions) && institutions.length > 0 ? (
+              institutions
+                .filter((hospital: any) =>
+                  hospital.name
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()),
+                )
+                .map((hospital: any, index: number) => (
+                  <div
+                    key={index}
+                    className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer"
+                  >
+                    <div className="py-4 px-6 mr-4">
+                      <section className="flex justify-start">
+                        {/* <Icon type="homeAvatar" className="pr-2" /> */}
+                        {hospital.logo ? (
+                          <img
+                            src={hospital.logo}
+                            alt="Institution Icon"
+                            className="pr-2"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
+                            <span className="text-white p-2">
+                              {hospital.name
+                                ?.split(" ")
+                                .map((word: string) => word[0])
+                                .join("")}
+                            </span>
+                          </div>
+                        )}
+                        <div>
+                          <p className="ml-2 font-bold text-black">
+                            {hospital.name}
+                          </p>
+                          <p className="ml-2 font-normal text-[#5E5959]">
+                            {/* {hospital.abbreviation} */}
+                            {hospital.name
+                              ?.split(" ")
+                              .map((word: string) => word[0])
+                              .join("")}
+                          </p>
+                        </div>
+                      </section>
+                      <p className="font-normal text-sm pt-3">
+                        {hospital.address}
+                      </p>
+                      <div className="flex items-center justify-start pt-2">
+                        <Icon type="timeClocKSvg" className="pr-2" />
+                        <p className="font-normal text-sm text-[#5E5959] pr-1">
+                          {formatOperationalDays(
+                            hospital?.operation_days || "",
+                          )}
+                        </p>
+                        <p className="font-normal text-sm">
+                          ({hospital.closing_time} - {hospital.opening_time})
                         </p>
                       </div>
-                    </section>
-                    <p className="font-normal text-sm pt-3">
-                      {hospital.address}
-                    </p>
-                    <div className="flex items-center justify-start pt-2">
-                      <Icon type="timeClocKSvg" className="pr-2" />
-                      <p className="font-normal text-sm text-[#5E5959] pr-1">
-                        {hospital.schedule}
+                    </div>
+                    <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
+                    <div
+                      className="flex items-center justify-end pr-4 pt-2 mb-1"
+                      onClick={() =>
+                        navigate(
+                          `/verified-agent-dashboard/reports/hospitals/survey-list/${hospital.identifier}`,
+                        )
+                      }
+                    >
+                      <p className="font-bold text-sm text-[#007A61] pr-1">
+                        Give report
                       </p>
-                      <p className="font-normal text-sm">({hospital.hours})</p>
+                      <Icon type="arrowUpSvg" className="pr-2" />
                     </div>
                   </div>
-                  <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
-                  <div
-                    className="flex items-center justify-end pr-4 pt-2 mb-1"
-                    onClick={() =>
-                      navigate(
-                        "/verified-agent-dashboard/reports/hospitals/survey-list",
-                      )
-                    }
-                  >
-                    <p className="font-bold text-sm text-[#007A61] pr-1">
-                      Give report
-                    </p>
-                    <Icon type="arrowUpSvg" className="pr-2" />
-                  </div>
-                </div>
-              ))}
+                ))
+            ) : (
+              <div>
+                <p>Loading...</p>
+              </div>
+            )}
           </div>
-          <div className="flex justify-center  ">
-            <ButtonComponent
-              text="Show more"
-              bg_color="transparent"
-              active={true}
-              text_color="#5E5959"
-              border_color="#5E5959"
-            />
+          <div className="flex justify-center">
+            {hasMore && (
+              <ButtonComponent
+                text={isLoading ? "Loading..." : "Show more"}
+                bg_color="transparent"
+                active={!isLoading}
+                text_color="#5E5959"
+                border_color="#5E5959"
+                onClick={() => !isLoading && handlePageChange(currentPage + 1)}
+              />
+            )}
           </div>
         </>
       )}
@@ -340,7 +476,7 @@ const Hospitals = () => {
                   active={true}
                   text_color="#FFFFFF"
                   onClick={handleFilter}
-                  loading={loading}
+                  loading={isLoading}
                 />
               </div>
             </div>

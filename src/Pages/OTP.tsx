@@ -38,8 +38,6 @@ const OTP = () => {
     (state: RootState) => state.user,
   );
 
-  console.log("Email: ", email);
-
   const sendOtp = () => {
     const payload = {
       otp: OTP,

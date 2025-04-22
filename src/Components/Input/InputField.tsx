@@ -24,8 +24,7 @@ const InputField: React.FC<TextInputProps> = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    console.log("values", value, name);
+    const { value } = e.target;
     setFieldValue!(props.name, value);
     setFieldTouched!(props.name, true, false);
   };
@@ -34,7 +33,7 @@ const InputField: React.FC<TextInputProps> = ({
     <div className="relative w-full ">
       <input
         type={type}
-        className={`text-base  font-normal pt-5 pl-5 w-full  flex justify-center items-center  px-3 py-3 border border-primary_color rounded-md shadow-sm focus:outline-none placeholder-transparent ${
+        className={`text-base  font-normal pt-5 pl-5 block w-full  flex justify-center items-center  px-3 py-3 border border-primary_color rounded-md shadow-sm focus:outline-none placeholder-transparent ${
           meta.touched && meta.error
             ? "border-error focus:border-error focus:ring-error"
             : `focus:border-${focusStyle} focus:ring-${focusStyle}`
