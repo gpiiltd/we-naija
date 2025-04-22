@@ -9,45 +9,56 @@ import woman from "../../Assets/svgImages/woman_green.svg";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { triggerGetAllInstitute } from "../../redux/Services/user/UserServices";
+import { RootState } from "../../redux/Store/store";
 import { toast } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
-import { RootState } from "../../redux/Store/store";
 
 const PendingKyc = () => {
-  const [institutionsData, setInstitutionsData] = useState<any>([]);
+  const [institutionsData, setInstitutionsData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const userData = useSelector((state: any) => state.user.userData);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(triggerGetAllInstitute({}) as any);
+    const fetchInstitutions = async () => {
+      try {
+        setIsLoading(true);
+        await dispatch(triggerGetAllInstitute({}) as any);
+      } catch (error) {
+        console.error("Error fetching institutions:", error);
+      }
+    };
+
+    fetchInstitutions();
   }, [dispatch]);
 
   const { instituteData, error, message } = useSelector(
     (state: RootState) => state.user,
   );
 
-  // useEffect(() => {
-  //   if (instituteData.length > 0 && !error) {
-  //     const userData = instituteData as any;
-  //     setInstitutionsData(userData);
-  //   }
+  useEffect(() => {
+    if (Array.isArray(instituteData) && instituteData.length > 0 && !error) {
+      setInstitutionsData(instituteData);
+    }
 
-  //   if (error && instituteData.length === 0) {
-  //     console.error("Error fetching institutions:", message);
-  //     toast.error(message);
-  //   }
-  //   dispatch(resetState());
-  // }, [error, message, instituteData, dispatch]);
+    if (error) {
+      console.error("Error fetching institutions:", message);
+      toast.error(message);
+    }
+
+    setIsLoading(false);
+    dispatch(resetState());
+  }, [error, message, instituteData, dispatch]);
 
   return (
     <div>
       <p className="font-normal text-[#5E5959] text-lg">
         Hello,{" "}
-        <span className="font-bold text-black">{userData.first_name}</span> 👋
+        <span className="font-bold text-black">{userData?.first_name}</span> 👋
       </p>
       <p className="font-light text-[#5E5959] text-sm">
-        Let’s improve health care service together.
+        Let's improve health care service together.
       </p>
       <div className="w-full sm:grid sm:grid-cols-1 md:flex lg:flex items-start lg:w-[55rem] mt-4 mb-10">
         <VerificationCard
@@ -65,8 +76,12 @@ const PendingKyc = () => {
       </p>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-        {institutionsData?.length > 0 ? (
-          institutionsData?.map((institution: any) => (
+        {isLoading ? (
+          <div className="col-span-3 text-center py-4">
+            <p>Loading...</p>
+          </div>
+        ) : institutionsData.length > 0 ? (
+          institutionsData.map((institution) => (
             <InstitutionsCard
               key={institution.identifier}
               icon={institution.logo}
@@ -75,7 +90,6 @@ const PendingKyc = () => {
               address={institution.address}
               hours={institution.operation_days}
               onClick={() =>
-                // navigate(`hospital-details/${institution?.identifier}`)
                 navigate(
                   `/verified-agent-dashboard/reports/hospitals/survey-list/${institution?.identifier}`,
                 )
@@ -83,8 +97,8 @@ const PendingKyc = () => {
             />
           ))
         ) : (
-          <div>
-            <p>Loading...</p>
+          <div className="col-span-3 text-center py-4">
+            <p>No institutions found.</p>
           </div>
         )}
       </div>
