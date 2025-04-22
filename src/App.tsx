@@ -20,7 +20,7 @@ import PendingKyc from "./Pages/Home/PendingKyc";
 import HospitalDetail from "./Pages/Home/HospitalDetail";
 import Leaderboard from "./Pages/Leaderboard/Leaderboard";
 import Hospitals from "./Pages/VADashboard/Reports/HIS/Hospitals";
-import SurveyList from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyList";
+// import SurveyList from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyList";
 import GiveReport from "./Pages/VADashboard/Reports/HIS/GiveReport/GiveReport";
 import BasicInfo from "./Pages/Settings/BasicInfo";
 import SettingsHeader from "./Pages/Settings/SettingsHeader";
@@ -40,6 +40,7 @@ import { ToastContainer } from "react-toastify";
 import ForgotPasswordOtp from "./Pages/ForgotPasswordOtp";
 import EmailSent from "./Pages/EmailSent";
 import EmailVerification from "./Pages/EmailVerification";
+import SurveyListCopy from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyListCopy";
 function App() {
   return (
     <>
@@ -98,7 +99,8 @@ function App() {
               />
               <Route
                 path="/verified-agent-dashboard/reports/hospitals/survey-list/:id"
-                Component={SurveyList}
+                // Component={SurveyList}
+                Component={SurveyListCopy}
               />
               <Route
                 path="/verified-agent-dashboard/reports/hospitals/give-report/:id"

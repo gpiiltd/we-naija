@@ -5,10 +5,11 @@ import Icon from "../../../../../Assets/SvgImagesAndIcons";
 import Typography from "../../../../../Components/Typography";
 import { TypographyVariant } from "../../../../../Components/types";
 import { Card } from "@gpiiltd/gpi-ui-library";
-import Survey from "../SurveyReport";
+// import Survey from "../SurveyReport";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../redux/Store/store";
 import { triggerSurveyIndicatorQuestions } from "../../../../../redux/Services/institute/instituteServices";
+import SurveyCopy from "../SurveyReportCopy";
 
 const GiveReport = () => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const GiveReport = () => {
       <section className="py-6 pb-16 w-full flex justify-center">
         <Card titleLeft={undefined} titleRight={undefined} width="48.61%">
           <div className=" px-16 pt-8 pb-10">
-            <Survey surveyQuestions={surveyIndicatorQuestionsData} />
+            <SurveyCopy surveyQuestions={surveyIndicatorQuestionsData} />
           </div>
         </Card>
       </section>

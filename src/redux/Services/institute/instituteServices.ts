@@ -108,6 +108,7 @@ export const triggerSurveyIndicatorById = createAsyncThunk<
         },
       },
     );
+
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -136,6 +137,7 @@ export const triggerSurveyIndicatorQuestions = createAsyncThunk<
       },
     );
 
+    // console.log("SURVEY INDICATOR QUESTIONS RESPONSE IN SERVICE", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({

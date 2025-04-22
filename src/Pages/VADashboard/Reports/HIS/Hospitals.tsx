@@ -38,11 +38,11 @@ const Hospitals = () => {
   useEffect(() => {
     if (institution) {
       if (currentPage === 1) {
-        setInstitutions(institution.data?.results?.results || []);
+        setInstitutions(institution.data?.results || []);
       } else {
         setInstitutions((prevInstitutions) => [
           ...prevInstitutions,
-          ...(institution.data?.results?.results || []),
+          ...(institution.data?.results || []),
         ]);
       }
 

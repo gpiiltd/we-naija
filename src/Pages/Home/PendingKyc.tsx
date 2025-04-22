@@ -27,18 +27,18 @@ const PendingKyc = () => {
     (state: RootState) => state.user,
   );
 
-  useEffect(() => {
-    if (instituteData.length > 0 && !error) {
-      const userData = instituteData as any;
-      setInstitutionsData(userData);
-    }
+  // useEffect(() => {
+  //   if (instituteData.length > 0 && !error) {
+  //     const userData = instituteData as any;
+  //     setInstitutionsData(userData);
+  //   }
 
-    if (error && instituteData.length === 0) {
-      console.error("Error fetching institutions:", message);
-      toast.error(message);
-    }
-    dispatch(resetState());
-  }, [error, message, instituteData, dispatch]);
+  //   if (error && instituteData.length === 0) {
+  //     console.error("Error fetching institutions:", message);
+  //     toast.error(message);
+  //   }
+  //   dispatch(resetState());
+  // }, [error, message, instituteData, dispatch]);
 
   return (
     <div>

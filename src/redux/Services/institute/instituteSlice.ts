@@ -31,9 +31,7 @@ interface IinitialState {
     statusCode?: number | null;
   };
   surveyIndicator: {
-    genericData: Record<string, string>[] | any;
-    pediatricData: Record<string, string>[] | any;
-    sexualHealthData: Record<string, string>[] | any;
+    data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
     message: string | undefined;
@@ -79,9 +77,7 @@ const initialState: IinitialState = {
   },
 
   surveyIndicator: {
-    genericData: [],
-    pediatricData: [],
-    sexualHealthData: [],
+    data: [],
     loading: false,
     error: false,
     message: "",
@@ -148,11 +144,10 @@ const instituteSlice = createSlice({
     });
     builder.addCase(triggerGetAllInstitution.fulfilled, (state, action) => {
       state.institution.loading = false;
-      state.institution.data = action.payload;
+      state.institution.data = action.payload.data;
       state.institution.error = false;
-      state.institution.message = action.payload.results
-        .message as unknown as string;
-      state.institution.statusCode = action.payload.results
+      state.institution.message = action.payload.message as unknown as string;
+      state.institution.statusCode = action.payload
         .status_code as unknown as number;
     });
     builder.addCase(triggerGetAllInstitution.rejected, (state, action) => {
@@ -222,25 +217,12 @@ const instituteSlice = createSlice({
       state.surveyIndicator.message = "";
     });
     builder.addCase(triggerSurveyIndicatorById.fulfilled, (state, action) => {
+      // console.log("ACTION PAYLOAD in INSTITUTION>>>", action.payload);
       state.surveyIndicator.loading = false;
       state.surveyIndicator.error = false;
       state.surveyIndicator.message = action.payload?.message;
       state.surveyIndicator.statusCode = action.payload?.status_code;
-
-      const categoryId = action.payload.data.identifier;
-      const genericCategoryId = localStorage.getItem("genericCategoryId");
-      const pediatricCategoryId = localStorage.getItem("pediatricCategoryId");
-      const sexualHealthCategoryId = localStorage.getItem(
-        "sexualReproductiveHealthCategoryId",
-      );
-
-      if (categoryId === genericCategoryId) {
-        state.surveyIndicator.genericData = action.payload.data;
-      } else if (categoryId === pediatricCategoryId) {
-        state.surveyIndicator.pediatricData = action.payload.data;
-      } else if (categoryId === sexualHealthCategoryId) {
-        state.surveyIndicator.sexualHealthData = action.payload.data;
-      }
+      state.surveyIndicator.data = action.payload?.data;
     });
 
     builder.addCase(triggerSurveyIndicatorById.rejected, (state, action) => {
