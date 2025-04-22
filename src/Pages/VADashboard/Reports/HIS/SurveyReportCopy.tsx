@@ -41,34 +41,99 @@ const SurveyCopy = ({
     Record<string, string>
   >({});
   const [showCommentSection, setShowCommentSection] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<{
+    identifier: string;
+    requires_comment: boolean;
+    requires_image: boolean;
+  } | null>(null);
+  const [commentText, setCommentText] = useState("");
+  const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
 
   const dispatch = useDispatch();
   const { surveyReport } = useSelector((state: RootState) => state.institute);
 
   console.log("SURVEY QUESTIONS", surveyQuestions);
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!surveyQuestions || surveyQuestions.length === 0) return;
 
-    if (currentQuestionIndex < surveyQuestions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-    } else {
-      setShowCommentSection(true);
+    if (
+      !showAdditionalInfo &&
+      (selectedOption?.requires_image || selectedOption?.requires_comment)
+    ) {
+      setShowAdditionalInfo(true);
+      return;
+    }
+
+    // Submit the current question's answer
+    const formData = new FormData();
+    if (currentQuestionId && currentAnswer) {
+      formData.append(`selected_option`, currentAnswer);
+    }
+    if (uploadedFile) {
+      formData.append("images", uploadedFile);
+    }
+    if (commentText) {
+      formData.append("comment", commentText);
+    }
+    console.log("FORM DATA", formData);
+    for (let pair of Array.from(formData.entries())) {
+      console.log(`kye: ${pair[0]} value: ${pair[1]}`);
+    }
+
+    try {
+      await dispatch(triggerSubmitSurveyReport(formData) as any);
+
+      // Only move to next question if we're not on the last one
+      if (currentQuestionIndex < surveyQuestions.length - 1) {
+        setCurrentQuestionIndex((prev) => prev + 1);
+        setSelectedOption(null);
+        setUploadedFileName(null);
+        setUploadedFileSize(null);
+        setUploadedFile(null);
+        setCommentText("");
+        setShowAdditionalInfo(false);
+        setSelectedAnswers((prev) => {
+          const newAnswers = { ...prev };
+          delete newAnswers[currentQuestionId];
+          return newAnswers;
+        });
+      } else {
+        // If it's the last question, show success modal
+        setShowModal(true);
+      }
+    } catch (error) {
+      // Handle error if submission fails
+      console.error("Failed to submit answer:", error);
+      // You might want to show an error message to the user here
     }
   };
 
   const handlePrev = () => {
-    if (showCommentSection) {
-      setShowCommentSection(false);
-    } else if (currentQuestionIndex > 0) {
+    if (showAdditionalInfo) {
+      setShowAdditionalInfo(false);
+      return;
+    }
+
+    if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prev) => prev - 1);
+      setSelectedOption(null);
+      setUploadedFileName(null);
+      setUploadedFileSize(null);
+      setUploadedFile(null);
+      setCommentText("");
     }
   };
 
-  const handleAnswerSelect = (questionId: string, answerId: string) => {
+  const handleAnswerSelect = (
+    questionId: string,
+    answerId: string,
+    option: any
+  ) => {
     setSelectedAnswers((prev) => ({
       ...prev,
       [questionId]: answerId,
     }));
+    setSelectedOption(option);
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,10 +145,19 @@ const SurveyCopy = ({
     }
   };
 
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentText(e.target.value);
+  };
+
+  const isCommentValid = () => {
+    if (!selectedOption?.requires_comment) return true;
+    return commentText.length > 0 && commentText.length <= 20;
+  };
+
   const validationSchema = Yup.object({
     textArea: Yup.string().max(
       20,
-      "You are allowed a maximum of 20 characters",
+      "You are allowed a maximum of 20 characters"
     ),
   });
 
@@ -92,40 +166,35 @@ const SurveyCopy = ({
     setUploadedFile(null);
   };
 
-  const submitReport = (values: any) => {
-    const payload = new FormData();
-    Object.entries(selectedAnswers).forEach(([questionId, answerId]) => {
-      payload.append(`question_${questionId}`, answerId);
-    });
-    if (uploadedFile) {
-      payload.append("images", uploadedFile);
-    }
-    if (values.textArea) {
-      payload.append("comment", values.textArea);
-    }
-
-    console.log("PAYLOAD", payload);
-    for (let pair of Array.from(payload.entries())) {
-      console.log(`kye: ${pair[0]} value: ${pair[1]}`);
-    }
-    dispatch(triggerSubmitSurveyReport(payload) as any);
-  };
-
   useEffect(() => {
     if (surveyReport?.statusCode === 200 && surveyReport?.data) {
-      setTimeout(() => {
-        setShowModal(true);
-      }, 3000);
+      // Clear the survey report state after successful submission
+      dispatch(resetSurveyReportState());
     }
     if (surveyReport?.error && surveyReport?.message) {
       toast.error(`${surveyReport.message}`);
+      dispatch(resetSurveyReportState());
     }
-    dispatch(resetSurveyReportState());
   }, [surveyReport, dispatch]);
 
   const currentQuestion = surveyQuestions?.[currentQuestionIndex];
   const currentQuestionId = currentQuestion?.identifier || "";
   const currentAnswer = selectedAnswers[currentQuestionId] || "";
+
+  const isNextButtonActive = () => {
+    if (!currentAnswer) return false;
+
+    if (showAdditionalInfo) {
+      if (selectedOption?.requires_image && !uploadedFile) return false;
+      if (
+        selectedOption?.requires_comment &&
+        (!commentText || commentText.length > 250)
+      )
+        return false;
+    }
+
+    return true;
+  };
 
   if (!surveyQuestions || surveyQuestions.length === 0 || !currentQuestion) {
     return (
@@ -137,7 +206,7 @@ const SurveyCopy = ({
 
   return (
     <div className="flex flex-col gap-10">
-      {!showCommentSection ? (
+      {!showAdditionalInfo ? (
         <section className="flex flex-col gap-4">
           <Typography
             variant={TypographyVariant.NORMAL}
@@ -168,12 +237,17 @@ const SurveyCopy = ({
                   value={option.identifier}
                   selectedValue={currentAnswer}
                   onChange={() =>
-                    handleAnswerSelect(currentQuestionId, option.identifier)
+                    handleAnswerSelect(
+                      currentQuestionId,
+                      option.identifier,
+                      option
+                    )
                   }
                 />
               ))}
             </section>
           </form>
+
           <div className="flex flex-row gap-3">
             <Button
               text="Prev. question"
@@ -185,116 +259,138 @@ const SurveyCopy = ({
             />
             <Button
               text={
-                currentQuestionIndex === surveyQuestions.length - 1
-                  ? "Proceed to comments"
-                  : "Next question"
+                selectedOption?.requires_image ||
+                selectedOption?.requires_comment
+                  ? "Proceed"
+                  : "Submit Answer"
               }
               text_color="#FFFFFF"
               bg_color="#007A61"
-              active={!!currentAnswer}
+              active={isNextButtonActive()}
               onClick={handleNext}
             />
           </div>
         </section>
       ) : (
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-6">
+          <Typography variant={TypographyVariant.NORMAL} className="text-center mb-4">
+            {currentQuestion?.title}
+          </Typography>
           <Typography
             variant={TypographyVariant.NORMAL}
             className="font-bold tracking-wide text-center"
           >
-            Additional Comments
+            Based on your response, kindly provide more details about the
+            incident.
           </Typography>
-          <section>
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="tracking-wide text-start text-black"
-            >
-              Kindly upload an image
-            </Typography>
-            {uploadedFileName ? (
-              <section className="flex justify-between items-center w-full border border-primary_green rounded-lg mt-2 p-3">
-                <label className="flex gap-2 items-center">
-                  <Icon type="imageUploadIcon" />
-                  <div className="flex flex-col gap-1">
+
+          {selectedOption?.requires_image && (
+            <div>
+              <Typography variant={TypographyVariant.NORMAL} className="mb-4">
+                Kindly upload images
+              </Typography>
+              {uploadedFileName ? (
+                <section className="flex justify-between items-center w-full border border-primary_green rounded-lg p-3">
+                  <label className="flex gap-2 items-center">
+                    <Icon type="imageUploadIcon" />
+                    <div className="flex flex-col gap-1">
+                      <Typography
+                        variant={TypographyVariant.SMALL}
+                        className="text-black font-bold"
+                      >
+                        {uploadedFileName}
+                      </Typography>
+                      <Typography
+                        variant={TypographyVariant.SMALL}
+                        className="text-gray-500"
+                      >
+                        {uploadedFileSize} KB – 100% uploaded
+                      </Typography>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                  </label>
+                  <RiDeleteBin6Line onClick={deleteImage} />
+                </section>
+              ) : (
+                <div className="border border-dashed border-gray-300 rounded-lg p-8 text-center">
+                  <label className="cursor-pointer w-full">
+                    <Icon type="imageUploadIcon" />
                     <Typography
                       variant={TypographyVariant.SMALL}
-                      className="text-black font-bold"
+                      className="text-gray-500 mt-2"
                     >
-                      {uploadedFileName}
+                      Kindly upload it as an image or pdf
                     </Typography>
                     <Typography
                       variant={TypographyVariant.SMALL}
-                      className="text-gray-500"
+                      className="text-primary_green mt-1"
                     >
-                      {uploadedFileSize} KB – 100% uploaded
+                      Choose a file
                     </Typography>
-                  </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </label>
-                <RiDeleteBin6Line onClick={deleteImage} />
-              </section>
-            ) : (
-              <label className="block pt-3 cursor-pointer w-full">
-                <img
-                  src={imageUploadIcon}
-                  alt="Upload"
-                  className="w-full object-cover"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                />
-              </label>
-            )}
-          </section>
-
-          <div>
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="tracking-wide text-start text-black"
-            >
-              Additional comments
-            </Typography>
-            <Formik
-              initialValues={{ textArea: "" }}
-              validationSchema={validationSchema}
-              onSubmit={submitReport}
-            >
-              {({ handleSubmit, isValid, dirty }) => (
-                <Form onSubmit={handleSubmit}>
-                  <TextAreaField
-                    label={""}
-                    name="textArea"
-                    placeHolder="Write here..."
-                  />
-
-                  <div className="flex flex-row gap-3 pt-4">
-                    <Button
-                      text="Prev. question"
-                      text_color="#17191C"
-                      bg_color="transparent"
-                      border_color="#17191C"
-                      active={true}
-                      onClick={handlePrev}
+                    <input
+                      type="file"
+                      accept="image/*,.pdf"
+                      onChange={handleImageUpload}
+                      className="hidden"
                     />
-                    <Button
-                      text="Submit"
-                      text_color="#FFFFFF"
-                      bg_color="#007A61"
-                      active={isValid && dirty}
-                      onClick={handleSubmit}
-                    />
-                  </div>
-                </Form>
+                  </label>
+                </div>
               )}
-            </Formik>
+            </div>
+          )}
+
+          {selectedOption?.requires_comment && (
+            <div>
+              <Typography variant={TypographyVariant.NORMAL} className="mb-4">
+                Additional comments
+              </Typography>
+              <textarea
+                className="w-full p-4 border rounded-lg"
+                placeholder="Write here..."
+                value={commentText}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  setCommentText(e.target.value)
+                }
+                rows={6}
+              />
+              <Typography
+                variant={TypographyVariant.SMALL}
+                className="text-gray-500 mt-2"
+              >
+                You are allowed a maximum of 250 characters
+              </Typography>
+              {commentText.length > 250 && (
+                <Typography
+                  variant={TypographyVariant.SMALL}
+                  className="text-red-500 mt-1"
+                >
+                  Maximum character limit exceeded
+                </Typography>
+              )}
+            </div>
+          )}
+
+          <div className="flex flex-row gap-3 mt-4">
+            <Button
+              text="Prev. question"
+              text_color="#17191C"
+              bg_color="transparent"
+              border_color="#17191C"
+              active={true}
+              onClick={handlePrev}
+            />
+            <Button
+              text="Submit Answer"
+              text_color="#FFFFFF"
+              bg_color="#007A61"
+              active={isNextButtonActive()}
+              onClick={handleNext}
+            />
           </div>
         </section>
       )}
