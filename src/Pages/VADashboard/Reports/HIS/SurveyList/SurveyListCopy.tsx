@@ -90,6 +90,8 @@ const SurveyListCopy = () => {
     setActiveCategory(categoryId);
   };
 
+  // console.log("categories---", categories);
+  console.log("indicators---", indicators);
   return (
     <>
       {institutionById.loading ? (
@@ -260,6 +262,11 @@ const SurveyListCopy = () => {
                           "surveyIndicatorName",
                           indicator.name,
                         );
+                        localStorage.setItem(
+                          "surveyIndicatorIdentifier",
+                          indicator.identifier,
+                        );
+                        localStorage.setItem("total_sp", indicator.total_sp);
 
                         navigate(
                           `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,

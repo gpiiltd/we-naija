@@ -6,6 +6,7 @@ import {
   triggerSurveyIndicatorById,
   triggerSurveyIndicatorQuestions,
   triggerSubmitSurveyReport,
+  triggerSubmitSurveyReportMultiple,
 } from "./instituteServices";
 interface IinitialState {
   institution: {
@@ -45,6 +46,13 @@ interface IinitialState {
     statusCode?: number | null;
   };
   surveyReport: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  surveyReportMultiple: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -97,6 +105,13 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  surveyReportMultiple: {
+    data: [],
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 
 const instituteSlice = createSlice({
@@ -132,6 +147,14 @@ const instituteSlice = createSlice({
       state.surveyReport.error = initialState.surveyReport.error;
       state.surveyReport.message = initialState.surveyReport.message;
       state.surveyReport.statusCode = initialState.surveyReport.statusCode;
+    },
+    resetSurveyReportMultipleState: (state) => {
+      state.surveyReportMultiple.error =
+        initialState.surveyReportMultiple.error;
+      state.surveyReportMultiple.message =
+        initialState.surveyReportMultiple.message;
+      state.surveyReportMultiple.statusCode =
+        initialState.surveyReportMultiple.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -286,6 +309,36 @@ const instituteSlice = createSlice({
       state.surveyReport.statusCode = action.payload
         ?.status_code as unknown as number;
     });
+
+    //SUBMIT SURVEY REPORT MULTIPLE
+    builder.addCase(triggerSubmitSurveyReportMultiple.pending, (state) => {
+      state.surveyReportMultiple.loading = true;
+      state.surveyReportMultiple.error = false;
+      state.surveyReportMultiple.message = "";
+    });
+    builder.addCase(
+      triggerSubmitSurveyReportMultiple.fulfilled,
+      (state, action) => {
+        state.surveyReportMultiple.loading = false;
+        state.surveyReportMultiple.data = action.payload;
+        state.surveyReportMultiple.error = false;
+        state.surveyReportMultiple.message = action.payload
+          ?.message as unknown as string;
+        state.surveyReportMultiple.statusCode = action.payload
+          ?.status_code as unknown as number;
+      },
+    );
+    builder.addCase(
+      triggerSubmitSurveyReportMultiple.rejected,
+      (state, action) => {
+        state.surveyReportMultiple.loading = false;
+        state.surveyReportMultiple.error = true;
+        state.surveyReportMultiple.message = action.payload
+          ?.message as unknown as string;
+        state.surveyReportMultiple.statusCode = action.payload
+          ?.status_code as unknown as number;
+      },
+    );
   },
 });
 
@@ -294,6 +347,7 @@ export const {
   resetSurveyCategoriesState,
   resetSurveyIndicatorState,
   resetSurveyReportState,
+  resetSurveyReportMultipleState,
 } = instituteSlice.actions;
 
 export default instituteSlice.reducer;

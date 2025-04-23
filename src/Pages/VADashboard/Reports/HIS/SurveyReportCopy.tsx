@@ -12,7 +12,10 @@ import RadioButton from "../../../../Components/Input/SelectOption";
 import { useNavigate } from "react-router-dom";
 // import imageUploadIcon from "../../../../Assets/svgImages/upload.svg";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { triggerSubmitSurveyReport } from "../../../../redux/Services/institute/instituteServices";
+import {
+  // triggerSubmitSurveyReport,
+  triggerSubmitSurveyReportMultiple,
+} from "../../../../redux/Services/institute/instituteServices";
 import { RootState } from "../../../../redux/Store/store";
 import { toast } from "react-toastify";
 import { resetSurveyReportState } from "../../../../redux/Services/institute/instituteSlice";
@@ -23,7 +26,16 @@ interface SurveyQuestion {
   options: {
     identifier: string;
     text: string;
+    requires_comment: boolean;
+    requires_image: boolean;
   }[];
+}
+
+interface SurveyAnswer {
+  question_id: string;
+  selected_option: string;
+  comment?: string;
+  images?: File[];
 }
 
 const SurveyCopy = ({
@@ -40,7 +52,6 @@ const SurveyCopy = ({
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<string, string>
   >({});
-  // const [showCommentSection, setShowCommentSection] = useState(false);
   const [selectedOption, setSelectedOption] = useState<{
     identifier: string;
     requires_comment: boolean;
@@ -48,6 +59,8 @@ const SurveyCopy = ({
   } | null>(null);
   const [commentText, setCommentText] = useState("");
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
+  const [surveyAnswers, setSurveyAnswers] = useState<SurveyAnswer[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useDispatch();
   const { surveyReport } = useSelector((state: RootState) => state.institute);
@@ -63,43 +76,87 @@ const SurveyCopy = ({
       return;
     }
 
-    // Submit the current question's answer
-    const formData = new FormData();
-    if (currentQuestionId && currentAnswer) {
-      formData.append(`selected_option`, currentAnswer);
-    }
-    if (uploadedFile) {
-      formData.append("images", uploadedFile);
-    }
-    if (commentText) {
-      formData.append("comment", commentText);
+    // Create answer object for current question
+    const answerData: SurveyAnswer = {
+      question_id: currentQuestionId,
+      selected_option: selectedAnswers[currentQuestionId] || "",
+    };
+
+    if (commentText && selectedOption?.requires_comment) {
+      answerData.comment = commentText;
     }
 
-    try {
-      await dispatch(triggerSubmitSurveyReport(formData) as any);
+    if (uploadedFile && selectedOption?.requires_image) {
+      answerData.images = [uploadedFile];
+    }
 
-      // Only move to next question if we're not on the last one
-      if (currentQuestionIndex < surveyQuestions.length - 1) {
-        setCurrentQuestionIndex((prev) => prev + 1);
-        setSelectedOption(null);
-        setUploadedFileName(null);
-        setUploadedFileSize(null);
-        setUploadedFile(null);
-        setCommentText("");
-        setShowAdditionalInfo(false);
-        setSelectedAnswers((prev) => {
-          const newAnswers = { ...prev };
-          delete newAnswers[currentQuestionId];
-          return newAnswers;
-        });
-      } else {
-        // If it's the last question, show success modal
-        setShowModal(true);
+    // Update or add the answer to the surveyAnswers array
+    setSurveyAnswers((prev) => {
+      const existingAnswerIndex = prev.findIndex(
+        (a) => a.question_id === currentQuestionId,
+      );
+      if (existingAnswerIndex !== -1) {
+        const newAnswers = [...prev];
+        newAnswers[existingAnswerIndex] = answerData;
+        return newAnswers;
       }
-    } catch (error) {
-      // Handle error if submission fails
-      console.error("Failed to submit answer:", error);
-      // You might want to show an error message to the user here
+      return [...prev, answerData];
+    });
+    console.log("surveyAnswers------", surveyAnswers);
+
+    // If it's the last question, submit all answers
+    if (currentQuestionIndex === surveyQuestions.length - 1) {
+      try {
+        setIsSubmitting(true);
+
+        // Create the final answers array including the current answer
+        const finalAnswers = [
+          ...surveyAnswers,
+          {
+            question_id: answerData.question_id,
+            selected_option: answerData.selected_option,
+            ...(answerData.comment && { comment: answerData.comment }),
+            ...(answerData.images && { images: answerData.images }),
+          },
+        ];
+
+        const formData = new FormData();
+
+        finalAnswers.forEach((answer, index) => {
+          formData.append(`[${index}][question_id]`, answer.question_id);
+          formData.append(
+            `[${index}][selected_option]`,
+            answer.selected_option,
+          );
+
+          if (answer.comment) {
+            formData.append(`[${index}][comment]`, answer.comment);
+          }
+
+          if (answer.images && answer.images.length > 0) {
+            answer.images.forEach((image) => {
+              formData.append(`[${index}][images][]`, image);
+            });
+          }
+        });
+
+        await dispatch(triggerSubmitSurveyReportMultiple(formData) as any);
+        setShowModal(true);
+      } catch (error) {
+        console.error("Failed to submit survey:", error);
+        toast.error("Failed to submit survey. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      // Move to next question
+      setCurrentQuestionIndex((prev) => prev + 1);
+      setSelectedOption(null);
+      setUploadedFileName(null);
+      setUploadedFileSize(null);
+      setUploadedFile(null);
+      setCommentText("");
+      setShowAdditionalInfo(false);
     }
   };
 
@@ -111,11 +168,29 @@ const SurveyCopy = ({
 
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prev) => prev - 1);
+
+      // Restore previous answer's data if it exists
+      const previousAnswer = surveyAnswers.find(
+        (a) =>
+          a.question_id ===
+          surveyQuestions[currentQuestionIndex - 1].identifier,
+      );
+
+      if (previousAnswer) {
+        setSelectedAnswers((prev) => ({
+          ...prev,
+          [previousAnswer.question_id]: previousAnswer.selected_option,
+        }));
+        setCommentText(previousAnswer.comment || "");
+        if (previousAnswer.images && previousAnswer.images.length > 0) {
+          setUploadedFile(previousAnswer.images[0]);
+          setUploadedFileName(previousAnswer.images[0].name);
+          setUploadedFileSize(previousAnswer.images[0].size);
+        }
+      }
+
       setSelectedOption(null);
-      setUploadedFileName(null);
-      setUploadedFileSize(null);
-      setUploadedFile(null);
-      setCommentText("");
+      setShowAdditionalInfo(false);
     }
   };
 
@@ -163,11 +238,10 @@ const SurveyCopy = ({
 
   useEffect(() => {
     if (surveyReport?.statusCode === 200 && surveyReport?.data) {
-      // Clear the survey report state after successful submission
       dispatch(resetSurveyReportState());
     }
     if (surveyReport?.error && surveyReport?.message) {
-      toast.error(`${surveyReport.message}`);
+      toast.error(surveyReport.message);
       dispatch(resetSurveyReportState());
     }
   }, [surveyReport, dispatch]);
@@ -188,7 +262,7 @@ const SurveyCopy = ({
         return false;
     }
 
-    return true;
+    return !isSubmitting;
   };
 
   if (!surveyQuestions || surveyQuestions.length === 0 || !currentQuestion) {
@@ -254,14 +328,17 @@ const SurveyCopy = ({
             />
             <Button
               text={
-                selectedOption?.requires_image ||
-                selectedOption?.requires_comment
-                  ? "Proceed"
-                  : "Submit Answer"
+                currentQuestionIndex === surveyQuestions.length - 1
+                  ? "Submit Survey"
+                  : selectedOption?.requires_image ||
+                      selectedOption?.requires_comment
+                    ? "Proceed"
+                    : "Next Question"
               }
               text_color="#FFFFFF"
               bg_color="#007A61"
               active={isNextButtonActive()}
+              loading={isSubmitting}
               onClick={handleNext}
             />
           </div>
@@ -409,7 +486,7 @@ const SurveyCopy = ({
                 variant={TypographyVariant.NORMAL}
                 className="font-bold tracking-wide text-orange"
               >
-                5 star points earned.
+                {localStorage.getItem("total_sp")} star points earned.
               </Typography>
             </div>
             <Typography

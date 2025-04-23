@@ -154,6 +154,7 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
   { rejectValue: any }
 >("user/submitSurveyReport", async (surveyReportData, thunkAPI) => {
   try {
+    console.log("surveyReportData------", surveyReportData);
     const institution_id = localStorage.getItem("institutionIdentifier");
     const surveyQuestionIdentifier = localStorage.getItem(
       "surveyQuestionIdentifier",
@@ -167,6 +168,38 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
           // Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerSubmitSurveyReportMultiple = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: any }
+>("user/submitSurveyReportMultiple", async (surveyReportData, thunkAPI) => {
+  try {
+    const institution_id = localStorage.getItem("institutionIdentifier");
+    const surveyIndicatorIdentifier = localStorage.getItem(
+      "surveyIndicatorIdentifier",
+    );
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      `${apiUrl.submitSurveyReportMultiple}/${institution_id}/indicators/${surveyIndicatorIdentifier}/`,
+      surveyReportData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // "Content-Type": "multipart/form-data",
+          Accept: "application/json",
         },
       },
     );
