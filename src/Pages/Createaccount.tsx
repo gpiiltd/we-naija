@@ -31,7 +31,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const { error, userData, message, loading } = useSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.user
   );
 
   const initialValues = {
@@ -54,7 +54,7 @@ const SignUp = () => {
       .max(20, "Password must not exceed 20 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character",
+        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character"
       ),
     confirmPassword: Yup.string()
       .required("Confirm password is required")
