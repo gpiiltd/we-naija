@@ -11,10 +11,7 @@ const SkipButton = () => {
       style={{ color: "#ED7D31" }}
       onClick={() => navigate("/")}
     >
-      <Typography
-        variant={TypographyVariant.SMALL}
-        className="underline cursor-pointer"
-      >
+      <Typography variant={TypographyVariant.SMALL} className="underline cursor-pointer">
         Skip, I’ll do it later
       </Typography>
     </div>

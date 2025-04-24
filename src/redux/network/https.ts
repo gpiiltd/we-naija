@@ -61,10 +61,7 @@ const requestInterceptorErrorCB = async (error: any) => {
 const responseInterceptorSuccessCB = (successRes: any) => {
   // const store = getStore();
   // dispatchAction(loginUser());
-  if (
-    successRes.config.method === "post" ||
-    successRes.config.method === "POST"
-  ) {
+  if (successRes.config.method === "post" || successRes.config.method === "POST") {
     //
   }
   return successRes;
@@ -85,22 +82,16 @@ const responseInterceptorErrorCB = async (error: any) => {
 
 (() => {
   // Request interceptor
-  axiosInstance.interceptors.request.use(
-    requestInterceptorSuccessCB,
-    requestInterceptorErrorCB,
-  );
+  axiosInstance.interceptors.request.use(requestInterceptorSuccessCB, requestInterceptorErrorCB);
 
   // Response interceptor
-  axiosInstance.interceptors.response.use(
-    responseInterceptorSuccessCB,
-    responseInterceptorErrorCB,
-  );
+  axiosInstance.interceptors.response.use(responseInterceptorSuccessCB, responseInterceptorErrorCB);
 })();
 
 // Handle Response Data
 const handleHttpResponse = (
   response: Record<string, any>,
-  success: (arg: Record<string, any>) => void,
+  success: (arg: Record<string, any>) => void
 ) => {
   // No Data Was Returned
   if (!response.data) {
@@ -247,21 +238,16 @@ async function ajax({
 }
 
 // Send GET Requests
-export const get = async (payload: any) =>
-  await ajax({ ...payload, method: "GET" });
+export const get = async (payload: any) => await ajax({ ...payload, method: "GET" });
 
 // Send POST Requests
-export const post = async (payload: any) =>
-  await ajax({ ...payload, method: "POST" });
+export const post = async (payload: any) => await ajax({ ...payload, method: "POST" });
 
 // Send Delete Requests
-export const del = async (payload: any) =>
-  await ajax({ ...payload, method: "DELETE" });
+export const del = async (payload: any) => await ajax({ ...payload, method: "DELETE" });
 
 // Send put Requests
-export const put = async (payload: any) =>
-  await ajax({ ...payload, method: "PUT" });
+export const put = async (payload: any) => await ajax({ ...payload, method: "PUT" });
 
 // Send patch Requests
-export const patch = async (payload: any) =>
-  await ajax({ ...payload, method: "PATCH" });
+export const patch = async (payload: any) => await ajax({ ...payload, method: "PATCH" });

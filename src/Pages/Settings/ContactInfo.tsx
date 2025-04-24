@@ -36,22 +36,13 @@ const ContactInfo = () => {
       <div className="w-full md:w-[50%]">
         <div className="flex flex-col gap-2">
           <div className="flex">
-            <span
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/setting-mobile")
-              }
-            >
+            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
               <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
             </span>
 
-            <Typography variant={TypographyVariant.SUBTITLE}>
-              Contact Information
-            </Typography>
+            <Typography variant={TypographyVariant.SUBTITLE}>Contact Information</Typography>
           </div>
-          <Typography
-            variant={TypographyVariant.SMALL}
-            className="text-gray-500 mt-2"
-          >
+          <Typography variant={TypographyVariant.SMALL} className="text-gray-500 mt-2">
             Edit your contact information{" "}
           </Typography>
         </div>
@@ -67,9 +58,7 @@ const ContactInfo = () => {
               label="Phone Number"
               value={phoneNumber}
               onChange={setPhoneNumber}
-              error={
-                phoneNumber === "" && error ? "Phone number is required." : ""
-              }
+              error={phoneNumber === "" && error ? "Phone number is required." : ""}
             />
             <FloatingSelect
               label="Residential Address"

@@ -57,10 +57,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
   // };
 
   if (surveyQuestions?.[0]?.identifier) {
-    localStorage.setItem(
-      "surveyQuestionIdentifier",
-      surveyQuestions[0].identifier,
-    );
+    localStorage.setItem("surveyQuestionIdentifier", surveyQuestions[0].identifier);
   }
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,10 +69,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
     }
   };
   const validationSchema = Yup.object({
-    textArea: Yup.string().max(
-      20,
-      "You are allowed a maximum of 20 characters",
-    ),
+    textArea: Yup.string().max(20, "You are allowed a maximum of 20 characters"),
   });
 
   const deleteImage = () => {
@@ -121,11 +115,10 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
             <span className="text-primary_green">
               {localStorage.getItem("surveyIndicatorName")}
             </span>{" "}
-            for the above institute. Your response is vital for improving
-            healthcare in Nigeria. By honestly assessing our health
-            institutions, you help drive the change needed for a healthier
-            community. Your responses are confidential—your voice can inspire
-            real progress.
+            for the above institute. Your response is vital for improving healthcare in Nigeria. By
+            honestly assessing our health institutions, you help drive the change needed for a
+            healthier community. Your responses are confidential—your voice can inspire real
+            progress.
           </Typography>
           <div className="flex flex-col gap-3 pt-6">
             <Button
@@ -161,10 +154,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
               >
                 QUESTION 1 OF 3
               </Typography>
-              <Typography
-                variant={TypographyVariant.NORMAL}
-                className="tracking-wide text-center"
-              >
+              <Typography variant={TypographyVariant.NORMAL} className="tracking-wide text-center">
                 {surveyQuestions?.[0]?.title}
               </Typography>
             </div>
@@ -220,8 +210,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
             variant={TypographyVariant.NORMAL}
             className="tracking-wide text-center text-light_gray"
           >
-            Based on your response, kindly provide more details about the
-            incident.
+            Based on your response, kindly provide more details about the incident.
           </Typography>
           <section>
             <Typography
@@ -235,17 +224,11 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
                 <label className=" flex gap-2  items-center">
                   <Icon type="imageUploadIcon" />
                   <div className="flex flex-col gap-1">
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="text-black font-bold"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className="text-black font-bold">
                       {uploadedFileName}
                     </Typography>
 
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className=" text-gray-500"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className=" text-gray-500">
                       {uploadedFileSize} KB – 100% uploaded{" "}
                     </Typography>
                   </div>
@@ -260,11 +243,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
               </section>
             ) : (
               <label className="block pt-3 cursor-pointer w-full">
-                <img
-                  src={imageUploadIcon}
-                  alt="Upload"
-                  className="w-full object-cover"
-                />
+                <img src={imageUploadIcon} alt="Upload" className="w-full object-cover" />
                 <input
                   type="file"
                   accept="image/*"
@@ -289,11 +268,7 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
             >
               {({ handleSubmit, isValid, dirty }) => (
                 <Form onSubmit={handleSubmit}>
-                  <TextAreaField
-                    label={""}
-                    name="textArea"
-                    placeHolder="Write here..."
-                  />
+                  <TextAreaField label={""} name="textArea" placeHolder="Write here..." />
 
                   <div className="flex flex-row gap-3 pt-4">
                     <Button

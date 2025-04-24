@@ -12,17 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { triggerPhoneNumberVerification } from "../../redux/Services/user/UserServices";
 import { toast } from "react-toastify";
 import { RootState } from "../../redux/Store/store";
-import {
-  setKycPhoneNumber,
-  resetState,
-} from "../../redux/Slices/user/userSlice";
+import { setKycPhoneNumber, resetState } from "../../redux/Slices/user/userSlice";
 
 const KycPhonenumber = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, message, loading } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { error, message, loading } = useSelector((state: RootState) => state.user);
 
   const handleProceed = (values: any) => {
     const phoneNumberWithCountryCode = `+234${values.phoneNumber}`;
@@ -66,14 +61,9 @@ const KycPhonenumber = () => {
           <div className="flex items-center justify-center gap-4">
             <Icon type="mobile" className="w-10 h-10 mb-4" />
 
-            <h1 className="text-center mb-4 text-xl  md:text-3xl">
-              Validate Phone Number
-            </h1>
+            <h1 className="text-center mb-4 text-xl  md:text-3xl">Validate Phone Number</h1>
           </div>
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="text-center mb-6 text-gray-500"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="text-center mb-6 text-gray-500">
             A 6-digit code will be sent via SMS to verify this number.
           </Typography>
 
@@ -90,10 +80,7 @@ const KycPhonenumber = () => {
                   <div className=" flex items-center justify-center w-[40%] h-[58px]  -mr-1  border border-primary_color rounded-l-xl border-r-0">
                     <Icon type="nigerianflag" className="w-6 h-6 mr-4" />
 
-                    <Typography
-                      variant={TypographyVariant.NORMAL}
-                      className="text-gray-500  "
-                    >
+                    <Typography variant={TypographyVariant.NORMAL} className="text-gray-500  ">
                       +234
                     </Typography>
                   </div>

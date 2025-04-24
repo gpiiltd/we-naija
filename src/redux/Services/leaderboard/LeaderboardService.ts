@@ -24,7 +24,7 @@ export const triggerGetAllLeaderboardData = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      },
+      }
     );
     return response.data;
   } catch (error: any) {

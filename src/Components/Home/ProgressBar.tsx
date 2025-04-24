@@ -16,9 +16,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ percentage }) => {
           }}
         ></div>
       </div>
-      <span className="ml-6 text-[#344054] font-normal text-sm">
-        {percentage}%
-      </span>
+      <span className="ml-6 text-[#344054] font-normal text-sm">{percentage}%</span>
     </div>
   );
 };

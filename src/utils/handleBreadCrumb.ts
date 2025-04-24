@@ -1,7 +1,7 @@
 export const handleBreadCrumbNavigate = (
   path: string,
   label: string,
-  navigate: (n: string) => void,
+  navigate: (n: string) => void
 ) => {
   const breadCrumb = localStorage.getItem("breadcrumb");
   const addBreadCrumb = JSON.parse(breadCrumb!);

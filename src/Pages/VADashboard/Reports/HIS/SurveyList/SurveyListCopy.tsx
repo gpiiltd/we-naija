@@ -31,16 +31,13 @@ const SurveyListCopy = () => {
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
 
   const { surveyCategories, institutionById, surveyIndicator } = useSelector(
-    (state: RootState) => state.institute,
+    (state: RootState) => state.institute
   );
 
   useEffect(() => {
     if (institutionDetails?.name) {
       localStorage.setItem("institutionName", institutionDetails.name);
-      localStorage.setItem(
-        "institutionIdentifier",
-        institutionDetails.identifier,
-      );
+      localStorage.setItem("institutionIdentifier", institutionDetails.identifier);
     }
   }, [institutionDetails?.name, institutionDetails?.identifier]);
 
@@ -70,9 +67,7 @@ const SurveyListCopy = () => {
   useEffect(() => {
     if (activeCategory) {
       setIsLoading(true);
-      dispatch(
-        triggerSurveyIndicatorById({ categoryId: activeCategory }) as any,
-      );
+      dispatch(triggerSurveyIndicatorById({ categoryId: activeCategory }) as any);
     }
   }, [activeCategory, dispatch]);
 
@@ -96,10 +91,7 @@ const SurveyListCopy = () => {
         <div className="bg-[#FFFFFF] py-3">
           <section>
             <div className="flex gap-3 items-center">
-              <Typography
-                variant={TypographyVariant.SUBTITLE}
-                className="font-bold"
-              >
+              <Typography variant={TypographyVariant.SUBTITLE} className="font-bold">
                 Loading institution details...
               </Typography>
             </div>
@@ -115,11 +107,7 @@ const SurveyListCopy = () => {
                 </div>
                 {/* <Icon type="homeAvatar" className="pr-2" /> */}
                 {institutionDetails?.logo ? (
-                  <img
-                    src={institutionDetails?.logo}
-                    alt="Institution Icon"
-                    className="pr-2"
-                  />
+                  <img src={institutionDetails?.logo} alt="Institution Icon" className="pr-2" />
                 ) : (
                   <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
                     <span className="text-white p-2">
@@ -131,10 +119,7 @@ const SurveyListCopy = () => {
                   </div>
                 )}
 
-                <Typography
-                  variant={TypographyVariant.SUBTITLE}
-                  className="font-bold"
-                >
+                <Typography variant={TypographyVariant.SUBTITLE} className="font-bold">
                   {institutionDetails?.name} (
                   {institutionDetails?.name
                     ?.split(" ")
@@ -148,20 +133,14 @@ const SurveyListCopy = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
                   <CiLocationOn color="#007A61" />
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                     {institutionDetails?.address}
                   </Typography>
                 </div>
 
                 <div className="flex gap-2">
                   <CiClock2 color="#007A61" />
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                     {institutionDetails?.operation_days}
                   </Typography>
                 </div>
@@ -170,19 +149,13 @@ const SurveyListCopy = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
                   <FiPhoneCall color="#007A61" />
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                     {institutionDetails?.mobile_number}
                   </Typography>
                 </div>
                 <div className="flex gap-2">
                   <HiOutlineEnvelope color="#007A61" />
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                     {institutionDetails?.email}
                   </Typography>
                 </div>
@@ -195,24 +168,15 @@ const SurveyListCopy = () => {
       <div className="bg-[#FAFAFA] px-2 pb-20">
         <div className="border-b pt-5">
           <section className="pt-4 flex flex-col gap-4">
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="font-bold"
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="font-bold">
               Survey Categories
             </Typography>
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="pt-1 text-light_gray"
-            >
-              Kindly select the survey category you would like to report on this
-              institution.
+            <Typography variant={TypographyVariant.SMALL} className="pt-1 text-light_gray">
+              Kindly select the survey category you would like to report on this institution.
             </Typography>
             <nav className="flex space-x-4">
               {isCategoriesLoading ? (
-                <Typography variant={TypographyVariant.NORMAL}>
-                  Loading categories...
-                </Typography>
+                <Typography variant={TypographyVariant.NORMAL}>Loading categories...</Typography>
               ) : categories && categories.length > 0 ? (
                 categories.map((category) => (
                   <button
@@ -228,9 +192,7 @@ const SurveyListCopy = () => {
                   </button>
                 ))
               ) : (
-                <Typography variant={TypographyVariant.NORMAL}>
-                  No categories available
-                </Typography>
+                <Typography variant={TypographyVariant.NORMAL}>No categories available</Typography>
               )}
             </nav>
           </section>
@@ -239,35 +201,23 @@ const SurveyListCopy = () => {
         <div className="mt-4">
           {isLoading ? (
             <div className="flex justify-center items-center py-8">
-              <Typography variant={TypographyVariant.NORMAL}>
-                Loading indicators...
-              </Typography>
+              <Typography variant={TypographyVariant.NORMAL}>Loading indicators...</Typography>
             </div>
           ) : (
             <div className="grid gap-6 py-6  grid-cols-1 md:grid-cols-2">
               {indicators.length > 0 ? (
                 indicators.map((indicator) => (
-                  <Card
-                    key={indicator.identifier}
-                    titleLeft={undefined}
-                    titleRight={undefined}
-                  >
+                  <Card key={indicator.identifier} titleLeft={undefined} titleRight={undefined}>
                     <div
                       key={indicator.identifier}
                       className="bg-white p-4 rounded-lg shadow-sm cursor-pointer hover:shadow-md transition-shadow"
                       onClick={() => {
-                        localStorage.setItem(
-                          "surveyIndicatorName",
-                          indicator.name,
-                        );
-                        localStorage.setItem(
-                          "surveyIndicatorIdentifier",
-                          indicator.identifier,
-                        );
+                        localStorage.setItem("surveyIndicatorName", indicator.name);
+                        localStorage.setItem("surveyIndicatorIdentifier", indicator.identifier);
                         localStorage.setItem("total_sp", indicator.total_sp);
 
                         navigate(
-                          `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,
+                          `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`
                         );
                       }}
                     >
@@ -287,28 +237,19 @@ const SurveyListCopy = () => {
                           </Typography>
                         </div>
 
-                        <IoIosArrowForward
-                          className="font-extrabold"
-                          size={24}
-                          color="#007A61"
-                        />
+                        <IoIosArrowForward className="font-extrabold" size={24} color="#007A61" />
                       </div>
                     </div>
                   </Card>
                 ))
               ) : (
-                <Typography variant={TypographyVariant.NORMAL}>
-                  No indicators available
-                </Typography>
+                <Typography variant={TypographyVariant.NORMAL}>No indicators available</Typography>
               )}
             </div>
           )}
         </div>
         <div className="border h-50 bg-white py-10 flex justify-between px-10 rounded-lg">
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="pt-1 font-bold"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="pt-1 font-bold">
             Have generic feedback or reports on this facility?
           </Typography>
 
@@ -325,11 +266,7 @@ const SurveyListCopy = () => {
               text_color="#FFFFFF"
               bg_color="#007A61"
               active={true}
-              onClick={() =>
-                navigate(
-                  "/verified-agent-dashboard/reports/hospitals/give-report",
-                )
-              }
+              onClick={() => navigate("/verified-agent-dashboard/reports/hospitals/give-report")}
             />
           </div>
         </div>

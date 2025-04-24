@@ -18,9 +18,7 @@ import { resetState, setUserEmail } from "../redux/Slices/user/userSlice";
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, message, loading } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { error, message, loading } = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     email: "",
@@ -73,16 +71,10 @@ const ForgotPassword = () => {
             <Icon type="keys" />
           </div>
           <div className="flex flex-col justify-center items-start lg:items-center pt-6">
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className="text-black "
-            >
+            <Typography variant={TypographyVariant.SUBTITLE} className="text-black ">
               Forgot password?
             </Typography>
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="text-light_gray "
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="text-light_gray ">
               Enter your email to reset your password{" "}
             </Typography>
           </div>

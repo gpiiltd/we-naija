@@ -51,9 +51,7 @@ const InputField: React.FC<TextInputProps> = ({
       <label
         htmlFor={props.name}
         className={`absolute left-3 top-4 text-base transition-all duration-200 transform ${
-          field.value || meta.touched
-            ? "scale-75 -translate-y-3 text-gray-600 "
-            : "text-gray-400"
+          field.value || meta.touched ? "scale-75 -translate-y-3 text-gray-600 " : "text-gray-400"
         }`}
       >
         <Typography variant={TypographyVariant.NORMAL}>{label}</Typography>
@@ -61,10 +59,7 @@ const InputField: React.FC<TextInputProps> = ({
       {meta.touched && meta.error ? (
         <div className="w-full md:w-[350px] lg:w-[500px] overflow-hidden">
           {" "}
-          <Typography
-            variant={TypographyVariant.SMALL}
-            className="text-error mt-1 text-left"
-          >
+          <Typography variant={TypographyVariant.SMALL} className="text-error mt-1 text-left">
             {meta.error}
           </Typography>
         </div>

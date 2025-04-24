@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  ForgotPasswordResponse,
-  SignupResponse,
-  DefaultResponse,
-} from "../../Services/user/types";
+import { ForgotPasswordResponse, SignupResponse, DefaultResponse } from "../../Services/user/types";
 import {
   triggerForgotPassword,
   triggerForgotPasswordOtp,
@@ -92,40 +88,28 @@ const userSlice = createSlice({
         state.userData = {};
         state.message = "";
       })
-      .addCase(
-        triggerUserSignup.fulfilled,
-        (state, action: PayloadAction<SignupResponse>) => {
-          state.loading = false;
-          state.message = action.payload.message;
-        },
-      )
-      .addCase(
-        triggerUserSignup.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload;
-          state.message = action.payload.message;
-        },
-      )
+      .addCase(triggerUserSignup.fulfilled, (state, action: PayloadAction<SignupResponse>) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerUserSignup.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.message = action.payload.message;
+      })
 
       .addCase(triggerForgotPassword.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        triggerForgotPassword.fulfilled,
-        (state, action: PayloadAction<DefaultResponse>) => {
-          state.loading = false;
-          state.message = action.payload.message;
-        },
-      )
-      .addCase(
-        triggerForgotPassword.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerForgotPassword.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerForgotPassword.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
       .addCase(triggerOTPValidation.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -135,19 +119,13 @@ const userSlice = createSlice({
         (state, action: PayloadAction<ForgotPasswordResponse>) => {
           state.loading = false;
           state.message = action.payload.data || null;
-        },
+        }
       )
-      .addCase(
-        triggerOTPValidation.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.code;
-          state.message =
-            typeof action.payload === "string"
-              ? action.payload
-              : action.payload.data;
-        },
-      )
+      .addCase(triggerOTPValidation.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.code;
+        state.message = typeof action.payload === "string" ? action.payload : action.payload.data;
+      })
       .addCase(triggerForgotPasswordOtp.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -157,76 +135,54 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-          state.otpToken =
-            action.payload.results?.access_credentials.token || "";
-        },
+          state.otpToken = action.payload.results?.access_credentials.token || "";
+        }
       )
-      .addCase(
-        triggerForgotPasswordOtp.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.status_code;
-          state.message = action.payload.message;
-        },
-      )
+      .addCase(triggerForgotPasswordOtp.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.status_code;
+        state.message = action.payload.message;
+      })
       .addCase(triggerOTPRequest.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        triggerOTPRequest.fulfilled,
-        (state, action: PayloadAction<DefaultResponse>) => {
-          state.loading = false;
-          state.message = action.payload.message;
-        },
-      )
-      .addCase(
-        triggerOTPRequest.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerOTPRequest.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerOTPRequest.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
       .addCase(triggerResetPassword.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        triggerResetPassword.fulfilled,
-        (state, action: PayloadAction<DefaultResponse>) => {
-          state.loading = false;
-          state.message = action.payload.message;
-        },
-      )
-      .addCase(
-        triggerResetPassword.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerResetPassword.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerResetPassword.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
 
       //login
       .addCase(triggerUserLogin.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        triggerUserLogin.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.userData = action.payload.data;
-          state.message = action.payload.message;
-        },
-      )
-      .addCase(
-        triggerUserLogin.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload;
-          state.message = action.payload.message;
-        },
-      )
+      .addCase(triggerUserLogin.fulfilled, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.userData = action.payload.data;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerUserLogin.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.message = action.payload.message;
+      })
       .addCase(triggerEmailVerificationResend.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -236,15 +192,12 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        },
+        }
       )
-      .addCase(
-        triggerEmailVerificationResend.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerEmailVerificationResend.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
       .addCase(triggerEmailVerification.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -254,33 +207,24 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        },
+        }
       )
-      .addCase(
-        triggerEmailVerification.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerEmailVerification.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
       .addCase(triggerPhoneNumberVerification.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        triggerPhoneNumberVerification.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.message = action.payload;
-        },
-      )
-      .addCase(
-        triggerPhoneNumberVerification.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerPhoneNumberVerification.fulfilled, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.message = action.payload;
+      })
+      .addCase(triggerPhoneNumberVerification.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
       .addCase(triggerPhoneNumberVerificationOtp.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -290,33 +234,24 @@ const userSlice = createSlice({
         (state, action: PayloadAction<DefaultResponse>) => {
           state.loading = false;
           state.message = action.payload.message;
-        },
+        }
       )
-      .addCase(
-        triggerPhoneNumberVerificationOtp.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerPhoneNumberVerificationOtp.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
       .addCase(triggerKycInfoSubmit.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        triggerKycInfoSubmit.fulfilled,
-        (state, action: PayloadAction<DefaultResponse>) => {
-          state.loading = false;
-          state.message = action.payload.message;
-        },
-      )
-      .addCase(
-        triggerKycInfoSubmit.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerKycInfoSubmit.fulfilled, (state, action: PayloadAction<DefaultResponse>) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(triggerKycInfoSubmit.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
       .addCase(triggerGetAllInstitute.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -327,16 +262,13 @@ const userSlice = createSlice({
           state.loading = false;
           state.instituteData = action.payload.results as Record<string, any>;
           state.message = action.payload.message;
-        },
+        }
       )
-      .addCase(
-        triggerGetAllInstitute.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.instituteData = {} as Record<string, any>; // Fix: Ensure instituteData is set to undefined on rejection
-          state.error = action.payload.message;
-        },
-      )
+      .addCase(triggerGetAllInstitute.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.instituteData = {} as Record<string, any>; // Fix: Ensure instituteData is set to undefined on rejection
+        state.error = action.payload.message;
+      })
       .addCase(triggerGetInstituteById.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -347,16 +279,13 @@ const userSlice = createSlice({
           state.loading = false;
           state.instituteData = action.payload as Record<string, any>;
           state.message = action.payload.message;
-        },
+        }
       )
-      .addCase(
-        triggerGetInstituteById.rejected,
-        (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.instituteData = {} as Record<string, any>;
-          state.error = action.payload.message;
-        },
-      );
+      .addCase(triggerGetInstituteById.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.instituteData = {} as Record<string, any>;
+        state.error = action.payload.message;
+      });
   },
 });
 

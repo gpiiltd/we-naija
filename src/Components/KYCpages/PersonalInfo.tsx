@@ -30,10 +30,7 @@ const PersonalInfo = () => {
   };
 
   const isFormComplete =
-    address !== "" &&
-    nationality !== "" &&
-    gender !== "" &&
-    dateOfBirth !== null;
+    address !== "" && nationality !== "" && gender !== "" && dateOfBirth !== null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +41,7 @@ const PersonalInfo = () => {
     }
 
     const formattedDate = `${dateOfBirth?.getFullYear()}-${String(
-      dateOfBirth?.getMonth() + 1,
+      dateOfBirth?.getMonth() + 1
     ).padStart(2, "0")}-${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
     setDateOfBirth(new Date(formattedDate));
 
@@ -54,7 +51,7 @@ const PersonalInfo = () => {
         nationality,
         gender,
         dateOfBirth: formattedDate,
-      }),
+      })
     );
 
     navigate("/kyc/id-verification");
@@ -68,15 +65,10 @@ const PersonalInfo = () => {
           <div className="flex  mb-4">
             <Icon type="person" className="w-6 h-6 mr-4" />
 
-            <h1 className="text-center md:mb-4 text-xl  md:text-3xl">
-              Personal Information
-            </h1>
+            <h1 className="text-center md:mb-4 text-xl  md:text-3xl">Personal Information</h1>
           </div>
 
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className=" mb-6 text-gray-500"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className=" mb-6 text-gray-500">
             Kindly fill in your details
           </Typography>
 
@@ -92,20 +84,15 @@ const PersonalInfo = () => {
               options={nationalityOptions}
               value={nationality}
               onChange={setNationality}
-              error={
-                nationality === "" && error ? "Nationality is required." : ""
-              }
+              error={nationality === "" && error ? "Nationality is required." : ""}
             />
             <FloatingSelect
               label="Gender"
               options={genderOptions.map((option) => option.name)}
-              value={
-                genderOptions.find((option) => option.value === gender)?.name ||
-                ""
-              }
+              value={genderOptions.find((option) => option.value === gender)?.name || ""}
               onChange={(selectedOption) => {
                 const selectedGender = genderOptions.find(
-                  (option) => option.name === selectedOption,
+                  (option) => option.name === selectedOption
                 );
                 if (selectedGender) {
                   setGender(selectedGender.value);
@@ -113,16 +100,11 @@ const PersonalInfo = () => {
               }}
               error={gender === "" && error ? "Gender is required." : ""}
             />
-            <CustomDatePicker
-              selectedDate={dateOfBirth}
-              onChange={handleDateChange}
-            />
+            <CustomDatePicker selectedDate={dateOfBirth} onChange={handleDateChange} />
             <button
               type="submit"
               className={`mt-12 w-full py-4 rounded-md bg-primary_green  text-white ${
-                isFormComplete
-                  ? "hover:bg-[#015443]"
-                  : "cursor-not-allowed opacity-50"
+                isFormComplete ? "hover:bg-[#015443]" : "cursor-not-allowed opacity-50"
               }`}
             >
               Poceed

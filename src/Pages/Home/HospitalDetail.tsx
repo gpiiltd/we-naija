@@ -14,9 +14,7 @@ function HospitalDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { instituteData, error, message } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { instituteData, error, message } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     dispatch(triggerGetInstituteById(id as string) as any);
@@ -56,39 +54,29 @@ function HospitalDetail() {
           {/* 1 */}
           <div className="flex justify-start items-center pb-2">
             <Icon type="locationGreenSvg" className="text-[#007A61] pr-2" />
-            <p className="font-normal text-sm text-[#5E5959]">
-              {instituteDetails?.address}
-            </p>
+            <p className="font-normal text-sm text-[#5E5959]">{instituteDetails?.address}</p>
           </div>
 
           {/* 2 */}
           <div className="flex justify-start items-center pb-2">
             <Icon type="timeGreenSvg" className="text-[#007A61] pr-2" />
-            <p className="font-normal text-sm text-[#5E5959]">
-              {instituteDetails?.operation_days}
-            </p>
+            <p className="font-normal text-sm text-[#5E5959]">{instituteDetails?.operation_days}</p>
           </div>
 
           {/* 3 */}
           <div className="flex justify-start items-center pb-2">
             <Icon type="callingGreenSvg" className="text-[#007A61] pr-2" />
-            <p className="font-normal text-sm text-[#5E5959]">
-              {instituteDetails?.mobile_number}
-            </p>
+            <p className="font-normal text-sm text-[#5E5959]">{instituteDetails?.mobile_number}</p>
           </div>
 
           {/* 4 */}
           <div className="flex justify-start items-center pb-2">
             <Icon type="messageGreenSvg" className="text-[#007A61] pr-2" />
-            <p className="font-normal text-sm text-[#5E5959]">
-              {instituteDetails?.email}
-            </p>
+            <p className="font-normal text-sm text-[#5E5959]">{instituteDetails?.email}</p>
           </div>
         </div>
 
-        <p className="font-bold text-lg">
-          Survey list ({instituteDetails?.survey_count})
-        </p>
+        <p className="font-bold text-lg">Survey list ({instituteDetails?.survey_count})</p>
         <p className="font-normal text-sm text-[#5E5959] mt-2">
           Kindly select the survey indicator you would like to report
           <br />

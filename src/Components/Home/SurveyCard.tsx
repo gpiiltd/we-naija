@@ -23,13 +23,9 @@ const SurveysCard: React.FC<SurveysCardProps> = ({
             <div className="w-full">
               <section className="flex justify-start w-full">
                 <div className="pl-6 pr-6 my-6 w-full">
-                  <p className="font-bold text-lg text-black">
-                    {responseTimeMessage}
-                  </p>
+                  <p className="font-bold text-lg text-black">{responseTimeMessage}</p>
                   <section className="flex justify-between items-center">
-                    <p className="font-normal text-[14px] text-[#5E5959] w-auto">
-                      {statusMessage}
-                    </p>
+                    <p className="font-normal text-[14px] text-[#5E5959] w-auto">{statusMessage}</p>
                     <Icon type="arrowLeftSvg" className="ml-4" />{" "}
                     {/* Adds space between icon and text */}
                   </section>

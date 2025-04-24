@@ -99,8 +99,7 @@ export const notifications = [
     id: 4,
     user: "Wenaija",
     handle: "@support",
-    message:
-      "Thank you for signing up successfully. Kindly begin your KYC verification",
+    message: "Thank you for signing up successfully. Kindly begin your KYC verification",
     time: "4 hr ago",
     read: true,
   },

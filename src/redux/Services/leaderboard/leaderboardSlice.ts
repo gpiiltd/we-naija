@@ -27,8 +27,7 @@ const leaderboardSlice = createSlice({
     resetLeaderboardState: (state) => {
       state.leaderboardData.error = initialState.leaderboardData.error;
       state.leaderboardData.message = initialState.leaderboardData.message;
-      state.leaderboardData.statusCode =
-        initialState.leaderboardData.statusCode;
+      state.leaderboardData.statusCode = initialState.leaderboardData.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -43,16 +42,13 @@ const leaderboardSlice = createSlice({
       state.leaderboardData.loading = false;
       state.leaderboardData.data = action.payload?.data;
       state.leaderboardData.error = false;
-      state.leaderboardData.message = action.payload
-        ?.message as unknown as string;
-      state.leaderboardData.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.leaderboardData.message = action.payload?.message as unknown as string;
+      state.leaderboardData.statusCode = action.payload?.status_code as unknown as number;
     });
     builder.addCase(triggerGetAllLeaderboardData.rejected, (state, action) => {
       state.leaderboardData.loading = false;
       state.leaderboardData.error = true;
-      state.leaderboardData.message = action.payload
-        ?.message as unknown as string;
+      state.leaderboardData.message = action.payload?.message as unknown as string;
       state.leaderboardData.statusCode = action.payload?.status_code ?? null;
     });
   },

@@ -35,9 +35,7 @@ const SettingsMobile = () => {
           <div className="flex flex-col space-y-2 mt-2">
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/basic-information")
-              }
+              onClick={() => navigate("/verified-agent-dashboard/settings/basic-information")}
             >
               <div className="flex items-center gap-2">
                 <Icon type="basicInfo" className="w-fit" />
@@ -47,11 +45,7 @@ const SettingsMobile = () => {
             </button>
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate(
-                  "/verified-agent-dashboard/settings/contact-information",
-                )
-              }
+              onClick={() => navigate("/verified-agent-dashboard/settings/contact-information")}
             >
               <div className="flex items-center gap-2">
                 <Icon type="contactInfo" className="w-fit" />
@@ -68,9 +62,7 @@ const SettingsMobile = () => {
           <div className="flex flex-col space-y-2 mt-2">
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/password-reset")
-              }
+              onClick={() => navigate("/verified-agent-dashboard/settings/password-reset")}
             >
               <div className="flex items-center gap-2">
                 <Icon type="passwordReset" className="w-fit" />
@@ -80,9 +72,7 @@ const SettingsMobile = () => {
             </button>
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/kyc-verification")
-              }
+              onClick={() => navigate("/verified-agent-dashboard/settings/kyc-verification")}
             >
               <div className="flex items-center gap-2">
                 <Icon type="kycVerify" className="w-fit" />
@@ -99,9 +89,7 @@ const SettingsMobile = () => {
           <div className="flex flex-col space-y-2 mt-2">
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/join-community")
-              }
+              onClick={() => navigate("/verified-agent-dashboard/settings/join-community")}
             >
               <div className="flex items-center gap-2">
                 <Icon type="joinCom" className="w-fit" />
@@ -118,11 +106,7 @@ const SettingsMobile = () => {
           <div className="flex flex-col space-y-2 mt-2">
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate(
-                  "/verified-agent-dashboard/settings/help-and-support/faq",
-                )
-              }
+              onClick={() => navigate("/verified-agent-dashboard/settings/help-and-support/faq")}
             >
               <div className="flex items-center gap-2">
                 <Icon type="faq" className="w-fit" />
@@ -133,9 +117,7 @@ const SettingsMobile = () => {
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
               onClick={() =>
-                navigate(
-                  "/verified-agent-dashboard/settings/help-and-support/contact-us",
-                )
+                navigate("/verified-agent-dashboard/settings/help-and-support/contact-us")
               }
             >
               <div className="flex items-center gap-2">
@@ -146,9 +128,7 @@ const SettingsMobile = () => {
             </button>
             <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/help-and-support")
-              }
+              onClick={() => navigate("/verified-agent-dashboard/settings/help-and-support")}
             >
               <div className="flex items-center gap-2">
                 <Icon type="chatUs" className="w-fit" />

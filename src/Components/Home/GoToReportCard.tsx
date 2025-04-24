@@ -6,9 +6,7 @@ interface HomeGoToReportCardProps {
   backgroundImage?: string;
 }
 
-const HomeGoToReportCard: React.FC<HomeGoToReportCardProps> = ({
-  backgroundImage,
-}) => {
+const HomeGoToReportCard: React.FC<HomeGoToReportCardProps> = ({ backgroundImage }) => {
   const navigate = useNavigate();
   return (
     <div

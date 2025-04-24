@@ -17,17 +17,11 @@ const CommunityTasks = () => {
           <AiOutlineArrowLeft size={24} className="cursor-pointer" />
         </div>
 
-        <Typography variant={TypographyVariant.SUBTITLE}>
-          Community Task
-        </Typography>
+        <Typography variant={TypographyVariant.SUBTITLE}>Community Task</Typography>
       </div>
       <Breadcrumb />
-      {currentPath === "/verified-agent-dashboard/reports/community-tasks" && (
-        <Tasks />
-      )}
-      {currentPath === "/verified-agent-dashboard/reports/NCD-prevention" && (
-        <NCDPrevention />
-      )}
+      {currentPath === "/verified-agent-dashboard/reports/community-tasks" && <Tasks />}
+      {currentPath === "/verified-agent-dashboard/reports/NCD-prevention" && <NCDPrevention />}
     </div>
   );
 };

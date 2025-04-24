@@ -126,10 +126,7 @@ const VADashboard = () => {
 
         {isDrawerOpen && (
           <div className="fixed inset-0 z-50">
-            <div
-              className="fixed inset-0 bg-black opacity-50"
-              onClick={toggleDrawer}
-            ></div>
+            <div className="fixed inset-0 bg-black opacity-50" onClick={toggleDrawer}></div>
             <div
               className={`fixed top-0 left-0 h-full w-10/12 bg-white z-50 px-6 shadow-inner transform transition-transform duration-300 ${
                 isDrawerOpen ? "translate-x-0" : "-translate-x-full"
@@ -141,9 +138,7 @@ const VADashboard = () => {
                     <Icon
                       type="logo"
                       className="w-fit"
-                      click={() =>
-                        (window.location.href = "/verified-agent-dashboard")
-                      }
+                      click={() => (window.location.href = "/verified-agent-dashboard")}
                     />
                     <button onClick={toggleDrawer} className="text-lg">
                       <FiX size={24} className="text-gray-500" />
@@ -209,10 +204,7 @@ const VADashboard = () => {
                         </NavLink>
                       </li>
                       <li className="flex gap-2">
-                        <FiBell
-                          size={24}
-                          className="text-primary_green text-lg"
-                        />
+                        <FiBell size={24} className="text-primary_green text-lg" />
                         <NavLink
                           to="/verified-agent-dashboard/notifications"
                           onClick={toggleDrawer}
@@ -226,10 +218,7 @@ const VADashboard = () => {
                         </NavLink>
                       </li>
                       <li className="flex gap-2">
-                        <FiSettings
-                          size={24}
-                          className="text-primary_green text-lg"
-                        />
+                        <FiSettings size={24} className="text-primary_green text-lg" />
                         <NavLink
                           to="/verified-agent-dashboard/settings/setting-mobile"
                           onClick={toggleDrawer}

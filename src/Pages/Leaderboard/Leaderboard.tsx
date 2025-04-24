@@ -17,9 +17,7 @@ const Leaderboard = () => {
   const [allLeaderboardData, setAllLeaderboardData] = useState([]);
   const dispatch = useDispatch();
 
-  const { leaderboardData } = useSelector(
-    (state: RootState) => state.leaderboard,
-  );
+  const { leaderboardData } = useSelector((state: RootState) => state.leaderboard);
 
   useEffect(() => {
     dispatch(triggerGetAllLeaderboardData(timeFrame) as any);
@@ -37,9 +35,7 @@ const Leaderboard = () => {
   }, [leaderboardData, dispatch]);
 
   const handleShowMore = () => {
-    setVisibleCount((prevCount) =>
-      Math.min(prevCount + 3, allLeaderboardData.length),
-    );
+    setVisibleCount((prevCount) => Math.min(prevCount + 3, allLeaderboardData.length));
   };
 
   const handleTimeFrameChange = (frame: string) => {
@@ -64,10 +60,7 @@ const Leaderboard = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg  w-full mx-auto mb-12">
-      <Typography
-        variant={TypographyVariant.SUBTITLE}
-        className="text-lg md:text-2xl"
-      >
+      <Typography variant={TypographyVariant.SUBTITLE} className="text-lg md:text-2xl">
         Leaderboard
       </Typography>
       <div className="flex flex-col md:flex-row justify-center items-center  text-white rounded-lg py-4 mb-4 md:space-x-8 ">
@@ -92,16 +85,12 @@ const Leaderboard = () => {
             <div className="flex items-center justify-center">
               <img
                 src={
-                  allBadges?.find(
-                    (badge: any) => badge.name === userProfileData?.badge,
-                  )?.logo || ""
+                  allBadges?.find((badge: any) => badge.name === userProfileData?.badge)?.logo || ""
                 }
                 alt={`Badge ${userProfileData?.badge}`}
                 className="w-10 h-10"
               />
-              <span className=" pl-1 text-sm font-semibold">
-                {userProfileData?.badge || "NA"}
-              </span>
+              <span className=" pl-1 text-sm font-semibold">{userProfileData?.badge || "NA"}</span>
             </div>
             <span className="mx-4 text-3xl">|</span>
             <div className="flex items-center justify-center  bg-white rounded-full px-4">
@@ -126,10 +115,7 @@ const Leaderboard = () => {
           }}
         >
           <div className="text-left">
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className=" text-left text-black "
-            >
+            <Typography variant={TypographyVariant.SUBTITLE} className=" text-left text-black ">
               Badges
             </Typography>
           </div>
@@ -137,32 +123,17 @@ const Leaderboard = () => {
             {allBadges?.map((badge: any, index: any) => (
               <div className="relative bg-white  rounded-3xl p-4 border border-gray-200">
                 <div className="">
-                  <Typography
-                    variant={TypographyVariant.NORMAL}
-                    className="text-black text-center"
-                  >
+                  <Typography variant={TypographyVariant.NORMAL} className="text-black text-center">
                     {badge.name}
                   </Typography>
-                  <img
-                    key={index}
-                    src={badge.logo}
-                    alt={`Badge ${index}`}
-                    className="w-24 h-28"
-                  />
+                  <img key={index} src={badge.logo} alt={`Badge ${index}`} className="w-24 h-28" />
                 </div>
-                {allBadges?.findIndex(
-                  (b: any) => b.name === userProfileData?.badge,
-                ) < index && (
+                {allBadges?.findIndex((b: any) => b.name === userProfileData?.badge) < index && (
                   <div className="relative group">
-                    <Icon
-                      type="lockIcon"
-                      className="w-10 h-10 absolute bottom-0 left-0"
-                    />
+                    <Icon type="lockIcon" className="w-10 h-10 absolute bottom-0 left-0" />
                     <div className="absolute bottom-90 left-0 hidden group-hover:block bg-black text-white text-xs rounded-2xl p-4 w-64 z-10">
                       <div className="absolute -top-2 left-4 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-black"></div>
-                      <span className="font-bold">
-                        {`Unlock ${badge.name} badge`}
-                      </span>
+                      <span className="font-bold">{`Unlock ${badge.name} badge`}</span>
                       <h2 className="my-2">
                         Earn
                         <span className="text-[#ED7D31] font-bold">
@@ -185,9 +156,7 @@ const Leaderboard = () => {
       <div className="flex justify-center items-center space-x-4 mb-4 bg-gray-100 p-2 rounded-lg w-full md:w-[50%] lg:w-[32%] mx-auto">
         <button
           className={`px-4 py-2 rounded ${
-            timeFrame === "today"
-              ? "bg-white text-black px-2 md:px-6"
-              : "text-gray-500"
+            timeFrame === "today" ? "bg-white text-black px-2 md:px-6" : "text-gray-500"
           }`}
           onClick={() => handleTimeFrameChange("today")}
         >
@@ -248,11 +217,7 @@ const Leaderboard = () => {
                       className="w-6 h-6 mr-2 "
                     /> */}
                     <img
-                      src={
-                        allBadges?.find(
-                          (badge: any) => badge.name === player.badge,
-                        )?.logo || ""
-                      }
+                      src={allBadges?.find((badge: any) => badge.name === player.badge)?.logo || ""}
                       alt={`Badge ${player.badge}`}
                       className="w-8 h-8 mr-2"
                     />

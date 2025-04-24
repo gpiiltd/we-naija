@@ -49,17 +49,11 @@ const IDVerification = () => {
         <div className="bg-white  rounded-lg w-full md:w-[50%] ">
           <div className="flex items-center mb-4">
             <div className="flex">
-              <span
-                onClick={() =>
-                  navigate("/verified-agent-dashboard/settings/setting-mobile")
-                }
-              >
+              <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
                 <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
               </span>
 
-              <Typography variant={TypographyVariant.SUBTITLE}>
-                KYC Verification
-              </Typography>
+              <Typography variant={TypographyVariant.SUBTITLE}>KYC Verification</Typography>
             </div>
           </div>
 
@@ -69,10 +63,7 @@ const IDVerification = () => {
             responseTimeMessage=""
           />
 
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className=" mt-8 font-semibold text-lg"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className=" mt-8 font-semibold text-lg">
             Identity card details
           </Typography>
           <div className="pt-2">
@@ -94,11 +85,7 @@ const IDVerification = () => {
                     onChange={setIdType}
                   />
 
-                  <FloatingInput
-                    label="ID Number"
-                    value={idNumber}
-                    onChange={setIdNumber}
-                  />
+                  <FloatingInput label="ID Number" value={idNumber} onChange={setIdNumber} />
 
                   <Typography
                     variant={TypographyVariant.NORMAL}
@@ -107,10 +94,7 @@ const IDVerification = () => {
                     Identity card upload
                   </Typography>
                   <div className="relative mb-4">
-                    <Typography
-                      variant={TypographyVariant.NORMAL}
-                      className="mb-2 "
-                    >
+                    <Typography variant={TypographyVariant.NORMAL} className="mb-2 ">
                       Front of the ID card
                     </Typography>
 
@@ -121,10 +105,7 @@ const IDVerification = () => {
                       error={errors.frontFile}
                     />
 
-                    <Typography
-                      variant={TypographyVariant.NORMAL}
-                      className="mb-2 "
-                    >
+                    <Typography variant={TypographyVariant.NORMAL} className="mb-2 ">
                       Back of the ID card
                     </Typography>
                     <FileUpload

@@ -102,32 +102,24 @@ const communitySlice = createSlice({
   reducers: {
     resetCommunityState: (state) => {
       state.communityCategories.error = initialState.communityCategories.error;
-      state.communityCategories.message =
-        initialState.communityCategories.message;
-      state.communityCategories.statusCode =
-        initialState.communityCategories.statusCode;
+      state.communityCategories.message = initialState.communityCategories.message;
+      state.communityCategories.statusCode = initialState.communityCategories.statusCode;
     },
     resetCommunityIndicatorsState: (state) => {
       state.communityIndicators.error = initialState.communityIndicators.error;
-      state.communityIndicators.message =
-        initialState.communityIndicators.message;
-      state.communityIndicators.statusCode =
-        initialState.communityIndicators.statusCode;
+      state.communityIndicators.message = initialState.communityIndicators.message;
+      state.communityIndicators.statusCode = initialState.communityIndicators.statusCode;
     },
     resetCommunityTaskCategoryByIdState: (state) => {
-      state.communityTaskCategoryById.error =
-        initialState.communityTaskCategoryById.error;
-      state.communityTaskCategoryById.message =
-        initialState.communityTaskCategoryById.message;
+      state.communityTaskCategoryById.error = initialState.communityTaskCategoryById.error;
+      state.communityTaskCategoryById.message = initialState.communityTaskCategoryById.message;
       state.communityTaskCategoryById.statusCode =
         initialState.communityTaskCategoryById.statusCode;
     },
     resetAnswerTaskQuestionState: (state) => {
       state.answerTaskQuestion.error = initialState.answerTaskQuestion.error;
-      state.answerTaskQuestion.message =
-        initialState.answerTaskQuestion.message;
-      state.answerTaskQuestion.statusCode =
-        initialState.answerTaskQuestion.statusCode;
+      state.answerTaskQuestion.message = initialState.answerTaskQuestion.message;
+      state.answerTaskQuestion.statusCode = initialState.answerTaskQuestion.statusCode;
     },
     resetTaskQuestionsState: (state) => {
       state.taskQuestions.error = initialState.taskQuestions.error;
@@ -137,8 +129,7 @@ const communitySlice = createSlice({
     resetTaskQuestionByIdState: (state) => {
       state.taskQuestionById.error = initialState.taskQuestionById.error;
       state.taskQuestionById.message = initialState.taskQuestionById.message;
-      state.taskQuestionById.statusCode =
-        initialState.taskQuestionById.statusCode;
+      state.taskQuestionById.statusCode = initialState.taskQuestionById.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -149,29 +140,19 @@ const communitySlice = createSlice({
       state.communityCategories.data = {};
       state.communityCategories.message = "";
     });
-    builder.addCase(
-      triggerGetAllCommunityCategories.fulfilled,
-      (state, action) => {
-        state.communityCategories.loading = false;
-        state.communityCategories.data = action.payload?.results;
-        state.communityCategories.error = false;
-        state.communityCategories.message = action.payload
-          ?.message as unknown as string;
-        state.communityCategories.statusCode = action.payload
-          ?.status_code as unknown as number;
-      },
-    );
-    builder.addCase(
-      triggerGetAllCommunityCategories.rejected,
-      (state, action) => {
-        state.communityCategories.loading = false;
-        state.communityCategories.error = true;
-        state.communityCategories.message = action.payload
-          ?.message as unknown as string;
-        state.communityCategories.statusCode =
-          action.payload?.status_code ?? null;
-      },
-    );
+    builder.addCase(triggerGetAllCommunityCategories.fulfilled, (state, action) => {
+      state.communityCategories.loading = false;
+      state.communityCategories.data = action.payload?.results;
+      state.communityCategories.error = false;
+      state.communityCategories.message = action.payload?.message as unknown as string;
+      state.communityCategories.statusCode = action.payload?.status_code as unknown as number;
+    });
+    builder.addCase(triggerGetAllCommunityCategories.rejected, (state, action) => {
+      state.communityCategories.loading = false;
+      state.communityCategories.error = true;
+      state.communityCategories.message = action.payload?.message as unknown as string;
+      state.communityCategories.statusCode = action.payload?.status_code ?? null;
+    });
 
     //LIST COMMUNITY TASK CATEGORY BY ID
     builder.addCase(triggerGetCommunityTaskCategoryById.pending, (state) => {
@@ -180,29 +161,19 @@ const communitySlice = createSlice({
       state.communityTaskCategoryById.data = {};
       state.communityTaskCategoryById.message = "";
     });
-    builder.addCase(
-      triggerGetCommunityTaskCategoryById.fulfilled,
-      (state, action) => {
-        state.communityTaskCategoryById.loading = false;
-        state.communityTaskCategoryById.data = action.payload;
-        state.communityTaskCategoryById.error = false;
-        state.communityTaskCategoryById.message = action.payload
-          ?.message as unknown as string;
-        state.communityTaskCategoryById.statusCode = action.payload
-          ?.status_code as unknown as number;
-      },
-    );
-    builder.addCase(
-      triggerGetCommunityTaskCategoryById.rejected,
-      (state, action) => {
-        state.communityTaskCategoryById.loading = false;
-        state.communityTaskCategoryById.error = true;
-        state.communityTaskCategoryById.message = action.payload
-          ?.message as unknown as string;
-        state.communityTaskCategoryById.statusCode = action.payload
-          ?.status_code as unknown as number;
-      },
-    );
+    builder.addCase(triggerGetCommunityTaskCategoryById.fulfilled, (state, action) => {
+      state.communityTaskCategoryById.loading = false;
+      state.communityTaskCategoryById.data = action.payload;
+      state.communityTaskCategoryById.error = false;
+      state.communityTaskCategoryById.message = action.payload?.message as unknown as string;
+      state.communityTaskCategoryById.statusCode = action.payload?.status_code as unknown as number;
+    });
+    builder.addCase(triggerGetCommunityTaskCategoryById.rejected, (state, action) => {
+      state.communityTaskCategoryById.loading = false;
+      state.communityTaskCategoryById.error = true;
+      state.communityTaskCategoryById.message = action.payload?.message as unknown as string;
+      state.communityTaskCategoryById.statusCode = action.payload?.status_code as unknown as number;
+    });
 
     //LIST ALL INDICATORS
     builder.addCase(triggerGetAllIndicators.pending, (state) => {
@@ -215,18 +186,14 @@ const communitySlice = createSlice({
       state.communityIndicators.loading = false;
       state.communityIndicators.data = action.payload?.results;
       state.communityIndicators.error = false;
-      state.communityIndicators.message = action.payload
-        ?.message as unknown as string;
-      state.communityIndicators.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.communityIndicators.message = action.payload?.message as unknown as string;
+      state.communityIndicators.statusCode = action.payload?.status_code as unknown as number;
     });
     builder.addCase(triggerGetAllIndicators.rejected, (state, action) => {
       state.communityIndicators.loading = false;
       state.communityIndicators.error = true;
-      state.communityIndicators.message = action.payload
-        ?.message as unknown as string;
-      state.communityIndicators.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.communityIndicators.message = action.payload?.message as unknown as string;
+      state.communityIndicators.statusCode = action.payload?.status_code as unknown as number;
     });
 
     //ANSWER TASK QUESTION
@@ -240,18 +207,14 @@ const communitySlice = createSlice({
       state.answerTaskQuestion.loading = false;
       state.answerTaskQuestion.data = action.payload;
       state.answerTaskQuestion.error = false;
-      state.answerTaskQuestion.message = action.payload
-        ?.message as unknown as string;
-      state.answerTaskQuestion.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.answerTaskQuestion.message = action.payload?.message as unknown as string;
+      state.answerTaskQuestion.statusCode = action.payload?.status_code as unknown as number;
     });
     builder.addCase(triggerAnswerTaskQuestion.rejected, (state, action) => {
       state.answerTaskQuestion.loading = false;
       state.answerTaskQuestion.error = true;
-      state.answerTaskQuestion.message = action.payload
-        ?.message as unknown as string;
-      state.answerTaskQuestion.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.answerTaskQuestion.message = action.payload?.message as unknown as string;
+      state.answerTaskQuestion.statusCode = action.payload?.status_code as unknown as number;
     });
 
     //GET TASK QUESTIONS
@@ -265,18 +228,14 @@ const communitySlice = createSlice({
       state.taskQuestions.loading = false;
       state.taskQuestions.data = action.payload?.data?.results;
       state.taskQuestions.error = false;
-      state.taskQuestions.message = action.payload
-        ?.message as unknown as string;
-      state.taskQuestions.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.taskQuestions.message = action.payload?.message as unknown as string;
+      state.taskQuestions.statusCode = action.payload?.status_code as unknown as number;
     });
     builder.addCase(triggerGetTaskQuestions.rejected, (state, action) => {
       state.taskQuestions.loading = false;
       state.taskQuestions.error = true;
-      state.taskQuestions.message = action.payload
-        ?.message as unknown as string;
-      state.taskQuestions.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.taskQuestions.message = action.payload?.message as unknown as string;
+      state.taskQuestions.statusCode = action.payload?.status_code as unknown as number;
     });
 
     //GET TASK QUESTION BY ID
@@ -290,18 +249,14 @@ const communitySlice = createSlice({
       state.taskQuestionById.loading = false;
       state.taskQuestionById.data = action.payload?.data;
       state.taskQuestionById.error = false;
-      state.taskQuestionById.message = action.payload
-        ?.message as unknown as string;
-      state.taskQuestionById.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.taskQuestionById.message = action.payload?.message as unknown as string;
+      state.taskQuestionById.statusCode = action.payload?.status_code as unknown as number;
     });
     builder.addCase(triggerGetTaskQuestionById.rejected, (state, action) => {
       state.taskQuestionById.loading = false;
       state.taskQuestionById.error = true;
-      state.taskQuestionById.message = action.payload
-        ?.message as unknown as string;
-      state.taskQuestionById.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.taskQuestionById.message = action.payload?.message as unknown as string;
+      state.taskQuestionById.statusCode = action.payload?.status_code as unknown as number;
     });
   },
 });

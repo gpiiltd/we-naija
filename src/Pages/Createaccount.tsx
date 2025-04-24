@@ -16,11 +16,7 @@ import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  resetState,
-  resetUserData,
-  setUserEmail,
-} from "../redux/Slices/user/userSlice";
+import { resetState, resetUserData, setUserEmail } from "../redux/Slices/user/userSlice";
 import CustomModal from "../Components/Modal";
 import Icon from "../Assets/SvgImagesAndIcons";
 
@@ -30,9 +26,7 @@ const SignUp = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, userData, message, loading } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { error, userData, message, loading } = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     fullName: "",
@@ -45,10 +39,7 @@ const SignUp = () => {
     fullName: Yup.string()
       .required("Full name is required")
       .min(2, "Full name must be at least 2 characters long"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Invalid email format")
-      .trim(),
+    email: Yup.string().required("Email is required").email("Invalid email format").trim(),
     password: Yup.string()
       .required("Password cannot be empty")
       .max(20, "Password must not exceed 20 characters")
@@ -94,16 +85,10 @@ const SignUp = () => {
     <AuthPages>
       <ToastContainer />
       <div className="w-full">
-        <Typography
-          variant={TypographyVariant.SUBTITLE}
-          className="text-black md:text-center"
-        >
+        <Typography variant={TypographyVariant.SUBTITLE} className="text-black md:text-center">
           Create Account
         </Typography>
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="text-light_gray md:text-center "
-        >
+        <Typography variant={TypographyVariant.NORMAL} className="text-light_gray md:text-center ">
           Kindly fill in your details to sign up
         </Typography>
         <div className="pt-10">
@@ -169,9 +154,7 @@ const SignUp = () => {
             )}
           </Formik>
           <div className="flex mb-6 gap-1 pt-4 items-center justify-center">
-            <Typography variant={TypographyVariant.SMALL}>
-              Already have an account?
-            </Typography>
+            <Typography variant={TypographyVariant.SMALL}>Already have an account?</Typography>
             <Link to="/login">
               <Typography
                 variant={TypographyVariant.SMALL}
@@ -193,10 +176,7 @@ const SignUp = () => {
             >
               Registration successful
             </Typography>
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="text-[#5E5959] text-center"
-            >
+            <Typography variant={TypographyVariant.SMALL} className="text-[#5E5959] text-center">
               Account successfully created.
             </Typography>
           </div>

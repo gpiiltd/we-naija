@@ -15,23 +15,15 @@ const GiveReport = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { surveyIndicatorQuestions } = useSelector(
-    (state: RootState) => state.institute,
-  );
-  const [surveyIndicatorQuestionsData, setSurveyIndicatorQuestionsData] =
-    useState<any>([]);
+  const { surveyIndicatorQuestions } = useSelector((state: RootState) => state.institute);
+  const [surveyIndicatorQuestionsData, setSurveyIndicatorQuestionsData] = useState<any>([]);
 
   useEffect(() => {
-    dispatch(
-      triggerSurveyIndicatorQuestions({ indicatorId: id as string }) as any,
-    );
+    dispatch(triggerSurveyIndicatorQuestions({ indicatorId: id as string }) as any);
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (
-      surveyIndicatorQuestions.statusCode === 200 ||
-      surveyIndicatorQuestions.data
-    ) {
+    if (surveyIndicatorQuestions.statusCode === 200 || surveyIndicatorQuestions.data) {
       setSurveyIndicatorQuestionsData(surveyIndicatorQuestions.data);
     }
     if (surveyIndicatorQuestions.error && surveyIndicatorQuestions.message) {
@@ -52,10 +44,7 @@ const GiveReport = () => {
             <AiOutlineArrowLeft size={24} className="cursor-pointer" />
           </div>
           <Icon type="homeAvatar" className="pr-2" />
-          <Typography
-            variant={TypographyVariant.SUBTITLE}
-            className="font-bold"
-          >
+          <Typography variant={TypographyVariant.SUBTITLE} className="font-bold">
             {localStorage.getItem("institutionName")}
           </Typography>
         </div>

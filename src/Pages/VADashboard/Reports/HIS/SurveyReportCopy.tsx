@@ -38,20 +38,14 @@ interface SurveyAnswer {
   images?: File[];
 }
 
-const SurveyCopy = ({
-  surveyQuestions,
-}: {
-  surveyQuestions: SurveyQuestion[];
-}) => {
+const SurveyCopy = ({ surveyQuestions }: { surveyQuestions: SurveyQuestion[] }) => {
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [uploadedFileSize, setUploadedFileSize] = useState<number | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<string, string>
-  >({});
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [selectedOption, setSelectedOption] = useState<{
     identifier: string;
     requires_comment: boolean;
@@ -92,9 +86,7 @@ const SurveyCopy = ({
 
     // Update or add the answer to the surveyAnswers array
     setSurveyAnswers((prev) => {
-      const existingAnswerIndex = prev.findIndex(
-        (a) => a.question_id === currentQuestionId,
-      );
+      const existingAnswerIndex = prev.findIndex((a) => a.question_id === currentQuestionId);
       if (existingAnswerIndex !== -1) {
         const newAnswers = [...prev];
         newAnswers[existingAnswerIndex] = answerData;
@@ -123,10 +115,7 @@ const SurveyCopy = ({
 
         finalAnswers.forEach((answer, index) => {
           formData.append(`[${index}][question_id]`, answer.question_id);
-          formData.append(
-            `[${index}][selected_option]`,
-            answer.selected_option,
-          );
+          formData.append(`[${index}][selected_option]`, answer.selected_option);
 
           if (answer.comment) {
             formData.append(`[${index}][comment]`, answer.comment);
@@ -170,9 +159,7 @@ const SurveyCopy = ({
 
       // Restore previous answer's data if it exists
       const previousAnswer = surveyAnswers.find(
-        (a) =>
-          a.question_id ===
-          surveyQuestions[currentQuestionIndex - 1].identifier,
+        (a) => a.question_id === surveyQuestions[currentQuestionIndex - 1].identifier
       );
 
       if (previousAnswer) {
@@ -193,11 +180,7 @@ const SurveyCopy = ({
     }
   };
 
-  const handleAnswerSelect = (
-    questionId: string,
-    answerId: string,
-    option: any,
-  ) => {
+  const handleAnswerSelect = (questionId: string, answerId: string, option: any) => {
     setSelectedAnswers((prev) => ({
       ...prev,
       [questionId]: answerId,
@@ -254,10 +237,7 @@ const SurveyCopy = ({
 
     if (showAdditionalInfo) {
       if (selectedOption?.requires_image && !uploadedFile) return false;
-      if (
-        selectedOption?.requires_comment &&
-        (!commentText || commentText.length > 250)
-      )
+      if (selectedOption?.requires_comment && (!commentText || commentText.length > 250))
         return false;
     }
 
@@ -289,10 +269,7 @@ const SurveyCopy = ({
             >
               QUESTION {currentQuestionIndex + 1} OF {surveyQuestions.length}
             </Typography>
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="tracking-wide text-center"
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="tracking-wide text-center">
               {currentQuestion?.title}
             </Typography>
           </div>
@@ -304,13 +281,7 @@ const SurveyCopy = ({
                   label={option.text}
                   value={option.identifier}
                   selectedValue={currentAnswer}
-                  onChange={() =>
-                    handleAnswerSelect(
-                      currentQuestionId,
-                      option.identifier,
-                      option,
-                    )
-                  }
+                  onChange={() => handleAnswerSelect(currentQuestionId, option.identifier, option)}
                 />
               ))}
             </section>
@@ -329,8 +300,7 @@ const SurveyCopy = ({
               text={
                 currentQuestionIndex === surveyQuestions.length - 1
                   ? "Submit Survey"
-                  : selectedOption?.requires_image ||
-                      selectedOption?.requires_comment
+                  : selectedOption?.requires_image || selectedOption?.requires_comment
                     ? "Proceed"
                     : "Next Question"
               }
@@ -344,18 +314,14 @@ const SurveyCopy = ({
         </section>
       ) : (
         <section className="flex flex-col gap-6">
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="text-center mb-4"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="text-center mb-4">
             {currentQuestion?.title}
           </Typography>
           <Typography
             variant={TypographyVariant.NORMAL}
             className="font-bold tracking-wide text-center"
           >
-            Based on your response, kindly provide more details about the
-            incident.
+            Based on your response, kindly provide more details about the incident.
           </Typography>
 
           {selectedOption?.requires_image && (
@@ -374,10 +340,7 @@ const SurveyCopy = ({
                       >
                         {uploadedFileName}
                       </Typography>
-                      <Typography
-                        variant={TypographyVariant.SMALL}
-                        className="text-gray-500"
-                      >
+                      <Typography variant={TypographyVariant.SMALL} className="text-gray-500">
                         {uploadedFileSize} KB – 100% uploaded
                       </Typography>
                     </div>
@@ -394,10 +357,7 @@ const SurveyCopy = ({
                 <div className="border border-dashed border-gray-300 rounded-lg p-8 text-center">
                   <label className="cursor-pointer w-full">
                     <Icon type="imageUploadIcon" />
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="text-gray-500 mt-2"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className="text-gray-500 mt-2">
                       Kindly upload it as an image or pdf
                     </Typography>
                     <Typography
@@ -432,17 +392,11 @@ const SurveyCopy = ({
                 }
                 rows={6}
               />
-              <Typography
-                variant={TypographyVariant.SMALL}
-                className="text-gray-500 mt-2"
-              >
+              <Typography variant={TypographyVariant.SMALL} className="text-gray-500 mt-2">
                 You are allowed a maximum of 250 characters
               </Typography>
               {commentText.length > 250 && (
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="text-red-500 mt-1"
-                >
+                <Typography variant={TypographyVariant.SMALL} className="text-red-500 mt-1">
                   Maximum character limit exceeded
                 </Typography>
               )}

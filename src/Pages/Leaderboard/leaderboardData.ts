@@ -1,10 +1,5 @@
 const getRandomBadge = () => {
-  const badges = [
-    "Scout level",
-    "Guardian level",
-    "Champion level",
-    "Legend level",
-  ];
+  const badges = ["Scout level", "Guardian level", "Champion level", "Legend level"];
   return badges[Math.floor(Math.random() * badges.length)];
 };
 

@@ -23,8 +23,7 @@ const FAQ: React.FC = () => {
     },
     {
       question: "Can other info be added to an invoice?",
-      answer:
-        "Yes, you can customize your invoices with additional information.",
+      answer: "Yes, you can customize your invoices with additional information.",
     },
     {
       question: "How does billing work?",
@@ -43,11 +42,7 @@ const FAQ: React.FC = () => {
   return (
     <div className="md:max-w-[60%] mx-auto p-6 bg-white rounded-lg shadow-md mb-8">
       <div className="flex">
-        <span
-          onClick={() =>
-            navigate("/verified-agent-dashboard/settings/setting-mobile")
-          }
-        >
+        <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
           <Icon type="arrowBackSvg" className="mr-4 md:hidden" />
         </span>
 
@@ -73,9 +68,7 @@ const FAQ: React.FC = () => {
             </span>
           </div>
           {activeIndex === index && (
-            <div className=" text-gray-600 bg-gray-100 p-4 rounded-lg border-t-0">
-              {faq.answer}
-            </div>
+            <div className=" text-gray-600 bg-gray-100 p-4 rounded-lg border-t-0">{faq.answer}</div>
           )}
         </div>
       ))}

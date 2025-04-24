@@ -7,10 +7,7 @@ import Typography from "../../Components/Typography";
 const SettingsHeader = () => {
   return (
     <div className="min-h-screen flex flex-col w-full">
-      <Typography
-        variant={TypographyVariant.SUBTITLE}
-        className="hidden md:block mb-4 font-bold"
-      >
+      <Typography variant={TypographyVariant.SUBTITLE} className="hidden md:block mb-4 font-bold">
         Settings
       </Typography>
       <Header className="">

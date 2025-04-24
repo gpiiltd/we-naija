@@ -6,11 +6,7 @@ import { TypographyVariant } from "../../../../../Components/types";
 import { useNavigate } from "react-router-dom";
 import Typography from "../../../../../Components/Typography";
 
-export const GenericComponent = ({
-  surveyIndicatorData,
-}: {
-  surveyIndicatorData: any[];
-}) => {
+export const GenericComponent = ({ surveyIndicatorData }: { surveyIndicatorData: any[] }) => {
   const navigate = useNavigate();
 
   return (
@@ -24,7 +20,7 @@ export const GenericComponent = ({
                 onClick={() => {
                   localStorage.setItem("surveyIndicatorName", indicator.name);
                   navigate(
-                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,
+                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`
                   );
                 }}
               >
@@ -36,27 +32,17 @@ export const GenericComponent = ({
                     >
                       {indicator.name}
                     </Typography>
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="pt-2 text-light_gray"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className="pt-2 text-light_gray">
                       {indicator.description}
                     </Typography>
                   </div>
 
-                  <IoIosArrowForward
-                    className="font-extrabold"
-                    size={24}
-                    color="#007A61"
-                  />
+                  <IoIosArrowForward className="font-extrabold" size={24} color="#007A61" />
                 </div>
                 <div className="flex gap-2 items-center pt-3">
                   <LuClock12 color="#7A0019" />
 
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                     3 tasks
                   </Typography>
                 </div>
@@ -66,10 +52,7 @@ export const GenericComponent = ({
             </Card>
           ))
         ) : (
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="text-center text-light_gray"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="text-center text-light_gray">
             Loading indicators...
           </Typography>
         )}
@@ -78,11 +61,7 @@ export const GenericComponent = ({
   );
 };
 
-export const PediatricComponent = ({
-  surveyIndicatorData,
-}: {
-  surveyIndicatorData: any[];
-}) => {
+export const PediatricComponent = ({ surveyIndicatorData }: { surveyIndicatorData: any[] }) => {
   const navigate = useNavigate();
 
   return (
@@ -95,7 +74,7 @@ export const PediatricComponent = ({
                 className="py-8 px-6"
                 onClick={() =>
                   navigate(
-                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,
+                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`
                   )
                 }
               >
@@ -107,27 +86,17 @@ export const PediatricComponent = ({
                     >
                       {indicator.name}
                     </Typography>
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="pt-2 text-light_gray"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className="pt-2 text-light_gray">
                       {indicator.description}
                     </Typography>
                   </div>
 
-                  <IoIosArrowForward
-                    className="font-extrabold"
-                    size={24}
-                    color="#007A61"
-                  />
+                  <IoIosArrowForward className="font-extrabold" size={24} color="#007A61" />
                 </div>
                 <div className="flex gap-2 items-center pt-3">
                   <LuClock12 color="#7A0019" />
 
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                     3 tasks
                   </Typography>
                 </div>
@@ -138,10 +107,7 @@ export const PediatricComponent = ({
           ))
         ) : (
           <div className="border h-50 bg-white py-10 flex justify-between  px-10 rounded-lg mb-8">
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="pt-1 font-bold "
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="pt-1 font-bold ">
               No Pediatric indicators found
             </Typography>
           </div>
@@ -168,7 +134,7 @@ export const SexualReproductiveHealthComponent = ({
                 className="py-8 px-6"
                 onClick={() =>
                   navigate(
-                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`,
+                    `/verified-agent-dashboard/reports/hospitals/give-report/${indicator.identifier}`
                   )
                 }
               >
@@ -180,27 +146,17 @@ export const SexualReproductiveHealthComponent = ({
                     >
                       {indicator.name}
                     </Typography>
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="pt-2 text-light_gray"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className="pt-2 text-light_gray">
                       {indicator.description}
                     </Typography>
                   </div>
 
-                  <IoIosArrowForward
-                    className="font-extrabold"
-                    size={24}
-                    color="#007A61"
-                  />
+                  <IoIosArrowForward className="font-extrabold" size={24} color="#007A61" />
                 </div>
                 <div className="flex gap-2 items-center pt-3">
                   <LuClock12 color="#7A0019" />
 
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                     3 tasks
                   </Typography>
                 </div>
@@ -211,10 +167,7 @@ export const SexualReproductiveHealthComponent = ({
           ))
         ) : (
           <div className="border h-50 bg-white py-10 flex justify-between  px-10 rounded-lg mb-8">
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="pt-1 font-bold "
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="pt-1 font-bold ">
               No Sexual & reproductive health indicators found
             </Typography>
           </div>

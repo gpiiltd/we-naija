@@ -82,7 +82,7 @@ const Hospitals = () => {
   const suggestions = Array.isArray(institutions)
     ? getRandomItems(
         institutions.map((institution: any) => institution.name),
-        3,
+        3
       )
     : [];
 
@@ -125,14 +125,7 @@ const Hospitals = () => {
     "Yobe",
     "Zamfara",
   ];
-  const cities = [
-    "Ikeja",
-    "Maitama",
-    "Sabon Gari",
-    "Port Harcourt",
-    "Zaria",
-    "Ibadan",
-  ];
+  const cities = ["Ikeja", "Maitama", "Sabon Gari", "Port Harcourt", "Zaria", "Ibadan"];
   const [buttonText, setButtonText] = useState("Location");
 
   const handleSearchChange = (newSearchQuery: string) => {
@@ -192,22 +185,15 @@ const Hospitals = () => {
           <div onClick={() => navigate(-1)}>
             <AiOutlineArrowLeft size={24} className="cursor-pointer" />
           </div>
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="text-black font-extrabold"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="text-black font-extrabold">
             Health institutes survey
           </Typography>
         </div>
         <Breadcrumb />
 
         <div className="flex flex-col justify-between w-full  md:flex-row">
-          <Typography
-            variant={TypographyVariant.SMALL}
-            className="text-light_gray"
-          >
-            Select a health institute to submit a survey report today and earn
-            star points
+          <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
+            Select a health institute to submit a survey report today and earn star points
           </Typography>
           <div className="flex gap-2 pt-3 flex-col justify-center md:gap-1  md:pt-0 md:flex-row">
             <SearchBar
@@ -231,31 +217,21 @@ const Hospitals = () => {
 
       {/*  */}
       {searchQuery !== "" && (
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="text-black font-extrabold pt-5"
-        >
+        <Typography variant={TypographyVariant.NORMAL} className="text-black font-extrabold pt-5">
           Search result:
         </Typography>
       )}
       {institutions?.filter((hospital: any) =>
-        hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
       ).length === 0 ? (
         <div className="flex justify-center items-center pt-4">
           <div className="rounded-lg border border-gray-300 shadow-md p-4 w-full flex flex-col gap-4 justify-center items-center py-32">
             <Icon type="noData" />
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="font-bold"
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="font-bold">
               No result found
             </Typography>
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="text-light_gray"
-            >
-              Sorry, no available institute match your keyword. Find institute
-              by location
+            <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
+              Sorry, no available institute match your keyword. Find institute by location
             </Typography>
             <ButtonComponent
               text="Filter by location"
@@ -272,9 +248,7 @@ const Hospitals = () => {
             {Array.isArray(institutions) && institutions.length > 0 ? (
               institutions
                 .filter((hospital: any) =>
-                  hospital.name
-                    .toLowerCase()
-                    .includes(searchQuery.toLowerCase()),
+                  hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
                 )
                 .map((hospital: any, index: number) => (
                   <div
@@ -285,11 +259,7 @@ const Hospitals = () => {
                       <section className="flex justify-start">
                         {/* <Icon type="homeAvatar" className="pr-2" /> */}
                         {hospital.logo ? (
-                          <img
-                            src={hospital.logo}
-                            alt="Institution Icon"
-                            className="pr-2"
-                          />
+                          <img src={hospital.logo} alt="Institution Icon" className="pr-2" />
                         ) : (
                           <div className="w-8 h-8 bg-blue-500 text-white text-[10px] flex items-center justify-center rounded-full">
                             <span className="text-white p-2">
@@ -301,9 +271,7 @@ const Hospitals = () => {
                           </div>
                         )}
                         <div>
-                          <p className="ml-2 font-bold text-black">
-                            {hospital.name}
-                          </p>
+                          <p className="ml-2 font-bold text-black">{hospital.name}</p>
                           <p className="ml-2 font-normal text-[#5E5959]">
                             {/* {hospital.abbreviation} */}
                             {hospital.name
@@ -313,15 +281,11 @@ const Hospitals = () => {
                           </p>
                         </div>
                       </section>
-                      <p className="font-normal text-sm pt-3">
-                        {hospital.address}
-                      </p>
+                      <p className="font-normal text-sm pt-3">{hospital.address}</p>
                       <div className="flex items-center justify-start pt-2">
                         <Icon type="timeClocKSvg" className="pr-2" />
                         <p className="font-normal text-sm text-[#5E5959] pr-1">
-                          {formatOperationalDays(
-                            hospital?.operation_days || "",
-                          )}
+                          {formatOperationalDays(hospital?.operation_days || "")}
                         </p>
                         <p className="font-normal text-sm">
                           ({hospital.closing_time} - {hospital.opening_time})
@@ -333,13 +297,11 @@ const Hospitals = () => {
                       className="flex items-center justify-end pr-4 pt-2 mb-1"
                       onClick={() =>
                         navigate(
-                          `/verified-agent-dashboard/reports/hospitals/survey-list/${hospital.identifier}`,
+                          `/verified-agent-dashboard/reports/hospitals/survey-list/${hospital.identifier}`
                         )
                       }
                     >
-                      <p className="font-bold text-sm text-[#007A61] pr-1">
-                        Give report
-                      </p>
+                      <p className="font-bold text-sm text-[#007A61] pr-1">Give report</p>
                       <Icon type="arrowUpSvg" className="pr-2" />
                     </div>
                   </div>
@@ -370,10 +332,7 @@ const Hospitals = () => {
         <div className="py-2 flex flex-col">
           <div className="flex flex-col gap-4 justify-center ">
             <div className="border-b text-center pb-4">
-              <Typography
-                variant={TypographyVariant.NORMAL}
-                className="font-bold"
-              >
+              <Typography variant={TypographyVariant.NORMAL} className="font-bold">
                 Location Filter
               </Typography>
             </div>
@@ -464,9 +423,7 @@ const Hospitals = () => {
             </div>
             <div className="flex justify-between items-center pt-6 pb-3 border-t mt-4">
               <div className="px-4 cursor-pointer" onClick={handleClearAll}>
-                <Typography variant={TypographyVariant.NORMAL}>
-                  Clear all
-                </Typography>
+                <Typography variant={TypographyVariant.NORMAL}>Clear all</Typography>
               </div>
               <div className="px-4">
                 {" "}

@@ -8,12 +8,7 @@ type RadioButtonProps = {
   onChange: (value: string) => void;
 };
 
-const RadioButton: React.FC<RadioButtonProps> = ({
-  label,
-  value,
-  selectedValue,
-  onChange,
-}) => {
+const RadioButton: React.FC<RadioButtonProps> = ({ label, value, selectedValue, onChange }) => {
   const isSelected = selectedValue === value;
 
   return (

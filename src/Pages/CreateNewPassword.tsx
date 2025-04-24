@@ -24,9 +24,7 @@ const CreateNewPassword = () => {
 
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, message, loading } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { error, message, loading } = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     passwordReset: "",
@@ -39,7 +37,7 @@ const CreateNewPassword = () => {
       .max(20, "Password must not exceed 20 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character",
+        "Must contain at least 8 characters with 1 Uppercase, Lowercase, Number and Special Character"
       ),
     confirmPassword: Yup.string()
       .required("Confirm password is required")
@@ -91,16 +89,10 @@ const CreateNewPassword = () => {
       <div className="flex w-full px-4 pt-5 justify-center items-center md:px-32 lg:px-56">
         <div className="w-full pt-8 lg:pt-0">
           <div className="flex flex-col justify-center items-center pt-6">
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className="text-black "
-            >
+            <Typography variant={TypographyVariant.SUBTITLE} className="text-black ">
               Reset password
             </Typography>
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="text-light_gray "
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="text-light_gray ">
               Enter new password{" "}
             </Typography>
           </div>
@@ -134,9 +126,7 @@ const CreateNewPassword = () => {
                     name="confirmPassword"
                     helperText="Passwords matched"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    icon={
-                      showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />
-                    }
+                    icon={showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                     setFieldValue={setFieldValue}
                     setFieldTouched={setFieldTouched}
                   />
@@ -166,10 +156,7 @@ const CreateNewPassword = () => {
             >
               Password changed successfully
             </Typography>
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="text-light_gray pt-4"
-            >
+            <Typography variant={TypographyVariant.SMALL} className="text-light_gray pt-4">
               Great
             </Typography>
           </div>{" "}

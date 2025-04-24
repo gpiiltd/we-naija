@@ -14,21 +14,10 @@ const CustomModal: FC<Modalprops> = ({ isOpen, onClose, children }) => {
       }`}
       onClick={onClose}
     >
-      <div
-        className="bg-white rounded-lg shadow-lg  w-96"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="bg-white rounded-lg shadow-lg  w-96" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-end mr-4 mt-4">
-          <button
-            className="text-gray-400 hover:text-gray-600"
-            onClick={onClose}
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+          <button className="text-gray-400 hover:text-gray-600" onClick={onClose}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

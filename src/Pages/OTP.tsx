@@ -7,10 +7,7 @@ import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/Store/store";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  triggerOTPValidation,
-  triggerOTPRequest,
-} from "../redux/Services/user/UserServices";
+import { triggerOTPValidation, triggerOTPRequest } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,9 +31,7 @@ const OTP = () => {
   const [canResend, setCanResend] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { error, message, loading, email } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { error, message, loading, email } = useSelector((state: RootState) => state.user);
 
   const sendOtp = () => {
     const payload = {
@@ -134,10 +129,7 @@ const OTP = () => {
       <div className="flex w-full px-4 pt-12 md:pt-24 lg:pt-48 md:px-32 lg:px-56">
         <div className="w-full pt-8 lg:pt-0">
           <div className="flex flex-col items-center gap-6 lg:gap-4">
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className="text-black text-center "
-            >
+            <Typography variant={TypographyVariant.SUBTITLE} className="text-black text-center ">
               Check your email
             </Typography>
             <div className="">
@@ -167,10 +159,7 @@ const OTP = () => {
                 autoFocus={true}
               />
             </div>
-            <Typography
-              variant={TypographyVariant.NORMAL}
-              className="text-light_gray text-center"
-            >
+            <Typography variant={TypographyVariant.NORMAL} className="text-light_gray text-center">
               Didn't receive a code?{" "}
             </Typography>
             <div
@@ -179,15 +168,11 @@ const OTP = () => {
             >
               <Typography
                 variant={TypographyVariant.NORMAL}
-                className={`text-center ${
-                  canResend ? "text-orange underline" : "text-black"
-                }`}
+                className={`text-center ${canResend ? "text-orange underline" : "text-black"}`}
               >
                 {canResend
                   ? "Re-send code via SMS"
-                  : `Re-send code via SMS (0:${
-                      countdown < 10 ? `0${countdown}` : countdown
-                    })`}
+                  : `Re-send code via SMS (0:${countdown < 10 ? `0${countdown}` : countdown})`}
               </Typography>
             </div>
             <div className="w-full pt-8 lg:pt-6">

@@ -26,16 +26,12 @@ const Reports = () => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-1">
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="text-black font-extrabold"
-        >
+        <Typography variant={TypographyVariant.NORMAL} className="text-black font-extrabold">
           Reports
         </Typography>
       </div>
       <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
-        Kindly select the type of report type you would like to participate in
-        today.{" "}
+        Kindly select the type of report type you would like to participate in today.{" "}
       </Typography>
 
       <div className="grid gap-8  md:grid-cols-2">
@@ -48,9 +44,8 @@ const Reports = () => {
               </h3>
               <div className="flex flex-col gap-1 lg:pt-2 lg:pr-52">
                 <p className="text-xs md:text-sm lg:leading-6 lg:text-base font-thin">
-                  As a Health Hero, complete curated tasks to deepen your health
-                  knowledge, provide valuable data, and{" "}
-                  <span className="font-extrabold">earn star points.</span>
+                  As a Health Hero, complete curated tasks to deepen your health knowledge, provide
+                  valuable data, and <span className="font-extrabold">earn star points.</span>
                 </p>
                 <div className="flex h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
                   <Button
@@ -61,7 +56,7 @@ const Reports = () => {
                       handleBreadCrumbNavigate(
                         "/verified-agent-dashboard/reports/community-tasks",
                         "Community task",
-                        navigate,
+                        navigate
                       )
                     }
                   />
@@ -80,9 +75,8 @@ const Reports = () => {
               </h3>
               <div className="flex flex-col gap-1 lg:pt-2 lg:pr-52">
                 <p className="text-xs md:text-sm lg:leading-6 lg:text-base font-thin">
-                  Take part in surveys at our partners' health institutes,
-                  provide feedback on key indicators, and{" "}
-                  <span className="font-extrabold">earn star points.</span>
+                  Take part in surveys at our partners' health institutes, provide feedback on key
+                  indicators, and <span className="font-extrabold">earn star points.</span>
                 </p>
                 <div className="flex h-7 justify-center w-[50%] mt-2 md:w-[40%] lg:w-[50%] lg:h-12 md:mt-6">
                   <Button
@@ -93,7 +87,7 @@ const Reports = () => {
                       handleBreadCrumbNavigate(
                         "/verified-agent-dashboard/reports/hospitals",
                         "Health inst. survey",
-                        navigate,
+                        navigate
                       )
                     }
                   />

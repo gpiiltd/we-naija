@@ -33,9 +33,7 @@ const PendingKyc = () => {
     fetchInstitutions();
   }, [dispatch]);
 
-  const { instituteData, error, message } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { instituteData, error, message } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     if (Array.isArray(instituteData) && instituteData.length > 0 && !error) {
@@ -54,8 +52,7 @@ const PendingKyc = () => {
   return (
     <div>
       <p className="font-normal text-[#5E5959] text-lg">
-        Hello,{" "}
-        <span className="font-bold text-black">{userData?.first_name}</span> 👋
+        Hello, <span className="font-bold text-black">{userData?.first_name}</span> 👋
       </p>
       <p className="font-light text-[#5E5959] text-sm">
         Let's improve health care service together.
@@ -71,8 +68,8 @@ const PendingKyc = () => {
       </div>
       <p className="font-bold text-black">Recommended institutes</p>
       <p className="font-light text-[#5E5959] text-sm">
-        Below are list of recommend institute to visit and give a report based
-        on your residential address.
+        Below are list of recommend institute to visit and give a report based on your residential
+        address.
       </p>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
@@ -91,7 +88,7 @@ const PendingKyc = () => {
               hours={institution.operation_days}
               onClick={() =>
                 navigate(
-                  `/verified-agent-dashboard/reports/hospitals/survey-list/${institution?.identifier}`,
+                  `/verified-agent-dashboard/reports/hospitals/survey-list/${institution?.identifier}`
                 )
               }
             />
@@ -113,9 +110,7 @@ const PendingKyc = () => {
               </p>
               <div className="flex pt-2 md:pt-4 ">
                 <button
-                  onClick={() =>
-                    navigate("/verified-agent-dashboard/join-community")
-                  }
+                  onClick={() => navigate("/verified-agent-dashboard/join-community")}
                   className=" flex items-center gap-2 px-3 py-2 rounded bg-orange text-white  focus:outline-none"
                 >
                   <span className="text-xs text-white font-thin md:text-base md:font-bold">

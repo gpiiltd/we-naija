@@ -37,7 +37,7 @@ const IDVerification = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const { kycPersonalInfo, kycPhoneNumber, error, message } = useSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.user
   );
 
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,14 +92,9 @@ const IDVerification = () => {
           <div className="flex items-center mb-4">
             <Icon type="idcard" className="w-10 h-10 mr-4" />
 
-            <h1 className="text-center md:mb-4 text-xl  md:text-3xl">
-              ID Verification
-            </h1>
+            <h1 className="text-center md:mb-4 text-xl  md:text-3xl">ID Verification</h1>
           </div>
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="text-left mb-6 text-gray-500"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="text-left mb-6 text-gray-500">
             Kindly fill in your ID card details
           </Typography>
 
@@ -128,23 +123,16 @@ const IDVerification = () => {
                 ></span>
                 <Typography
                   variant={TypographyVariant.NORMAL}
-                  className={`${
-                    idType === type.value ? "text-black" : "text-gray-500"
-                  }`}
+                  className={`${idType === type.value ? "text-black" : "text-gray-500"}`}
                 >
                   {type.name}
                 </Typography>
               </label>
             ))}
-            {errors.idType && (
-              <p className="text-red-500 text-sm">{errors.idType}</p>
-            )}
+            {errors.idType && <p className="text-red-500 text-sm">{errors.idType}</p>}
           </div>
 
-          <Typography
-            variant={TypographyVariant.SUBTITLE}
-            className="mb-4 mt-8"
-          >
+          <Typography variant={TypographyVariant.SUBTITLE} className="mb-4 mt-8">
             Enter ID Number
           </Typography>
           <input
@@ -157,34 +145,22 @@ const IDVerification = () => {
             placeholder="ID Number"
           />
 
-          {errors.idNumber && (
-            <p className="text-red-500 text-sm">{errors.idNumber}</p>
-          )}
+          {errors.idNumber && <p className="text-red-500 text-sm">{errors.idNumber}</p>}
 
           {/* File Upload Instructions */}
-          <Typography
-            variant={TypographyVariant.SUBTITLE}
-            className="mb-2 mt-8"
-          >
+          <Typography variant={TypographyVariant.SUBTITLE} className="mb-2 mt-8">
             Upload a photo of your selected valid ID
           </Typography>
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="mb-4 text-gray-500"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="mb-4 text-gray-500">
             1. Make sure the whole ID is in the frame.
             <br />
-            2. The photo should clearly show the front of your ID - with no
-            edges cut off.
+            2. The photo should clearly show the front of your ID - with no edges cut off.
             <br />
             3. Take the photo indoors to prevent glare or reflections.
           </Typography>
 
           <div className="relative mb-4">
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className="mb-2 mt-8"
-            >
+            <Typography variant={TypographyVariant.SUBTITLE} className="mb-2 mt-8">
               Front of the ID card
             </Typography>
 
@@ -196,10 +172,7 @@ const IDVerification = () => {
               error={errors.frontFile}
             />
 
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className="mb-2 mt-8"
-            >
+            <Typography variant={TypographyVariant.SUBTITLE} className="mb-2 mt-8">
               Back of the ID card
             </Typography>
             <FileUpload
@@ -234,10 +207,7 @@ const IDVerification = () => {
               >
                 KYC successful submitted{" "}
               </Typography>
-              <Typography
-                variant={TypographyVariant.SMALL}
-                className="text-light_gray pt-4"
-              >
+              <Typography variant={TypographyVariant.SMALL} className="text-light_gray pt-4">
                 Great job!
               </Typography>
             </div>{" "}

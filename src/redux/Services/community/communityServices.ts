@@ -16,16 +16,13 @@ export const triggerGetAllCommunityCategories = createAsyncThunk<
 >("community/GetAllCommunityTasks", async (_, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get<DefaultResponse>(
-      `${apiUrl.getAllCommunityTaskCategories}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+    const response = await axios.get<DefaultResponse>(`${apiUrl.getAllCommunityTaskCategories}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-    );
+    });
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -51,7 +48,7 @@ export const triggerGetCommunityTaskCategoryById = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      },
+      }
     );
 
     return response.data;
@@ -71,16 +68,13 @@ export const triggerGetAllIndicators = createAsyncThunk<
 >("community/GetAllIndicators", async (_, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get<DefaultResponse>(
-      `${apiUrl.getAllIndicators}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+    const response = await axios.get<DefaultResponse>(`${apiUrl.getAllIndicators}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-    );
+    });
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -98,17 +92,13 @@ export const triggerAnswerTaskQuestion = createAsyncThunk<
 >("community/AnswerTaskQuestion", async (data, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.post<DefaultResponse>(
-      `${apiUrl.answerTaskQuestion}`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+    const response = await axios.post<DefaultResponse>(`${apiUrl.answerTaskQuestion}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-    );
+    });
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -134,7 +124,7 @@ export const triggerGetTaskQuestions = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      },
+      }
     );
 
     return response.data;
@@ -154,16 +144,13 @@ export const triggerGetTaskQuestionById = createAsyncThunk<
 >("community/GetTaskQuestionById", async (id, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get<DefaultResponse>(
-      `${apiUrl.getTaskQuestions}/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+    const response = await axios.get<DefaultResponse>(`${apiUrl.getTaskQuestions}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-    );
+    });
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({

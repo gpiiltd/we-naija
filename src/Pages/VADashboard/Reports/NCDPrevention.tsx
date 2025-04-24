@@ -21,9 +21,7 @@ const NCDPrevention = () => {
   const dispatch = useDispatch();
   const [communityTaskCategory, setCommunityTaskCategory] = useState<any>({});
   // const [indicators, setIndicators] = useState<any>({});
-  const { communityTaskCategoryById } = useSelector(
-    (state: RootState) => state.community,
-  );
+  const { communityTaskCategoryById } = useSelector((state: RootState) => state.community);
 
   useEffect(() => {
     // dispatch(triggerGetAllIndicators({}) as any);
@@ -31,10 +29,7 @@ const NCDPrevention = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (
-      communityTaskCategoryById?.statusCode === 200 &&
-      communityTaskCategoryById
-    ) {
+    if (communityTaskCategoryById?.statusCode === 200 && communityTaskCategoryById) {
       setCommunityTaskCategory(communityTaskCategoryById.data.data);
     }
     dispatch(resetCommunityTaskCategoryByIdState());
@@ -46,28 +41,19 @@ const NCDPrevention = () => {
         <div onClick={() => navigate(-1)}>
           <AiOutlineArrowLeft size={24} className="cursor-pointer" />
         </div>
-        <Typography variant={TypographyVariant.SUBTITLE}>
-          {communityTaskCategory?.name}
-        </Typography>
+        <Typography variant={TypographyVariant.SUBTITLE}>{communityTaskCategory?.name}</Typography>
       </div>
       <Breadcrumb />
 
-      <Typography
-        variant={TypographyVariant.SMALL}
-        className="pt-1 text-light_gray max-w-lg mt-2"
-      >
+      <Typography variant={TypographyVariant.SMALL} className="pt-1 text-light_gray max-w-lg mt-2">
         {communityTaskCategory?.description}
       </Typography>
       <div className="pt-4">
         <Typography variant={TypographyVariant.NORMAL}>
           Indicators ({communityTaskCategory?.indicators?.length}){" "}
         </Typography>{" "}
-        <Typography
-          variant={TypographyVariant.SMALL}
-          className="pt-2 text-light_gray"
-        >
-          Kindly select the community indicator you would like to perform a task
-          on.{" "}
+        <Typography variant={TypographyVariant.SMALL} className="pt-2 text-light_gray">
+          Kindly select the community indicator you would like to perform a task on.{" "}
         </Typography>
       </div>
       <div className="grid gap-6 py-6 pb-48 grid-cols-1 md:grid-cols-2">
@@ -91,19 +77,16 @@ const NCDPrevention = () => {
                     totalPoints: indicator.total_points,
                     identifier: indicator.identifier,
                   };
-                  localStorage.setItem(
-                    "indicatorDetails",
-                    JSON.stringify(indicatorDetails),
-                  );
+                  localStorage.setItem("indicatorDetails", JSON.stringify(indicatorDetails));
                   // localStorage.setItem("indicatorName", indicator.name);
                   // localStorage.setItem("indicatorDescription", indicator.description);
                   handleBreadCrumbNavigate(
                     `/verified-agent-dashboard/reports/community-tasks/indicator/${indicator.name.replace(
                       /\s+/g,
-                      "",
+                      ""
                     )}/${indicator.identifier}`,
                     indicator.name,
-                    navigate,
+                    navigate
                   );
                 }}
               >
@@ -115,37 +98,24 @@ const NCDPrevention = () => {
                     >
                       {indicator.name}
                     </Typography>
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="pt-2 text-light_gray"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className="pt-2 text-light_gray">
                       {indicator.description}
                     </Typography>
                   </div>
                   <div className="bg-effect_green p-1 rounded-full">
-                    <IoIosArrowForward
-                      className="font-extrabold"
-                      size={24}
-                      color="#007A61"
-                    />
+                    <IoIosArrowForward className="font-extrabold" size={24} color="#007A61" />
                   </div>
                 </div>
                 <div className="flex gap-3">
                   <div className="flex gap-2 items-center justify-center">
                     <Icon type="kyc" />
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className=" text-light_gray"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className=" text-light_gray">
                       {indicator.task_count} tasks
                     </Typography>
                   </div>
                   <div className="flex items-center justify-center gap-2   ">
                     <Icon type="starPoints" />
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className=" text-light_gray"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className=" text-light_gray">
                       {indicator.total_points} points
                     </Typography>
                   </div>
@@ -155,10 +125,7 @@ const NCDPrevention = () => {
             </Card>
           ))
         ) : (
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className="text-center text-light_gray"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className="text-center text-light_gray">
             No indicators found
           </Typography>
         )}

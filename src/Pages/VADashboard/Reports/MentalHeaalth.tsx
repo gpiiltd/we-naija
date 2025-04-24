@@ -33,9 +33,7 @@ const MentalHeaalth = () => {
     }
   }, [taskQuestions]);
 
-  const indicatorDetails = JSON.parse(
-    localStorage.getItem("indicatorDetails") || "{}",
-  );
+  const indicatorDetails = JSON.parse(localStorage.getItem("indicatorDetails") || "{}");
 
   return (
     <div>
@@ -43,9 +41,7 @@ const MentalHeaalth = () => {
         <div onClick={() => navigate(-1)}>
           <AiOutlineArrowLeft size={24} className="cursor-pointer" />
         </div>
-        <Typography variant={TypographyVariant.SUBTITLE}>
-          {indicatorDetails.name}
-        </Typography>
+        <Typography variant={TypographyVariant.SUBTITLE}>{indicatorDetails.name}</Typography>
       </div>
       <Breadcrumb />
 
@@ -59,32 +55,21 @@ const MentalHeaalth = () => {
       <div className="flex mt-8  flex-col md:px-12 lg:px-52">
         <div className="rounded-lg self-center shadow-lg px-3 py-4 md:px-16 md:py-12 flex flex-col justify-start mb-16">
           <div className="flex flex-col justify-start ">
-            <Typography variant={TypographyVariant.SUBTITLE}>
-              {indicatorDetails.name}
-            </Typography>
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="pt-1 text-light_gray max-w-lg"
-            >
+            <Typography variant={TypographyVariant.SUBTITLE}>{indicatorDetails.name}</Typography>
+            <Typography variant={TypographyVariant.SMALL} className="pt-1 text-light_gray max-w-lg">
               {indicatorDetails.description}
             </Typography>
 
             <div className="flex gap-3 ">
               <div className="flex gap-2 items-center ">
                 <Icon type="tasks" className="pt-1" />
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="pt-2 text-light_gray"
-                >
+                <Typography variant={TypographyVariant.SMALL} className="pt-2 text-light_gray">
                   {indicatorDetails.taskCount} tasks
                 </Typography>
               </div>
               <div className="flex gap-2 items-center">
                 <Icon type="starPoints" className="pt-2" />
-                <Typography
-                  variant={TypographyVariant.SMALL}
-                  className="pt-2 text-orange"
-                >
+                <Typography variant={TypographyVariant.SMALL} className="pt-2 text-orange">
                   {indicatorDetails.totalPoints} star points
                 </Typography>
               </div>
@@ -97,10 +82,7 @@ const MentalHeaalth = () => {
               tasks.map((task: any, index: any) => (
                 <div key={index} className="flex gap-3 w-full items-center">
                   <div className="border border-d_red rounded-full h-5 w-5 flex items-center justify-center pb-1">
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="pt-1 text-d_red"
-                    >
+                    <Typography variant={TypographyVariant.SMALL} className="pt-1 text-d_red">
                       {index + 1}
                     </Typography>
                   </div>
@@ -108,7 +90,7 @@ const MentalHeaalth = () => {
                     className="w-full flex justify-between items-center py-4 px-6 gap-6 cursor-pointer shadow rounded-lg bg-white"
                     onClick={() =>
                       navigate(
-                        `/verified-agent-dashboard/reports/community-tasks/task/report-form/${task.identifier}`,
+                        `/verified-agent-dashboard/reports/community-tasks/task/report-form/${task.identifier}`
                       )
                     }
                   >
@@ -121,11 +103,7 @@ const MentalHeaalth = () => {
                       </Typography>
                     </div>
                     <div className="bg-effect_green p-1 rounded-full">
-                      <IoIosArrowForward
-                        className="font-extrabold"
-                        size={24}
-                        color="#007A61"
-                      />
+                      <IoIosArrowForward className="font-extrabold" size={24} color="#007A61" />
                     </div>
                   </div>
                 </div>

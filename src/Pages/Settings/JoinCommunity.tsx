@@ -13,17 +13,11 @@ const JoinCommunity = () => {
   return (
     <div className="flex flex-col  md:mt-4">
       <div className="flex md:hidden mb-8">
-        <span
-          onClick={() =>
-            navigate("/verified-agent-dashboard/settings/setting-mobile")
-          }
-        >
+        <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
           <Icon type="arrowBackSvg" className="mr-8 " />
         </span>
 
-        <Typography variant={TypographyVariant.SUBTITLE}>
-          Join Community
-        </Typography>
+        <Typography variant={TypographyVariant.SUBTITLE}>Join Community</Typography>
       </div>
       <div
         className="relative w-full md:w-[50%] h-[300px] rounded-xl flex flex-col items-center justify-center bg-[#007A61] "
@@ -49,9 +43,7 @@ const JoinCommunity = () => {
                 onClick={() => console.log("successful")}
                 className=" flex items-center gap-2 px-3 py-2 rounded bg-orange text-white  focus:outline-none"
               >
-                <span className="text-xs font-thin md:text-base md:font-bold">
-                  Join Community
-                </span>
+                <span className="text-xs font-thin md:text-base md:font-bold">Join Community</span>
                 <PiPaperPlaneTiltFill />
               </button>
             </div>

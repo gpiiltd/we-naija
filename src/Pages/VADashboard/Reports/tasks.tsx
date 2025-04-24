@@ -15,9 +15,7 @@ const Tasks: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [communityTasks, setCommunityTasks] = useState<any[]>([]);
-  const { communityCategories } = useSelector(
-    (state: RootState) => state.community,
-  );
+  const { communityCategories } = useSelector((state: RootState) => state.community);
 
   useEffect(() => {
     dispatch(triggerGetAllCommunityCategories({}) as any);
@@ -29,10 +27,7 @@ const Tasks: React.FC = () => {
     }
 
     if (communityCategories?.error && communityCategories?.message) {
-      console.error(
-        "Error fetching community tasks:",
-        communityCategories.message,
-      );
+      console.error("Error fetching community tasks:", communityCategories.message);
       toast.error(communityCategories.message);
     }
   }, [
@@ -46,12 +41,8 @@ const Tasks: React.FC = () => {
   return (
     <>
       {" "}
-      <Typography
-        variant={TypographyVariant.SMALL}
-        className="pt-1 text-light_gray max-w-lg"
-      >
-        Kindly select the community task category you would like to proceed
-        with.
+      <Typography variant={TypographyVariant.SMALL} className="pt-1 text-light_gray max-w-lg">
+        Kindly select the community task category you would like to proceed with.
       </Typography>
       <div className="grid gap-6 py-3 pb-48 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {communityTasks.length > 0 &&
@@ -69,10 +60,10 @@ const Tasks: React.FC = () => {
                   handleBreadCrumbNavigate(
                     `/verified-agent-dashboard/reports/community-tasks/${task.name.replace(
                       /\s+/g,
-                      "",
+                      ""
                     )}/${task.identifier}`,
                     task.name,
-                    navigate,
+                    navigate
                   )
                 }
               >
@@ -83,18 +74,11 @@ const Tasks: React.FC = () => {
                   >
                     {task.name}
                   </Typography>
-                  <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="pt-2 text-light_gray"
-                  >
+                  <Typography variant={TypographyVariant.SMALL} className="pt-2 text-light_gray">
                     {task.description}
                   </Typography>
                 </div>
-                <IoIosArrowForward
-                  className="font-extrabold"
-                  size={34}
-                  color="#007A61"
-                />
+                <IoIosArrowForward className="font-extrabold" size={34} color="#007A61" />
               </div>
             </Card>
           ))}

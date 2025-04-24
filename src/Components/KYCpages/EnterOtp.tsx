@@ -16,9 +16,7 @@ const EnterOtp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { error, message, kycPhoneNumber, loading } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { error, message, kycPhoneNumber, loading } = useSelector((state: RootState) => state.user);
 
   const handleChange = (index: number, value: string) => {
     if (/^[0-9]*$/.test(value)) {
@@ -33,10 +31,7 @@ const EnterOtp = () => {
     }
   };
 
-  const handleKeyDown = (
-    index: number,
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
+  const handleKeyDown = (index: number, event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Backspace" && !otp[index]) {
       // If the current input is empty and backspace is pressed, focus the previous input
       if (index > 0) {
@@ -81,14 +76,9 @@ const EnterOtp = () => {
           <Typography variant={TypographyVariant.SUBTITLE} className="">
             Enter OTP
           </Typography>
-          <Typography
-            variant={TypographyVariant.NORMAL}
-            className=" mb-6 text-gray-500"
-          >
+          <Typography variant={TypographyVariant.NORMAL} className=" mb-6 text-gray-500">
             Enter the 6-digit code sent to{" "}
-            <span className="font-bold text-primary_green">
-              {kycPhoneNumber}
-            </span>
+            <span className="font-bold text-primary_green">{kycPhoneNumber}</span>
           </Typography>
 
           <div className="flex mb-6 gap-1 pt-4 items-center justify-center">

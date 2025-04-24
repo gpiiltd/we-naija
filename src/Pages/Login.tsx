@@ -21,9 +21,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [inputEmail, setInputEmail] = useState("");
   const navigate = useNavigate();
-  const { error, userData, message, loading } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { error, userData, message, loading } = useSelector((state: RootState) => state.user);
 
   const initialValues = {
     email: "",
@@ -31,10 +29,7 @@ const Login = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .required("Email is required")
-      .email("Invalid email format")
-      .trim(),
+    email: Yup.string().required("Email is required").email("Invalid email format").trim(),
     password: Yup.string()
       .required("Password cannot be empty")
       .max(20, "Password must not exceed 20 characters")
@@ -72,10 +67,7 @@ const Login = () => {
         navigate("/verified-agent-dashboard");
         dispatch(resetState());
       }, 3000);
-    } else if (
-      Object.keys(userData).length > 0 &&
-      userData.kyc_status === "pending"
-    ) {
+    } else if (Object.keys(userData).length > 0 && userData.kyc_status === "pending") {
       toast.success("Kindly complete your KYC to continue");
       if (userData.email) {
         dispatch(setUserEmail(userData.email));
@@ -85,11 +77,7 @@ const Login = () => {
         // navigate("/verified-agent-dashboard");
       }, 3000);
       dispatch(resetState());
-    } else if (
-      message?.includes(
-        "Email not verified. Please verify your email to proceed",
-      )
-    ) {
+    } else if (message?.includes("Email not verified. Please verify your email to proceed")) {
       // toast.error("Email not verified. Please verify your email to proceed");
       toast.error(message);
       if (inputEmail) {
@@ -106,16 +94,10 @@ const Login = () => {
     <AuthPages>
       <ToastContainer />
       <div className="w-full">
-        <Typography
-          variant={TypographyVariant.SUBTITLE}
-          className="text-black md:text-center "
-        >
+        <Typography variant={TypographyVariant.SUBTITLE} className="text-black md:text-center ">
           Login
         </Typography>
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="text-light_gray md:text-center"
-        >
+        <Typography variant={TypographyVariant.NORMAL} className="text-light_gray md:text-center">
           Kindly fill in your details to login up
         </Typography>
         <div className="pt-10 ">
@@ -170,9 +152,7 @@ const Login = () => {
             )}
           </Formik>
           <div className="flex mb-6 gap-1 pt-4 items-center justify-center">
-            <Typography variant={TypographyVariant.SMALL}>
-              Don't have an account?
-            </Typography>
+            <Typography variant={TypographyVariant.SMALL}>Don't have an account?</Typography>
             <Link to="/">
               <Typography
                 variant={TypographyVariant.SMALL}

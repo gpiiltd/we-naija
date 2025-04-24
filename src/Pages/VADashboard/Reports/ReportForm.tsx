@@ -32,9 +32,7 @@ const ReportForm = () => {
   const dispatch = useDispatch();
   const closeModal = () => setIsModalOpen(false);
 
-  const { taskQuestionById, answerTaskQuestion } = useSelector(
-    (state: any) => state.community,
-  );
+  const { taskQuestionById, answerTaskQuestion } = useSelector((state: any) => state.community);
 
   useEffect(() => {
     dispatch(triggerGetTaskQuestionById(id as string) as any);
@@ -78,47 +76,32 @@ const ReportForm = () => {
             <div onClick={() => navigate(-1)}>
               <AiOutlineArrowLeft size={24} className="cursor-pointer" />
             </div>
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="pt-1 text-d_red "
-            >
+            <Typography variant={TypographyVariant.SMALL} className="pt-1 text-d_red ">
               Task
             </Typography>
             <div className="border border-d_red rounded-full h-5 w-5 flex items-center justify-center pb-1">
-              <Typography
-                variant={TypographyVariant.SMALL}
-                className="pt-1 text-d_red "
-              >
+              <Typography variant={TypographyVariant.SMALL} className="pt-1 text-d_red ">
                 1
               </Typography>
             </div>
           </div>
           <div className="flex gap-2 items-center">
             <Icon type="starPoints" className="pt-2" />
-            <Typography
-              variant={TypographyVariant.SMALL}
-              className="pt-2 text-orange"
-            >
+            <Typography variant={TypographyVariant.SMALL} className="pt-2 text-orange">
               {taskQuestion?.max_points} star points
             </Typography>
           </div>
         </div>
 
         {/* main component */}
-        <Typography
-          variant={TypographyVariant.NORMAL}
-          className="font-bold pt-5"
-        >
+        <Typography variant={TypographyVariant.NORMAL} className="font-bold pt-5">
           {taskQuestion?.title}
         </Typography>
         <Icon type="response" className="w-full" />
 
         <div className="flex gap-1 pt-4">
           <LuBookMinus color="#007A61" />
-          <Typography
-            variant={TypographyVariant.SMALL}
-            className="ext-light_gray"
-          >
+          <Typography variant={TypographyVariant.SMALL} className="ext-light_gray">
             Comment
           </Typography>
         </div>
@@ -131,11 +114,7 @@ const ReportForm = () => {
         >
           {({ handleSubmit, isValid, dirty }) => (
             <Form onSubmit={handleSubmit}>
-              <TextAreaField
-                label={""}
-                name="textArea"
-                placeHolder="Write here..."
-              />
+              <TextAreaField label={""} name="textArea" placeHolder="Write here..." />
               <Button
                 text="Submit"
                 active={isValid && dirty}
@@ -150,16 +129,10 @@ const ReportForm = () => {
           <div className="  py-2 flex flex-col px-3 gap-3">
             <section className="flex flex-col justify-center items-center gap-4 pb-6">
               <Icon type="warning" />
-              <Typography
-                variant={TypographyVariant.NORMAL}
-                className="text-center"
-              >
+              <Typography variant={TypographyVariant.NORMAL} className="text-center">
                 Are you sure you want to submit?
               </Typography>
-              <Typography
-                variant={TypographyVariant.SMALL}
-                className="text-light_gray"
-              >
+              <Typography variant={TypographyVariant.SMALL} className="text-light_gray">
                 This action cannot be reversed
               </Typography>
             </section>

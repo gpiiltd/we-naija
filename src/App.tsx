@@ -54,15 +54,9 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/otp" element={<OTP />} />
             <Route path="/email-sent" element={<EmailSent />} />
-            <Route
-              path="/email-verification/:uid/:email_token"
-              element={<EmailVerification />}
-            />
+            <Route path="/email-verification/:uid/:email_token" element={<EmailVerification />} />
             <Route path="/reset-password" element={<CreateNewPassword />} />
-            <Route
-              path="/forgot-password-otp"
-              element={<ForgotPasswordOtp />}
-            />
+            <Route path="/forgot-password-otp" element={<ForgotPasswordOtp />} />
             <Route path="/kyc/*" Component={Kyc} />
             <Route path="/kyc/validate-phone" Component={KycPhonenumber} />
             <Route path="/kyc/enter-otp" Component={EnterOtp} />
@@ -93,10 +87,7 @@ function App() {
                 path="/verified-agent-dashboard/reports/community-tasks/task/report-form/:id"
                 Component={ReportForm}
               />
-              <Route
-                path="/verified-agent-dashboard/reports/hospitals"
-                Component={Hospitals}
-              />
+              <Route path="/verified-agent-dashboard/reports/hospitals" Component={Hospitals} />
               <Route
                 path="/verified-agent-dashboard/reports/hospitals/survey-list/:id"
                 // Component={SurveyList}
@@ -118,10 +109,7 @@ function App() {
                 <Route path="help-and-support" element={<HelpandSupport />} />
                 <Route path="setting-mobile" element={<SettingsMobile />} />
                 <Route path="help-and-support/faq" element={<FAQ />} />
-                <Route
-                  path="help-and-support/contact-us"
-                  element={<ContactUs />}
-                />
+                <Route path="help-and-support/contact-us" element={<ContactUs />} />
               </Route>
               <Route path="notifications" element={<Notification />} />
               <Route path="profile" element={<div>Profile</div>} />

@@ -100,35 +100,21 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "landingBG":
         return <img src={landingBG} alt="landingBG" className={className} />;
       case "notification":
-        return (
-          <img src={notification} alt="notification" className={className} />
-        );
+        return <img src={notification} alt="notification" className={className} />;
       case "settings":
         return <img src={settings} alt="settings" className={className} />;
       case "user":
         return <img src={user} alt="user" className={className} />;
       case "nigerianflag":
-        return (
-          <img src={nigerianflag} alt="nigerian flag" className={className} />
-        );
+        return <img src={nigerianflag} alt="nigerian flag" className={className} />;
       case "calendar":
         return <img src={calendar} alt="calendar" className={className} />;
       case "cloudUpload":
-        return (
-          <img src={cloudUpload} alt="cloudUpload" className={className} />
-        );
+        return <img src={cloudUpload} alt="cloudUpload" className={className} />;
       case "imageUploadIcon":
-        return (
-          <img
-            src={imageUploadIcon}
-            alt="fileUploadIcon"
-            className={className}
-          />
-        );
+        return <img src={imageUploadIcon} alt="fileUploadIcon" className={className} />;
       case "pdfUploadIcon":
-        return (
-          <img src={pdfUploadIcon} alt="pdfUploadIcon" className={className} />
-        );
+        return <img src={pdfUploadIcon} alt="pdfUploadIcon" className={className} />;
       case "deleteIcon":
         return <img src={deleteIcon} alt="deleteIcon" className={className} />;
       case "wenaija":
@@ -136,9 +122,7 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "linkedin":
         return <img src={linkedin} alt="we-naija icon" className={className} />;
       case "instagram":
-        return (
-          <img src={instagram} alt="we-naija icon" className={className} />
-        );
+        return <img src={instagram} alt="we-naija icon" className={className} />;
       case "facebook":
         return <img src={facebook} alt="we-naija icon" className={className} />;
       case "twitter":
@@ -146,178 +130,68 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "avatar":
         return <img src={avatar} alt="we-naija icon" className={className} />;
       case "report":
-        return (
-          <img src={report_icon} alt="we-naija icon" className={className} />
-        );
+        return <img src={report_icon} alt="we-naija icon" className={className} />;
       case "home":
         return <img src={home} alt="we-naija icon" className={className} />;
       case "cup":
         return <img src={cup} alt="cup icon" className={className} />;
       case "starPoints":
-        return (
-          <img src={startpoints} alt="start point icon" className={className} />
-        );
+        return <img src={startpoints} alt="start point icon" className={className} />;
       case "kyc":
         return <img src={kyc} alt="start point icon" className={className} />;
       case "tasks":
         return <img src={task} alt="start point icon" className={className} />;
       case "warning":
-        return (
-          <img
-            src={warning_icon}
-            alt="start point icon"
-            className={className}
-          />
-        );
+        return <img src={warning_icon} alt="start point icon" className={className} />;
       case "keys":
         return <img src={key} alt="start point icon" className={className} />;
       case "success":
-        return (
-          <img src={success} alt="start point icon" className={className} />
-        );
+        return <img src={success} alt="start point icon" className={className} />;
       case "home-kyc-verification":
         return (
-          <img
-            src={firstImageSvg}
-            alt="we-naija home-kyc-verification svg"
-            className={className}
-          />
+          <img src={firstImageSvg} alt="we-naija home-kyc-verification svg" className={className} />
         );
       case "home-report-star":
         return (
-          <img
-            src={homeReportStarSvg}
-            alt="we-naija homeReportStar svg"
-            className={className}
-          />
+          <img src={homeReportStarSvg} alt="we-naija homeReportStar svg" className={className} />
         );
       case "homeAvatar":
-        return (
-          <img
-            src={homeAvatarSvg}
-            alt="we-naija homeAvatar svg"
-            className={className}
-          />
-        );
+        return <img src={homeAvatarSvg} alt="we-naija homeAvatar svg" className={className} />;
       case "arrowUpSvg":
-        return (
-          <img
-            src={arrowUpSvg}
-            alt="we-naija arrowUp svg"
-            className={className}
-          />
-        );
+        return <img src={arrowUpSvg} alt="we-naija arrowUp svg" className={className} />;
 
       case "timeClocKSvg":
-        return (
-          <img
-            src={timeClocKSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={timeClocKSvg} alt="we-naija time Clock svg" className={className} />;
       case "whiteArrowSvg":
-        return (
-          <img
-            src={whiteArrowSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={whiteArrowSvg} alt="we-naija time Clock svg" className={className} />;
       case "bigGirlSvg":
-        return (
-          <img
-            src={bigGirlSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={bigGirlSvg} alt="we-naija time Clock svg" className={className} />;
       case "arrowBackSvg":
-        return (
-          <img
-            src={arrowBackSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={arrowBackSvg} alt="we-naija time Clock svg" className={className} />;
       case "timerSurveySvg":
-        return (
-          <img
-            src={timerSurveySvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={timerSurveySvg} alt="we-naija time Clock svg" className={className} />;
       case "arrowLeftSvg":
-        return (
-          <img
-            src={arrowLeftSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={arrowLeftSvg} alt="we-naija time Clock svg" className={className} />;
       case "locationGreenSvg":
-        return (
-          <img
-            src={locationGreenSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={locationGreenSvg} alt="we-naija time Clock svg" className={className} />;
       case "timeGreenSvg":
-        return (
-          <img
-            src={timeGreenSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={timeGreenSvg} alt="we-naija time Clock svg" className={className} />;
       case "callingGreenSvg":
-        return (
-          <img
-            src={callingGreenSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={callingGreenSvg} alt="we-naija time Clock svg" className={className} />;
       case "messageGreenSvg":
-        return (
-          <img
-            src={messageGreenSvg}
-            alt="we-naija time Clock svg"
-            className={className}
-          />
-        );
+        return <img src={messageGreenSvg} alt="we-naija time Clock svg" className={className} />;
       case "scoutIcon":
-        return (
-          <img src={scoutIcon} alt="scoutIcon icon" className={className} />
-        );
+        return <img src={scoutIcon} alt="scoutIcon icon" className={className} />;
       case "guardianIcon":
-        return (
-          <img
-            src={guardianIcon}
-            alt="guardianIcon icon"
-            className={className}
-          />
-        );
+        return <img src={guardianIcon} alt="guardianIcon icon" className={className} />;
       case "legendIcon":
-        return (
-          <img src={legendIcon} alt="legendIcon icon" className={className} />
-        );
+        return <img src={legendIcon} alt="legendIcon icon" className={className} />;
       case "championIcon":
-        return (
-          <img
-            src={championIcon}
-            alt="championIcon icon"
-            className={className}
-          />
-        );
+        return <img src={championIcon} alt="championIcon icon" className={className} />;
       case "lockIcon":
         return <img src={lockIcon} alt="lockIcon icon" className={className} />;
       case "lineScout":
-        return (
-          <img src={lineScout} alt="lineScout icon" className={className} />
-        );
+        return <img src={lineScout} alt="lineScout icon" className={className} />;
       case "starIcon":
         return <img src={starIcon} alt="starIcon icon" className={className} />;
       case "noData":
@@ -327,31 +201,17 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "watch":
         return <img src={video} alt="starIcon icon" className={className} />;
       case "plusCircle":
-        return (
-          <img src={plusCircle} alt="plusCircle icon" className={className} />
-        );
+        return <img src={plusCircle} alt="plusCircle icon" className={className} />;
       case "minusCircle":
-        return (
-          <img src={minusCircle} alt="minusCircle icon" className={className} />
-        );
+        return <img src={minusCircle} alt="minusCircle icon" className={className} />;
       case "locationWhiteSvg":
-        return (
-          <img
-            src={locationWhiteSvg}
-            alt="locationWhiteSvg icon"
-            className={className}
-          />
-        );
+        return <img src={locationWhiteSvg} alt="locationWhiteSvg icon" className={className} />;
       case "instagramo":
-        return (
-          <img src={instagramo} alt="instagramo icon" className={className} />
-        );
+        return <img src={instagramo} alt="instagramo icon" className={className} />;
       case "twittero":
         return <img src={twittero} alt="twittero icon" className={className} />;
       case "facebooko":
-        return (
-          <img src={facebooko} alt="facebooko icon" className={className} />
-        );
+        return <img src={facebooko} alt="facebooko icon" className={className} />;
       case "phone":
         return <img src={phone} alt="phone icon" className={className} />;
       case "email":
@@ -361,37 +221,21 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "chatUs":
         return <img src={chatUs} alt="chatUs icon" className={className} />;
       case "basicInfo":
-        return (
-          <img src={basicInfo} alt="basicInfo icon" className={className} />
-        );
+        return <img src={basicInfo} alt="basicInfo icon" className={className} />;
       case "passwordReset":
-        return (
-          <img
-            src={passwordReset}
-            alt="passwordReset icon"
-            className={className}
-          />
-        );
+        return <img src={passwordReset} alt="passwordReset icon" className={className} />;
       case "faq":
         return <img src={faq} alt="faq icon" className={className} />;
       case "kycVerify":
-        return (
-          <img src={kycVerify} alt="kycVerify icon" className={className} />
-        );
+        return <img src={kycVerify} alt="kycVerify icon" className={className} />;
       case "joinCom":
         return <img src={joinCom} alt="joinCom icon" className={className} />;
       case "contactUs":
-        return (
-          <img src={contactUs} alt="contactUs icon" className={className} />
-        );
+        return <img src={contactUs} alt="contactUs icon" className={className} />;
       case "contactInfo":
-        return (
-          <img src={contactInfo} alt="contactInfo icon" className={className} />
-        );
+        return <img src={contactInfo} alt="contactInfo icon" className={className} />;
       case "arrowRight":
-        return (
-          <img src={arrowRight} alt="arrowRight icon" className={className} />
-        );
+        return <img src={arrowRight} alt="arrowRight icon" className={className} />;
       case "medal1":
         return <img src={medal1} alt="medal1 icon" className={className} />;
       case "medal2":
@@ -399,33 +243,15 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "medal3":
         return <img src={medal3} alt="medal3 icon" className={className} />;
       case "lineGuardian":
-        return (
-          <img
-            src={lineGuardian}
-            alt="lineGuardian icon"
-            className={className}
-          />
-        );
+        return <img src={lineGuardian} alt="lineGuardian icon" className={className} />;
       case "lineChampion":
-        return (
-          <img
-            src={lineChampion}
-            alt="lineChampion icon"
-            className={className}
-          />
-        );
+        return <img src={lineChampion} alt="lineChampion icon" className={className} />;
       case "lineLegend":
-        return (
-          <img src={lineLegend} alt="lineLegend icon" className={className} />
-        );
+        return <img src={lineLegend} alt="lineLegend icon" className={className} />;
       case "response":
-        return (
-          <img src={response} alt="lineLegend icon" className={className} />
-        );
+        return <img src={response} alt="lineLegend icon" className={className} />;
       case "sentEmail":
-        return (
-          <img src={sentEmail} alt="sentEmail icon" className={className} />
-        );
+        return <img src={sentEmail} alt="sentEmail icon" className={className} />;
       default:
         return null;
     }

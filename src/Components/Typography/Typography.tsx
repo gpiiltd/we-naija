@@ -1,11 +1,7 @@
 import React from "react";
 import { TypographyProps, TypographyVariant } from "../types";
 
-const Typography: React.FC<TypographyProps> = ({
-  children,
-  variant,
-  className,
-}) => {
+const Typography: React.FC<TypographyProps> = ({ children, variant, className }) => {
   const classes = {
     [TypographyVariant.TITLE]: "text-3xl tracking-wide leading-5 ",
     [TypographyVariant.SUBTITLE]: "text-2xl  ",

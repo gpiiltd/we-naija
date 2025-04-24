@@ -62,23 +62,15 @@ const Notification: React.FC = () => {
                     <section className="flex justify-start ">
                       <Icon type="championIcon" className="pr-2 w-10 h-10" />
                       <div className="">
-                        <p className=" text-black text-sm">
-                          {notification.user}
-                        </p>
-                        <p className="text-gray-500 text-sm">
-                          {notification.handle}
-                        </p>
+                        <p className=" text-black text-sm">{notification.user}</p>
+                        <p className="text-gray-500 text-sm">{notification.handle}</p>
                       </div>
                     </section>
-                    <p className="text-gray-700 text-sm md:text-base">
-                      {notification.message}
-                    </p>
+                    <p className="text-gray-700 text-sm md:text-base">{notification.message}</p>
                   </div>
                 </div>
 
-                <span className="text-gray-500 text-sm justify-self-end ">
-                  {notification.time}
-                </span>
+                <span className="text-gray-500 text-sm justify-self-end ">{notification.time}</span>
               </div>
             </div>
           ))

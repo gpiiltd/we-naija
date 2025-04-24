@@ -8,13 +8,8 @@ const Breadcrumb = () => {
   useEffect(() => {
     const breadCrumb = localStorage.getItem("breadcrumb");
     if (breadCrumb) {
-      let crumbData = JSON.parse(breadCrumb) as Record<
-        string,
-        string | boolean
-      >[];
-      const crumbIndex = crumbData.findIndex(
-        (crumb) => crumb.path === location.pathname,
-      );
+      let crumbData = JSON.parse(breadCrumb) as Record<string, string | boolean>[];
+      const crumbIndex = crumbData.findIndex((crumb) => crumb.path === location.pathname);
       crumbData = crumbData.slice(0, crumbIndex + 1);
       crumbData[crumbData.length - 1].active = true;
       setCrumb(crumbData);
@@ -28,11 +23,7 @@ const Breadcrumb = () => {
         {crumb.map((items, index) => {
           return (
             <li key={index} className="flex items-center gap-1">
-              <span
-                className={`${
-                  items.active ? "text-primary_green" : "text-dark_gray"
-                }`}
-              >
+              <span className={`${items.active ? "text-primary_green" : "text-dark_gray"}`}>
                 {items.label}
               </span>
               {index < crumb.length - 1 && (

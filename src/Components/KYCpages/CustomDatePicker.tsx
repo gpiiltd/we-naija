@@ -7,10 +7,7 @@ interface CustomDatePickerProps {
   selectedDate: Date | null;
   onChange: (date: Date | null) => void;
 }
-const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
-  selectedDate,
-  onChange,
-}) => {
+const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ selectedDate, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -21,10 +18,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -52,9 +46,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative w-80 p-4 bg-white shadow-lg rounded-lg">
-            <label className="block  text-gray-700 text-sm font-bold mb-2">
-              Select Date
-            </label>
+            <label className="block  text-gray-700 text-sm font-bold mb-2">Select Date</label>
             <DatePicker
               selected={selectedDate}
               onChange={onChange}

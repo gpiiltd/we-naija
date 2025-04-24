@@ -12,9 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const [searchTerm, setSearchTerm] = useState(value);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedPlaceholder, setSelectedPlaceholder] = useState(placeholder);
-  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(
-    null,
-  );
+  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
   const searchBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -23,10 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchBarRef.current &&
-        !searchBarRef.current.contains(event.target as Node)
-      ) {
+      if (searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) {
         setIsFocused(false);
       }
     };
@@ -57,7 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   const filteredSuggestions = suggestions.filter((suggestion) =>
-    suggestion.toLowerCase().includes(searchTerm.toLowerCase()),
+    suggestion.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -71,10 +66,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           className="py-2 pl-10 text-sm text-text-black border border-primary_color rounded-lg focus:outline-none focus:ring-1 focus:ring-primary_color w-[20rem]"
           onFocus={() => setIsFocused(true)}
         />
-        <button
-          type="submit"
-          className="absolute ml-2 text-gray-600 hover:text-gray-900"
-        >
+        <button type="submit" className="absolute ml-2 text-gray-600 hover:text-gray-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -107,9 +99,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 {suggestion}
               </li>
 
-              {selectedSuggestion === suggestion && (
-                <IoMdCheckmark color="#007A61" />
-              )}
+              {selectedSuggestion === suggestion && <IoMdCheckmark color="#007A61" />}
             </div>
           ))}
         </ul>

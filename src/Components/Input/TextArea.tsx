@@ -51,10 +51,7 @@ const TextAreaField: FC<TextInputProps & { rows?: number }> = ({
         <div className="flex gap-1">
           <RiErrorWarningLine size={24} color={"#007A61"} className="pt-1" />
 
-          <Typography
-            variant={TypographyVariant.SMALL}
-            className="text-light_gray mt-1"
-          >
+          <Typography variant={TypographyVariant.SMALL} className="text-light_gray mt-1">
             {meta.error}
           </Typography>
         </div>

@@ -31,8 +31,7 @@ const BasicInfo = () => {
   //   }
   // }, [userData]);
 
-  const isFormComplete =
-    nationality !== "" && gender !== "" && dateOfBirth !== "";
+  const isFormComplete = nationality !== "" && gender !== "" && dateOfBirth !== "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,22 +49,13 @@ const BasicInfo = () => {
       <div className="w-full md:w-[60%] lg:mr-80">
         <div className="flex flex-col gap-2">
           <div className="flex">
-            <span
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/setting-mobile")
-              }
-            >
+            <span onClick={() => navigate("/verified-agent-dashboard/settings/setting-mobile")}>
               <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
             </span>
 
-            <Typography variant={TypographyVariant.SUBTITLE}>
-              Basic Information
-            </Typography>
+            <Typography variant={TypographyVariant.SUBTITLE}>Basic Information</Typography>
           </div>
-          <Typography
-            variant={TypographyVariant.SMALL}
-            className="text-gray-500"
-          >
+          <Typography variant={TypographyVariant.SMALL} className="text-gray-500">
             Edit your basic information{" "}
           </Typography>
         </div>
@@ -94,9 +84,7 @@ const BasicInfo = () => {
               label="Date of birth"
               value={dateOfBirth}
               onChange={setDateOfBirth}
-              error={
-                dateOfBirth === "" && error ? "Date of birth is required." : ""
-              }
+              error={dateOfBirth === "" && error ? "Date of birth is required." : ""}
               readOnly={true}
               onClick={() => setIsModalOpen(true)}
               icon={<Icon type="calendar" className="w-6 h-6" />}
@@ -106,9 +94,7 @@ const BasicInfo = () => {
               options={nationalityOptions}
               value={nationality}
               onChange={setNationality}
-              error={
-                nationality === "" && error ? "Nationality is required." : ""
-              }
+              error={nationality === "" && error ? "Nationality is required." : ""}
             />
             <button
               type="submit"

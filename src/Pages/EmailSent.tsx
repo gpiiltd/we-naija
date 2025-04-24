@@ -13,9 +13,7 @@ const EmailSent = () => {
   const dispatch: AppDispatch = useDispatch();
   const [countdown, setCountdown] = useState(30);
   const [canResend, setCanResend] = useState(false);
-  const { error, message, email } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { error, message, email } = useSelector((state: RootState) => state.user);
 
   localStorage.setItem("emailverification", email);
 
@@ -81,10 +79,7 @@ const EmailSent = () => {
       <div className="flex w-full px-4 pt-5 justify-center items-center md:px-32 lg:px-56">
         <div className="w-full pt-8 lg:pt-0">
           <div className="flex flex-col justify-center items-center lg:items-center pt-6">
-            <Typography
-              variant={TypographyVariant.SUBTITLE}
-              className="text-black md:text-center"
-            >
+            <Typography variant={TypographyVariant.SUBTITLE} className="text-black md:text-center">
               Email verification
             </Typography>
             <Typography
@@ -103,8 +98,7 @@ const EmailSent = () => {
           <div className="flex flex-col  items-center justify-center">
             <div className="flex mb-6 text-center justify-center w-96">
               <Typography variant={TypographyVariant.SMALL}>
-                Check your inbox and click the link to complete the email
-                verification process.
+                Check your inbox and click the link to complete the email verification process.
               </Typography>
             </div>
             <div
@@ -113,15 +107,11 @@ const EmailSent = () => {
             >
               <Typography
                 variant={TypographyVariant.SMALL}
-                className={`text-center ${
-                  canResend ? "text-orange underline" : "text-black"
-                }`}
+                className={`text-center ${canResend ? "text-orange underline" : "text-black"}`}
               >
                 {canResend
                   ? "Re-send link via email "
-                  : `Re-send link via email  (0:${
-                      countdown < 10 ? `0${countdown}` : countdown
-                    })`}
+                  : `Re-send link via email  (0:${countdown < 10 ? `0${countdown}` : countdown})`}
               </Typography>
             </div>
           </div>
