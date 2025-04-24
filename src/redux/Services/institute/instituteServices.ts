@@ -137,7 +137,6 @@ export const triggerSurveyIndicatorQuestions = createAsyncThunk<
       },
     );
 
-    // console.log("SURVEY INDICATOR QUESTIONS RESPONSE IN SERVICE", response.data);
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -154,7 +153,6 @@ export const triggerSubmitSurveyReport = createAsyncThunk<
   { rejectValue: any }
 >("user/submitSurveyReport", async (surveyReportData, thunkAPI) => {
   try {
-    console.log("surveyReportData------", surveyReportData);
     const institution_id = localStorage.getItem("institutionIdentifier");
     const surveyQuestionIdentifier = localStorage.getItem(
       "surveyQuestionIdentifier",

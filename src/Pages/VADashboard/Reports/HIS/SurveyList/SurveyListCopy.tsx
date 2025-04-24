@@ -90,8 +90,6 @@ const SurveyListCopy = () => {
     setActiveCategory(categoryId);
   };
 
-  // console.log("categories---", categories);
-  console.log("indicators---", indicators);
   return (
     <>
       {institutionById.loading ? (

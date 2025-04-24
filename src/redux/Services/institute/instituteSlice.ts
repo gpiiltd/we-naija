@@ -240,7 +240,6 @@ const instituteSlice = createSlice({
       state.surveyIndicator.message = "";
     });
     builder.addCase(triggerSurveyIndicatorById.fulfilled, (state, action) => {
-      // console.log("ACTION PAYLOAD in INSTITUTION>>>", action.payload);
       state.surveyIndicator.loading = false;
       state.surveyIndicator.error = false;
       state.surveyIndicator.message = action.payload?.message;

@@ -87,9 +87,6 @@ const Survey = ({ surveyQuestions }: { surveyQuestions: any }) => {
     payload.append("images", uploadedFile as File);
     payload.append("comment", values.textArea);
 
-    for (let pair of Array.from(payload.entries())) {
-      console.log(`kye: ${pair[0]} value: ${pair[1]}`);
-    }
     dispatch(triggerSubmitSurveyReport(payload) as any);
   };
   useEffect(() => {

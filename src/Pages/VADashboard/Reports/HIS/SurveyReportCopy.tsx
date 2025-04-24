@@ -102,7 +102,6 @@ const SurveyCopy = ({
       }
       return [...prev, answerData];
     });
-    console.log("surveyAnswers------", surveyAnswers);
 
     // If it's the last question, submit all answers
     if (currentQuestionIndex === surveyQuestions.length - 1) {
