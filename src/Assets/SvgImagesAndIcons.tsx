@@ -80,6 +80,7 @@ import lineChampion from "../Assets/svgImages/lineChampion.svg";
 import lineLegend from "../Assets/svgImages/lineLegend.svg";
 import response from "../Assets/svgImages/response.svg";
 import sentEmail from "../Assets/svgImages/sentemail.svg";
+import landingBG from "../Assets/svgImages/landing-bg.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -96,6 +97,8 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return <img src={mobile} alt="mobile" className={className} />;
       case "person":
         return <img src={person} alt="person" className={className} />;
+      case "landingBG":
+        return <img src={landingBG} alt="landingBG" className={className} />;
       case "notification":
         return (
           <img src={notification} alt="notification" className={className} />
