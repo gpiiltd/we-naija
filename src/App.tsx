@@ -41,6 +41,9 @@ import ForgotPasswordOtp from "./Pages/ForgotPasswordOtp";
 import EmailSent from "./Pages/EmailSent";
 import EmailVerification from "./Pages/EmailVerification";
 import SurveyListCopy from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyListCopy";
+import LandingView from "./Pages/LandingPage/LandingView";
+import LandingHome from "./Pages/LandingPage/LandingHome";
+import ContactView from "./Pages/LandingPage/ContactView";
 function App() {
   return (
     <>
@@ -49,7 +52,12 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignUp />} />
+            <Route path="/" element={<LandingView />}>
+              <Route index element={<Navigate to="landing" />} />
+              <Route path="landing" Component={LandingHome} />
+              <Route path="contact" element={<ContactView />} />
+            </Route>
+            <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/otp" element={<OTP />} />
@@ -62,6 +70,7 @@ function App() {
             <Route path="/kyc/enter-otp" Component={EnterOtp} />
             <Route path="/kyc/personal-information" Component={PersonalInfo} />
             <Route path="/kyc/id-verification" Component={IdVerification} />
+
             <Route path="/verified-agent-dashboard" element={<VADashboard />}>
               <Route index element={<Navigate to="home" />} />
               <Route path="home" Component={PendingKyc} />

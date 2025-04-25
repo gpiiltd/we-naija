@@ -1,9 +1,10 @@
 module.exports = {
   parser: "@typescript-eslint/parser", // Tells ESLint to use the TypeScript parser
   extends: [
-    "eslint:recommended", // ESLint recommended rules
+    // "eslint:recommended", // ESLint recommended rules
     "plugin:@typescript-eslint/recommended", // TypeScript-specific linting rules
     "plugin:prettier/recommended", // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors
+    "prettier",
   ],
   parserOptions: {
     ecmaVersion: "latest", // Allows for the parsing of modern ECMAScript features

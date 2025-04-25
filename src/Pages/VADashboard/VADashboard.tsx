@@ -3,16 +3,21 @@ import { NavLink } from "react-router-dom";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { TypographyVariant } from "../../Components/types";
 import Header from "../../Components/Header";
-import { FiSettings, FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
+
 import { CiLogout } from "react-icons/ci";
 import { useState } from "react";
+import { FiMenu } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
+import { FiBell } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
+import { FiUsers } from "react-icons/fi";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
 
 const VADashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const toggleDrawer = () => {
+  const toggleDrawer: () => void = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
   return (
