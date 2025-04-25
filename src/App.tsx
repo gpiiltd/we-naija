@@ -107,7 +107,7 @@ function App() {
                 Component={GiveReport}
               />
               <Route path="leaderboard" Component={Leaderboard} />
-              <Route path="join-community" element={<div>Community</div>} />
+              <Route path="join-community" element={<JoinCommunity />} />
               <Route path="settings" element={<SettingsHeader />}>
                 <Route index element={<Navigate to="basic-information" />} />
                 <Route path="basic-information" element={<BasicInfo />} />

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   triggerGetNotifications,
   triggerGetUserProfile,
+  triggerReadNotifications,
 } from "./settingsServices";
 interface IinitialState {
   userProfileData: {
@@ -12,6 +13,13 @@ interface IinitialState {
     statusCode?: number | null;
   };
   notificationsData: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  readNotifications: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -29,6 +37,13 @@ const initialState: IinitialState = {
     statusCode: null,
   },
   notificationsData: {
+    data: [],
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
+  readNotifications: {
     data: [],
     loading: false,
     error: false,
@@ -87,6 +102,29 @@ const settingsSlice = createSlice({
       state.notificationsData.message = action.payload
         ?.message as unknown as string;
       state.notificationsData.statusCode = action.payload?.status_code ?? null;
+    });
+
+    //READ NOTIFICATIONS DATA
+    builder.addCase(triggerReadNotifications.pending, (state) => {
+      state.readNotifications.loading = true;
+      state.readNotifications.error = false;
+      state.readNotifications.data = {};
+      state.readNotifications.message = "";
+    });
+    builder.addCase(triggerReadNotifications.fulfilled, (state, action) => {
+      state.readNotifications.loading = false;
+      state.readNotifications.data = action.payload?.results;
+      state.readNotifications.error = false;
+      state.readNotifications.message = action.payload
+        ?.message as unknown as string;
+      state.readNotifications.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerReadNotifications.rejected, (state, action) => {
+      state.readNotifications.loading = false;
+      state.readNotifications.error = true;
+      state.readNotifications.message = action.payload
+        ?.message as unknown as string;
+      state.readNotifications.statusCode = action.payload?.status_code ?? null;
     });
   },
 });

@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 // import Icon from "../Assets/SvgImagesAndIcons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/Store/store";
-import { triggerGetNotifications } from "../redux/Services/settings/settingsServices";
+import {
+  triggerGetNotifications,
+  triggerReadNotifications,
+} from "../redux/Services/settings/settingsServices";
 import { formatDistanceToNow } from "date-fns";
+import { toast } from "react-toastify";
 
 interface Notification {
   id: string;
@@ -18,13 +22,22 @@ interface Notification {
 const Notification: React.FC = () => {
   const [activeTab, setActiveTab] = useState("All");
   const dispatch: AppDispatch = useDispatch();
-  const { data: notifications, loading } = useSelector(
-    (state: RootState) => state.settings.notificationsData,
-  );
+  const {
+    data: notifications,
+    loading,
+    error,
+    message,
+  } = useSelector((state: RootState) => state.settings.notificationsData);
 
   useEffect(() => {
     dispatch(triggerGetNotifications({}));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error && message) {
+      toast.error(message);
+    }
+  }, [error, message]);
 
   const formatTimeAgo = (timestamp: string) => {
     try {
@@ -32,6 +45,33 @@ const Notification: React.FC = () => {
     } catch (error) {
       console.log("error", error);
       return timestamp; // fallback to original timestamp if parsing fails
+    }
+  };
+
+  const handleNotificationClick = async (
+    notificationId: string,
+    isRead: boolean,
+  ) => {
+    if (isRead) return;
+
+    try {
+      const result = await dispatch(
+        triggerReadNotifications({ notification_ids: [notificationId] }),
+      ).unwrap();
+
+      if (result?.status_code === 200) {
+        toast.success("Notification marked as read");
+
+        dispatch(triggerGetNotifications({}));
+      } else {
+        toast.error(result?.message || "Failed to mark notification as read");
+      }
+    } catch (error: any) {
+      console.error("Error marking notification as read:", error);
+      toast.error(
+        error?.message ||
+          "An error occurred while marking the notification as read",
+      );
     }
   };
 
@@ -54,7 +94,7 @@ const Notification: React.FC = () => {
   }
 
   return (
-    <div className="p-6 bg-white w-full md:w-[70%] mx-auto min-h-screen">
+    <div className="p-6 bg-white w-full md:w-[70%] mx-auto min-h-screen mb-10">
       <h2 className="text-xl font-semibold mb-4">Notifications</h2>
       <div className="flex bg-[#F2F4F7] space-x-4 mb-6 w-full md:w-[60%] lg:w-[40%] rounded-xl p-4">
         <button
@@ -88,8 +128,13 @@ const Notification: React.FC = () => {
             <div
               key={notification.id}
               className={`flex items-start p-4 border-b space-x-4 ${
-                notification.read_at ? "" : "bg-white"
+                notification.read_at
+                  ? "cursor-default"
+                  : "cursor-pointer hover:bg-gray-50"
               }`}
+              onClick={() =>
+                handleNotificationClick(notification.id, notification.read_at)
+              }
             >
               <div className="flex justify-between w-full">
                 <div className="flex items-start">

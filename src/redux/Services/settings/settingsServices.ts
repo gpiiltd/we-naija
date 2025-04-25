@@ -53,6 +53,35 @@ export const triggerGetNotifications = createAsyncThunk<
         },
       },
     );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerReadNotifications = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("settings/ReadNotifications", async (notification_id, thunkAPI) => {
+  try {
+    console.log("notification_id", notification_id);
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.patch<DefaultResponse>(
+      `${apiUrl.readNotifications}`,
+      notification_id,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
     console.log("response", response.data);
     return response.data;
   } catch (error: any) {
