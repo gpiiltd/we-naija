@@ -1,7 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { triggerGetUserProfile } from "./settingsServices";
+import {
+  triggerGetNotifications,
+  triggerGetUserProfile,
+} from "./settingsServices";
 interface IinitialState {
   userProfileData: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  notificationsData: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -18,8 +28,14 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  notificationsData: {
+    data: [],
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
-
 const settingsSlice = createSlice({
   name: "settings",
   initialState,
@@ -54,6 +70,23 @@ const settingsSlice = createSlice({
       state.userProfileData.message = action.payload
         ?.message as unknown as string;
       state.userProfileData.statusCode = action.payload?.status_code ?? null;
+    });
+
+    //GET NOTIFICATIONS DATA
+    builder.addCase(triggerGetNotifications.pending, (state) => {
+      state.notificationsData.loading = true;
+      state.notificationsData.error = false;
+      state.notificationsData.data = {};
+      state.notificationsData.message = "";
+    });
+    builder.addCase(triggerGetNotifications.fulfilled, (state, action) => {
+      console.log("action", action.payload);
+      state.notificationsData.loading = false;
+      state.notificationsData.data = action.payload?.results;
+      state.notificationsData.error = false;
+      state.notificationsData.message = action.payload
+        ?.message as unknown as string;
+      state.notificationsData.statusCode = action.payload?.status_code ?? null;
     });
   },
 });
