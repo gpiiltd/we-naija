@@ -208,31 +208,33 @@ const SurveyListCopy = () => {
               Kindly select the survey category you would like to report on this
               institution.
             </Typography>
-            <nav className="flex space-x-4">
-              {isCategoriesLoading ? (
-                <Typography variant={TypographyVariant.NORMAL}>
-                  Loading categories...
-                </Typography>
-              ) : categories && categories.length > 0 ? (
-                categories.map((category) => (
-                  <button
-                    key={category.identifier}
-                    className={`${
-                      activeCategory === category.identifier
-                        ? "text-primary_green border-b-2 border-primary_green font-bold py-2"
-                        : "text-gray-500 py-2"
-                    } hover:text-primary_green`}
-                    onClick={() => handleCategoryClick(category.identifier)}
-                  >
-                    {category.name}
-                  </button>
-                ))
-              ) : (
-                <Typography variant={TypographyVariant.NORMAL}>
-                  No categories available
-                </Typography>
-              )}
-            </nav>
+            <div className="overflow-x-auto">
+              <nav className="flex space-x-4 min-w-max pb-2">
+                {isCategoriesLoading ? (
+                  <Typography variant={TypographyVariant.NORMAL}>
+                    Loading categories...
+                  </Typography>
+                ) : categories && categories.length > 0 ? (
+                  categories.map((category) => (
+                    <button
+                      key={category.identifier}
+                      className={`${
+                        activeCategory === category.identifier
+                          ? "text-primary_green border-b-2 border-primary_green font-bold py-2"
+                          : "text-gray-500 py-2"
+                      } hover:text-primary_green whitespace-nowrap px-4`}
+                      onClick={() => handleCategoryClick(category.identifier)}
+                    >
+                      {category.name}
+                    </button>
+                  ))
+                ) : (
+                  <Typography variant={TypographyVariant.NORMAL}>
+                    No categories available
+                  </Typography>
+                )}
+              </nav>
+            </div>
           </section>
         </div>
 

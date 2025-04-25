@@ -26,6 +26,9 @@ interface ApiUrls {
   getAllLeaderboardData: string;
   getTaskQuestions: string;
   submitSurveyReportMultiple: string;
+  getUserProfile: string;
+  getNotifications: string;
+  readNotifications: string;
 }
 
 // const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://api.test.nssf.ng/api/v1/";
@@ -59,4 +62,7 @@ export const apiUrl: ApiUrls = {
   getAllLeaderboardData: `${BASE_URL}leaderboard`,
   getTaskQuestions: `${BASE_URL}task`,
   submitSurveyReportMultiple: `${BASE_URL}survey/institutions`,
+  getUserProfile: `${BASE_URL}agent/profile/`,
+  getNotifications: `${BASE_URL}notifications`,
+  readNotifications: `${BASE_URL}notifications/mark_as_read`,
 };

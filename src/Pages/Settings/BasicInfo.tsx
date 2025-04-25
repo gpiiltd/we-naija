@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { TypographyVariant } from "../../Components/types";
 import Typography from "../../Components/Typography";
 import Icon from "../../Assets/SvgImagesAndIcons";
@@ -7,45 +8,78 @@ import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
 import { genderOptions, nationalityOptions } from "../../utils/selectOptions";
 import { useNavigate } from "react-router-dom";
-// import { RootState } from "../../redux/Store/store";
-// import { useSelector } from "react-redux";
+import { RootState } from "../../redux/Store/store";
+import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
 
 const BasicInfo = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [fullName, setFullName] = useState("Jelly Grande");
-  const [userName, setUsername] = useState("G- Jelly");
-  const [nationality, setNationality] = useState("Nigerian");
-  const [gender, setGender] = useState("Female");
-  const [error] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("26-06-1991");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const userData = useSelector((state: RootState) => state.user.userData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUsername] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [gender, setGender] = useState("");
+  const [error] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
 
-  // useEffect(() => {
-  //   if (userData) {
-  //     setFullName(userData.first_name + " " + userData.last_name || "");
-  //     setUsername(userData.first_name || "");
-  //     setNationality(userData.nationality || "");
-  //     setGender(userData.gender || "");
-  //     setDateOfBirth(userData.date_of_birth || "");
-  //   }
-  // }, [userData]);
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
+  const { data, loading } = userProfileData;
+
+  useEffect(() => {
+    dispatch(triggerGetUserProfile({}) as any);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (data) {
+      setFirstName(data.first_name || "");
+      setLastName(data.last_name || "");
+      setUsername(data.username || "");
+      setNationality(data.nationality || "");
+      setGender(data.gender || "");
+      setDateOfBirth(data.date_of_birth || "");
+    }
+  }, [data]);
+
+  const handleFullNameChange = (value: string) => {
+    const names = value.split(" ");
+    if (names.length >= 2) {
+      setFirstName(names[0]);
+      setLastName(names.slice(1).join(" "));
+    } else {
+      setFirstName(value);
+      setLastName("");
+    }
+  };
 
   const isFormComplete =
-    nationality !== "" && gender !== "" && dateOfBirth !== "";
+    firstName !== "" &&
+    lastName !== "" &&
+    nationality !== "" &&
+    gender !== "" &&
+    dateOfBirth !== "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: Implement update profile functionality
   };
 
   const handleDateSelect = (date: string) => {
     setDateOfBirth(date);
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Typography variant={TypographyVariant.NORMAL}>Loading...</Typography>
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-between items-start gap-10 md:mx-32 md:mt-4">
-      <div className="hidden md:flex  gap-2 w-32 h-32 bg-white items-center justify-center rounded-xl  border border-gray-200">
-        <Icon type="avatar" className="w-20 h-20" />
+      <div className="hidden md:flex gap-2 w-32 h-32 bg-white items-center justify-center rounded-xl border border-gray-200">
+        <Icon type="avatarv" className="w-20 h-20" />
       </div>
       <div className="w-full md:w-[60%] lg:mr-80">
         <div className="flex flex-col gap-2">
@@ -70,12 +104,16 @@ const BasicInfo = () => {
           </Typography>
         </div>
         <div className="pt-10">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-1 ">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-1">
             <FloatingInput
               label="Full Name"
-              value={fullName}
-              onChange={setFullName}
-              error={fullName === "" && error ? "Full name is required." : ""}
+              value={`${firstName} ${lastName}`.trim()}
+              onChange={handleFullNameChange}
+              error={
+                (!firstName || !lastName) && error
+                  ? "Full name is required."
+                  : ""
+              }
             />
             <FloatingInput
               label="User Name"
@@ -117,12 +155,10 @@ const BasicInfo = () => {
                   ? "bg-[#007A61] hover:bg-[#015443] text-white"
                   : "bg-[#007A61] text-white cursor-not-allowed opacity-50"
               }`}
-              // onClick={handleButtonClick} //
-              // disabled={!isFormComplete} // Disable button if form is not complete
             >
               Save changes
             </button>
-            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}{" "}
+            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
           </form>
         </div>
       </div>
