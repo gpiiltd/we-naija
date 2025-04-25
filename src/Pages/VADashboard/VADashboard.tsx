@@ -110,7 +110,7 @@ const VADashboard = () => {
               >
                 <FiBell size={20} />
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 to="/verified-agent-dashboard/profile"
                 className={({ isActive }) =>
                   isActive
@@ -119,7 +119,7 @@ const VADashboard = () => {
                 }
               >
                 <Icon type="avatar" />
-              </NavLink>
+              </NavLink> */}
             </nav>
           </div>
         </div>
