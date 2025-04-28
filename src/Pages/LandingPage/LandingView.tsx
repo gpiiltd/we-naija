@@ -8,21 +8,13 @@ import Header from "../../Components/Header";
 
 import { FiX, FiMenu } from "react-icons/fi";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
 
 const LandingView = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
-  const aboutUsRef = useRef<HTMLDivElement>(null);
-
-  const scrollToAboutUs = () => {
-    if (aboutUsRef.current) {
-      aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => {
