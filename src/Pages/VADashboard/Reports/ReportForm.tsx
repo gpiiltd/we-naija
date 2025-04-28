@@ -55,7 +55,7 @@ const ReportForm = () => {
     dispatch(triggerAnswerTaskQuestion(payload) as any);
   };
 
-  // console.log("answerTaskQuestion***", answerTaskQuestion);
+  console.log("answerTaskQuestion***", answerTaskQuestion);
   useEffect(() => {
     if (answerTaskQuestion?.statusCode === 200 && answerTaskQuestion?.data) {
       toast.success("Report submitted successfully");
@@ -69,7 +69,13 @@ const ReportForm = () => {
       toast.error(`${answerTaskQuestion.message}`);
     }
     dispatch(resetAnswerTaskQuestionState());
-  }, [answerTaskQuestion, dispatch, navigate]);
+  }, [
+    answerTaskQuestion?.statusCode,
+    answerTaskQuestion?.error,
+    answerTaskQuestion?.message,
+    dispatch,
+    navigate,
+  ]);
 
   return (
     <div className="flex mt-8  flex-col md:px-32 ">

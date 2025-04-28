@@ -44,7 +44,12 @@ const SignUp = () => {
   const validationSchema = Yup.object().shape({
     fullName: Yup.string()
       .required("Full name is required")
-      .min(2, "Full name must be at least 2 characters long"),
+      .min(2, "Full name must be at least 2 characters long")
+      .trim()
+      .matches(
+        /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/,
+        "Please enter at least two names separated by a space",
+      ),
     email: Yup.string()
       .required("Email is required")
       .email("Invalid email format")

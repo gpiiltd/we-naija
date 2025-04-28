@@ -18,7 +18,10 @@ import {
 } from "../../../../redux/Services/institute/instituteServices";
 import { RootState } from "../../../../redux/Store/store";
 import { toast } from "react-toastify";
-import { resetSurveyReportState } from "../../../../redux/Services/institute/instituteSlice";
+import {
+  resetSurveyReportMultipleState,
+  // resetSurveyReportState,
+} from "../../../../redux/Services/institute/instituteSlice";
 
 interface SurveyQuestion {
   identifier: string;
@@ -63,7 +66,9 @@ const SurveyCopy = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useDispatch();
-  const { surveyReport } = useSelector((state: RootState) => state.institute);
+  const { surveyReportMultiple } = useSelector(
+    (state: RootState) => state.institute,
+  );
 
   const handleNext = async () => {
     if (!surveyQuestions || surveyQuestions.length === 0) return;
@@ -140,7 +145,6 @@ const SurveyCopy = ({
         });
 
         await dispatch(triggerSubmitSurveyReportMultiple(formData) as any);
-        setShowModal(true);
       } catch (error) {
         console.error("Failed to submit survey:", error);
         toast.error("Failed to submit survey. Please try again.");
@@ -214,36 +218,24 @@ const SurveyCopy = ({
     }
   };
 
-  // const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  //   setCommentText(e.target.value);
-  // };
-
-  // const isCommentValid = () => {
-  //   if (!selectedOption?.requires_comment) return true;
-  //   return commentText.length > 0 && commentText.length <= 20;
-  // };
-
-  // const validationSchema = Yup.object({
-  //   textArea: Yup.string().max(
-  //     20,
-  //     "You are allowed a maximum of 20 characters",
-  //   ),
-  // });
-
   const deleteImage = () => {
     setUploadedFileName(null);
     setUploadedFile(null);
   };
 
   useEffect(() => {
-    if (surveyReport?.statusCode === 200 && surveyReport?.data) {
-      dispatch(resetSurveyReportState());
+    if (
+      surveyReportMultiple?.statusCode === 201 &&
+      surveyReportMultiple?.data
+    ) {
+      setShowModal(true);
+      dispatch(resetSurveyReportMultipleState());
     }
-    if (surveyReport?.error && surveyReport?.message) {
-      toast.error(surveyReport.message);
-      dispatch(resetSurveyReportState());
+    if (surveyReportMultiple?.error && surveyReportMultiple?.message) {
+      toast.error(surveyReportMultiple.message);
+      dispatch(resetSurveyReportMultipleState());
     }
-  }, [surveyReport, dispatch]);
+  }, [surveyReportMultiple, dispatch]);
 
   const currentQuestion = surveyQuestions?.[currentQuestionIndex];
   const currentQuestionId = currentQuestion?.identifier || "";

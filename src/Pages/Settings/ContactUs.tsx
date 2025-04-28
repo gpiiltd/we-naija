@@ -22,7 +22,7 @@ const ContactUs = () => {
       </div>
       <div className="flex justify-center items-center mt-4 mb-8">
         <div
-          className="relative w-full md:w-[60%] lg:w-[40%] h-[600px] rounded-xl flex flex-col  bg-[#007A61] "
+          className="relative w-full md:w-[60%] lg:w-[60%] h-[600px] rounded-xl flex flex-col  bg-[#007A61] "
           style={{
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "cover",
@@ -47,14 +47,14 @@ const ContactUs = () => {
                 <span className="material-icons">
                   <Icon type="email" />
                 </span>
-                <span className="ml-8 text-lg">hello@mail.com</span>
+                <span className="ml-8 text-lg">info@nssf.ng</span>
               </div>
               <div className="flex items-center my-10">
                 <span className="material-icons">
                   <Icon type="location" />
                 </span>
                 <span className="ml-8 text-lg">
-                  33, New York City, United States.
+                  Lake Point Towers, Banana Island, Lagos, 106104, Nigeria.
                 </span>
               </div>
               <div className="flex space-x-8">

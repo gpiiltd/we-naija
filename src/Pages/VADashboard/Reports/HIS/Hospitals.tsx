@@ -5,7 +5,7 @@ import Typography from "../../../../Components/Typography";
 import { TypographyVariant } from "../../../../Components/types";
 import SearchBar from "../../../../Components/Searchbar";
 import ButtonComponent from "../../../../Components/ButtonComponent";
-import { CiLocationOn } from "react-icons/ci";
+// import { CiLocationOn } from "react-icons/ci";
 import Icon from "../../../../Assets/SvgImagesAndIcons";
 import CustomModal from "../../../../Components/Modal";
 import { AiOutlineDown } from "react-icons/ai";
@@ -13,6 +13,7 @@ import Breadcrumb from "../BreadCrum";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/Store/store";
 import { triggerGetAllInstitution } from "../../../../redux/Services/institute/instituteServices";
+import { formatOperationalDays } from "../../../../utils/inputValidations";
 // import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
 
 const Hospitals = () => {
@@ -56,23 +57,23 @@ const Hospitals = () => {
     // dispatch(resetInstitutionState());
   }, [institution, dispatch, currentPage]);
 
-  const formatOperationalDays = (operationalDays: string): string => {
-    const daysMap: { [key: string]: string } = {
-      monday_to_friday: "Monday - Friday",
-      monday_to_saturday: "Monday - Saturday",
-      monday_to_sunday: "Monday - Sunday",
-      saturday_only: "Saturday only",
-      sunday_only: "Sunday only",
-      saturday_to_sunday: "Saturday - Sunday",
-      friday_to_saturday: "Friday - Saturday",
-      friday_to_sunday: "Friday - Sunday",
-      thursday_to_friday: "Thursday - Friday",
-      thursday_to_saturday: "Thursday - Saturday",
-      thursday_to_sunday: "Thursday - Sunday",
-    };
+  // const formatOperationalDays = (operationalDays: string): string => {
+  //   const daysMap: { [key: string]: string } = {
+  //     monday_to_friday: "Monday - Friday",
+  //     monday_to_saturday: "Monday - Saturday",
+  //     monday_to_sunday: "Monday - Sunday",
+  //     saturday_only: "Saturday only",
+  //     sunday_only: "Sunday only",
+  //     saturday_to_sunday: "Saturday - Sunday",
+  //     friday_to_saturday: "Friday - Saturday",
+  //     friday_to_sunday: "Friday - Sunday",
+  //     thursday_to_friday: "Thursday - Friday",
+  //     thursday_to_saturday: "Thursday - Saturday",
+  //     thursday_to_sunday: "Thursday - Sunday",
+  //   };
 
-    return daysMap[operationalDays.toLowerCase()] || operationalDays;
-  };
+  //   return daysMap[operationalDays.toLowerCase()] || operationalDays;
+  // };
 
   const getRandomItems = (arr: string[], num: number) => {
     const shuffled = [...arr].sort(() => 0.5 - Math.random());
@@ -133,7 +134,7 @@ const Hospitals = () => {
     "Zaria",
     "Ibadan",
   ];
-  const [buttonText, setButtonText] = useState("Location");
+  // const [buttonText, setButtonText] = useState("Location");
 
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
@@ -169,11 +170,11 @@ const Hospitals = () => {
       setIsLoading(!isLoading);
       setTimeout(() => {
         setIsLoading(false);
-        setButtonText(`${cityDropdown.selected}, ${stateDropdown.selected}`);
+        // setButtonText(`${cityDropdown.selected}, ${stateDropdown.selected}`);
         setShowModal(false);
       }, 3000);
     } else {
-      setButtonText("Location");
+      // setButtonText("Location");
       setShowModal(false);
     }
   };
@@ -182,7 +183,7 @@ const Hospitals = () => {
     setSearchQuery("");
     setStateDropdown({ selected: "", isOpen: false });
     setCityDropdown({ selected: "", isOpen: false });
-    setButtonText("Location");
+    // setButtonText("Location");
   };
 
   return (
@@ -217,14 +218,14 @@ const Hospitals = () => {
               onSubmit={handleSearchSubmit}
               suggestions={suggestions}
             />
-            <ButtonComponent
+            {/* <ButtonComponent
               text={buttonText}
               bg_color="#007A61"
               active={true}
               text_color="#FFFFFF"
               icon={<CiLocationOn size={30} />}
               onClick={openModal}
-            />
+            /> */}
           </div>
         </div>
       </div>

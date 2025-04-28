@@ -318,6 +318,7 @@ const instituteSlice = createSlice({
     builder.addCase(
       triggerSubmitSurveyReportMultiple.fulfilled,
       (state, action) => {
+        console.log("action.payload SURVEY REPORT MULTIPLE***", action.payload);
         state.surveyReportMultiple.loading = false;
         state.surveyReportMultiple.data = action.payload;
         state.surveyReportMultiple.error = false;

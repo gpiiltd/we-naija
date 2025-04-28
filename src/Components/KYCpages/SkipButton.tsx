@@ -9,7 +9,7 @@ const SkipButton = () => {
     <div
       className="w-[42%] flex justify-center mt-8"
       style={{ color: "#ED7D31" }}
-      onClick={() => navigate("/")}
+      onClick={() => navigate("/kyc/*")}
     >
       <Typography
         variant={TypographyVariant.SMALL}

@@ -23,7 +23,7 @@ const KycHeader = () => {
           <Icon
             type="logo"
             className="w-fit cursor-pointer"
-            click={() => (window.location.href = "/verified-agent-dashboard")}
+            click={() => (window.location.href = "/")}
           />
         </div>
 
