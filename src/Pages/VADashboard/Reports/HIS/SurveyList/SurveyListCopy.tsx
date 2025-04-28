@@ -8,7 +8,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { CiClock2 } from "react-icons/ci";
 import { FiPhoneCall } from "react-icons/fi";
 import { HiOutlineEnvelope } from "react-icons/hi2";
-import ButtonComponent from "../../../../../Components/ButtonComponent";
+// import ButtonComponent from "../../../../../Components/ButtonComponent";
 import { useDispatch, useSelector } from "react-redux";
 import {
   triggerGetAllSurveyCategories,
@@ -18,6 +18,7 @@ import {
 import { RootState } from "../../../../../redux/Store/store";
 import { Card } from "@gpiiltd/gpi-ui-library";
 import { IoIosArrowForward } from "react-icons/io";
+import { formatOperationalDays } from "../../../../../utils/inputValidations";
 
 const SurveyListCopy = () => {
   const { id } = useParams();
@@ -162,7 +163,9 @@ const SurveyListCopy = () => {
                     variant={TypographyVariant.SMALL}
                     className="text-light_gray"
                   >
-                    {institutionDetails?.operation_days}
+                    {formatOperationalDays(
+                      institutionDetails?.operation_days || "",
+                    )}
                   </Typography>
                 </div>
               </div>
@@ -306,7 +309,7 @@ const SurveyListCopy = () => {
             </div>
           )}
         </div>
-        <div className="border h-50 bg-white py-10 flex justify-between px-10 rounded-lg">
+        {/* <div className="border h-50 bg-white py-10 flex justify-between px-10 rounded-lg">
           <Typography
             variant={TypographyVariant.NORMAL}
             className="pt-1 font-bold"
@@ -334,7 +337,7 @@ const SurveyListCopy = () => {
               }
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

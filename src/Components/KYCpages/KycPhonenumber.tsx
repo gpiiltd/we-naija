@@ -4,7 +4,7 @@ import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import InputField from "../../Components/Input/InputField";
+// import InputField from "../../Components/Input/InputField";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useNavigate } from "react-router-dom";
 import KycHeader from "./KycHeader";
@@ -30,6 +30,7 @@ const KycPhonenumber = () => {
       mobile_number: phoneNumberWithCountryCode,
     };
 
+    console.log("payload", payload);
     dispatch(setKycPhoneNumber(phoneNumberWithCountryCode));
     dispatch(triggerPhoneNumberVerification(payload) as any);
   };
@@ -51,11 +52,10 @@ const KycPhonenumber = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    phoneNumber: Yup.number()
+    phoneNumber: Yup.string()
       .required("Phone number is required")
-      .min(10, "Phone number must be 10 characters long")
-      // .max(11, "Phone number must be at most 11 characters long")
-      .typeError("Phone number must be a number"),
+      .matches(/^\d{10}$/, "Phone number must be exactly 10 digits")
+      .typeError("Phone number must contain only numbers"),
   });
 
   return (
@@ -84,28 +84,52 @@ const KycPhonenumber = () => {
             onSubmit={handleProceed}
             validationSchema={validationSchema}
           >
-            {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
+            {({
+              isValid,
+              dirty,
+              setFieldValue,
+              setFieldTouched,
+              values,
+              errors,
+              touched,
+            }) => (
               <Form>
-                <div className="flex items-start mb-8">
-                  <div className=" flex items-center justify-center w-[40%] h-[58px]  -mr-1  border border-primary_color rounded-l-xl border-r-0">
-                    <Icon type="nigerianflag" className="w-6 h-6 mr-4" />
+                <div className="items-center justify-center mb-8">
+                  <div className="flex items-start  w-full">
+                    <div className=" flex items-center justify-center w-[40%] h-[58px]  -mr-1  border border-primary_color rounded-l-xl border-r-0">
+                      <Icon type="nigerianflag" className="w-6 h-6 mr-4" />
 
-                    <Typography
-                      variant={TypographyVariant.NORMAL}
-                      className="text-gray-500  "
-                    >
-                      +234
-                    </Typography>
+                      <Typography
+                        variant={TypographyVariant.NORMAL}
+                        className="text-gray-500  "
+                      >
+                        +234
+                      </Typography>
+                    </div>
+                    <input
+                      type="text"
+                      name="phoneNumber"
+                      placeholder="Enter your phone number"
+                      className={`w-[60%] h-[58px] px-4 border ${
+                        errors.phoneNumber && touched.phoneNumber
+                          ? "border-red "
+                          : "border-primary_color"
+                      } rounded-r-xl focus:outline-none `}
+                      onChange={(e) => {
+                        const value = e.target.value
+                          .replace(/\D/g, "")
+                          .slice(0, 10);
+                        setFieldValue("phoneNumber", value);
+                      }}
+                      onBlur={() => setFieldTouched("phoneNumber", true)}
+                      value={values.phoneNumber}
+                    />
                   </div>
-                  <InputField
-                    placeHolder="Enter your phone number"
-                    type="text"
-                    focusStyle="green"
-                    label="Phone number"
-                    name="phoneNumber"
-                    setFieldValue={setFieldValue}
-                    setFieldTouched={setFieldTouched}
-                  />
+                  {errors.phoneNumber && touched.phoneNumber && (
+                    <div className="text-red text-sm mt-1">
+                      {errors.phoneNumber}
+                    </div>
+                  )}
                 </div>
 
                 <Button

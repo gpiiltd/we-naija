@@ -49,7 +49,8 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignUp />} />
+            <Route path="/" element={<div>Landing Page</div>} />
+            <Route path="/create-account" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/otp" element={<OTP />} />

@@ -55,8 +55,7 @@ const Login = () => {
     if (userData || error) {
       checkLoginStatus();
     }
-    dispatch(resetState());
-  });
+  }, [userData, error]);
 
   const checkLoginStatus = () => {
     if (error) {
@@ -65,8 +64,8 @@ const Login = () => {
       return;
     }
     if (Object.keys(userData).length > 0 && userData.kyc_step === "completed") {
-      toast.success("Login successful");
       const userEmail = userData?.email || "";
+      toast.success("Login successful");
       dispatch(setUserEmail(userEmail));
       setTimeout(() => {
         navigate("/verified-agent-dashboard");
@@ -82,7 +81,6 @@ const Login = () => {
       }
       setTimeout(() => {
         navigate("/kyc/*");
-        // navigate("/verified-agent-dashboard");
       }, 3000);
       dispatch(resetState());
     } else if (
@@ -90,7 +88,6 @@ const Login = () => {
         "Email not verified. Please verify your email to proceed",
       )
     ) {
-      // toast.error("Email not verified. Please verify your email to proceed");
       toast.error(message);
       if (inputEmail) {
         dispatch(setUserEmail(inputEmail));
@@ -149,13 +146,14 @@ const Login = () => {
                     setFieldValue={setFieldValue}
                     setFieldTouched={setFieldTouched}
                   />
-                  <div onClick={() => navigate("/forgot-password")}>
-                    <Typography
-                      variant={TypographyVariant.SMALL}
+
+                  <div className="flex justify-end text-sm">
+                    <h6
                       className="text-orange text-end pt-3 cursor-pointer"
+                      onClick={() => navigate("/forgot-password")}
                     >
                       Forgot password?
-                    </Typography>
+                    </h6>
                   </div>
                 </div>
 
@@ -173,7 +171,7 @@ const Login = () => {
             <Typography variant={TypographyVariant.SMALL}>
               Don't have an account?
             </Typography>
-            <Link to="/">
+            <Link to="/create-account">
               <Typography
                 variant={TypographyVariant.SMALL}
                 className="text-orange font-extrabold cursor-pointer"

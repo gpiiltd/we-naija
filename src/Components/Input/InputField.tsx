@@ -50,10 +50,10 @@ const InputField: React.FC<TextInputProps> = ({
       />
       <label
         htmlFor={props.name}
-        className={`absolute left-3 top-4 text-base transition-all duration-200 transform ${
-          field.value || meta.touched
-            ? "scale-75 -translate-y-3 text-gray-600 "
-            : "text-gray-400"
+        className={`absolute left-3 transition-all duration-200 ease-in-out ${
+          field.value || isFocused
+            ? "top-1 text-xs text-gray-600"
+            : "top-4 text-base text-gray-400"
         }`}
       >
         <Typography variant={TypographyVariant.NORMAL}>{label}</Typography>
@@ -86,7 +86,10 @@ const InputField: React.FC<TextInputProps> = ({
           </div>
         )
       )}
-      <span className="absolute right-3 top-3 cursor-pointer" onClick={onClick}>
+      <span
+        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+        onClick={onClick}
+      >
         {icon}
       </span>
     </div>
