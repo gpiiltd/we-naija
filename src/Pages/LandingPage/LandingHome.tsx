@@ -8,8 +8,10 @@ import bigGirlSvg from "../../Assets/svgImages/bgGirl.svg";
 import backgroundImage from "../../Assets/svgImages/reportCardBg.svg";
 import Leaderboard from "../../Components/Landing/Leaderboard";
 import SwiperCarosel from "../../Components/Landing/SwiperCarosel";
+import { useNavigate } from "react-router-dom";
 
 const LandingHome = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div>
@@ -80,7 +82,9 @@ const LandingHome = () => {
                     bg_color="#007A61"
                     text_color="white"
                     loading={false}
-                    onClick={() => {}}
+                    onClick={() => {
+                      navigate("/login");
+                    }}
                   />
                   <Button
                     text="Join community"
@@ -88,66 +92,15 @@ const LandingHome = () => {
                     bg_color="#ED7D31"
                     text_color="white"
                     loading={false}
-                    onClick={() => {}}
+                    onClick={() => {
+                      //<Link to="/login"></Link>;
+                      navigate("/signUp");
+                    }}
                   />
                 </div>
               </div>
             </div>
 
-            {/* <div className="lg:flex flex-row lg:mt-10">
-              <div className="flex flex-row items-center px-8 lg:basis-1/2 lg:mx-10">
-                <div className="flex flex-row items-center justify-center lg:justify-start">
-                  <Typography
-                    variant={TypographyVariant.TITLE}
-                    className="text-[30px] font-bold text-gray-800 mb-1 leading-9 lg:text[176px]"
-                  >
-                    VOICE YOUR CHANGE{" "}
-                    <span className="hidden md:inline lg:inline">
-                      <Icon type="homeSVg" className="" />
-                    </span>
-                  </Typography>
-                </div>
-                <Icon
-                  type="homeSVg"
-                  className="lg:hidden md:hidden h-40 w-40"
-                />
-              </div>
-              <div className="lg:basis-1/2">
-                <div className="px-8">
-                  <Typography
-                    variant={TypographyVariant.NORMAL}
-                    className="font-normal text-lg text-[#575757] mb-2 leading-9"
-                  >
-                    Your voice matters! Share your experiences and insights to
-                    help drive real improvements in healthcare. Make your
-                    impact— voice your change today!
-                  </Typography>
-                </div>
-                <div className="w-full mt-8 flex flex-row space-x-2 px-8">
-                  <Button
-                    text="Send message"
-                    // active={isValid && dirty}
-                    active={true}
-                    bg_color="#007A61"
-                    text_color="white"
-                    loading={false}
-                    onClick={() => {}}
-                  />
-                  <Button
-                    text="Join community"
-                    // active={isValid && dirty}
-                    active={true}
-                    bg_color="#ED7D31"
-                    text_color="white"
-                    loading={false}
-                    onClick={() => {}}
-                  />
-                </div>
-              </div>
-            </div> */}
-            {/* <div className="w-full h-[30rem] bg-cyan-200 mt-4 mb-4">
-              <SwiperCarosel />
-            </div> */}
             <SwiperCarosel />
             <div className="flex flex-row mr-6 items-center justify-center mt-6 mb-10 px-8">
               <div>
@@ -197,7 +150,9 @@ const LandingHome = () => {
               border_color="#ffffff"
               text_color="white"
               loading={false}
-              onClick={() => {}}
+              onClick={() => {
+                navigate("/signUp");
+              }}
             />
           </div>
         </div>
@@ -238,6 +193,7 @@ const LandingHome = () => {
 export default LandingHome;
 
 const CommunitySection = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full flex justify-center p-6 mt-16 mb-[30px] lg:mb-10">
       <div className="relative flex flex-col lg:flex-row items-center w-full md:w-[80vw]">
@@ -269,7 +225,9 @@ const CommunitySection = () => {
                 border_color="#ffffff"
                 text_color="#007A61"
                 loading={false}
-                onClick={() => {}}
+                onClick={() => {
+                  navigate("/signUp");
+                }}
               />
               <Button
                 text="Join community"
@@ -279,7 +237,9 @@ const CommunitySection = () => {
                 border_color="#ED7D31"
                 text_color="white"
                 loading={false}
-                onClick={() => {}}
+                onClick={() => {
+                  navigate("/signUp");
+                }}
               />
             </div>
           </div>

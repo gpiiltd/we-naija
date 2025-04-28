@@ -70,7 +70,7 @@ const LandingView = () => {
               Leaderboards
             </NavLink>
             <NavLink
-              to="/landing-home/contact"
+              to="/landing-contact"
               className={({ isActive }) =>
                 isActive ? "text-primary_green font-medium" : "hover:text-primary_green transition"
               }

@@ -54,8 +54,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingView />}>
               <Route index element={<Navigate to="landing" />} />
-              <Route path="landing" Component={LandingHome} />
-              <Route path="contact" element={<ContactView />} />
+              <Route path="/landing" Component={LandingHome} />
+              <Route path="/landing-contact" element={<ContactView />} />
             </Route>
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
