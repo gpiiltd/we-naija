@@ -43,7 +43,7 @@ const ContactView = () => {
         help.
       </Typography>
 
-      {/* contact view section */}
+      {/* contact view section to fill out the details and complete the process *Munchee Pinned :) */}
       <div className="bg-white w-full flex flex-col md:flex-row max-w-5xl">
         {/* Left Section */}
         <div className="bg-green-800 text-white p-6 md:p-8 relative w-full basis-1/3">
