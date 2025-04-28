@@ -9,32 +9,28 @@ interface ErroResponseData {
   results?: Record<string, string[]>;
 }
 
-export const triggerGetUserProfile = createAsyncThunk<
-  any,
-  any,
-  { rejectValue: ErroResponseData }
->("settings/GetUserProfile", async (_, thunkAPI) => {
-  try {
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.get<DefaultResponse>(
-      `${apiUrl.getUserProfile}`,
-      {
+export const triggerGetUserProfile = createAsyncThunk<any, any, { rejectValue: ErroResponseData }>(
+  "settings/GetUserProfile",
+  async (_, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.get<DefaultResponse>(`${apiUrl.getUserProfile}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      },
-    );
-    return response.data;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue({
-      message: error.response.data.message ?? "Something went wrong",
-      status_code: error.response.data.status_code,
-      results: error.response.data.results,
-    });
+      });
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        message: error.response.data.message ?? "Something went wrong",
+        status_code: error.response.data.status_code,
+        results: error.response.data.results,
+      });
+    }
   }
-});
+);
 
 export const triggerGetNotifications = createAsyncThunk<
   any,
@@ -43,16 +39,13 @@ export const triggerGetNotifications = createAsyncThunk<
 >("settings/GetNotifications", async (_, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get<DefaultResponse>(
-      `${apiUrl.getNotifications}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+    const response = await axios.get<DefaultResponse>(`${apiUrl.getNotifications}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-    );
+    });
     return response.data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -80,7 +73,7 @@ export const triggerReadNotifications = createAsyncThunk<
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      },
+      }
     );
     console.log("response", response.data);
     return response.data;

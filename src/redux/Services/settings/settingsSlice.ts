@@ -58,8 +58,7 @@ const settingsSlice = createSlice({
     resetUserProfileState: (state) => {
       state.userProfileData.error = initialState.userProfileData.error;
       state.userProfileData.message = initialState.userProfileData.message;
-      state.userProfileData.statusCode =
-        initialState.userProfileData.statusCode;
+      state.userProfileData.statusCode = initialState.userProfileData.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -74,16 +73,13 @@ const settingsSlice = createSlice({
       state.userProfileData.loading = false;
       state.userProfileData.data = action.payload?.data;
       state.userProfileData.error = false;
-      state.userProfileData.message = action.payload
-        ?.message as unknown as string;
-      state.userProfileData.statusCode = action.payload
-        ?.status_code as unknown as number;
+      state.userProfileData.message = action.payload?.message as unknown as string;
+      state.userProfileData.statusCode = action.payload?.status_code as unknown as number;
     });
     builder.addCase(triggerGetUserProfile.rejected, (state, action) => {
       state.userProfileData.loading = false;
       state.userProfileData.error = true;
-      state.userProfileData.message = action.payload
-        ?.message as unknown as string;
+      state.userProfileData.message = action.payload?.message as unknown as string;
       state.userProfileData.statusCode = action.payload?.status_code ?? null;
     });
 
@@ -99,8 +95,7 @@ const settingsSlice = createSlice({
       state.notificationsData.loading = false;
       state.notificationsData.data = action.payload?.results;
       state.notificationsData.error = false;
-      state.notificationsData.message = action.payload
-        ?.message as unknown as string;
+      state.notificationsData.message = action.payload?.message as unknown as string;
       state.notificationsData.statusCode = action.payload?.status_code ?? null;
     });
 
@@ -115,15 +110,13 @@ const settingsSlice = createSlice({
       state.readNotifications.loading = false;
       state.readNotifications.data = action.payload?.results;
       state.readNotifications.error = false;
-      state.readNotifications.message = action.payload
-        ?.message as unknown as string;
+      state.readNotifications.message = action.payload?.message as unknown as string;
       state.readNotifications.statusCode = action.payload?.status_code ?? null;
     });
     builder.addCase(triggerReadNotifications.rejected, (state, action) => {
       state.readNotifications.loading = false;
       state.readNotifications.error = true;
-      state.readNotifications.message = action.payload
-        ?.message as unknown as string;
+      state.readNotifications.message = action.payload?.message as unknown as string;
       state.readNotifications.statusCode = action.payload?.status_code ?? null;
     });
   },
