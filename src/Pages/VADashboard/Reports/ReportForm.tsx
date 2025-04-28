@@ -53,6 +53,7 @@ const ReportForm = () => {
     dispatch(triggerAnswerTaskQuestion(payload) as any);
   };
 
+  // console.log("answerTaskQuestion***", answerTaskQuestion);
   useEffect(() => {
     if (answerTaskQuestion?.statusCode === 200 && answerTaskQuestion?.data) {
       toast.success("Report submitted successfully");
@@ -95,7 +96,7 @@ const ReportForm = () => {
 
         {/* main component */}
         <Typography variant={TypographyVariant.NORMAL} className="font-bold pt-5">
-          {taskQuestion?.title}
+          {taskQuestion?.question}
         </Typography>
         <Icon type="response" className="w-full" />
 

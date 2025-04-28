@@ -1,35 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { TypographyVariant } from "../../Components/types";
 import Typography from "../../Components/Typography";
-import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
-import { nigerianAddresses } from "../../utils/selectOptions";
 import { useNavigate } from "react-router-dom";
-
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { RootState } from "../../redux/Store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
+
 const ContactInfo = () => {
-  const [email, setEmail] = useState("jellygrande@gmail.com");
-  const [phoneNumber, setPhoneNumber] = useState("081042001438");
-  const [address, setAddress] = useState("123 Lagos Street, Lagos");
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
   const [error] = useState("");
   const navigate = useNavigate();
-  const userData = useSelector((state: RootState) => state.user.userData);
+
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
+  const { data, loading } = userProfileData;
 
   useEffect(() => {
-    if (userData) {
-      setEmail(userData.email || "");
-      setPhoneNumber(userData.mobile_number || "");
-      setAddress(userData.address || "");
+    dispatch(triggerGetUserProfile({}) as any);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (data) {
+      setEmail(data.email || "");
+      setPhoneNumber(data.mobile_number || "");
+      setAddress(data.address || "");
     }
-  }, [userData]);
+  }, [data]);
 
   const isFormComplete = address !== "" && email !== "" && phoneNumber !== "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: Implement update contact info functionality
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Typography variant={TypographyVariant.NORMAL}>Loading...</Typography>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center items-center md:mt-4">
@@ -47,7 +62,7 @@ const ContactInfo = () => {
           </Typography>
         </div>
         <div className="pt-10">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-1 ">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-1">
             <FloatingInput
               label="Email"
               value={email}
@@ -60,13 +75,20 @@ const ContactInfo = () => {
               onChange={setPhoneNumber}
               error={phoneNumber === "" && error ? "Phone number is required." : ""}
             />
-            <FloatingSelect
+
+            <FloatingInput
+              label="Residential Address"
+              value={address}
+              onChange={setAddress}
+              error={address === "" && error ? "Address is required." : ""}
+            />
+            {/* <FloatingSelect
               label="Residential Address"
               options={nigerianAddresses}
               value={address}
               onChange={setAddress}
               error={address === "" && error ? "Address is required." : ""}
-            />
+            /> */}
             <button
               type="submit"
               className={`mt-4 w-full py-4 rounded-md ${
@@ -74,12 +96,10 @@ const ContactInfo = () => {
                   ? "bg-[#007A61] hover:bg-[#015443] text-white"
                   : "bg-[#007A61] text-white cursor-not-allowed opacity-50"
               }`}
-              // onClick={handleButtonClick} //
-              // disabled={!isFormComplete} // Disable button if form is not complete
             >
               Save changes
             </button>
-            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}{" "}
+            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
           </form>
         </div>
       </div>

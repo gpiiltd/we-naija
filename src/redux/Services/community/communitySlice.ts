@@ -204,6 +204,7 @@ const communitySlice = createSlice({
       state.answerTaskQuestion.message = "";
     });
     builder.addCase(triggerAnswerTaskQuestion.fulfilled, (state, action) => {
+      console.log("action.payload***", action.payload);
       state.answerTaskQuestion.loading = false;
       state.answerTaskQuestion.data = action.payload;
       state.answerTaskQuestion.error = false;

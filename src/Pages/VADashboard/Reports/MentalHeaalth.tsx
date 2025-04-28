@@ -99,7 +99,7 @@ const MentalHeaalth = () => {
                         variant={TypographyVariant.NORMAL}
                         className="font-bold tracking-wide"
                       >
-                        {task.title}
+                        {task.question}
                       </Typography>
                     </div>
                     <div className="bg-effect_green p-1 rounded-full">
