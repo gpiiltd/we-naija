@@ -18,7 +18,7 @@ const LandingHome = () => {
           <div
             className="absolute inset-0 bg-no-repeat bg-cover bg-center"
             style={{
-              backgroundImage: `url(${LandingBg})`, // ✅ Fix: Use backticks
+              backgroundImage: `url(${LandingBg})`,
               zIndex: 0,
             }}
           ></div>
@@ -163,6 +163,7 @@ const LandingHome = () => {
           </div>
         </div>
       </div>
+      {/* About us */}
       <div className="bg-[#006C55] px-8 py-12 w-full flex flex-col md:flex-row-reverse items-center md:items-start gap-12 max-w-10xl mx-auto">
         {/* Left Side - Text Content */}
         <div className="md:w-1/2">
@@ -206,6 +207,7 @@ const LandingHome = () => {
           <Icon type="millionpic" className="w-full h-auto max-h-[500px] object-contain" />
         </div>
       </div>
+      {/* About us */}
 
       <div className="bg-[#001611] p-6 w-full">
         <Typography
