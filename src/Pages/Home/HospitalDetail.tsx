@@ -15,7 +15,7 @@ function HospitalDetail() {
   const dispatch = useDispatch();
 
   const { instituteData, error, message } = useSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.user
   );
 
   useEffect(() => {
