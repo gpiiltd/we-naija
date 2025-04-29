@@ -47,8 +47,8 @@ const SignUp = () => {
       .min(2, "Full name must be at least 2 characters long")
       .trim()
       .matches(
-        /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/,
-        "Please enter at least two names separated by a space",
+        /^[a-zA-Z][a-zA-Z\s-]*[a-zA-Z]\s[a-zA-Z][a-zA-Z\s-]*[a-zA-Z]$/,
+        "Please enter at least two names.",
       ),
     email: Yup.string()
       .required("Email is required")
