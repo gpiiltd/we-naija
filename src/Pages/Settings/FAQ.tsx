@@ -9,30 +9,29 @@ const FAQ: React.FC = () => {
 
   const faqs = [
     {
-      question: "Is there a free trial available?",
+      question: "What are 'Community Tasks' and 'Primary Health Centre Tasks'?",
       answer:
-        "Yes, you can try us for free for 30 days. If you want, we’ll provide you with a free, personalized 30-minute onboarding call to get you up and running as soon as possible.",
+        "Community Tasks are tasks that are assigned to the community to complete. Primary Health Centre Tasks are tasks that are assigned to the Primary Health Centre to complete.",
     },
     {
-      question: "Can I change my plan later?",
-      answer: "Yes, you can change your plan at any time.",
-    },
-    {
-      question: "What is your cancellation policy?",
-      answer: "You can cancel your subscription at any time without penalty.",
-    },
-    {
-      question: "Can other info be added to an invoice?",
+      question: "How do I complete a task?",
       answer:
-        "Yes, you can customize your invoices with additional information.",
+        "Once you select a task, a set of questions will appear. Fill in the answers accurately based on your findings. After completing the questions, submit your responses to earn points.",
     },
     {
-      question: "How does billing work?",
-      answer: "Billing is done monthly or annually, depending on your plan.",
+      question: "Can I save my answers and come back later?",
+      answer:
+        "Yes! If you are unable to finish at once, you can save your progress as a draft and return later to complete and submit it.",
     },
     {
-      question: "How do I change my account email?",
-      answer: "You can change your email in the account settings.",
+      question: "How are points awarded?",
+      answer:
+        "Each completed tag has a point value attached to it, based on the complexity and importance of the task. Once you successfully submit a task and it has been completed, your points are automatically added to your account.",
+    },
+    {
+      question: "Where can I see my points and how I rank against others?",
+      answer:
+        "You can view your accumulated points and your position on the leaderboard by clicking the 'Leaderboard' section on your dashboard.",
     },
   ];
 

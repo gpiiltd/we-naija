@@ -80,7 +80,7 @@ import lineChampion from "../Assets/svgImages/lineChampion.svg";
 import lineLegend from "../Assets/svgImages/lineLegend.svg";
 import response from "../Assets/svgImages/response.svg";
 import sentEmail from "../Assets/svgImages/sentemail.svg";
-
+import linkedin2 from "../Assets/svgImages/linkedin2.svg";
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
     switch (type) {
@@ -422,6 +422,10 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "sentEmail":
         return (
           <img src={sentEmail} alt="sentEmail icon" className={className} />
+        );
+      case "linkedin2":
+        return (
+          <img src={linkedin2} alt="linkedin2 icon" className={className} />
         );
       default:
         return null;
