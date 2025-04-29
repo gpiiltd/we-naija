@@ -1,13 +1,26 @@
 import { Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
-import { NavLink } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { triggerLogout } from "../../redux/Services/user/UserServices";
 
 const SettingsMobile = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    try {
+      await dispatch(triggerLogout() as any);
+      // Wait for the Redux store to be cleared before navigating
+      setTimeout(() => {
+        navigate("/login", { replace: true });
+      }, 100);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
     <div className="flex flex-col w-full  bg-[#E3E3E359]">
       <Typography
@@ -160,11 +173,12 @@ const SettingsMobile = () => {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-center mt-8 mb-12">
-        <CiLogout size={24} className="text-error" />
-        <NavLink to="/login" className="text-error font-semibold">
-          Logout
-        </NavLink>
+      <div
+        onClick={handleLogout}
+        className="flex gap-2 justify-center mt-8 mb-12 cursor-pointer text-error"
+      >
+        <CiLogout size={24} className="text-error font-semibol" />
+        Logout
       </div>
     </div>
   );

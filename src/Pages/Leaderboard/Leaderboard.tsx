@@ -4,7 +4,7 @@ import backgroundImage2 from "../../Assets/svgImages/background2.svg";
 import { Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
 import Icon from "../../Assets/SvgImagesAndIcons";
-import LevelBar from "./levelBar";
+// import LevelBar from "./levelBar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/Store/store";
 import { triggerGetAllLeaderboardData } from "../../redux/Services/leaderboard/LeaderboardService";
@@ -13,38 +13,62 @@ import { resetLeaderboardState } from "../../redux/Services/leaderboard/leaderbo
 
 const Leaderboard = () => {
   const [timeFrame, setTimeFrame] = useState("today");
-  const [visibleCount, setVisibleCount] = useState(3);
-  const [allLeaderboardData, setAllLeaderboardData] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(10);
+  const [allLeaderboardData, setAllLeaderboardData] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
 
   const { leaderboardData } = useSelector(
     (state: RootState) => state.leaderboard,
   );
+  const payload = {
+    page: currentPage,
+    timeframe: timeFrame,
+  };
 
   useEffect(() => {
-    dispatch(triggerGetAllLeaderboardData(timeFrame) as any);
+    dispatch(triggerGetAllLeaderboardData(payload) as any);
   }, [dispatch, timeFrame]);
 
   useEffect(() => {
     if (leaderboardData.statusCode === 200 && leaderboardData.data) {
-      setAllLeaderboardData(leaderboardData.data.results);
+      if (currentPage === 1) {
+        setAllLeaderboardData(leaderboardData.data.results);
+      } else {
+        setAllLeaderboardData((prevData) => [
+          ...prevData,
+          ...leaderboardData.data.results,
+        ]);
+      }
     }
 
     if (leaderboardData.error && leaderboardData.message) {
       toast.error(leaderboardData.message);
     }
     dispatch(resetLeaderboardState());
-  }, [leaderboardData, dispatch]);
+  }, [leaderboardData, dispatch, currentPage]);
 
   const handleShowMore = () => {
-    setVisibleCount((prevCount) =>
-      Math.min(prevCount + 3, allLeaderboardData.length),
-    );
+    if (leaderboardData.data?.next) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      const newPayload = {
+        ...payload,
+        page: nextPage,
+      };
+      dispatch(triggerGetAllLeaderboardData(newPayload) as any);
+    } else {
+      setVisibleCount((prevCount) =>
+        Math.min(prevCount + 10, allLeaderboardData.length),
+      );
+    }
   };
 
+  console.log("leaderboardData***", leaderboardData);
   const handleTimeFrameChange = (frame: string) => {
     setTimeFrame(frame);
-    setVisibleCount(3);
+    setVisibleCount(10);
+    setCurrentPage(1);
   };
   const getInitials = (name: string) => {
     const names = name.split(" ");
@@ -85,7 +109,7 @@ const Leaderboard = () => {
           <div className="text-lg font-semibold bg-white rounded-full px-5 py-4 text-[#007A61]  mb-2">
             {getInitials(userProfileData?.full_name || "")}
           </div>
-          <div className="text-2xl font-semibold">
+          <div className="text-2xl font-semibold my-4">
             {capitalizeName(userProfileData?.full_name || "")}
           </div>
           <div className="flex items-center justify-center mt-2">
@@ -112,9 +136,9 @@ const Leaderboard = () => {
             </div>
           </div>
 
-          <div className="w-full px-5 mt-8">
+          {/* <div className="w-full px-5 mt-8">
             <LevelBar level={userProfileData?.level || 0} />
-          </div>
+          </div> */}
         </div>
 
         <div
@@ -243,10 +267,6 @@ const Leaderboard = () => {
                     <span className="text-sm">SP</span>
                   </td>
                   <td className=" px-4 py-2 flex items-center text-gray-500 w-64">
-                    {/* <Icon
-                      type={badgeIconMap[player.badge] || "lineScout"}
-                      className="w-6 h-6 mr-2 "
-                    /> */}
                     <img
                       src={
                         allBadges?.find(
@@ -268,7 +288,8 @@ const Leaderboard = () => {
               </tr>
             )}
             {/* Show more rows */}
-            {visibleCount < tableData.length && (
+            {(visibleCount < tableData.length ||
+              leaderboardData.data?.next) && (
               <tr>
                 <td colSpan={4} className="text-center border-b relative">
                   <button

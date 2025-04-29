@@ -280,16 +280,27 @@ const VADashboard = () => {
             <div className="text-cream  ">
               <ul className="flex md:space-x-6">
                 <li className="cursor-pointer">
-                  <Icon type="linkedin" />
+                  <a
+                    href="https://ng.linkedin.com/company/nssf-ng"
+                    target="_blank"
+                  >
+                    <Icon type="linkedin" />
+                  </a>
                 </li>
                 <li className="cursor-pointer">
-                  <Icon type="facebook" />
+                  <a href="https://www.facebook.com/NSSF.NG" target="_blank">
+                    <Icon type="facebook" />
+                  </a>
                 </li>
                 <li className="cursor-pointer">
-                  <Icon type="twitter" />
+                  <a href="https://x.com/nssf_ng" target="_blank">
+                    <Icon type="twitter" />
+                  </a>
                 </li>
                 <li className="cursor-pointer">
-                  <Icon type="instagram" />
+                  <a href="https://www.instagram.com/nssf_ng" target="_blank">
+                    <Icon type="instagram" />
+                  </a>
                 </li>
               </ul>
             </div>

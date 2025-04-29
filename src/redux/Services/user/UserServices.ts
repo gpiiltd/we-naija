@@ -14,6 +14,7 @@ import {
   ResetPasswordData,
   SignupResponse,
 } from "./types";
+import { resetUserData } from "../../Slices/user/userSlice";
 interface SignupData {
   email: string;
   full_name: string;
@@ -463,6 +464,24 @@ export const triggerGetAllSurveyCategories = createAsyncThunk<
       },
     );
     return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerLogout = createAsyncThunk<
+  unknown,
+  void,
+  { rejectValue: ErroResponseData }
+>("user/logout", async (_, thunkAPI) => {
+  try {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    thunkAPI.dispatch(resetUserData());
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
       message: error.response.data.message ?? "Something went wrong",

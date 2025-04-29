@@ -13,11 +13,11 @@ export const triggerGetAllLeaderboardData = createAsyncThunk<
   any,
   any,
   { rejectValue: ErroResponseData }
->("leaderboard/GetAllLeaderboardData", async (query, thunkAPI) => {
+>("leaderboard/GetAllLeaderboardData", async (payload, thunkAPI) => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
-      `${apiUrl.getAllLeaderboardData}?timeframe=${query}`,
+      `${apiUrl.getAllLeaderboardData}?timeframe=${payload.timeframe}&page=${payload.page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

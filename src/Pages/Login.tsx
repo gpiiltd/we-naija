@@ -55,6 +55,7 @@ const Login = () => {
     if (userData || error) {
       checkLoginStatus();
     }
+    // dispatch(resetState());
   }, [userData, error]);
 
   const checkLoginStatus = () => {
@@ -67,10 +68,11 @@ const Login = () => {
       const userEmail = userData?.email || "";
       toast.success("Login successful");
       dispatch(setUserEmail(userEmail));
+      localStorage.setItem("first_name", userData?.first_name);
       setTimeout(() => {
         navigate("/verified-agent-dashboard");
         dispatch(resetState());
-      }, 3000);
+      }, 1000);
     } else if (
       Object.keys(userData).length > 0 &&
       userData.kyc_status === "pending"

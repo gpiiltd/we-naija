@@ -3,8 +3,27 @@ import { TypographyVariant } from "../../Components/types";
 import Header from "../../Components/Header";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
+import { useDispatch } from "react-redux";
+import { triggerLogout } from "../../redux/Services/user/UserServices";
+import { useNavigate } from "react-router-dom";
+import { CiLogout } from "react-icons/ci";
 
 const SettingsHeader = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(triggerLogout() as any);
+      // Wait for the Redux store to be cleared before navigating
+      setTimeout(() => {
+        navigate("/login", { replace: true });
+      }, 100);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col w-full">
       <Typography
@@ -92,6 +111,13 @@ const SettingsHeader = () => {
                 </li>
               </ul>
             </nav>
+          </div>
+          <div
+            onClick={handleLogout}
+            className="flex gap-2 justify-center mt-8 mb-12 cursor-pointer text-error"
+          >
+            <CiLogout size={24} className="text-error" />
+            Logout
           </div>
         </div>
       </Header>

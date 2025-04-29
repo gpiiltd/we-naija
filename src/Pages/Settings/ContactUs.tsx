@@ -59,23 +59,30 @@ const ContactUs = () => {
               </div>
               <div className="flex space-x-8">
                 <a
-                  href="https://www.facebook.com/profile.php?id=100093181866208"
+                  href="https://www.facebook.com/NSSF.NG"
                   className="text-white hover:text-gray-300"
                 >
                   <Icon type="facebooko" />
                 </a>
                 <a
-                  href="https://x.com/wenaija"
+                  href="https://x.com/nssf_ng"
                   className="text-white hover:text-gray-300"
                 >
                   <Icon type="twittero" />
                 </a>
                 <a
-                  href="https://www.instagram.com/wenaija"
+                  href="https://www.instagram.com/nssf_ng"
                   className="text-white hover:text-gray-300"
+                  // target="_blank"
                 >
                   <Icon type="instagramo" />
                 </a>
+                {/* <a
+                  href="https://ng.linkedin.com/company/nssf-ng"
+                  target="_blank"
+                >
+                  <Icon type="linkedin2" className="text-white w-10 h-10" />
+                </a> */}
               </div>
             </div>
           </div>
