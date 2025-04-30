@@ -8,8 +8,9 @@ import bigGirlSvg from "../../Assets/svgImages/bgGirl.svg";
 import backgroundImage from "../../Assets/svgImages/reportCardBg.svg";
 import Leaderboard from "../../Components/Landing/Leaderboard";
 import SwiperCarosel from "../../Components/Landing/SwiperCarosel";
-
+import { useNavigate } from "react-router-dom";
 const LandingHome = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div>
@@ -84,7 +85,9 @@ const LandingHome = () => {
                     bg_color="#007A61"
                     text_color="white"
                     loading={false}
-                    onClick={() => {}}
+                    onClick={() => {
+                      navigate("/create-account");
+                    }}
                   />
                   <Button
                     text="Join community"
@@ -92,7 +95,9 @@ const LandingHome = () => {
                     bg_color="#ED7D31"
                     text_color="white"
                     loading={false}
-                    onClick={() => {}}
+                    onClick={() => {
+                      navigate("/create-account");
+                    }}
                   />
                 </div>
               </div>
@@ -201,7 +206,9 @@ const LandingHome = () => {
               border_color="#ffffff"
               text_color="white"
               loading={false}
-              onClick={() => {}}
+              onClick={() => {
+                navigate("/create-account");
+              }}
             />
           </div>
         </div>
@@ -247,6 +254,7 @@ const LandingHome = () => {
 export default LandingHome;
 
 const CommunitySection = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full flex justify-center p-6 mt-16 mb-[30px] lg:mb-10">
       <div className="relative flex flex-col lg:flex-row items-center w-full md:w-[80vw]">
@@ -278,7 +286,9 @@ const CommunitySection = () => {
                 border_color="#ffffff"
                 text_color="#007A61"
                 loading={false}
-                onClick={() => {}}
+                onClick={() => {
+                  navigate("/create-account");
+                }}
               />
               <Button
                 text="Join community"
@@ -288,7 +298,9 @@ const CommunitySection = () => {
                 border_color="#ED7D31"
                 text_color="white"
                 loading={false}
-                onClick={() => {}}
+                onClick={() => {
+                  navigate("/create-account");
+                }}
               />
             </div>
           </div>

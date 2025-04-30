@@ -11,10 +11,12 @@ import { FiX, FiMenu } from "react-icons/fi";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
+import { useNavigate } from "react-router-dom";
 
 const LandingView = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -178,7 +180,9 @@ const LandingView = () => {
                         bg_color="#007A61"
                         text_color="white"
                         loading={false}
-                        onClick={() => {}}
+                        onClick={() => {
+                          navigate("/contact");
+                        }}
                       />
                       <Button
                         text="Join community"
@@ -187,7 +191,9 @@ const LandingView = () => {
                         bg_color="#ED7D31"
                         text_color="white"
                         loading={false}
-                        onClick={() => {}}
+                        onClick={() => {
+                          navigate("/create-account");
+                        }}
                       />
                     </div>
                   </nav>
