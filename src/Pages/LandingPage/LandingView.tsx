@@ -56,7 +56,7 @@ const LandingView = () => {
           {/* Navigation Menu */}
           <nav className="hidden md:flex items-center space-x-8 text-[#575757] font-light">
             <NavLink
-              to="/landing-home/landing"
+              to="/"
               className={({ isActive }) =>
                 isActive
                   ? "text-primary_green font-medium"
@@ -66,7 +66,7 @@ const LandingView = () => {
               About us
             </NavLink>
             <NavLink
-              to="/leaderboard"
+              to="/"
               className={({ isActive }) =>
                 isActive
                   ? "text-primary_green font-medium"
@@ -76,7 +76,7 @@ const LandingView = () => {
               Leaderboards
             </NavLink>
             <NavLink
-              to="/landing-home/contact"
+              to="/contact"
               className={({ isActive }) =>
                 isActive
                   ? "text-primary_green font-medium"
@@ -118,7 +118,7 @@ const LandingView = () => {
                     <ul className="space-y-6 ">
                       <li className="flex gap-2 ">
                         <NavLink
-                          to="/verified-agent-dashboard/home"
+                          to="/"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -131,7 +131,7 @@ const LandingView = () => {
                       </li>
                       <li className="flex gap-2">
                         <NavLink
-                          to="/verified-agent-dashboard/reports"
+                          to="/"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -157,7 +157,7 @@ const LandingView = () => {
                       </li>
                       <li className="flex gap-2">
                         <NavLink
-                          to="/verified-agent-dashboard/leaderboard"
+                          to="/contact"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
