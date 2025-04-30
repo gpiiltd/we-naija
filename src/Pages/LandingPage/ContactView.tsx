@@ -81,7 +81,7 @@ const ContactView = () => {
                     variant={TypographyVariant.SMALL}
                     className="font-light text-[#E5E7EB]"
                   >
-                    +29000000000
+                    +234 ---- --- ----
                   </Typography>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -92,7 +92,7 @@ const ContactView = () => {
                     variant={TypographyVariant.SMALL}
                     className="font-light text-[#E5E7EB]"
                   >
-                    hello@mail.com
+                    info@nssf.ng
                   </Typography>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -103,7 +103,7 @@ const ContactView = () => {
                     variant={TypographyVariant.SMALL}
                     className="font-light text-[#E5E7EB]"
                   >
-                    33. New York City, United States.
+                    Lake Point Towers, Banana Island, Lagos, 106104, Nigeria.
                   </Typography>
                 </div>
               </div>
@@ -112,13 +112,21 @@ const ContactView = () => {
             <div className="flex space-x-4 mt-6">
               <ul className="flex space-x-6 md:space-x-6">
                 <li className="cursor-pointer">
-                  <Icon type="facebookContact" />
+                  <a href="https://www.facebook.com/NSSF.NG" target="_blank">
+                    <Icon type="facebookContact" />
+                  </a>
                 </li>
+
                 <li className="cursor-pointer">
-                  <Icon type="xContact" />
+                  <a href="https://x.com/nssf_ng" target="_blank">
+                    <Icon type="xContact" />
+                  </a>
                 </li>
+
                 <li className="cursor-pointer">
-                  <Icon type="insta2Contact" />
+                  <a href="https://instagram.com/nssf.ng" target="_blank">
+                    <Icon type="insta2Contact" />
+                  </a>
                 </li>
               </ul>
             </div>

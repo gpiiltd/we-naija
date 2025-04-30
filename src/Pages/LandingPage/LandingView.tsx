@@ -48,9 +48,7 @@ const LandingView = () => {
               <Icon
                 type="logo"
                 className="w-fit"
-                click={() =>
-                  (window.location.href = "/verified-agent-dashboard")
-                }
+                click={() => (window.location.href = "/")}
               />
             </div>
           </div>
@@ -97,9 +95,7 @@ const LandingView = () => {
                     <Icon
                       type="logo"
                       className="w-fit"
-                      click={() =>
-                        (window.location.href = "/verified-agent-dashboard")
-                      }
+                      click={() => (window.location.href = "/")}
                     />
                     <button onClick={toggleDrawer} className="text-lg">
                       <FiX size={24} className="text-gray-500" />
