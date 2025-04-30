@@ -68,16 +68,6 @@ const LandingView = () => {
               About us
             </NavLink>
             <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary_green font-medium"
-                  : "hover:text-primary_green transition"
-              }
-            >
-              Leaderboards
-            </NavLink>
-            <NavLink
               to="/contact"
               className={({ isActive }) =>
                 isActive
@@ -118,7 +108,7 @@ const LandingView = () => {
 
                   <nav className="flex flex-col pt-8 text-md text-[#17191C] font-semibold">
                     <ul className="space-y-6 ">
-                      <li className="flex gap-2 ">
+                      {/* <li className="flex gap-2 ">
                         <NavLink
                           to="/"
                           onClick={toggleDrawer}
@@ -130,7 +120,7 @@ const LandingView = () => {
                         >
                           Home
                         </NavLink>
-                      </li>
+                      </li> */}
                       <li className="flex gap-2">
                         <NavLink
                           to="/"
@@ -144,9 +134,9 @@ const LandingView = () => {
                           About Us
                         </NavLink>
                       </li>
-                      <li className="flex gap-2">
+                      {/* <li className="flex gap-2">
                         <NavLink
-                          to="/verified-agent-dashboard/leaderboard"
+                          to="/create-account"
                           onClick={toggleDrawer}
                           className={({ isActive }) =>
                             isActive
@@ -156,7 +146,7 @@ const LandingView = () => {
                         >
                           Leaderboard
                         </NavLink>
-                      </li>
+                      </li> */}
                       <li className="flex gap-2">
                         <NavLink
                           to="/contact"
@@ -172,7 +162,7 @@ const LandingView = () => {
                       </li>
                     </ul>
 
-                    <div className="w-full mt-8 flex flex-row">
+                    <div className="w-full mt-10 flex flex-col gap-4">
                       <Button
                         text="Send message"
                         // active={isValid && dirty}
@@ -247,7 +237,7 @@ const LandingView = () => {
               </li>
               <li>
                 <NavLink
-                  to="/about"
+                  to="/create-account"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin"
@@ -259,7 +249,7 @@ const LandingView = () => {
               </li>
               <li>
                 <NavLink
-                  to="/contact"
+                  to="/create-account"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin"
@@ -271,7 +261,7 @@ const LandingView = () => {
               </li>
               <li>
                 <NavLink
-                  to="/contact"
+                  to="/create-account"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin"
@@ -283,7 +273,7 @@ const LandingView = () => {
               </li>
               <li>
                 <NavLink
-                  to="/contact"
+                  to="/create-account"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin text-xs"

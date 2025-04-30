@@ -53,8 +53,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingView />}>
-              <Route index element={<Navigate to="landing" />} />
-              <Route path="landing" Component={LandingHome} />
+              <Route index element={<LandingHome />} />{" "}
               <Route path="contact" element={<ContactView />} />
             </Route>
             <Route path="/create-account" element={<SignUp />} />

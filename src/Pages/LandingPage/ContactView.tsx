@@ -9,6 +9,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../../Components/Input/InputField";
 import { Button } from "@gpiiltd/gpi-ui-library";
+import TextAreaField from "../../Components/Input/TextArea";
 
 const ContactView = () => {
   const initialValues = {
@@ -27,7 +28,7 @@ const ContactView = () => {
       .required("Email is required")
       .email("Invalid email format")
       .trim(),
-    phone: Yup.string().required("Phone Number is required").trim(),
+    phone: Yup.number().required("Phone Number is required"),
     message: Yup.string().required("Message is required").trim(),
   });
   return (
@@ -135,46 +136,60 @@ const ContactView = () => {
             }}
             validationSchema={validationSchema}
           >
-            {({ isValid, dirty }) => (
+            {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
               <Form>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <InputField
-                    placeHolder="Enter your email address"
+                    placeHolder="First Name"
                     type="text"
                     focusStyle="green"
-                    label="Email address"
+                    label="First Name"
                     name="fName"
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
                   <InputField
-                    placeHolder="Enter your email address"
+                    placeHolder="Last Name"
                     type="text"
                     focusStyle="green"
-                    label="Email address"
+                    label="Last Name"
                     name="lName"
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <InputField
-                    placeHolder="Enter your email address"
+                    placeHolder="Email address"
                     type="text"
                     focusStyle="green"
                     label="Email address"
                     name="email"
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
                   <InputField
-                    placeHolder="Enter your email address"
+                    placeHolder="Phone Number"
                     type="text"
                     focusStyle="green"
-                    label="Email address"
+                    label="Phone Number"
                     name="phone"
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
                 </div>
-                <InputField
-                  placeHolder="Enter your email address"
+                {/* <TextArea
+                  placeHolder="Message"
                   type="text"
                   focusStyle="green"
-                  label="Email address"
+                  label="Message"
                   name="message"
+                /> */}
+
+                <TextAreaField
+                  label={""}
+                  name="message"
+                  placeHolder="Write message here..."
                 />
 
                 <div className="w-[15rem] mt-8">
