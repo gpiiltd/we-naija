@@ -92,3 +92,32 @@ export const triggerReadNotifications = createAsyncThunk<
     });
   }
 });
+
+export const triggerChangePassword = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("settings/ChangePassword", async (payload, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.put<DefaultResponse>(
+      `${apiUrl.changePassword}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
+    console.log("response", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});

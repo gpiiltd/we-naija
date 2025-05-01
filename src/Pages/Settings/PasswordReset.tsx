@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Typography from "../../Components/Typography/Typography";
 import { TypographyVariant } from "../../Components/types";
 import { Formik, Form } from "formik";
@@ -8,12 +8,20 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useNavigate } from "react-router-dom";
+import { triggerChangePassword } from "../../redux/Services/settings/settingsServices";
+import { RootState, AppDispatch } from "../../redux/Store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { resetChangePasswordState } from "../../redux/Services/settings/settingsSlice";
 
 const PasswordReset = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { changePassword } = useSelector((state: RootState) => state.settings);
+  const dispatch: AppDispatch = useDispatch();
 
   const initialValues = {
     existingPassword: "",
@@ -42,12 +50,30 @@ const PasswordReset = () => {
       .trim(),
   });
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = (values: any) => {
     setLoading(!loading);
+    const payload = {
+      old_password: values.existingPassword,
+      new_password: values.newPassword,
+    };
+    console.log("payload", payload);
+    dispatch(triggerChangePassword(payload));
     setTimeout(() => {
       setLoading(false);
     }, 3000);
   };
+
+  const formikRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (changePassword.message && changePassword.statusCode === 200) {
+      toast.success(changePassword.message);
+      formikRef.current?.resetForm();
+    } else if (changePassword.message && changePassword.statusCode !== 200) {
+      toast.error(changePassword.message);
+    }
+    dispatch(resetChangePasswordState());
+  }, [changePassword.message, dispatch]);
 
   return (
     <div className="flex justify-center items-center md:mt-4">
@@ -77,15 +103,14 @@ const PasswordReset = () => {
 
           <div className="pt-8">
             <Formik
+              innerRef={formikRef}
               initialValues={initialValues}
               validateOnChange={true}
               validateOnBlur={true}
-              onSubmit={(values) => {
-                console.log("Form values:", values);
-              }}
+              onSubmit={handleForgotPassword}
               validationSchema={validationSchema}
             >
-              {({ isValid, dirty }) => (
+              {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
                 <Form className="flex flex-col gap-5 text-gray-800">
                   <InputField
                     placeHolder="Enter your password"
@@ -95,6 +120,8 @@ const PasswordReset = () => {
                     name="existingPassword"
                     onClick={() => setShowPassword(!showPassword)}
                     icon={showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
 
                   <InputField
@@ -105,6 +132,8 @@ const PasswordReset = () => {
                     name="newPassword"
                     onClick={() => setShowPassword(!showPassword)}
                     icon={showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
                   <InputField
                     placeHolder="Enter your password"
@@ -117,6 +146,8 @@ const PasswordReset = () => {
                     icon={
                       showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />
                     }
+                    setFieldValue={setFieldValue}
+                    setFieldTouched={setFieldTouched}
                   />
 
                   <Button
@@ -125,7 +156,7 @@ const PasswordReset = () => {
                     bg_color="#007A61"
                     text_color="white"
                     loading={loading}
-                    onClick={handleForgotPassword}
+                    // onClick={handleForgotPassword}
                   />
                 </Form>
               )}

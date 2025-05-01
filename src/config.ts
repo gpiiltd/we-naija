@@ -30,6 +30,7 @@ interface ApiUrls {
   getNotifications: string;
   readNotifications: string;
   logout: string;
+  changePassword: string;
 }
 
 // const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://api.test.nssf.ng/api/v1/";
@@ -67,4 +68,5 @@ export const apiUrl: ApiUrls = {
   getNotifications: `${BASE_URL}notifications`,
   readNotifications: `${BASE_URL}notifications/mark_as_read`,
   logout: `${BASE_URL}auth/logout`,
+  changePassword: `${BASE_URL}agent/process/change-password`,
 };

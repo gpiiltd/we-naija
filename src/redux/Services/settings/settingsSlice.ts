@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  triggerChangePassword,
   triggerGetNotifications,
   triggerGetUserProfile,
   triggerReadNotifications,
@@ -20,6 +21,13 @@ interface IinitialState {
     statusCode?: number | null;
   };
   readNotifications: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  changePassword: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -50,6 +58,13 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  changePassword: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 const settingsSlice = createSlice({
   name: "settings",
@@ -60,6 +75,11 @@ const settingsSlice = createSlice({
       state.userProfileData.message = initialState.userProfileData.message;
       state.userProfileData.statusCode =
         initialState.userProfileData.statusCode;
+    },
+    resetChangePasswordState: (state) => {
+      state.changePassword.error = initialState.changePassword.error;
+      state.changePassword.message = initialState.changePassword.message;
+      state.changePassword.statusCode = initialState.changePassword.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -126,9 +146,33 @@ const settingsSlice = createSlice({
         ?.message as unknown as string;
       state.readNotifications.statusCode = action.payload?.status_code ?? null;
     });
+
+    //CHANGE PASSWORD
+    builder.addCase(triggerChangePassword.pending, (state) => {
+      state.changePassword.loading = true;
+      state.changePassword.error = false;
+      state.changePassword.data = {};
+      state.changePassword.message = "";
+    });
+    builder.addCase(triggerChangePassword.fulfilled, (state, action) => {
+      console.log("action", action.payload);
+      state.changePassword.loading = false;
+      state.changePassword.data = action.payload?.results;
+      state.changePassword.error = false;
+      state.changePassword.message = action.payload?.message ?? "";
+      state.changePassword.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerChangePassword.rejected, (state, action) => {
+      console.log("action rejected", action.payload);
+      state.changePassword.loading = false;
+      state.changePassword.error = true;
+      state.changePassword.message = action.payload?.message;
+      state.changePassword.statusCode = action.payload?.status_code ?? null;
+    });
   },
 });
 
-export const { resetUserProfileState } = settingsSlice.actions;
+export const { resetUserProfileState, resetChangePasswordState } =
+  settingsSlice.actions;
 
 export default settingsSlice.reducer;
