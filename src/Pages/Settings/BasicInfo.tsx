@@ -17,7 +17,7 @@ const BasicInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [userName, setUsername] = useState("");
+  // const [userName, setUsername] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error] = useState("");
@@ -34,7 +34,7 @@ const BasicInfo = () => {
     if (data) {
       setFirstName(data.first_name || "");
       setLastName(data.last_name || "");
-      setUsername(data.username || "");
+      // setUsername(data.username || "");
       setNationality(data.nationality || "");
       setGender(data.gender || "");
       setDateOfBirth(data.date_of_birth || "");
@@ -115,12 +115,12 @@ const BasicInfo = () => {
                   : ""
               }
             />
-            <FloatingInput
+            {/* <FloatingInput
               label="User Name"
               value={userName}
               onChange={setUsername}
               error={userName === "" && error ? "User name is required." : ""}
-            />
+            /> */}
             <FloatingSelect
               label="Gender"
               options={genderOptions.map((option) => option.name)}

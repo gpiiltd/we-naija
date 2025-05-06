@@ -54,7 +54,10 @@ const KycPhonenumber = () => {
   const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string()
       .required("Phone number is required")
-      .matches(/^\d{10}$/, "Phone number must be exactly 10 digits")
+      .matches(
+        /^[1-9]\d{9}$/,
+        "Phone number must be exactly 10 digits and cannot start with 0",
+      )
       .typeError("Phone number must contain only numbers"),
   });
 
