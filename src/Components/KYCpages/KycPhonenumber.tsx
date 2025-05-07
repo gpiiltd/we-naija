@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import KycHeader from "./KycHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { triggerPhoneNumberVerification } from "../../redux/Services/user/UserServices";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { RootState, AppDispatch } from "../../redux/Store/store";
 import {
   setKycPhoneNumber,
@@ -65,6 +65,7 @@ const KycPhonenumber = () => {
 
   return (
     <>
+      <ToastContainer />
       <KycHeader />
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 ">
         <div className="bg-white p-8 rounded-lg shadow-lg  lg:px-48 lg:py-36">
