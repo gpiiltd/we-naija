@@ -5,17 +5,29 @@ import "./datepicker.css";
 
 interface CustomDatePickerProps {
   selectedDate: Date | null;
-  onChange: (date: Date | null) => void;
+  onApply: (date: Date | null) => void;
+  error: string;
 }
+
 const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   selectedDate,
-  onChange,
+  onApply,
+  error,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [tempDate, setTempDate] = useState<Date | null>(selectedDate);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    setTempDate(selectedDate);
+  }, [selectedDate]);
+
   const handleDateChange = (date: Date | null) => {
-    onChange(date);
+    setTempDate(date);
+  };
+
+  const handleApply = () => {
+    onApply(tempDate);
     setIsOpen(false);
   };
 
@@ -45,7 +57,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
         readOnly
         value={selectedDate ? selectedDate.toDateString() : ""}
         onClick={() => setIsOpen(true)}
-        className="w-full p-2 border rounded-md cursor-pointer"
+        className={`w-full p-2 border rounded-md cursor-pointer ${
+          error ? "border-error" : ""
+        }`}
       />
 
       {/* Modal */}
@@ -56,8 +70,8 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               Select Date
             </label>
             <DatePicker
-              selected={selectedDate}
-              onChange={onChange}
+              selected={tempDate}
+              onChange={handleDateChange}
               dateFormat="dd/MM/yyyy"
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               calendarClassName="shadow-lg rounded-lg p-4 bg-white"
@@ -65,6 +79,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
+              maxDate={new Date()}
+              yearDropdownItemNumber={100}
+              scrollableYearDropdown
               inline
             />
             <div className="mt-4 flex justify-between">
@@ -76,7 +93,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               </button>
               <button
                 className="px-4 py-2 bg-green-600 text-white rounded-md"
-                onClick={() => handleDateChange(selectedDate)}
+                onClick={handleApply}
               >
                 Apply
               </button>
