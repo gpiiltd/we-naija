@@ -63,7 +63,10 @@ const GiveReport = () => {
       <section className="py-6 pb-16 w-full flex justify-center">
         <Card titleLeft={undefined} titleRight={undefined} width="48.61%">
           <div className=" px-16 pt-8 pb-10">
-            <SurveyCopy surveyQuestions={surveyIndicatorQuestionsData} />
+            <SurveyCopy
+              surveyQuestions={surveyIndicatorQuestionsData}
+              loading={surveyIndicatorQuestions.loading}
+            />
           </div>
         </Card>
       </section>

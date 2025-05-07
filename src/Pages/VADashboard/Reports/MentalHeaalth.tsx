@@ -10,7 +10,10 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../../../redux/Store/store";
 import { triggerGetTaskQuestions } from "../../../redux/Services/community/communityServices";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { triggerGetUserProfile } from "../../../redux/Services/settings/settingsServices";
+import "react-toastify/dist/ReactToastify.css";
 
 const MentalHeaalth = () => {
   const navigate = useNavigate();
@@ -18,9 +21,12 @@ const MentalHeaalth = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { taskQuestions } = useSelector((state: RootState) => state.community);
+  const { userData } = useSelector((state: RootState) => state.user);
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
 
   useEffect(() => {
     dispatch(triggerGetTaskQuestions(id as string) as any);
+    dispatch(triggerGetUserProfile({}) as any);
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -37,8 +43,25 @@ const MentalHeaalth = () => {
     localStorage.getItem("indicatorDetails") || "{}",
   );
 
+  const kycStatus = userProfileData?.data?.kyc_status || userData?.kyc_status;
+
+  const handleTaskClick = (taskIdentifier: string) => {
+    if (kycStatus === "approved") {
+      navigate(
+        `/verified-agent-dashboard/reports/community-tasks/task/report-form/${taskIdentifier}`,
+      );
+    } else {
+      setTimeout(() => {
+        toast.error(
+          "You cannot perform this action as your KYC has not been approved",
+        );
+      }, 100);
+    }
+  };
+
   return (
     <div>
+      <ToastContainer />
       <div className="flex gap-3 items-center">
         <div onClick={() => navigate(-1)}>
           <AiOutlineArrowLeft size={24} className="cursor-pointer" />
@@ -51,7 +74,7 @@ const MentalHeaalth = () => {
 
       <Typography
         variant={TypographyVariant.SMALL}
-        className="pt-1 text-light_gray max-w-lg" // Adjust this max-width to control line breaks
+        className="pt-1 text-light_gray max-w-lg"
       >
         {indicatorDetails.description}
       </Typography>
@@ -91,9 +114,13 @@ const MentalHeaalth = () => {
             </div>
           </div>
 
-          {/* New Cards */}
           <div className="flex flex-col gap-4">
-            {tasks && tasks.length > 0 ? (
+            {taskQuestions.loading ? (
+              <div className="flex justify-center items-center h-full">
+                <ClipLoader color="#007A61" size={24} className="mr-6" />
+                Loading...
+              </div>
+            ) : tasks && tasks.length > 0 ? (
               tasks.map((task: any, index: any) => (
                 <div key={index} className="flex gap-3 w-full items-center">
                   <div className="border border-d_red rounded-full h-5 w-5 flex items-center justify-center pb-1">
@@ -105,12 +132,12 @@ const MentalHeaalth = () => {
                     </Typography>
                   </div>
                   <div
-                    className="w-full flex justify-between items-center py-4 px-6 gap-6 cursor-pointer shadow rounded-lg bg-white"
-                    onClick={() =>
-                      navigate(
-                        `/verified-agent-dashboard/reports/community-tasks/task/report-form/${task.identifier}`,
-                      )
-                    }
+                    className={`w-full flex justify-between items-center py-4 px-6 gap-6 ${
+                      kycStatus === "approved"
+                        ? "cursor-pointer"
+                        : "cursor-not-allowed opacity-50"
+                    } shadow rounded-lg bg-white`}
+                    onClick={() => handleTaskClick(task.identifier)}
                   >
                     <div>
                       <Typography

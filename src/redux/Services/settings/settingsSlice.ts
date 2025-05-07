@@ -123,6 +123,13 @@ const settingsSlice = createSlice({
         ?.message as unknown as string;
       state.notificationsData.statusCode = action.payload?.status_code ?? null;
     });
+    builder.addCase(triggerGetNotifications.rejected, (state, action) => {
+      state.notificationsData.loading = false;
+      state.notificationsData.error = true;
+      state.notificationsData.message = action.payload
+        ?.message as unknown as string;
+      state.notificationsData.statusCode = action.payload?.status_code ?? null;
+    });
 
     //READ NOTIFICATIONS DATA
     builder.addCase(triggerReadNotifications.pending, (state) => {

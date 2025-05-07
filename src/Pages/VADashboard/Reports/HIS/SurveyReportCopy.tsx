@@ -22,6 +22,7 @@ import {
   resetSurveyReportMultipleState,
   // resetSurveyReportState,
 } from "../../../../redux/Services/institute/instituteSlice";
+import { ClipLoader } from "react-spinners";
 
 interface SurveyQuestion {
   identifier: string;
@@ -43,8 +44,10 @@ interface SurveyAnswer {
 
 const SurveyCopy = ({
   surveyQuestions,
+  loading,
 }: {
   surveyQuestions: SurveyQuestion[];
+  loading: boolean;
 }) => {
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -256,6 +259,14 @@ const SurveyCopy = ({
     return !isSubmitting;
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <ClipLoader color="#007A61" size={24} className="mr-6" />
+        Loading...
+      </div>
+    );
+  }
   if (!surveyQuestions || surveyQuestions.length === 0 || !currentQuestion) {
     return (
       <Typography variant={TypographyVariant.NORMAL} className="text-center">

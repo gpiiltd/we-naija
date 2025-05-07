@@ -117,17 +117,19 @@ const PersonalInfo = () => {
               selectedDate={dateOfBirth}
               onChange={handleDateChange}
             />
-            <button
-              type="submit"
-              className={`mt-12 w-full py-4 rounded-md bg-primary_green  text-white ${
-                isFormComplete
-                  ? "hover:bg-[#015443]"
-                  : "cursor-not-allowed opacity-50"
-              }`}
-            >
-              Poceed
-            </button>
-            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}{" "}
+            <div className="relative z-0">
+              <button
+                type="submit"
+                className={`mt-12 w-full py-4 rounded-md bg-primary_green text-white ${
+                  isFormComplete
+                    ? "hover:bg-[#015443]"
+                    : "cursor-not-allowed opacity-50"
+                }`}
+              >
+                Proceed
+              </button>
+              {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
+            </div>
           </form>
 
           <div className="flex pt-4 items-center justify-center">

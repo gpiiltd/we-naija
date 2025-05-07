@@ -50,9 +50,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
       {/* Modal */}
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="relative w-80 p-4 bg-white shadow-lg rounded-lg">
-            <label className="block  text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               Select Date
             </label>
             <DatePicker
@@ -64,7 +64,6 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               popperPlacement="bottom-start"
               showMonthDropdown
               showYearDropdown
-              //   dropdownMode="scroll"
               dropdownMode="select"
               inline
             />

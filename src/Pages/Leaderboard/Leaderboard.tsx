@@ -6,17 +6,19 @@ import { TypographyVariant } from "../../Components/types";
 import Icon from "../../Assets/SvgImagesAndIcons";
 // import LevelBar from "./levelBar";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/Store/store";
+import { RootState, AppDispatch } from "../../redux/Store/store";
 import { triggerGetAllLeaderboardData } from "../../redux/Services/leaderboard/LeaderboardService";
 import { toast } from "react-toastify";
 import { resetLeaderboardState } from "../../redux/Services/leaderboard/leaderboardSlice";
+import { capitalizeName } from "../../utils/inputValidations";
+import { Player, Badge } from "../../utils/interfaces";
 
 const Leaderboard = () => {
   const [timeFrame, setTimeFrame] = useState("today");
   const [visibleCount, setVisibleCount] = useState(10);
-  const [allLeaderboardData, setAllLeaderboardData] = useState<any[]>([]);
+  const [allLeaderboardData, setAllLeaderboardData] = useState<Player[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { leaderboardData } = useSelector(
     (state: RootState) => state.leaderboard,
@@ -27,7 +29,7 @@ const Leaderboard = () => {
   };
 
   useEffect(() => {
-    dispatch(triggerGetAllLeaderboardData(payload) as any);
+    dispatch(triggerGetAllLeaderboardData(payload));
   }, [dispatch, timeFrame]);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const Leaderboard = () => {
         ...payload,
         page: nextPage,
       };
-      dispatch(triggerGetAllLeaderboardData(newPayload) as any);
+      dispatch(triggerGetAllLeaderboardData(newPayload));
     } else {
       setVisibleCount((prevCount) =>
         Math.min(prevCount + 10, allLeaderboardData.length),
@@ -64,7 +66,6 @@ const Leaderboard = () => {
     }
   };
 
-  console.log("leaderboardData***", leaderboardData);
   const handleTimeFrameChange = (frame: string) => {
     setTimeFrame(frame);
     setVisibleCount(10);
@@ -73,12 +74,6 @@ const Leaderboard = () => {
   const getInitials = (name: string) => {
     const names = name.split(" ");
     return names.map((n) => n.charAt(0).toUpperCase()).join("");
-  };
-  const capitalizeName = (name: string) => {
-    return name
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
   };
 
   const tableData = allLeaderboardData;
@@ -117,7 +112,7 @@ const Leaderboard = () => {
               <img
                 src={
                   allBadges?.find(
-                    (badge: any) => badge.name === userProfileData?.badge,
+                    (badge: Badge) => badge.name === userProfileData?.badge,
                   )?.logo || ""
                 }
                 alt={`Badge ${userProfileData?.badge}`}
@@ -158,7 +153,7 @@ const Leaderboard = () => {
             </Typography>
           </div>
           <div className="flex space-x-4 mt-1">
-            {allBadges?.map((badge: any, index: any) => (
+            {allBadges?.map((badge: Badge, index: number) => (
               <div className="relative bg-white  rounded-3xl p-4 border border-gray-200">
                 <div className="">
                   <Typography
@@ -175,7 +170,7 @@ const Leaderboard = () => {
                   />
                 </div>
                 {allBadges?.findIndex(
-                  (b: any) => b.name === userProfileData?.badge,
+                  (b: Badge) => b.name === userProfileData?.badge,
                 ) < index && (
                   <div className="relative group">
                     <Icon
@@ -246,8 +241,17 @@ const Leaderboard = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData?.length > 0 ? (
-              displayedTableData.map((player: any, index: any) => (
+            {leaderboardData.loading ? (
+              <div className="flex gap-3 items-center justify-center my-12">
+                <Typography
+                  variant={TypographyVariant.NORMAL}
+                  className="text-center"
+                >
+                  Loading leaderboard data...
+                </Typography>
+              </div>
+            ) : tableData?.length > 0 ? (
+              displayedTableData.map((player: Player, index: number) => (
                 <tr key={player.full_name} className="border-b-2">
                   <td className=" px-4 py-2 items-center justify-center">
                     {index < 3 ? (
@@ -270,7 +274,7 @@ const Leaderboard = () => {
                     <img
                       src={
                         allBadges?.find(
-                          (badge: any) => badge.name === player.badge,
+                          (badge: Badge) => badge.name === player.badge,
                         )?.logo || ""
                       }
                       alt={`Badge ${player.badge}`}
@@ -287,6 +291,7 @@ const Leaderboard = () => {
                 </td>
               </tr>
             )}
+
             {/* Show more rows */}
             {(visibleCount < tableData.length ||
               leaderboardData.data?.next) && (

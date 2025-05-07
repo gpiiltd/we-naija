@@ -6,21 +6,22 @@ import { IoIosArrowForward } from "react-icons/io";
 import { handleBreadCrumbNavigate } from "../../../utils/handleBreadCrumb";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { RootState } from "../../../redux/Store/store";
+import { AppDispatch, RootState } from "../../../redux/Store/store";
 import { useEffect, useState } from "react";
 import { triggerGetAllCommunityCategories } from "../../../redux/Services/community/communityServices";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const Tasks: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [communityTasks, setCommunityTasks] = useState<any[]>([]);
   const { communityCategories } = useSelector(
     (state: RootState) => state.community,
   );
 
   useEffect(() => {
-    dispatch(triggerGetAllCommunityCategories({}) as any);
+    dispatch(triggerGetAllCommunityCategories({}));
   }, [dispatch]);
 
   useEffect(() => {
@@ -54,7 +55,13 @@ const Tasks: React.FC = () => {
         with.
       </Typography>
       <div className="grid gap-6 py-3 pb-48 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {communityTasks.length > 0 &&
+        {communityCategories.loading ? (
+          <div className="flex justify-center items-center w-full h-full">
+            <ClipLoader color="#007A61" size={24} className="mr-6" />
+            Loading...
+          </div>
+        ) : (
+          communityTasks.length > 0 &&
           communityTasks.map((task, index) => (
             <Card titleLeft={undefined} titleRight={undefined}>
               <div
@@ -97,7 +104,8 @@ const Tasks: React.FC = () => {
                 />
               </div>
             </Card>
-          ))}
+          ))
+        )}
       </div>
     </>
   );

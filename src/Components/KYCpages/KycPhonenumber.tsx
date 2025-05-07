@@ -11,28 +11,32 @@ import KycHeader from "./KycHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { triggerPhoneNumberVerification } from "../../redux/Services/user/UserServices";
 import { toast } from "react-toastify";
-import { RootState } from "../../redux/Store/store";
+import { RootState, AppDispatch } from "../../redux/Store/store";
 import {
   setKycPhoneNumber,
   resetState,
 } from "../../redux/Slices/user/userSlice";
 
+interface phoneNumber {
+  phoneNumber: string;
+}
 const KycPhonenumber = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { error, message, loading } = useSelector(
     (state: RootState) => state.user,
   );
 
-  const handleProceed = (values: any) => {
-    const phoneNumberWithCountryCode = `+234${values.phoneNumber}`;
+  const handleProceed = (values: phoneNumber) => {
+    const lastTenDigits = values.phoneNumber.slice(-10);
+    const phoneNumberWithCountryCode = `+234${lastTenDigits}`;
     const payload = {
       mobile_number: phoneNumberWithCountryCode,
     };
 
     console.log("payload", payload);
     dispatch(setKycPhoneNumber(phoneNumberWithCountryCode));
-    dispatch(triggerPhoneNumberVerification(payload) as any);
+    dispatch(triggerPhoneNumberVerification(payload));
   };
 
   useEffect(() => {
@@ -54,11 +58,9 @@ const KycPhonenumber = () => {
   const validationSchema = Yup.object().shape({
     phoneNumber: Yup.string()
       .required("Phone number is required")
-      .matches(
-        /^[1-9]\d{9}$/,
-        "Phone number must be exactly 10 digits and cannot start with 0",
-      )
-      .typeError("Phone number must contain only numbers"),
+      .min(10, "Phone number must be at least 10 digits")
+      .max(11, "Phone number cannot be more than 11 digits")
+      .matches(/^\d+$/, "Phone number must contain only numbers"),
   });
 
   return (
@@ -121,7 +123,7 @@ const KycPhonenumber = () => {
                       onChange={(e) => {
                         const value = e.target.value
                           .replace(/\D/g, "")
-                          .slice(0, 10);
+                          .slice(0, 11);
                         setFieldValue("phoneNumber", value);
                       }}
                       onBlur={() => setFieldTouched("phoneNumber", true)}

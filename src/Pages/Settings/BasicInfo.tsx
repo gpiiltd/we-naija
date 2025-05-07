@@ -10,6 +10,7 @@ import { genderOptions, nationalityOptions } from "../../utils/selectOptions";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/Store/store";
 import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
+import { capitalizeName } from "../../utils/inputValidations";
 
 const BasicInfo = () => {
   const dispatch = useDispatch();
@@ -32,11 +33,11 @@ const BasicInfo = () => {
 
   useEffect(() => {
     if (data) {
-      setFirstName(data.first_name || "");
-      setLastName(data.last_name || "");
+      setFirstName(capitalizeName(data.first_name || ""));
+      setLastName(capitalizeName(data.last_name || ""));
       // setUsername(data.username || "");
       setNationality(data.nationality || "");
-      setGender(data.gender || "");
+      setGender(capitalizeName(data.gender || ""));
       setDateOfBirth(data.date_of_birth || "");
     }
   }, [data]);

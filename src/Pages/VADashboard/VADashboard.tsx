@@ -8,27 +8,27 @@ import { CiLogout } from "react-icons/ci";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
+import { useNavigate } from "react-router-dom";
 
 const VADashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
   return (
-    <div className="min-h-screen flex flex-col w-full">
-      <Header className="px-4 md:px-6 lg:px-16">
+    <div className="min-h-screen flex flex-col w-full mt-8">
+      <Header className="px-4 md:px-6 lg:px-16 pb-4">
         <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
           <button onClick={toggleDrawer} className="md:hidden text-gray-700">
             <FiMenu size={24} />
           </button>
 
           <div className="flex items-center gap-4">
-            <Icon
-              type="logo"
-              className="w-fit cursor-pointer"
-              click={() => (window.location.href = "/verified-agent-dashboard")}
-            />
+            <div onClick={() => navigate("/verified-agent-dashboard/home")}>
+              <Icon type="logo" className="w-fit cursor-pointer" />
+            </div>
 
             <nav className="hidden md:block pt-2">
               <ul className="flex justify-center items-center text-sm md:text-xs lg:text-base lg:gap-4">
@@ -310,7 +310,7 @@ const VADashboard = () => {
             <ul className="flex flex-col gap-4 md:flex-row">
               <li>
                 <NavLink
-                  to="/"
+                  to="/verified-agent-dashboard/home"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin"
@@ -322,7 +322,7 @@ const VADashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to="/about"
+                  to="/verified-agent-dashboard/reports"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin"
@@ -334,7 +334,7 @@ const VADashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to="/contact"
+                  to="/verified-agent-dashboard/leaderboard"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin"
@@ -346,7 +346,7 @@ const VADashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to="/contact"
+                  to="/verified-agent-dashboard/join-community"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin"
@@ -358,7 +358,7 @@ const VADashboard = () => {
               </li>
               <li>
                 <NavLink
-                  to="/contact"
+                  to="/verified-agent-dashboard/settings/basic-information"
                   className={({ isActive }) =>
                     isActive
                       ? "text-blue-400 font-thin text-xs"
@@ -374,13 +374,13 @@ const VADashboard = () => {
 
         <div className="text-cream py-4 text-xs font-thin flex flex-col gap-4 md:flex-row md:justify-between  ">
           <Typography variant={TypographyVariant.SMALL}>
-            © 2024 Wenailja. All rights reserved.
+            © 2025 Wenailja. All rights reserved.
           </Typography>
-          <ul className="flex space-x-3">
+          {/* <ul className="flex space-x-3">
             <li className="cursor-pointer">Terms</li>
             <li className="cursor-pointer">Privacy </li>
             <li className="cursor-pointer">Cookies </li>
-          </ul>
+          </ul> */}
         </div>
       </Footer>
     </div>

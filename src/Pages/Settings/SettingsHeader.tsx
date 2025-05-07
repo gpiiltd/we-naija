@@ -7,15 +7,15 @@ import { useDispatch } from "react-redux";
 import { triggerLogout } from "../../redux/Services/user/UserServices";
 import { useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
+import { AppDispatch } from "../../redux/Store/store";
 
 const SettingsHeader = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await dispatch(triggerLogout() as any);
-      // Wait for the Redux store to be cleared before navigating
+      await dispatch(triggerLogout());
       setTimeout(() => {
         navigate("/login", { replace: true });
       }, 100);
