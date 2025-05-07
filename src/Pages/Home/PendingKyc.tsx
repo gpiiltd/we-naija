@@ -9,7 +9,7 @@ import woman from "../../Assets/svgImages/woman_green.svg";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { triggerGetAllInstitute } from "../../redux/Services/user/UserServices";
-import { RootState } from "../../redux/Store/store";
+import { AppDispatch, RootState } from "../../redux/Store/store";
 import { toast } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
 
@@ -18,13 +18,13 @@ const PendingKyc = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const userData = useSelector((state: any) => state.user.userData);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const fetchInstitutions = async () => {
       try {
         setIsLoading(true);
-        await dispatch(triggerGetAllInstitute({}) as any);
+        await dispatch(triggerGetAllInstitute({}));
       } catch (error) {
         console.error("Error fetching institutions:", error);
       }
@@ -56,7 +56,7 @@ const PendingKyc = () => {
     <div>
       <p className="font-normal text-[#5E5959] text-lg">
         Hello,
-        <span className="font-bold text-black">{firstName}</span> 👋
+        <span className="font-bold text-black ml-1">{firstName}</span> 👋
       </p>
       <p className="font-light text-[#5E5959] text-sm">
         Let's improve health care service together.

@@ -17,7 +17,10 @@ const CommunityTasks = () => {
           <AiOutlineArrowLeft size={24} className="cursor-pointer" />
         </div>
 
-        <Typography variant={TypographyVariant.SUBTITLE}>
+        <Typography
+          variant={TypographyVariant.NORMAL}
+          className="text-black font-extrabold"
+        >
           Community Task
         </Typography>
       </div>
