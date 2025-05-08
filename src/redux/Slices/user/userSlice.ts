@@ -21,11 +21,17 @@ import {
   triggerGetInstituteById,
 } from "../../Services/user/UserServices";
 
+interface ErroResponseData {
+  message: string;
+  status_code?: number;
+  results?: Record<string, string[]>;
+}
 interface UserState {
   userData: Record<string, any>;
   loading: boolean;
   error: string | null;
   message: string | null;
+  statusCode?: number | null;
   email: string;
   otpToken: string;
   kycPhoneNumber: string;
@@ -39,6 +45,7 @@ const initialState: UserState = {
   loading: false,
   error: null,
   message: null,
+  statusCode: null,
   email: "",
   otpToken: "",
   kycPhoneNumber: "",
@@ -240,9 +247,12 @@ const userSlice = createSlice({
       )
       .addCase(
         triggerEmailVerificationResend.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ErroResponseData | undefined>) => {
           state.loading = false;
-          state.error = action.payload.message;
+          state.error = action.payload?.message || "Email verification failed";
+          state.message =
+            action.payload?.message || "Email verification failed";
+          state.statusCode = action.payload?.status_code || null;
         },
       )
       .addCase(triggerEmailVerification.pending, (state) => {
@@ -276,9 +286,13 @@ const userSlice = createSlice({
       )
       .addCase(
         triggerPhoneNumberVerification.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ErroResponseData | undefined>) => {
           state.loading = false;
-          state.error = action.payload.message;
+          state.error =
+            action.payload?.message || "Phone number verification failed";
+          state.message =
+            action.payload?.message || "Phone number verification failed";
+          state.statusCode = action.payload?.status_code || null;
         },
       )
       .addCase(triggerPhoneNumberVerificationOtp.pending, (state) => {
@@ -294,9 +308,13 @@ const userSlice = createSlice({
       )
       .addCase(
         triggerPhoneNumberVerificationOtp.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ErroResponseData | undefined>) => {
           state.loading = false;
-          state.error = action.payload.message;
+          state.error =
+            action.payload?.message || "Phone number verification failed";
+          state.message =
+            action.payload?.message || "Phone number verification failed";
+          state.statusCode = action.payload?.status_code || null;
         },
       )
       .addCase(triggerKycInfoSubmit.pending, (state) => {
@@ -312,9 +330,11 @@ const userSlice = createSlice({
       )
       .addCase(
         triggerKycInfoSubmit.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ErroResponseData | undefined>) => {
           state.loading = false;
-          state.error = action.payload.message;
+          state.error = action.payload?.message || "Kyc info submit failed";
+          state.message = action.payload?.message || "Kyc info submit failed";
+          state.statusCode = action.payload?.status_code || null;
         },
       )
       .addCase(triggerGetAllInstitute.pending, (state) => {
@@ -331,10 +351,11 @@ const userSlice = createSlice({
       )
       .addCase(
         triggerGetAllInstitute.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ErroResponseData | undefined>) => {
           state.loading = false;
-          state.instituteData = {} as Record<string, any>; // Fix: Ensure instituteData is set to undefined on rejection
-          state.error = action.payload.message;
+          state.error = action.payload?.message || "Institute not found";
+          state.message = action.payload?.message || "Institute not found";
+          state.statusCode = action.payload?.status_code || null;
         },
       )
       .addCase(triggerGetInstituteById.pending, (state) => {
@@ -351,10 +372,11 @@ const userSlice = createSlice({
       )
       .addCase(
         triggerGetInstituteById.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<ErroResponseData | undefined>) => {
           state.loading = false;
-          state.instituteData = {} as Record<string, any>;
-          state.error = action.payload.message;
+          state.error = action.payload?.message || "Institute not found";
+          state.message = action.payload?.message || "Institute not found";
+          state.statusCode = action.payload?.status_code || null;
         },
       );
   },

@@ -14,6 +14,7 @@ import { triggerGetCommunityTaskCategoryById } from "../../../redux/Services/com
 import { useEffect, useState } from "react";
 import { RootState } from "../../../redux/Store/store";
 import { resetCommunityTaskCategoryByIdState } from "../../../redux/Services/community/communitySlice";
+import { ClipLoader } from "react-spinners";
 
 const NCDPrevention = () => {
   const navigate = useNavigate();
@@ -71,7 +72,12 @@ const NCDPrevention = () => {
         </Typography>
       </div>
       <div className="grid gap-6 py-6 pb-48 grid-cols-1 md:grid-cols-2">
-        {communityTaskCategory?.indicators?.length > 0 ? (
+        {communityTaskCategoryById.loading ? (
+          <div className="flex justify-center items-center w-full h-full">
+            <ClipLoader color="#007A61" size={24} className="mr-6" />
+            Loading...
+          </div>
+        ) : communityTaskCategory?.indicators?.length > 0 ? (
           communityTaskCategory.indicators.map((indicator: any, index: any) => (
             <Card key={index} titleLeft={undefined} titleRight={undefined}>
               <div

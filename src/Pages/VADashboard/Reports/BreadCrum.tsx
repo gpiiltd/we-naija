@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { IoChevronForward } from "react-icons/io5";
+
 const Breadcrumb = () => {
   const location = useLocation();
   const [crumb, setCrumb] = useState<Record<string, string | boolean>[]>([]);
@@ -8,17 +9,39 @@ const Breadcrumb = () => {
   useEffect(() => {
     const breadCrumb = localStorage.getItem("breadcrumb");
     if (breadCrumb) {
-      let crumbData = JSON.parse(breadCrumb) as Record<
-        string,
-        string | boolean
-      >[];
-      const crumbIndex = crumbData.findIndex(
-        (crumb) => crumb.path === location.pathname,
-      );
-      crumbData = crumbData.slice(0, crumbIndex + 1);
-      crumbData[crumbData.length - 1].active = true;
-      setCrumb(crumbData);
-      localStorage.setItem("breadcrumb", JSON.stringify(crumbData));
+      try {
+        let crumbData = JSON.parse(breadCrumb) as Record<
+          string,
+          string | boolean
+        >[];
+        const crumbIndex = crumbData.findIndex(
+          (crumb) => crumb.path === location.pathname,
+        );
+
+        // If no matching path is found, return early
+        if (crumbIndex === -1) {
+          return;
+        }
+
+        // Slice the array up to the current path
+        crumbData = crumbData.slice(0, crumbIndex + 1);
+
+        // Only set active if we have items in the array
+        if (crumbData.length > 0) {
+          // Reset all items to not active
+          crumbData = crumbData.map((item) => ({ ...item, active: false }));
+          // Set the last item as active
+          crumbData[crumbData.length - 1].active = true;
+        }
+
+        setCrumb(crumbData);
+        localStorage.setItem("breadcrumb", JSON.stringify(crumbData));
+      } catch (error) {
+        console.error("Error processing breadcrumb:", error);
+        // If there's an error parsing the breadcrumb, reset it
+        localStorage.removeItem("breadcrumb");
+        setCrumb([]);
+      }
     }
   }, [location.pathname]);
 

@@ -3,8 +3,32 @@ import { TypographyVariant } from "../Components/types";
 import KycCard from "../Components/KYCpages/KycCard";
 import SkipButton from "../Components/KYCpages/SkipButton";
 import KycHeader from "../Components/KYCpages/KycHeader";
+import { useEffect } from "react";
+import { triggerGetUserProfile } from "../redux/Services/settings/settingsServices";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/Store/store";
+import { ClipLoader } from "react-spinners";
 
 const Kyc = () => {
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
+  const { data, loading } = userProfileData;
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(triggerGetUserProfile({}));
+  }, [dispatch]);
+
+  const kycStep = data?.kyc_step;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <ClipLoader color="#007A61" size={24} className="mr-6" />
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div className="">
       <KycHeader />
@@ -32,6 +56,7 @@ const Kyc = () => {
             the OTP sent to your registered number."
             icon="mobile"
             linkTo="/kyc/validate-phone"
+            kycStep={kycStep}
           />
           <KycCard
             title="Personal Information"

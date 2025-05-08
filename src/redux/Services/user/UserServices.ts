@@ -253,7 +253,7 @@ export const triggerResetPassword = createAsyncThunk<
 export const triggerEmailVerificationResend = createAsyncThunk<
   DefaultResponse,
   ForgotPasswordData,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >("user/EmailVerificationResend", async (forgotPasswordData, thunkAPI) => {
   try {
     const response = await axios.post<DefaultResponse>(
@@ -262,18 +262,18 @@ export const triggerEmailVerificationResend = createAsyncThunk<
     );
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to resend email verification link",
-    );
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
   }
 });
 
 export const triggerEmailVerification = createAsyncThunk<
   DefaultResponse,
   EmailVerificationData,
-  { rejectValue: string }
+  { rejectValue: ErroResponseData }
 >("user/EmailVerification", async (EmailVerificationData, thunkAPI) => {
   try {
     const { uid, email_token } = EmailVerificationData;
@@ -291,11 +291,11 @@ export const triggerEmailVerification = createAsyncThunk<
     );
     return response.data;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error.response?.message ||
-        error.response?.data ||
-        "Failed to resend email verification link",
-    );
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
   }
 });
 

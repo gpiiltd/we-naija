@@ -44,6 +44,8 @@ import SurveyListCopy from "./Pages/VADashboard/Reports/HIS/SurveyList/SurveyLis
 import LandingView from "./Pages/LandingPage/LandingView";
 import LandingHome from "./Pages/LandingPage/LandingHome";
 import ContactView from "./Pages/LandingPage/ContactView";
+import ProtectedRoute from "./Components/ProtectedRoute";
+
 function App() {
   return (
     <>
@@ -75,64 +77,72 @@ function App() {
             <Route path="/kyc/enter-otp" Component={EnterOtp} />
             <Route path="/kyc/personal-information" Component={PersonalInfo} />
             <Route path="/kyc/id-verification" Component={IdVerification} />
-            <Route path="/verified-agent-dashboard" element={<VADashboard />}>
-              <Route index element={<Navigate to="home" />} />
-              <Route path="home" Component={PendingKyc} />
-              <Route
-                path="/verified-agent-dashboard/home/hospital-details/:id"
-                Component={HospitalDetail}
-              />
-              <Route path="reports" Component={Reports} />
-              <Route
-                path="/verified-agent-dashboard/reports/community-tasks"
-                Component={CommunityTasks}
-              />
-              <Route
-                path="/verified-agent-dashboard/reports/community-tasks/:title/:id"
-                Component={NCDPrevention}
-              />
-              <Route
-                path="/verified-agent-dashboard/reports/community-tasks/indicator/:title/:id"
-                Component={MentalHeaalth}
-              />
-              <Route
-                // path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
-                path="/verified-agent-dashboard/reports/community-tasks/task/report-form/:id"
-                Component={ReportForm}
-              />
-              <Route
-                path="/verified-agent-dashboard/reports/hospitals"
-                Component={Hospitals}
-              />
-              <Route
-                path="/verified-agent-dashboard/reports/hospitals/survey-list/:id"
-                // Component={SurveyList}
-                Component={SurveyListCopy}
-              />
-              <Route
-                path="/verified-agent-dashboard/reports/hospitals/give-report/:id"
-                Component={GiveReport}
-              />
-              <Route path="leaderboard" Component={Leaderboard} />
-              <Route path="join-community" element={<JoinCommunity />} />
-              <Route path="settings" element={<SettingsHeader />}>
-                <Route index element={<Navigate to="basic-information" />} />
-                <Route path="basic-information" element={<BasicInfo />} />
-                <Route path="contact-information" element={<ContactInfo />} />
-                <Route path="password-reset" element={<PasswordReset />} />
-                <Route path="kyc-verification" element={<KycVerification />} />
-                <Route path="join-community" element={<JoinCommunity />} />
-                <Route path="help-and-support" element={<HelpandSupport />} />
-                <Route path="setting-mobile" element={<SettingsMobile />} />
-                <Route path="help-and-support/faq" element={<FAQ />} />
+
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/verified-agent-dashboard" element={<VADashboard />}>
+                <Route index element={<Navigate to="home" />} />
+                <Route path="home" Component={PendingKyc} />
                 <Route
-                  path="help-and-support/contact-us"
-                  element={<ContactUs />}
+                  path="/verified-agent-dashboard/home/hospital-details/:id"
+                  Component={HospitalDetail}
                 />
+                <Route path="reports" Component={Reports} />
+                <Route
+                  path="/verified-agent-dashboard/reports/community-tasks"
+                  Component={CommunityTasks}
+                />
+                <Route
+                  path="/verified-agent-dashboard/reports/community-tasks/:title/:id"
+                  Component={NCDPrevention}
+                />
+                <Route
+                  path="/verified-agent-dashboard/reports/community-tasks/indicator/:title/:id"
+                  Component={MentalHeaalth}
+                />
+                <Route
+                  // path="/verified-agent-dashboard/reports/community-tasks/NCD-prevention/report-form"
+                  path="/verified-agent-dashboard/reports/community-tasks/task/report-form/:id"
+                  Component={ReportForm}
+                />
+                <Route
+                  path="/verified-agent-dashboard/reports/hospitals"
+                  Component={Hospitals}
+                />
+                <Route
+                  path="/verified-agent-dashboard/reports/hospitals/survey-list/:id"
+                  // Component={SurveyList}
+                  Component={SurveyListCopy}
+                />
+                <Route
+                  path="/verified-agent-dashboard/reports/hospitals/give-report/:id"
+                  Component={GiveReport}
+                />
+                <Route path="leaderboard" Component={Leaderboard} />
+                <Route path="join-community" element={<JoinCommunity />} />
+                <Route path="settings" element={<SettingsHeader />}>
+                  <Route index element={<Navigate to="basic-information" />} />
+                  <Route path="basic-information" element={<BasicInfo />} />
+                  <Route path="contact-information" element={<ContactInfo />} />
+                  <Route path="password-reset" element={<PasswordReset />} />
+                  <Route
+                    path="kyc-verification"
+                    element={<KycVerification />}
+                  />
+                  <Route path="join-community" element={<JoinCommunity />} />
+                  <Route path="help-and-support" element={<HelpandSupport />} />
+                  <Route path="setting-mobile" element={<SettingsMobile />} />
+                  <Route path="help-and-support/faq" element={<FAQ />} />
+                  <Route
+                    path="help-and-support/contact-us"
+                    element={<ContactUs />}
+                  />
+                </Route>
+                <Route path="notifications" element={<Notification />} />
+                <Route path="profile" element={<div>Profile</div>} />
               </Route>
-              <Route path="notifications" element={<Notification />} />
-              <Route path="profile" element={<div>Profile</div>} />
             </Route>
+            <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>
         </BrowserRouter>
       </Provider>
