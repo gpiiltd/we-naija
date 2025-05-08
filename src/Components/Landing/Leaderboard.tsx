@@ -25,16 +25,18 @@ import { resetLeaderboardPublicState } from "../../redux/Services/leaderboard/le
 //   }
 // };
 
-const getCoinIcon = (level: string) => {
-  switch (level) {
-    case "Legend":
-      return <Icon type="level1" className="" />;
-    case "Champion":
-      return <Icon type="level2" className="" />;
-    case "Guardian":
-      return <Icon type="level3" className="" />;
+const getCoinIcon = (badge: string) => {
+  switch (badge.toUpperCase()) {
+    case "LEGEND":
+      return <Icon type="level1" className="w-6 h-6" />;
+    case "CHAMPION":
+      return <Icon type="level2" className="w-6 h-6" />;
+    case "GUARDIAN":
+      return <Icon type="level3" className="w-6 h-6" />;
+    case "SCOUT":
+      return <Icon type="level4" className="w-6 h-6" />;
     default:
-      return <Icon type="level4" className="" />;
+      return null;
   }
 };
 
@@ -103,7 +105,7 @@ const Leaderboardd = () => {
 
   const tableData = allLeaderboardData;
   const displayedTableData = tableData.slice(0, visibleCount);
-  const allBadges = leaderboardDataPublic.data.badges;
+  //const allBadges = leaderboardDataPublic.data.badges;
 
   // useEffect(() => {
   //   dispatch(
@@ -201,22 +203,11 @@ const Leaderboardd = () => {
                       <span className="text-sm mr-2">{player.total_sp}</span>
                       <span className="text-sm">SP</span>
                     </td>
-                    <td className="px-6 py-4 text-gray-600 flex items-center gap-2">
+
+                    <td className="px-4 py-2 flex items-center text-gray-500 w-64">
                       {getCoinIcon(player.badge)}
-                      <span>{player.badge} level</span>
+                      <span className="ml-2">{player.badge}</span>
                     </td>
-                    {/* <td className=" px-4 py-2 flex items-center text-gray-500 w-64">
-                      <img
-                        src={
-                          allBadges?.find(
-                            (badge: any) => badge.name === player.badge,
-                          )?.logo || ""
-                        }
-                        alt={`Badge ${player.badge}`}
-                        className="w-8 h-8 mr-2"
-                      />
-                      {player.badge}
-                    </td> */}
                   </tr>
                 ))
               ) : (
