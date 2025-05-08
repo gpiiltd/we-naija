@@ -1,55 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import LandingBg from "../../Assets/svgImages/landing-bg.svg";
 import Typography from "../Typography";
 import { TypographyVariant } from "../types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/Store/store";
+import { toast } from "react-toastify";
+import { triggerGetAllLeaderboardDataPublic } from "../../redux/Services/leaderboard/LeaderboardService";
+import { resetLeaderboardPublicState } from "../../redux/Services/leaderboard/leaderboardSlice";
 
 // Define the tab type
-type LeaderboardTab = "daily" | "weekly" | "monthly";
+// type LeaderboardTab = "daily" | "weekly" | "monthly";
 
-// Sample data
-const leaderboardData: Record<
-  LeaderboardTab,
-  { name: string; points: number; level: string; icon?: string }[]
-> = {
-  daily: [
-    { name: "Jizzyjeggs", points: 200, level: "Legend", icon: "gold" },
-    { name: "Beaut112", points: 186, level: "Champion", icon: "silver" },
-    { name: "Graceee", points: 176, level: "Champion", icon: "bronze" },
-    { name: "Sholayyy", points: 152, level: "Guardian" },
-    { name: "Peacemind", points: 146, level: "Guardian" },
-    { name: "Gidiuup28...", points: 145, level: "Guardian" },
-    { name: "Jizzyjeggs", points: 50, level: "Scout" },
-    { name: "Jizzyjeggs", points: 48, level: "Scout" },
-    { name: "Jizzyjeggs", points: 32, level: "Scout" },
-    { name: "Jizzyjeggs", points: 30, level: "Scout" },
-  ],
-  weekly: [
-    { name: "WeeklyChamp", points: 500, level: "Legend", icon: "gold" },
-    { name: "WeeklyStar", points: 420, level: "Champion", icon: "silver" },
-    { name: "Graceee", points: 390, level: "Champion", icon: "bronze" },
-    { name: "GuardianX", points: 380, level: "Guardian" },
-  ],
-  monthly: [
-    { name: "MonthMaster", points: 900, level: "Legend", icon: "gold" },
-    { name: "MegaUser", points: 875, level: "Champion", icon: "silver" },
-    { name: "ActivityKing", points: 860, level: "Champion", icon: "bronze" },
-    { name: "ActiveBee", points: 800, level: "Guardian" },
-  ],
-};
-
-const getMedalIcon = (icon: string) => {
-  switch (icon) {
-    case "gold":
-      return <Icon type="icon1" className="h-30 w-30" />;
-    case "silver":
-      return <Icon type="icon2" className="h-30 w-30" />;
-    case "bronze":
-      return <Icon type="icon3" className="h-30 w-30" />;
-    default:
-      return null;
-  }
-};
+// const getMedalIcon = (icon: string) => {
+//   switch (icon) {
+//     case "gold":
+//       return <Icon type="icon1" className="h-30 w-30" />;
+//     case "silver":
+//       return <Icon type="icon2" className="h-30 w-30" />;
+//     case "bronze":
+//       return <Icon type="icon3" className="h-30 w-30" />;
+//     default:
+//       return null;
+//   }
+// };
 
 const getCoinIcon = (level: string) => {
   switch (level) {
@@ -65,23 +39,90 @@ const getCoinIcon = (level: string) => {
 };
 
 const Leaderboardd = () => {
-  const [activeTab, setActiveTab] = useState<LeaderboardTab>("daily");
+  const [timeFrame, setTimeFrame] = useState("today");
+  const [visibleCount, setVisibleCount] = useState(10);
+  const [allLeaderboardData, setAllLeaderboardData] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
 
-  const tabLabels: Record<LeaderboardTab, string> = {
-    daily: "Today",
-    weekly: "This week",
-    monthly: "All time",
+  // const tabLabels: Record<LeaderboardTab, string> = {
+  //   daily: "Today",
+  //   weekly: "This week",
+  //   monthly: "All time",
+  // };
+
+  const { leaderboardDataPublic } = useSelector(
+    (state: RootState) => state.leaderboard,
+  );
+  const payload = {
+    page: currentPage,
+    timeframe: timeFrame,
   };
+
+  useEffect(() => {
+    dispatch(triggerGetAllLeaderboardDataPublic(payload) as any);
+  }, [dispatch, timeFrame]);
+
+  useEffect(() => {
+    if (
+      leaderboardDataPublic.statusCode === 200 &&
+      leaderboardDataPublic.data
+    ) {
+      if (currentPage === 1) {
+        setAllLeaderboardData(leaderboardDataPublic.data.results);
+      } else {
+        setAllLeaderboardData((prevData) => [
+          ...prevData,
+          ...leaderboardDataPublic.data.results,
+        ]);
+      }
+    }
+
+    if (leaderboardDataPublic.error && leaderboardDataPublic.message) {
+      toast.error(leaderboardDataPublic.message);
+    }
+    dispatch(resetLeaderboardPublicState());
+  }, [leaderboardDataPublic, dispatch, currentPage]);
+
+  console.log("leaderboardData***", leaderboardDataPublic);
+  const handleTimeFrameChange = (frame: string) => {
+    setTimeFrame(frame);
+    setVisibleCount(10);
+    setCurrentPage(1);
+  };
+  const getInitials = (name: string) => {
+    const names = name.split(" ");
+    return names.map((n) => n.charAt(0).toUpperCase()).join("");
+  };
+  const capitalizeName = (name: string) => {
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const tableData = allLeaderboardData;
+  const displayedTableData = tableData.slice(0, visibleCount);
+  const allBadges = leaderboardDataPublic.data.badges;
+
+  // useEffect(() => {
+  //   dispatch(
+  //     triggerGetAllLeaderboardDataPublic({
+  //       timeframe: mapTabToBackendTimeframe[activeTab],
+  //       page: 1,
+  //     })
+  //   );
+  // }, [dispatch, activeTab]);
+
+  //const leaderboardData = leaderboardState.data || [];
 
   return (
     <div className="bg-[#006C55] pb-10 relative">
       <div
         className="absolute inset-0 bg-no-repeat bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${LandingBg})`,
-          zIndex: 0,
-        }}
+        style={{ backgroundImage: `url(${LandingBg})`, zIndex: 0 }}
       ></div>
+
       <div className="p-6 w-full relative z-10">
         <Typography
           variant={TypographyVariant.TITLE}
@@ -91,89 +132,120 @@ const Leaderboardd = () => {
         </Typography>
 
         {/* Tabs */}
-        <div className="bg-white rounded-md  mb-2 p-4 md:w-[25rem] lg:w-[20rem] mx-auto">
-          <div className="flex gap-2 items-center justify-center">
-            {Object.keys(tabLabels).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab as LeaderboardTab)}
-                className={`px-4 py-4 rounded-md text-sm font-medium ${
-                  activeTab === tab
-                    ? "bg-[#ED7D31] text-white shadow"
-                    : "bg-white text-gray-600"
-                }`}
-              >
-                {tabLabels[tab as LeaderboardTab]}
-              </button>
-            ))}
-          </div>
+        <div className="flex justify-center items-center space-x-4 mb-4 bg-gray-100 p-2 rounded-lg w-full md:w-[50%] lg:w-[32%] mx-auto">
+          <button
+            className={`px-4 py-2 rounded ${
+              timeFrame === "today"
+                ? "bg-[#ED7D31] text-white px-2 md:px-6"
+                : "text-gray-500"
+            }`}
+            onClick={() => handleTimeFrameChange("today")}
+          >
+            Today
+          </button>
+          <button
+            className={`px-4 py-2 rounded ${
+              timeFrame === "this_week"
+                ? "bg-[#ED7D31] text-white "
+                : "text-gray-500"
+            }`}
+            onClick={() => handleTimeFrameChange("this_week")}
+          >
+            This week
+          </button>
+          <button
+            className={`px-4 py-2 rounded ${
+              timeFrame === "all_time"
+                ? "bg-[#ED7D31] text-white"
+                : "text-gray-500"
+            }`}
+            onClick={() => handleTimeFrameChange("all_time")}
+          >
+            All time
+          </button>
         </div>
 
-        {/* Leaderboard List */}
-        <div className="max-w-5xl mx-auto rounded-2xl bg-white overflow-hidden">
-          {/* Table layout for md and up */}
-          <div className="hidden md:block max-w-5xl mx-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="bg-gray-100 text-gray-500">
-                <tr>
-                  <th className="px-6 py-3">Rank</th>
-                  <th className="px-6 py-3">Name</th>
-                  <th className="px-6 py-3">Star Point</th>
-                  <th className="px-6 py-3">Badges</th>
-                </tr>
-              </thead>
-              <tbody>
-                {leaderboardData[activeTab].map((user, index) => (
-                  <tr key={index} className="border-b last:border-none">
-                    <td className="px-6 py-4 font-bold">
-                      {index < 3 ? getMedalIcon(user.icon!) : index + 1}
+        <div className="bg-white overflow-x-auto rounded-3xl border-2 border-b-0">
+          <table className="min-w-full  rounded-t-3xl">
+            <thead>
+              <tr className="text-gray-500 font-semibold text-left border-b-2 py-12 rounded-t-3xl">
+                <th className=" px-4 py-6">Rank</th>
+                <th className=" px-4 py-6">Name</th>
+                <th className=" px-4 py-6">Star Point</th>
+                <th className=" px-4 py-6">Badges</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData?.length > 0 ? (
+                displayedTableData.map((player: any, index: any) => (
+                  <tr key={player.full_name} className="border-b-2">
+                    <td
+                      className={` px-4 py-2 items-center justify-center ${index <= 3 ? "ml-16" : ""}`}
+                    >
+                      {index < 3 ? (
+                        <Icon
+                          type={`medal${index + 1}`}
+                          className="w-10 h-10"
+                        />
+                      ) : (
+                        index + 1
+                      )}
                     </td>
-                    <td className="px-6 py-4 flex items-center gap-3">
-                      <div className="bg-green-100 text-green-900 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold">
-                        {user.name.slice(0, 2).toUpperCase()}
+                    <td className=" px-4 py-2 flex items-center w-64">
+                      <div className="text-xs md:text-lg font-semibold bg-[#F0FEFB] rounded-full px-2 py-2 md:px-6 md:py-4  text-[#007A61] mr-2">
+                        {getInitials(player.full_name)}
                       </div>
-                      <span className="font-medium">{user.name}</span>
+                      {capitalizeName(player.full_name)}
                     </td>
-                    <td className="px-6 py-4 text-[#ED7D31] font-bold">
-                      {user.points} SP
+                    <td className=" px-4 py-2  text-[#ED7D31] font-semibold w-64  gap-2">
+                      <span className="text-sm mr-2">{player.total_sp}</span>
+                      <span className="text-sm">SP</span>
                     </td>
                     <td className="px-6 py-4 text-gray-600 flex items-center gap-2">
-                      {getCoinIcon(user.level)}
-                      <span>{user.level} level</span>
+                      {getCoinIcon(player.badge)}
+                      <span>{player.badge} level</span>
                     </td>
+                    {/* <td className=" px-4 py-2 flex items-center text-gray-500 w-64">
+                      <img
+                        src={
+                          allBadges?.find(
+                            (badge: any) => badge.name === player.badge,
+                          )?.logo || ""
+                        }
+                        alt={`Badge ${player.badge}`}
+                        className="w-8 h-8 mr-2"
+                      />
+                      {player.badge}
+                    </td> */}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Card layout for mobile */}
-          <div className="md:hidden p-4">
-            {leaderboardData[activeTab].map((user, index) => (
-              <Card
-                key={index}
-                className="flex items-center justify-between p-6 shadow-md mb-2"
-              >
-                <div className="flex items-center">
-                  <div className="w-8 text-center text-lg font-bold">
-                    {index < 3 ? getMedalIcon(user.icon!) : index + 1}
-                  </div>
-                  <div className="bg-green-100 text-green-900 rounded-full w-10 h-10 flex items-center justify-center mx-3">
-                    {user.name.slice(0, 2).toUpperCase()}
-                  </div>
-                  <div className="flex flex-col items-start">
-                    <p className="font-semibold text-sm">{user.name}</p>
-                    <p className="text-xs text-gray-500 flex items-center justify-center gap-1">
-                      {user.level} level {getCoinIcon(user.level)}
-                    </p>
-                  </div>
-                </div>
-                <div className="text-[#ED7D31] font-bold text-sm">
-                  {user.points} SP
-                </div>
-              </Card>
-            ))}
-          </div>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={4} className="text-center py-4">
+                    No data available
+                  </td>
+                </tr>
+              )}
+              {/* Show more rows */}
+              {(visibleCount < tableData.length ||
+                leaderboardDataPublic.data?.next) && (
+                <tr>
+                  <td colSpan={4} className="text-center border-b relative">
+                    {/* <button
+                    onClick={handleShowMore}
+                    className="text-black hover:underline text-3xl pb-8 font-semibold"
+                    aria-label="Show more"
+                  >
+                    ...
+                  </button> */}
+                    <span className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 hover:opacity-100 transition-opacity duration-200">
+                      Show more
+                    </span>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -182,16 +254,15 @@ const Leaderboardd = () => {
 
 export default Leaderboardd;
 
-const Card = ({
-  children,
-  className = "",
-}: React.PropsWithChildren<{ className?: string }>) => (
-  <div className={`bg-white w-full rounded-xl shadow-md ${className}`}>
-    {children}
-  </div>
-);
+// const Card = ({
+//   children,
+//   className = "",
+// }: React.PropsWithChildren<{ className?: string }>) => (
+//   <div className={`bg-white w-full rounded-xl shadow-md ${className}`}>
+//     {children}
+//   </div>
+// );
 
-// {
 //   /* <Card
 //           key={index}
 //           className="flex items-center justify-between p-4 shadow-md"

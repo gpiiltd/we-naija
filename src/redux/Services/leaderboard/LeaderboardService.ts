@@ -35,3 +35,28 @@ export const triggerGetAllLeaderboardData = createAsyncThunk<
     });
   }
 });
+
+export const triggerGetAllLeaderboardDataPublic = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("leaderboard/public", async (payload, thunkAPI) => {
+  try {
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getAllLeaderboardDataPublic}?timeframe=${payload.timeframe}&page=${payload.page}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
