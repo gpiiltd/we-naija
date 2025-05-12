@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FAQ from "./FAQ";
 import ContactUs from "./ContactUs";
-import JoinCommunity from "./JoinCommunity";
+// import JoinCommunity from "./JoinCommunity";
 
 const HelpandSupport = () => {
   const [activeTab, setActiveTab] = useState<string>("faq");
@@ -26,19 +26,19 @@ const HelpandSupport = () => {
           Contact us
         </button>
 
-        <button
+        {/* <button
           className={`py-2 px-4 rounded-lg ${
             activeTab === "join" ? "bg-white text-gray-800" : "text-gray-600"
           }`}
           onClick={() => setActiveTab("join")}
         >
           Chat with us
-        </button>
+        </button> */}
       </div>
 
       {activeTab === "faq" && <FAQ />}
       {activeTab === "contact" && <ContactUs />}
-      {activeTab === "chat" && <JoinCommunity />}
+      {/* {activeTab === "chat" && <JoinCommunity />} */}
     </div>
   );
 };

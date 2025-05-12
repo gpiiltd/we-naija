@@ -81,6 +81,31 @@ import lineLegend from "../Assets/svgImages/lineLegend.svg";
 import response from "../Assets/svgImages/response.svg";
 import sentEmail from "../Assets/svgImages/sentemail.svg";
 import linkedin2 from "../Assets/svgImages/linkedin2.svg";
+
+import insta2 from "../Assets/svgImages/insta2.svg";
+import fb from "../Assets/svgImages/face.svg";
+import x from "../Assets/svgImages/x.svg";
+import homeSVg from "../Assets/svgImages/homeSVg.svg";
+import homeLandingNssf from "../Assets/svgImages/nssf-new-logo.svg";
+import millionpic from "../Assets/svgImages/millionpic.svg";
+import can1 from "../Assets/svgImages/can1.svg";
+import can2 from "../Assets/svgImages/can2.svg";
+import can3 from "../Assets/svgImages/can3.svg";
+import can4 from "../Assets/svgImages/can4.svg";
+import can5 from "../Assets/svgImages/can5.svg";
+import icon1 from "../Assets/svgImages/icon1.svg";
+import icon2 from "../Assets/svgImages/icon2.svg";
+import icon3 from "../Assets/svgImages/icon3.svg";
+import level1 from "../Assets/svgImages/level1.svg";
+import level2 from "../Assets/svgImages/level2.svg";
+import level3 from "../Assets/svgImages/level3.svg";
+import level4 from "../Assets/svgImages/level4.svg";
+
+import favoriteNote from "../Assets/svgImages/note-favorite.svg";
+import infoIcon from "../Assets/svgImages/info-icon.svg";
+import toastCheck from "../Assets/svgImages/toast-check.svg";
+import cancel from "../Assets/svgImages/cancel.svg";
+
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
     switch (type) {
@@ -100,6 +125,86 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return (
           <img src={notification} alt="notification" className={className} />
         );
+      case "homeSVg":
+        return (
+          <img src={homeSVg} alt="we-naija homeSVg" className={className} />
+        );
+
+      case "facebookContact":
+        return <img src={fb} alt="face book contact" className={className} />;
+
+      case "favoriteNote":
+        return (
+          <img
+            src={favoriteNote}
+            alt="start point icon"
+            className={className}
+          />
+        );
+
+      case "insta2Contact":
+        return (
+          <img src={insta2} alt="face book contact" className={className} />
+        );
+      case "xContact":
+        return <img src={x} alt="face book contact" className={className} />;
+      case "infoIcon":
+        return (
+          <img src={infoIcon} alt="start point icon" className={className} />
+        );
+      case "toastCheck":
+        return (
+          <img src={toastCheck} alt="start point icon" className={className} />
+        );
+      case "cancel":
+        return (
+          <img src={cancel} alt="start point icon" className={className} />
+        );
+
+      case "can1":
+        return <img src={can1} alt="we-naija can1" className={className} />;
+      case "can2":
+        return <img src={can2} alt="we-naija can2" className={className} />;
+      case "can3":
+        return <img src={can3} alt="we-naija can2" className={className} />;
+      case "can4":
+        return <img src={can4} alt="we-naija can2" className={className} />;
+      case "can5":
+        return <img src={can5} alt="we-naija can2" className={className} />;
+      case "millionpic":
+        return (
+          <img
+            src={millionpic}
+            alt="we-naija millionpic"
+            className={className}
+          />
+        );
+
+      case "level1":
+        return <img src={level1} alt="we-naija icon" className={className} />;
+      case "level2":
+        return <img src={level2} alt="we-naija icon" className={className} />;
+      case "level3":
+        return <img src={level3} alt="we-naija icon" className={className} />;
+      case "level4":
+        return <img src={level4} alt="we-naija icon" className={className} />;
+
+      case "icon1":
+        return <img src={icon1} alt="we-naija icon" className={className} />;
+      case "icon2":
+        return <img src={icon2} alt="we-naija icon" className={className} />;
+      case "icon3":
+        return <img src={icon3} alt="we-naija icon" className={className} />;
+
+      case "homeLandingNssf":
+        return (
+          <img
+            src={homeLandingNssf}
+            alt="we-naija homeLandingNssf"
+            className={className}
+          />
+        );
+
       case "settings":
         return <img src={settings} alt="settings" className={className} />;
       case "user":

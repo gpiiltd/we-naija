@@ -16,12 +16,14 @@ import {
   // triggerSubmitSurveyReport,
   triggerSubmitSurveyReportMultiple,
 } from "../../../../redux/Services/institute/instituteServices";
-import { RootState } from "../../../../redux/Store/store";
-import { toast } from "react-toastify";
+import { AppDispatch, RootState } from "../../../../redux/Store/store";
+import { toast, ToastContainer } from "react-toastify";
 import {
   resetSurveyReportMultipleState,
   // resetSurveyReportState,
 } from "../../../../redux/Services/institute/instituteSlice";
+import { ClipLoader } from "react-spinners";
+import "react-toastify/dist/ReactToastify.css";
 
 interface SurveyQuestion {
   identifier: string;
@@ -43,8 +45,10 @@ interface SurveyAnswer {
 
 const SurveyCopy = ({
   surveyQuestions,
+  loading,
 }: {
   surveyQuestions: SurveyQuestion[];
+  loading: boolean;
 }) => {
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -65,7 +69,7 @@ const SurveyCopy = ({
   const [surveyAnswers, setSurveyAnswers] = useState<SurveyAnswer[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { surveyReportMultiple } = useSelector(
     (state: RootState) => state.institute,
   );
@@ -144,7 +148,7 @@ const SurveyCopy = ({
           }
         });
 
-        await dispatch(triggerSubmitSurveyReportMultiple(formData) as any);
+        await dispatch(triggerSubmitSurveyReportMultiple(formData));
       } catch (error) {
         console.error("Failed to submit survey:", error);
         toast.error("Failed to submit survey. Please try again.");
@@ -256,6 +260,14 @@ const SurveyCopy = ({
     return !isSubmitting;
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <ClipLoader color="#007A61" size={24} className="mr-6" />
+        Loading...
+      </div>
+    );
+  }
   if (!surveyQuestions || surveyQuestions.length === 0 || !currentQuestion) {
     return (
       <Typography variant={TypographyVariant.NORMAL} className="text-center">
@@ -266,6 +278,7 @@ const SurveyCopy = ({
 
   return (
     <div className="flex flex-col gap-10">
+      <ToastContainer />
       {!showAdditionalInfo ? (
         <section className="flex flex-col gap-4">
           <Typography

@@ -6,15 +6,15 @@ import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { triggerPhoneNumberVerificationOtp } from "../../redux/Services/user/UserServices";
-import { toast } from "react-toastify";
-import { RootState } from "../../redux/Store/store";
+import { toast, ToastContainer } from "react-toastify";
+import { AppDispatch, RootState } from "../../redux/Store/store";
 import { resetState } from "../../redux/Slices/user/userSlice";
 
 const EnterOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [Errors, setError] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { error, message, kycPhoneNumber, loading } = useSelector(
     (state: RootState) => state.user,
@@ -56,7 +56,7 @@ const EnterOtp = () => {
       mobile_number: kycPhoneNumber,
       otp: otpCode,
     };
-    dispatch(triggerPhoneNumberVerificationOtp(payload) as any);
+    dispatch(triggerPhoneNumberVerificationOtp(payload));
   };
 
   useEffect(() => {
@@ -75,6 +75,7 @@ const EnterOtp = () => {
 
   return (
     <>
+      <ToastContainer />
       <KycHeader />
       <div className="flex flex-col items-center justify-center min-h-screen -mt-14">
         <div className="bg-white w-full p-4 md:p-8 rounded-lg md:w-2/4 ">
