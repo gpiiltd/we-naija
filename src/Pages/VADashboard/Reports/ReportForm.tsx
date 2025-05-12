@@ -73,8 +73,10 @@ const ReportForm = () => {
     if (answerTaskQuestion?.error && answerTaskQuestion?.message) {
       setLoading(false);
       setIsModalOpen(false);
-      if (answerTaskQuestion.message.includes("Invalid submission data")) {
+      if (answerTaskQuestion.message.includes("Your submission is invalid")) {
         toast.error(`You have already submitted a response for this task`);
+      } else {
+        toast.error(answerTaskQuestion.message);
       }
 
       setTimeout(() => {

@@ -9,9 +9,10 @@ import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { resetState } from "../redux/Slices/user/userSlice";
+
 const EmailSent = () => {
   const dispatch: AppDispatch = useDispatch();
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(180);
   const [canResend, setCanResend] = useState(false);
   const { error, message, email } = useSelector(
     (state: RootState) => state.user,
@@ -25,8 +26,7 @@ const EmailSent = () => {
     };
     if (canResend) {
       dispatch(triggerEmailVerificationResend(payload));
-
-      setCountdown(30);
+      setCountdown(180);
       setCanResend(false);
     }
     dispatch(resetState());
@@ -55,6 +55,12 @@ const EmailSent = () => {
       }, 1000);
     return () => clearInterval(timer as NodeJS.Timeout);
   }, [countdown]);
+
+  const formatCountdown = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
 
   return (
     <div className="w-full flex flex-col h-screen lg:flex-row">
@@ -119,9 +125,7 @@ const EmailSent = () => {
               >
                 {canResend
                   ? "Re-send link via email "
-                  : `Re-send link via email  (0:${
-                      countdown < 10 ? `0${countdown}` : countdown
-                    })`}
+                  : `Re-send link via email  (${formatCountdown(countdown)})`}
               </Typography>
             </div>
           </div>

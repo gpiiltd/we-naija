@@ -9,6 +9,8 @@ import woman from "../../Assets/svgImages/woman_green.svg";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { triggerGetAllInstitute } from "../../redux/Services/user/UserServices";
+import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
+
 import { AppDispatch, RootState } from "../../redux/Store/store";
 import { toast } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
@@ -21,21 +23,27 @@ const PendingKyc = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const fetchInstitutions = async () => {
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        await dispatch(triggerGetAllInstitute({}));
+        await Promise.all([
+          dispatch(triggerGetAllInstitute({})),
+          dispatch(triggerGetUserProfile({})),
+        ]);
       } catch (error) {
-        console.error("Error fetching institutions:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchInstitutions();
+    fetchData();
   }, [dispatch]);
 
   const { instituteData, error, message } = useSelector(
     (state: RootState) => state.user,
   );
+
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
+  const { data } = userProfileData;
 
   useEffect(() => {
     if (Array.isArray(instituteData) && instituteData.length > 0 && !error) {
@@ -43,7 +51,7 @@ const PendingKyc = () => {
     }
 
     if (error) {
-      console.error("Error fetching institutions:", message);
+      console.error("Error fetching data:", message);
       toast.error(message);
     }
 
@@ -52,6 +60,10 @@ const PendingKyc = () => {
   }, [error, message, instituteData, dispatch]);
 
   const firstName = localStorage.getItem("first_name") || userData?.first_name;
+
+  // const isKycApproved = data?.kyc_status === "approved";
+  const isKycApproved = data?.kyc_step === "completed";
+
   return (
     <div>
       <p className="font-normal text-[#5E5959] text-lg">
@@ -62,11 +74,13 @@ const PendingKyc = () => {
         Let's improve health care service together.
       </p>
       <div className="w-full sm:grid sm:grid-cols-1 md:flex lg:flex items-start lg:w-[55rem] mt-4 mb-10">
-        <VerificationCard
-          statusMessage="Your ID & profile details are being verified"
-          progressPercentage={90}
-          responseTimeMessage="You would receive a response in less than 12 hours"
-        />
+        {isKycApproved && (
+          <VerificationCard
+            statusMessage="Your ID & profile details are being verified"
+            progressPercentage={90}
+            responseTimeMessage="You would receive a response in less than 12 hours"
+          />
+        )}
         <br />
         <HomeGoToReportCard backgroundImage={backgroundImage} />
       </div>
