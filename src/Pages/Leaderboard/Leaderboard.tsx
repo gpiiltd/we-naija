@@ -9,76 +9,79 @@ import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/Store/store";
 import { triggerGetAllLeaderboardData } from "../../redux/Services/leaderboard/LeaderboardService";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 // import { resetLeaderboardState } from "../../redux/Services/leaderboard/leaderboardSlice";
 import { capitalizeName } from "../../utils/inputValidations";
 import { Player, Badge } from "../../utils/interfaces";
 
 const Leaderboard = () => {
   const [timeFrame, setTimeFrame] = useState("today");
-  const [visibleCount, setVisibleCount] = useState(10);
-  const [allLeaderboardData, setAllLeaderboardData] = useState<Player[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [allData, setAllData] = useState<Player[]>([]);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   const { leaderboardData } = useSelector(
     (state: RootState) => state.leaderboard,
   );
+
   const payload = {
     page: currentPage,
     timeframe: timeFrame,
   };
 
   useEffect(() => {
+    if (currentPage === 1) {
+      setAllData([]);
+    }
     dispatch(triggerGetAllLeaderboardData(payload));
-  }, [dispatch, timeFrame]);
+  }, [dispatch, timeFrame, currentPage]);
 
   useEffect(() => {
-    if (leaderboardData.statusCode === 200 && leaderboardData.data) {
+    if (leaderboardData.statusCode === 200 && leaderboardData.data?.results) {
+      const results = Array.isArray(leaderboardData.data.results)
+        ? leaderboardData.data.results
+        : [];
+
       if (currentPage === 1) {
-        setAllLeaderboardData(leaderboardData.data.results);
+        setAllData(results);
       } else {
-        setAllLeaderboardData((prevData) => [
-          ...prevData,
-          ...leaderboardData.data.results,
-        ]);
+        // Filter out any potential duplicates based on full_name
+        setAllData((prevData) => {
+          const existingNames = new Set(prevData.map((item) => item.full_name));
+          const newResults = results.filter(
+            (item: Player) => !existingNames.has(item.full_name),
+          );
+          return [...prevData, ...newResults];
+        });
       }
+      setIsLoadingMore(false);
     }
 
-    if (leaderboardData.error && leaderboardData.message) {
-      toast.error(leaderboardData.message);
+    if (leaderboardData.error) {
+      setIsLoadingMore(false);
     }
-    // dispatch(resetLeaderboardState());
-  }, [leaderboardData, dispatch, currentPage]);
+  }, [leaderboardData, currentPage]);
 
   const handleShowMore = () => {
-    if (leaderboardData.data?.next) {
-      const nextPage = currentPage + 1;
-      setCurrentPage(nextPage);
-      const newPayload = {
-        ...payload,
-        page: nextPage,
-      };
-      dispatch(triggerGetAllLeaderboardData(newPayload));
-    } else {
-      setVisibleCount((prevCount) =>
-        Math.min(prevCount + 10, allLeaderboardData.length),
-      );
+    if (leaderboardData.data?.next && !isLoadingMore) {
+      setIsLoadingMore(true);
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
   const handleTimeFrameChange = (frame: string) => {
     setTimeFrame(frame);
-    setVisibleCount(10);
     setCurrentPage(1);
+    setAllData([]);
+    setIsLoadingMore(false);
   };
+
   const getInitials = (name: string) => {
     const names = name.split(" ");
     return names.map((n) => n.charAt(0).toUpperCase()).join("");
   };
 
-  const tableData = allLeaderboardData || [];
-  const displayedTableData = tableData?.slice(0, visibleCount) || [];
   const userProfileData = leaderboardData.data?.user_profile;
   const allBadges = leaderboardData.data?.badges;
 
@@ -98,7 +101,7 @@ const Leaderboard = () => {
   return (
     <>
       <ToastContainer />
-      {leaderboardData.loading ? (
+      {leaderboardData.loading && currentPage === 1 ? (
         <div className="flex justify-center items-center w-full h-full p-6 bg-white rounded-lg mx-auto mb-12">
           <ClipLoader color="#007A61" size={24} className="mr-6" />
           Loading...
@@ -267,18 +270,12 @@ const Leaderboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {leaderboardData.loading ? (
-                  <div className="flex gap-3 items-center justify-center my-12">
-                    <Typography
-                      variant={TypographyVariant.NORMAL}
-                      className="text-center"
+                {allData.length > 0 ? (
+                  allData.map((player: Player, index: number) => (
+                    <tr
+                      key={`${player.full_name}-${index}`}
+                      className="border-b-2"
                     >
-                      Loading leaderboard data...
-                    </Typography>
-                  </div>
-                ) : displayedTableData?.length > 0 ? (
-                  displayedTableData.map((player: Player, index: number) => (
-                    <tr key={player.full_name} className="border-b-2">
                       <td className=" px-4 py-2 items-center justify-center">
                         {index < 3 ? (
                           <Icon
@@ -321,16 +318,29 @@ const Leaderboard = () => {
                   </tr>
                 )}
 
-                {(visibleCount < (tableData?.length || 0) ||
-                  leaderboardData.data?.next) && (
+                {leaderboardData.data?.next && (
                   <tr>
                     <td colSpan={4} className="text-center border-b relative">
                       <button
                         onClick={handleShowMore}
-                        className="text-black hover:underline text-3xl pb-8 font-semibold"
+                        disabled={isLoadingMore}
+                        className={`text-black hover:underline text-3xl pb-8 font-semibold ${
+                          isLoadingMore ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
                         aria-label="Show more"
                       >
-                        ...
+                        {isLoadingMore ? (
+                          <div className="flex items-center justify-center">
+                            <ClipLoader
+                              color="#007A61"
+                              size={20}
+                              className="mr-2"
+                            />
+                            Loading...
+                          </div>
+                        ) : (
+                          "..."
+                        )}
                       </button>
                       <span className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 hover:opacity-100 transition-opacity duration-200">
                         Show more

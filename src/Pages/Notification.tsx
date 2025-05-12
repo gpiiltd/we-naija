@@ -137,7 +137,7 @@ const Notification: React.FC = () => {
               }
             >
               <div className="flex justify-between w-full">
-                <div className="flex items-start">
+                <div className="flex items-start w-[90%]">
                   <div
                     className={`w-2 h-2 rounded-full ${
                       notification.read_at ? "bg-gray-400" : "bg-green-500"
