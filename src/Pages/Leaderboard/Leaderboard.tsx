@@ -34,21 +34,21 @@ const Leaderboard = () => {
   }, [dispatch, timeFrame]);
 
   useEffect(() => {
-    if (leaderboardData.statusCode === 200 && leaderboardData.data) {
+    if (leaderboardData.statusCode === 200 && leaderboardData.data?.results) {
+      const results = Array.isArray(leaderboardData.data.results)
+        ? leaderboardData.data.results
+        : [];
+
       if (currentPage === 1) {
-        setAllLeaderboardData(leaderboardData.data.results);
+        setAllLeaderboardData(results);
       } else {
-        setAllLeaderboardData((prevData) => [
-          ...prevData,
-          ...leaderboardData.data.results,
-        ]);
+        setAllLeaderboardData((prevData) => [...prevData, ...results]);
       }
     }
 
     if (leaderboardData.error && leaderboardData.message) {
       toast.error(leaderboardData.message);
     }
-    // dispatch(resetLeaderboardState());
   }, [leaderboardData, dispatch, currentPage]);
 
   const handleShowMore = () => {
