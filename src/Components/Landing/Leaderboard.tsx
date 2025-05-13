@@ -128,7 +128,7 @@ const Leaderboardd = () => {
       <div className="p-6 w-full relative z-10">
         <Typography
           variant={TypographyVariant.TITLE}
-          className="text-2xl text-center leading-10 font-bold text-white mb-6 mt-8"
+          className="text-2xl font-raleway text-center leading-10 font-bold text-white mb-6 mt-8"
         >
           LEADERBOARD
         </Typography>
@@ -136,7 +136,7 @@ const Leaderboardd = () => {
         {/* Tabs */}
         <div className="flex justify-center items-center space-x-4 mb-4 bg-gray-100 p-2 rounded-lg w-full md:w-[50%] lg:w-[32%] mx-auto">
           <button
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 rounded font-raleway  ${
               timeFrame === "today"
                 ? "bg-[#ED7D31] text-white px-2 md:px-6"
                 : "text-gray-500"
@@ -146,7 +146,7 @@ const Leaderboardd = () => {
             Today
           </button>
           <button
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 rounded  font-raleway ${
               timeFrame === "this_week"
                 ? "bg-[#ED7D31] text-white "
                 : "text-gray-500"
@@ -156,7 +156,7 @@ const Leaderboardd = () => {
             This week
           </button>
           <button
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 rounded font-raleway  ${
               timeFrame === "all_time"
                 ? "bg-[#ED7D31] text-white"
                 : "text-gray-500"
@@ -167,10 +167,10 @@ const Leaderboardd = () => {
           </button>
         </div>
 
-        <div className="bg-white overflow-x-auto rounded-3xl border-2 border-b-0">
-          <table className="min-w-full  rounded-t-3xl">
+        <div className="bg-white overflow-x-auto rounded-3xl border-2 border-b-0 font-raleway">
+          <table className="min-w-full  rounded-t-3xl font-raleway">
             <thead>
-              <tr className="text-gray-500 font-semibold text-left border-b-2 py-12 rounded-t-3xl">
+              <tr className="text-gray-500 font-semibold text-left border-b-2 py-12 rounded-t-3xl font-raleway">
                 <th className=" px-4 py-6">Rank</th>
                 <th className=" px-4 py-6">Name</th>
                 <th className=" px-4 py-6">Star Point</th>
@@ -206,13 +206,13 @@ const Leaderboardd = () => {
 
                     <td className="px-4 py-2 flex items-center text-gray-500 w-64">
                       {getCoinIcon(player.badge)}
-                      <span className="ml-2">{player.badge}</span>
+                      <span className="ml-2 font-raleway ">{player.badge}</span>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={4} className="text-center py-4">
+                  <td colSpan={4} className="text-center py-4 font-raleway ">
                     No data available
                   </td>
                 </tr>
@@ -229,7 +229,7 @@ const Leaderboardd = () => {
                   >
                     ...
                   </button> */}
-                    <span className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 hover:opacity-100 transition-opacity duration-200">
+                    <span className="font-raleway absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 hover:opacity-100 transition-opacity duration-200">
                       Show more
                     </span>
                   </td>
