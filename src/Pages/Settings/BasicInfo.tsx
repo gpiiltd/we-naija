@@ -10,6 +10,7 @@ import { genderOptions, nationalityOptions } from "../../utils/selectOptions";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/Store/store";
 import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
+import { capitalizeName } from "../../utils/inputValidations";
 
 const BasicInfo = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const BasicInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [userName, setUsername] = useState("");
+  // const [userName, setUsername] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error] = useState("");
@@ -32,11 +33,11 @@ const BasicInfo = () => {
 
   useEffect(() => {
     if (data) {
-      setFirstName(data.first_name || "");
-      setLastName(data.last_name || "");
-      setUsername(data.username || "");
+      setFirstName(capitalizeName(data.first_name || ""));
+      setLastName(capitalizeName(data.last_name || ""));
+      // setUsername(data.username || "");
       setNationality(data.nationality || "");
-      setGender(data.gender || "");
+      setGender(capitalizeName(data.gender || ""));
       setDateOfBirth(data.date_of_birth || "");
     }
   }, [data]);
@@ -115,12 +116,12 @@ const BasicInfo = () => {
                   : ""
               }
             />
-            <FloatingInput
+            {/* <FloatingInput
               label="User Name"
               value={userName}
               onChange={setUsername}
               error={userName === "" && error ? "User name is required." : ""}
-            />
+            /> */}
             <FloatingSelect
               label="Gender"
               options={genderOptions.map((option) => option.name)}

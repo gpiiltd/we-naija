@@ -39,3 +39,10 @@ export const formatOperationalDays = (operationalDays: string): string => {
 
   return daysMap[operationalDays.toLowerCase()] || operationalDays;
 };
+
+export const capitalizeName = (name: string) => {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

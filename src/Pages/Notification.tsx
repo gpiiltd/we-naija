@@ -60,7 +60,7 @@ const Notification: React.FC = () => {
       ).unwrap();
 
       if (result?.status_code === 200) {
-        toast.success("Notification marked as read");
+        // toast.success("Notification marked as read");
 
         dispatch(triggerGetNotifications({}));
       } else {
@@ -137,7 +137,7 @@ const Notification: React.FC = () => {
               }
             >
               <div className="flex justify-between w-full">
-                <div className="flex items-start">
+                <div className="flex items-start w-[90%]">
                   <div
                     className={`w-2 h-2 rounded-full ${
                       notification.read_at ? "bg-gray-400" : "bg-green-500"
@@ -147,7 +147,7 @@ const Notification: React.FC = () => {
                     <section className="flex justify-start">
                       {/* <Icon type="championIcon" className="pr-2 w-10 h-10" /> */}
                       <div>
-                        <p className="text-black text-sm">
+                        <p className="text-black text-sm font-semibold">
                           {notification.title}
                         </p>
                         <p className="text-gray-500 text-sm">

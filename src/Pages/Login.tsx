@@ -15,6 +15,7 @@ import { triggerUserLogin } from "../redux/Services/user/UserServices";
 import { resetState, setUserEmail } from "../redux/Slices/user/userSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LoginData } from "../utils/interfaces";
 
 const Login = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -41,7 +42,7 @@ const Login = () => {
       .trim(),
   });
 
-  const handleLogin = (values: any) => {
+  const handleLogin = (values: LoginData) => {
     const payload = {
       email: values.email.trim().toLowerCase(),
       password: values.password.trim(),
@@ -69,6 +70,7 @@ const Login = () => {
       toast.success("Login successful");
       dispatch(setUserEmail(userEmail));
       localStorage.setItem("first_name", userData?.first_name);
+      localStorage.setItem("kyc_status", userData?.kyc_status);
       setTimeout(() => {
         navigate("/verified-agent-dashboard");
         dispatch(resetState());

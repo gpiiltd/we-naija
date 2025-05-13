@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/Store/store";
 import { triggerGetAllInstitution } from "../../../../redux/Services/institute/instituteServices";
 import { formatOperationalDays } from "../../../../utils/inputValidations";
+import { ClipLoader } from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
 // import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
 
 const Hospitals = () => {
@@ -23,7 +25,7 @@ const Hospitals = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
+  const { userData } = useSelector((state: RootState) => state.user);
   const { institution } = useSelector((state: RootState) => state.institute);
   const dispatch = useDispatch();
 
@@ -56,24 +58,6 @@ const Hospitals = () => {
     }
     // dispatch(resetInstitutionState());
   }, [institution, dispatch, currentPage]);
-
-  // const formatOperationalDays = (operationalDays: string): string => {
-  //   const daysMap: { [key: string]: string } = {
-  //     monday_to_friday: "Monday - Friday",
-  //     monday_to_saturday: "Monday - Saturday",
-  //     monday_to_sunday: "Monday - Sunday",
-  //     saturday_only: "Saturday only",
-  //     sunday_only: "Sunday only",
-  //     saturday_to_sunday: "Saturday - Sunday",
-  //     friday_to_saturday: "Friday - Saturday",
-  //     friday_to_sunday: "Friday - Sunday",
-  //     thursday_to_friday: "Thursday - Friday",
-  //     thursday_to_saturday: "Thursday - Saturday",
-  //     thursday_to_sunday: "Thursday - Sunday",
-  //   };
-
-  //   return daysMap[operationalDays.toLowerCase()] || operationalDays;
-  // };
 
   const getRandomItems = (arr: string[], num: number) => {
     const shuffled = [...arr].sort(() => 0.5 - Math.random());
@@ -186,8 +170,24 @@ const Hospitals = () => {
     // setButtonText("Location");
   };
 
+  const kycStatus = localStorage.getItem("kyc_status") || userData?.kyc_status;
+
+  const handleTaskClick = (taskIdentifier: string) => {
+    if (kycStatus === "approved") {
+      navigate(
+        `/verified-agent-dashboard/reports/hospitals/survey-list/${taskIdentifier}`,
+      );
+    } else {
+      setTimeout(() => {
+        toast.error(
+          "You cannot perform this action as your KYC has not been approved",
+        );
+      }, 100);
+    }
+  };
   return (
     <div className="pb-20">
+      <ToastContainer />
       <div className="flex gap-3 flex-col justify-center ">
         <div className="flex gap-3 items-center">
           <div onClick={() => navigate(-1)}>
@@ -239,9 +239,14 @@ const Hospitals = () => {
           Search result:
         </Typography>
       )}
-      {institutions?.filter((hospital: any) =>
-        hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
-      ).length === 0 ? (
+      {institution.loading ? (
+        <div className="flex justify-center items-center w-full h-full">
+          <ClipLoader color="#007A61" size={24} className="mr-6" />
+          Loading...
+        </div>
+      ) : institutions?.filter((hospital: any) =>
+          hospital.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ).length === 0 ? (
         <div className="flex justify-center items-center pt-4">
           <div className="rounded-lg border border-gray-300 shadow-md p-4 w-full flex flex-col gap-4 justify-center items-center py-32">
             <Icon type="noData" />
@@ -280,7 +285,7 @@ const Hospitals = () => {
                 .map((hospital: any, index: number) => (
                   <div
                     key={index}
-                    className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4 cursor-pointer"
+                    className="border-[1px] border-solid border-[#D0D5DD] rounded-lg bg-white shadow-md p-2 mt-4"
                   >
                     <div className="py-4 px-6 mr-4">
                       <section className="flex justify-start">
@@ -331,12 +336,12 @@ const Hospitals = () => {
                     </div>
                     <div className="h-[1.5px] w-full bg-[#E4E7EC]"></div>
                     <div
-                      className="flex items-center justify-end pr-4 pt-2 mb-1"
-                      onClick={() =>
-                        navigate(
-                          `/verified-agent-dashboard/reports/hospitals/survey-list/${hospital.identifier}`,
-                        )
-                      }
+                      className={`flex items-center justify-end pr-4 pt-2 mb-1 ${
+                        kycStatus === "approved"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
+                      onClick={() => handleTaskClick(hospital.identifier)}
                     >
                       <p className="font-bold text-sm text-[#007A61] pr-1">
                         Give report

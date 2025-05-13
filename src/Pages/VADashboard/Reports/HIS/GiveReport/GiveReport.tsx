@@ -7,14 +7,14 @@ import { TypographyVariant } from "../../../../../Components/types";
 import { Card } from "@gpiiltd/gpi-ui-library";
 // import Survey from "../SurveyReport";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../../redux/Store/store";
+import { AppDispatch, RootState } from "../../../../../redux/Store/store";
 import { triggerSurveyIndicatorQuestions } from "../../../../../redux/Services/institute/instituteServices";
 import SurveyCopy from "../SurveyReportCopy";
 
 const GiveReport = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { surveyIndicatorQuestions } = useSelector(
     (state: RootState) => state.institute,
   );
@@ -22,9 +22,7 @@ const GiveReport = () => {
     useState<any>([]);
 
   useEffect(() => {
-    dispatch(
-      triggerSurveyIndicatorQuestions({ indicatorId: id as string }) as any,
-    );
+    dispatch(triggerSurveyIndicatorQuestions({ indicatorId: id as string }));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -63,7 +61,10 @@ const GiveReport = () => {
       <section className="py-6 pb-16 w-full flex justify-center">
         <Card titleLeft={undefined} titleRight={undefined} width="48.61%">
           <div className=" px-16 pt-8 pb-10">
-            <SurveyCopy surveyQuestions={surveyIndicatorQuestionsData} />
+            <SurveyCopy
+              surveyQuestions={surveyIndicatorQuestionsData}
+              loading={surveyIndicatorQuestions.loading}
+            />
           </div>
         </Card>
       </section>

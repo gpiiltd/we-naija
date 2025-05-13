@@ -15,11 +15,16 @@ import {
   triggerAnswerTaskQuestion,
   triggerGetTaskQuestionById,
 } from "../../../redux/Services/community/communityServices";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { resetAnswerTaskQuestionState } from "../../../redux/Services/community/communitySlice";
+import { AppDispatch } from "../../../redux/Store/store";
+import "react-toastify/dist/ReactToastify.css";
 
 const validationSchema = Yup.object({
-  textArea: Yup.string().max(20, "You are allowed a maximum of 20 characters"),
+  textArea: Yup.string().max(
+    250,
+    "You are allowed a maximum of 250 characters",
+  ),
 });
 
 const ReportForm = () => {
@@ -29,7 +34,7 @@ const ReportForm = () => {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState("");
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const closeModal = () => setIsModalOpen(false);
 
   const { taskQuestionById, answerTaskQuestion } = useSelector(
@@ -37,7 +42,7 @@ const ReportForm = () => {
   );
 
   useEffect(() => {
-    dispatch(triggerGetTaskQuestionById(id as string) as any);
+    dispatch(triggerGetTaskQuestionById(id as string));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -52,21 +57,31 @@ const ReportForm = () => {
       answer: answer,
     };
 
-    dispatch(triggerAnswerTaskQuestion(payload) as any);
+    dispatch(triggerAnswerTaskQuestion(payload));
   };
 
-  console.log("answerTaskQuestion***", answerTaskQuestion);
   useEffect(() => {
     if (answerTaskQuestion?.statusCode === 200 && answerTaskQuestion?.data) {
+      setLoading(false);
+      setIsModalOpen(false);
       toast.success("Report submitted successfully");
+
       setTimeout(() => {
-        setLoading(false);
-        setIsModalOpen(false);
         navigate(-1);
-      }, 1000);
+      }, 3000);
     }
     if (answerTaskQuestion?.error && answerTaskQuestion?.message) {
-      toast.error(`${answerTaskQuestion.message}`);
+      setLoading(false);
+      setIsModalOpen(false);
+      if (answerTaskQuestion.message.includes("Your submission is invalid")) {
+        toast.error(`You have already submitted a response for this task`);
+      } else {
+        toast.error(answerTaskQuestion.message);
+      }
+
+      setTimeout(() => {
+        navigate(-1);
+      }, 3000);
     }
     dispatch(resetAnswerTaskQuestionState());
   }, [
@@ -79,6 +94,7 @@ const ReportForm = () => {
 
   return (
     <div className="flex mt-8  flex-col md:px-32 ">
+      <ToastContainer />
       <div className="w-[70%]  rounded-xl self-center shadow-lg px-3 py-4 md:px-12 md:py-12 lg:py-24  flex flex-col justify-start mb-32">
         <div className="flex justify-between gap-3 ">
           <div className="flex gap-2 items-center ">

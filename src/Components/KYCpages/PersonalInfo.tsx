@@ -20,20 +20,50 @@ const PersonalInfo = () => {
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+  const [dateError, setDateError] = useState("");
 
   const dispatch: AppDispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const handleDateChange = (date: Date | null) => {
-    setDateOfBirth(date || new Date());
+  const isOver18 = (date: Date): boolean => {
+    const today = new Date();
+    const birthDate = new Date(date);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age >= 18;
+  };
+
+  const handleApply = (date: Date | null) => {
+    if (!date) {
+      setDateOfBirth(null);
+      setDateError("");
+      return;
+    }
+
+    setDateOfBirth(date);
+
+    if (!isOver18(date)) {
+      setDateError("You must be at least 18 years old");
+    } else {
+      setDateError("");
+    }
   };
 
   const isFormComplete =
     address !== "" &&
     nationality !== "" &&
     gender !== "" &&
-    dateOfBirth !== null;
+    dateOfBirth !== null &&
+    !dateError;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +76,6 @@ const PersonalInfo = () => {
     const formattedDate = `${dateOfBirth?.getFullYear()}-${String(
       dateOfBirth?.getMonth() + 1,
     ).padStart(2, "0")}-${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
-    setDateOfBirth(new Date(formattedDate));
 
     dispatch(
       setKycPersonalInfo({
@@ -113,21 +142,29 @@ const PersonalInfo = () => {
               }}
               error={gender === "" && error ? "Gender is required." : ""}
             />
-            <CustomDatePicker
-              selectedDate={dateOfBirth}
-              onChange={handleDateChange}
-            />
-            <button
-              type="submit"
-              className={`mt-12 w-full py-4 rounded-md bg-primary_green  text-white ${
-                isFormComplete
-                  ? "hover:bg-[#015443]"
-                  : "cursor-not-allowed opacity-50"
-              }`}
-            >
-              Poceed
-            </button>
-            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}{" "}
+            <div className="mb-4">
+              <CustomDatePicker
+                selectedDate={dateOfBirth}
+                onApply={handleApply}
+                error={dateError}
+              />
+              {dateError && (
+                <p className="text-error text-xs mt-1">{dateError}</p>
+              )}
+            </div>
+            <div className="relative z-0">
+              <button
+                type="submit"
+                className={`mt-12 w-full py-4 rounded-md bg-primary_green text-white ${
+                  isFormComplete
+                    ? "hover:bg-[#015443]"
+                    : "cursor-not-allowed opacity-50"
+                }`}
+              >
+                Proceed
+              </button>
+              {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
+            </div>
           </form>
 
           <div className="flex pt-4 items-center justify-center">

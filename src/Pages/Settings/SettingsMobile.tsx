@@ -157,7 +157,7 @@ const SettingsMobile = () => {
               </div>
               <Icon type="arrowRight" className="w-fit" />
             </button>
-            <button
+            {/* <button
               className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
               onClick={() =>
                 navigate("/verified-agent-dashboard/settings/help-and-support")
@@ -168,7 +168,7 @@ const SettingsMobile = () => {
                 <span>Chat with us</span>
               </div>
               <Icon type="arrowRight" className="w-fit" />
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

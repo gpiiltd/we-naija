@@ -1,19 +1,36 @@
 import React from "react";
 import Header from "../../Components/Header";
-import { FiSettings, FiBell, FiX, FiMenu } from "react-icons/fi";
+import { FiX, FiMenu } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
 import { useState } from "react";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { NavLink } from "react-router-dom";
+import { triggerLogout } from "../../redux/Services/user/UserServices";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/Store/store";
+import { useNavigate } from "react-router-dom";
 
 const KycHeader = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(triggerLogout());
+      setTimeout(() => {
+        navigate("/login", { replace: true });
+      }, 100);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
-    <Header className="px-4 md:px-6 lg:px-16">
+    <Header className="px-4 md:px-6 lg:px-16 pb-4 mt-8">
       <div className="flex flex-row gap-4 md:gap-12 w-full items-center justify-between">
         <button onClick={toggleDrawer} className="md:hidden text-gray-700">
           <FiMenu size={24} />
@@ -29,7 +46,7 @@ const KycHeader = () => {
 
         <div className="flex items-center gap-4">
           <nav className="flex justify-center items-center gap-4 text-gray-700">
-            <NavLink
+            {/* <NavLink
               to="/verified-agent-dashboard/settings"
               className={({ isActive }) =>
                 isActive
@@ -38,8 +55,8 @@ const KycHeader = () => {
               }
             >
               <FiSettings size={20} />
-            </NavLink>
-            <NavLink
+            </NavLink> */}
+            {/* <NavLink
               to="/verified-agent-dashboard/notifications"
               className={({ isActive }) =>
                 isActive
@@ -48,8 +65,8 @@ const KycHeader = () => {
               }
             >
               <FiBell size={20} />
-            </NavLink>
-            <NavLink
+            </NavLink> */}
+            {/* <NavLink
               to="/verified-agent-dashboard/profile"
               className={({ isActive }) =>
                 isActive
@@ -58,7 +75,7 @@ const KycHeader = () => {
               }
             >
               <Icon type="avatar" />
-            </NavLink>
+            </NavLink> */}
           </nav>
         </div>
       </div>
@@ -80,9 +97,7 @@ const KycHeader = () => {
                   <Icon
                     type="logo"
                     className="w-fit"
-                    click={() =>
-                      (window.location.href = "/verified-agent-dashboard")
-                    }
+                    click={() => (window.location.href = "/")}
                   />
                   <button onClick={toggleDrawer} className="text-lg">
                     <FiX size={24} className="text-gray-500" />
@@ -94,7 +109,7 @@ const KycHeader = () => {
                     <li className="flex gap-2">
                       <Icon type="home" />
                       <NavLink
-                        to="/verified-agent-dashboard/home"
+                        to="/"
                         onClick={toggleDrawer}
                         className={({ isActive }) =>
                           isActive
@@ -106,7 +121,7 @@ const KycHeader = () => {
                       </NavLink>
                     </li>
 
-                    <li className="flex gap-2">
+                    {/* <li className="flex gap-2">
                       <FiBell
                         size={24}
                         className=" text-primary_green text-lg"
@@ -122,8 +137,8 @@ const KycHeader = () => {
                       >
                         Notification
                       </NavLink>
-                    </li>
-                    <li className="flex gap-2">
+                    </li> */}
+                    {/* <li className="flex gap-2">
                       <FiSettings
                         size={24}
                         className=" text-primary_green text-lg"
@@ -139,24 +154,14 @@ const KycHeader = () => {
                       >
                         Settings
                       </NavLink>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2" onClick={handleLogout}>
                 <CiLogout size={24} className="text-error text-lg" />
-                <NavLink
-                  to="/login"
-                  onClick={toggleDrawer}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-error font-bold"
-                      : "text-error  font-thin hover:text-error transition duration-300"
-                  }
-                >
-                  Logout
-                </NavLink>
+                Logout
               </div>
             </div>
           </div>

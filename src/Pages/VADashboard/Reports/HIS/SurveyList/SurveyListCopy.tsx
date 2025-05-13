@@ -153,7 +153,7 @@ const SurveyListCopy = () => {
                     variant={TypographyVariant.SMALL}
                     className="text-light_gray"
                   >
-                    {institutionDetails?.address}
+                    {institutionDetails?.address || "N/A"}
                   </Typography>
                 </div>
 
@@ -177,7 +177,7 @@ const SurveyListCopy = () => {
                     variant={TypographyVariant.SMALL}
                     className="text-light_gray"
                   >
-                    {institutionDetails?.mobile_number}
+                    {institutionDetails?.mobile_number || "N/A"}
                   </Typography>
                 </div>
                 <div className="flex gap-2">
@@ -186,7 +186,7 @@ const SurveyListCopy = () => {
                     variant={TypographyVariant.SMALL}
                     className="text-light_gray"
                   >
-                    {institutionDetails?.email}
+                    {institutionDetails?.email || "N/A"}
                   </Typography>
                 </div>
               </div>
