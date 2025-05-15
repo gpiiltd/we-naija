@@ -2,7 +2,6 @@ import React from "react";
 import Typography from "../../Components/Typography";
 import { TypographyVariant } from "../../Components/types";
 import LandingBg from "../../Assets/svgImages/landing-bg.svg";
-import Icon from "../../Assets/SvgImagesAndIcons";
 import { IoCall, IoLocation } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { Form, Formik } from "formik";
@@ -10,6 +9,8 @@ import * as Yup from "yup";
 import InputField from "../../Components/Input/InputField";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import TextAreaField from "../../Components/Input/TextArea";
+import { socialsFooter } from "../../utils/selectOptions";
+import Icon from "../../Assets/SvgImagesAndIcons";
 
 const ContactView = () => {
   const initialValues = {
@@ -58,8 +59,8 @@ const ContactView = () => {
               zIndex: 0,
             }}
           ></div>
-          <div className="flex flex-col justify-between h-full py-2">
-            <div>
+          <div className="flex flex-col justify-between h-full py-2 ">
+            <div className="relative z-10">
               <Typography
                 variant={TypographyVariant.SUBTITLE}
                 className="font-bold mb-2"
@@ -109,25 +110,20 @@ const ContactView = () => {
               </div>
             </div>
 
-            <div className="flex space-x-4 mt-6">
-              <ul className="flex space-x-6 md:space-x-6">
-                <li className="cursor-pointer">
-                  <a href="https://www.facebook.com/NSSF.NG" target="_blank">
-                    <Icon type="facebookContact" />
-                  </a>
-                </li>
-
-                <li className="cursor-pointer">
-                  <a href="https://x.com/nssf_ng" target="_blank">
-                    <Icon type="xContact" />
-                  </a>
-                </li>
-
-                <li className="cursor-pointer">
-                  <a href="https://instagram.com/nssf.ng" target="_blank">
-                    <Icon type="insta2Contact" />
-                  </a>
-                </li>
+            <div className="flex space-x-4 mt-6 relative z-10">
+              <ul className="flex gap-5 flex-wrap">
+                {socialsFooter.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 bg-n-7 rounded-full transition-colors hover:bg-n-6"
+                    >
+                      <Icon type={item.iconUrl} />
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

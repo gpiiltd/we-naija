@@ -30,6 +30,7 @@ interface ApiUrls {
   getNotifications: string;
   readNotifications: string;
   logout: string;
+  getAllLeaderboardDataPublic: string;
   changePassword: string;
 }
 
@@ -68,5 +69,6 @@ export const apiUrl: ApiUrls = {
   getNotifications: `${BASE_URL}notifications`,
   readNotifications: `${BASE_URL}notifications/mark_as_read`,
   logout: `${BASE_URL}auth/logout`,
+  getAllLeaderboardDataPublic: `${BASE_URL}leaderboard/public`,
   changePassword: `${BASE_URL}agent/process/change-password`,
 };

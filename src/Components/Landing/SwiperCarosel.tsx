@@ -3,10 +3,47 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 
+import image1 from "../../Assets/svgImages/carosel1.svg";
+import image2 from "../../Assets/svgImages/carosel2.svg";
+import image3 from "../../Assets/svgImages/carosel3.svg";
+import image4 from "../../Assets/svgImages/carosel4.svg";
+import image5 from "../../Assets/svgImages/carosel5.svg";
+import image6 from "../../Assets/svgImages/carosel6.svg";
+
+const imageList = [image1, image2, image3, image4, image5, image6];
+
 const SwiperCarosel = () => {
   return (
     <div className="relative w-full  bg-slate-300 my-10">
       <Swiper
+        spaceBetween={10}
+        slidesPerView={2}
+        breakpoints={{
+          640: { slidesPerView: 5 },
+          768: { slidesPerView: 6 },
+          1024: { slidesPerView: 6 },
+        }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        className="w-full"
+      >
+        {imageList.map((imgSrc, index) => (
+          <SwiperSlide
+            key={index}
+            className="flex justify-center items-center h-40 sm:h-52 md:h-60"
+          >
+            <img
+              alt={`Slide ${index + 1}`}
+              src={imgSrc}
+              className="w-full h-[15rem] mx-auto lg:h-[20rem] object-cover rounded"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      {/* <Swiper
         spaceBetween={10}
         slidesPerView={2} // Mobile-first
         breakpoints={{
@@ -35,7 +72,7 @@ const SwiperCarosel = () => {
             />
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
       <div className="absolute top-0 z-50 w-full h-[100px] bg-transparent overflow-hidden">
         <svg
           className="absolute bottom-0 left-0 w-full h-full"

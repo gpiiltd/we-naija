@@ -54,3 +54,69 @@ export const notifications = [
     read: true,
   },
 ];
+
+export const navigation = [
+  {
+    id: "0",
+    title: "about",
+    url: "#about",
+  },
+  {
+    id: "1",
+    title: "Leaderboard",
+    url: "#leaderboard",
+  },
+  {
+    id: "2",
+    title: "Contact Us",
+    url: "/contact",
+  },
+];
+
+export const socials = [
+  {
+    id: "1",
+    title: "Facebook",
+    iconUrl: "facebookContact",
+    url: "https://www.facebook.com/NSSF.NG",
+  },
+  {
+    id: "2",
+    title: "Twitter",
+    iconUrl: "xContact",
+    url: "https://x.com/nssf_ng",
+  },
+  {
+    id: "3",
+    title: "Instagram",
+    iconUrl: "insta2Contact",
+    url: "https://instagram.com/nssf.ng",
+  },
+];
+
+export const socialsFooter = [
+  {
+    id: "1",
+    title: "Facebook",
+    iconUrl: "facebook",
+    url: "https://www.facebook.com/NSSF.NG",
+  },
+  {
+    id: "2",
+    title: "Twitter",
+    iconUrl: "twitter",
+    url: "https://x.com/nssf_ng",
+  },
+  {
+    id: "3",
+    title: "Instagram",
+    iconUrl: "instagram",
+    url: "https://instagram.com/nssf.ng",
+  },
+  {
+    id: "4",
+    title: "LinkedIn",
+    iconUrl: "linkedin",
+    url: "https://ng.linkedin.com/company/nssf-ng ",
+  },
+];

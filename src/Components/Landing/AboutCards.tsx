@@ -50,7 +50,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
     <>
       {/* === Desktop & Tablet View === */}
       <div
-        className={`hidden md:flex relative flex-col md:flex-row md:max-w-5xl mx-auto ${
+        className={`font-raleway hidden md:flex relative flex-col md:flex-row md:max-w-5xl mx-auto ${
           reverse ? "" : "md:flex-row-reverse"
         } items-center gap-6 md:gap-10`}
       >
@@ -74,13 +74,13 @@ const InfoCard: React.FC<InfoCardProps> = ({
         >
           <Typography
             variant={TypographyVariant.NORMAL}
-            className="text-[#8FF0A4] text-2xl font-bold"
+            className="text-[#8FF0A4] text-2xl font-bold font-raleway "
           >
             {title}
           </Typography>
           <Typography
             variant={TypographyVariant.NORMAL}
-            className="text-white mt-4 text-md font-light"
+            className="text-white mt-4 text-md font-light font-raleway "
           >
             {description}
           </Typography>
@@ -106,13 +106,13 @@ const InfoCard: React.FC<InfoCardProps> = ({
         >
           <Typography
             variant={TypographyVariant.NORMAL}
-            className="text-[#8FF0A4] text-[12px] md:text-2xl font-bold"
+            className="text-[#8FF0A4] text-[12px] md:text-2xl font-bold font-raleway"
           >
             {title}
           </Typography>
           <Typography
             variant={TypographyVariant.NORMAL}
-            className="text-white mt-2 text-sm font-light md:text-lg"
+            className="text-white mt-2 text-sm font-light md:text-lg font-raleway "
           >
             {description}
           </Typography>
@@ -124,7 +124,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
 
 const InfoSection: React.FC = () => {
   return (
-    <div className="space-y-10 md:space-y-16 px-4 md:px-10">
+    <div className="space-y-10 md:space-y-16 px-4 md:px-10 ">
       <InfoCard
         image="can1"
         title="SIGN UP"
