@@ -49,7 +49,12 @@ const IDVerification = () => {
 
   console.log(frontFile, backFile);
 
-  const idTypes = ["International passport"];
+  const idTypes = [
+    { name: "International passport", value: "international_passport" },
+    { name: "Driver's license", value: "drivers_license" },
+    { name: "Voter's card", value: "voters_card" },
+    { name: "National ID", value: "national_id" },
+  ];
 
   const handleFileChange = (file: File | null, isFront: boolean) => {
     if (isFront) {
@@ -160,15 +165,20 @@ const IDVerification = () => {
                 <Form className="flex flex-col gap-5">
                   <FloatingSelect
                     label="ID Type"
-                    options={idTypes}
+                    options={idTypes.map((option) => ({
+                      value: option.value,
+                      label: option.name,
+                    }))}
                     value={idType}
                     onChange={setIdType}
+                    readOnly={true}
                   />
 
                   <FloatingInput
                     label="ID Number"
                     value={idNumber}
                     onChange={setIdNumber}
+                    readOnly={true}
                   />
 
                   <Typography
@@ -194,6 +204,7 @@ const IDVerification = () => {
                         label="Kindly upload it as an image or pdf"
                         onChange={(file) => handleFileChange(file, true)}
                         error={errors.frontFile}
+                        readOnly={true}
                       />
                     )}
 
@@ -212,6 +223,7 @@ const IDVerification = () => {
                         label="Kindly upload it as an image or pdf"
                         onChange={(file) => handleFileChange(file, false)}
                         error={errors.backFile}
+                        readOnly={true}
                       />
                     )}
                   </div>

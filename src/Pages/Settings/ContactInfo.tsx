@@ -4,19 +4,34 @@ import Typography from "../../Components/Typography";
 import FloatingInput from "../../Components/Input/FloatingInput";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../Assets/SvgImagesAndIcons";
-import { RootState } from "../../redux/Store/store";
+import { AppDispatch, RootState } from "../../redux/Store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
+import {
+  triggerGetUserProfile,
+  triggerUpdateContactInfo,
+} from "../../redux/Services/settings/settingsServices";
+import FloatingSelect from "../../Components/Input/FloatingSelect";
+import { stateOptions, lgaOptions } from "../../utils/selectOptions";
+import { toast, ToastContainer } from "react-toastify";
 
+// interface IContactInfo {
+//   state: string;
+//   lga: string;
+//   address: string;
+// }
 const ContactInfo = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
+  const [state, setState] = useState("");
+  const [lga, setLga] = useState("");
   const [error] = useState("");
   const navigate = useNavigate();
 
-  const { userProfileData } = useSelector((state: RootState) => state.settings);
+  const { userProfileData, updateContactInfo } = useSelector(
+    (state: RootState) => state.settings,
+  );
   const { data, loading } = userProfileData;
 
   useEffect(() => {
@@ -26,17 +41,40 @@ const ContactInfo = () => {
   useEffect(() => {
     if (data) {
       setEmail(data.email || "");
-      setPhoneNumber(data.mobile_number || "");
+      setPhoneNumber(data.mobile_number ? `+234${data.mobile_number}` : "");
       setAddress(data.address || "");
+      setState(data.state_id || "");
+      setLga(data.lga_id || "");
     }
   }, [data]);
 
-  const isFormComplete = address !== "" && email !== "" && phoneNumber !== "";
+  const isFormComplete = address !== "" && state !== "" && lga !== "";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleUpdateContactInfo = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement update contact info functionality
+    const selectedState = stateOptions.find(
+      (option) => option.name.toString() === state,
+    );
+    const selectedLga = lgaOptions.find(
+      (option) => option.name.toString() === lga,
+    );
+    const payload = {
+      address,
+      state_id: selectedState?.value,
+      lga_id: selectedLga?.value,
+    };
+    console.log("payloadXXXX", payload);
+    dispatch(triggerUpdateContactInfo(payload));
   };
+
+  useEffect(() => {
+    if (updateContactInfo.statusCode !== 200 && updateContactInfo.error) {
+      toast.error(updateContactInfo.message);
+    }
+    if (updateContactInfo.statusCode === 200 && updateContactInfo.data) {
+      toast.success(updateContactInfo.message);
+    }
+  }, [updateContactInfo]);
 
   if (loading) {
     return (
@@ -48,6 +86,7 @@ const ContactInfo = () => {
 
   return (
     <div className="flex justify-center items-center md:mt-4">
+      <ToastContainer />
       <div className="w-full md:w-[50%]">
         <div className="flex flex-col gap-2">
           <div className="flex">
@@ -71,12 +110,16 @@ const ContactInfo = () => {
           </Typography>
         </div>
         <div className="pt-10">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-1">
+          <form
+            onSubmit={handleUpdateContactInfo}
+            className="flex flex-col gap-1"
+          >
             <FloatingInput
               label="Email"
               value={email}
               onChange={setEmail}
               error={email === "" && error ? "Email is required." : ""}
+              readOnly={true}
             />
             <FloatingInput
               label="Phone Number"
@@ -85,6 +128,7 @@ const ContactInfo = () => {
               error={
                 phoneNumber === "" && error ? "Phone number is required." : ""
               }
+              readOnly={true}
             />
 
             <FloatingInput
@@ -93,16 +137,32 @@ const ContactInfo = () => {
               onChange={setAddress}
               error={address === "" && error ? "Address is required." : ""}
             />
-            {/* <FloatingSelect
-              label="Residential Address"
-              options={nigerianAddresses}
-              value={address}
-              onChange={setAddress}
-              error={address === "" && error ? "Address is required." : ""}
-            /> */}
+
+            <FloatingSelect
+              label="State"
+              options={stateOptions.map((option) => ({
+                value: option.value.toString(),
+                label: option.name,
+              }))}
+              value={state}
+              onChange={setState}
+              error={state === "" && error ? "State is required." : ""}
+            />
+
+            <FloatingSelect
+              label="LGA"
+              options={lgaOptions.map((option) => ({
+                value: option.value.toString(),
+                label: option.name,
+              }))}
+              value={lga}
+              onChange={setLga}
+              error={lga === "" && error ? "LGA is required." : ""}
+            />
+
             <button
               type="submit"
-              className={`mt-4 w-full py-4 rounded-md ${
+              className={`my-4 mb-8 w-full py-4 rounded-md ${
                 isFormComplete
                   ? "bg-[#007A61] hover:bg-[#015443] text-white"
                   : "bg-[#007A61] text-white cursor-not-allowed opacity-50"

@@ -7,7 +7,11 @@ import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import FloatingInput from "../Input/FloatingInput";
 import FloatingSelect from "../Input/FloatingSelect";
-import { genderOptions } from "../../utils/selectOptions";
+import {
+  genderOptions,
+  lgaOptions,
+  stateOptions,
+} from "../../utils/selectOptions";
 import { nationalityOptions } from "../../utils/selectOptions";
 import { setKycPersonalInfo } from "../../redux/Slices/user/userSlice";
 import { useDispatch } from "react-redux";
@@ -16,6 +20,8 @@ import CustomDatePicker from "./CustomDatePicker";
 
 const PersonalInfo = () => {
   const [address, setAddress] = useState("");
+  const [state, setState] = useState("");
+  const [lga, setLga] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
@@ -60,6 +66,8 @@ const PersonalInfo = () => {
 
   const isFormComplete =
     address !== "" &&
+    state !== "" &&
+    lga !== "" &&
     nationality !== "" &&
     gender !== "" &&
     dateOfBirth !== null &&
@@ -67,6 +75,13 @@ const PersonalInfo = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const selectedState = stateOptions.find(
+      (option) => option.name.toString() === state,
+    );
+    const selectedLga = lgaOptions.find(
+      (option) => option.name.toString() === lga,
+    );
 
     if (!isFormComplete) {
       setError(".");
@@ -80,6 +95,8 @@ const PersonalInfo = () => {
     dispatch(
       setKycPersonalInfo({
         address,
+        state_id: selectedState?.value,
+        lga_id: selectedLga?.value,
         nationality,
         gender,
         dateOfBirth: formattedDate,
@@ -117,8 +134,31 @@ const PersonalInfo = () => {
               error={address === "" && error ? "Address is required." : ""}
             />
             <FloatingSelect
+              label="State"
+              options={stateOptions.map((option) => ({
+                value: option.value.toString(),
+                label: option.name,
+              }))}
+              value={state}
+              onChange={setState}
+              error={state === "" && error ? "State is required." : ""}
+            />
+            <FloatingSelect
+              label="LGA"
+              options={lgaOptions.map((option) => ({
+                value: option.value.toString(),
+                label: option.name,
+              }))}
+              value={lga}
+              onChange={setLga}
+              error={lga === "" && error ? "LGA is required." : ""}
+            />
+            <FloatingSelect
               label="Nationality"
-              options={nationalityOptions}
+              options={nationalityOptions.map((option) => ({
+                value: option.value,
+                label: option.name,
+              }))}
               value={nationality}
               onChange={setNationality}
               error={
@@ -127,11 +167,11 @@ const PersonalInfo = () => {
             />
             <FloatingSelect
               label="Gender"
-              options={genderOptions.map((option) => option.name)}
-              value={
-                genderOptions.find((option) => option.value === gender)?.name ||
-                ""
-              }
+              options={genderOptions.map((option) => ({
+                value: option.value,
+                label: option.name,
+              }))}
+              value={gender}
               onChange={(selectedOption) => {
                 const selectedGender = genderOptions.find(
                   (option) => option.name === selectedOption,

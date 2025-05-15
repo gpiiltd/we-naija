@@ -105,6 +105,7 @@ import favoriteNote from "../Assets/svgImages/note-favorite.svg";
 import infoIcon from "../Assets/svgImages/info-icon.svg";
 import toastCheck from "../Assets/svgImages/toast-check.svg";
 import cancel from "../Assets/svgImages/cancel.svg";
+import calendarg from "../Assets/svgImages/calenderg.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -531,6 +532,10 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
       case "linkedin2":
         return (
           <img src={linkedin2} alt="linkedin2 icon" className={className} />
+        );
+      case "calendarg":
+        return (
+          <img src={calendarg} alt="calendarg icon" className={className} />
         );
       default:
         return null;

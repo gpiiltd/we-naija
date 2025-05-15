@@ -1,4 +1,4 @@
-export const nationalityOptions = ["Nigerian"];
+export const nationalityOptions = [{ name: "Nigerian", value: "nigerian" }];
 
 export const genderOptions = [
   { name: "Male", value: "male" },
@@ -17,6 +17,22 @@ export const nigerianAddresses = [
   "505 Jos Close, Jos",
   "606 Kaduna Street, Kaduna",
   "707 Warri Road, Warri",
+];
+
+export const stateOptions = [
+  { name: "Lagos", value: 25 },
+  { name: "Abuja", value: 25 },
+  { name: "Port Harcourt", value: 25 },
+];
+
+export const lgaOptions = [
+  { name: "Eti-osa", value: 17 },
+  { name: "Ikeja", value: 17 },
+  { name: "Surulere", value: 17 },
+  { name: "Ikorodu", value: 17 },
+  { name: "Oshodi", value: 17 },
+  { name: "Ojodu", value: 17 },
+  { name: "Alimosho", value: 17 },
 ];
 
 export const notifications = [

@@ -35,12 +35,16 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
         onBlur={() => setIsFocused(false)}
         className={`block w-full bg-white border border-gray-300 rounded-md py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:ring-green-700 ${
           isFocused || value ? "pt-5" : ""
-        } font-sans ${error ? "text-error" : "border-gray-300"}`}
+        } font-sans ${error ? "text-error" : "border-gray-300"} ${
+          readOnly
+            ? "bg-gray-100 cursor-not-allowed opacity-70 focus:outline-none focus:ring-0"
+            : ""
+        }`}
       />
       <label
         className={`absolute left-3 top-2 transition-all duration-200 ease-in-out ${
-          isFocused || value ? "text-black-500 text-xs" : "text-gray-500"
-        } font-sans`}
+          isFocused || value ? "text-black-500 text-xs" : "text-black-500"
+        }  font-sans`}
       >
         {label}
       </label>

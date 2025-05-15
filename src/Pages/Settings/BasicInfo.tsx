@@ -53,12 +53,12 @@ const BasicInfo = () => {
     }
   };
 
-  const isFormComplete =
-    firstName !== "" &&
-    lastName !== "" &&
-    nationality !== "" &&
-    gender !== "" &&
-    dateOfBirth !== "";
+  // const isFormComplete =
+  //   firstName !== "" &&
+  //   lastName !== "" &&
+  //   nationality !== "" &&
+  //   gender !== "" &&
+  //   dateOfBirth !== "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,11 +78,11 @@ const BasicInfo = () => {
   }
 
   return (
-    <div className="flex justify-between items-start gap-10 md:mx-32 md:mt-4">
-      <div className="hidden md:flex gap-2 w-32 h-32 bg-white items-center justify-center rounded-xl border border-gray-200">
+    <div className="flex justify-center items-center md:mx-32 md:mt-4">
+      {/* <div className="hidden md:flex gap-2 w-32 h-32 bg-white items-center justify-center rounded-xl border border-gray-200">
         <Icon type="avatarv" className="w-20 h-20" />
-      </div>
-      <div className="w-full md:w-[60%] lg:mr-80">
+      </div> */}
+      <div className="w-full  md:w-[60%] lg:mr-80">
         <div className="flex flex-col gap-2">
           <div className="flex">
             <span
@@ -110,24 +110,23 @@ const BasicInfo = () => {
               label="Full Name"
               value={`${firstName} ${lastName}`.trim()}
               onChange={handleFullNameChange}
+              readOnly={true}
               error={
                 (!firstName || !lastName) && error
                   ? "Full name is required."
                   : ""
               }
             />
-            {/* <FloatingInput
-              label="User Name"
-              value={userName}
-              onChange={setUsername}
-              error={userName === "" && error ? "User name is required." : ""}
-            /> */}
             <FloatingSelect
               label="Gender"
-              options={genderOptions.map((option) => option.name)}
+              options={genderOptions.map((option) => ({
+                value: option.value,
+                label: option.name,
+              }))}
               value={gender}
               onChange={setGender}
               error={gender === "" && error ? "Gender is required." : ""}
+              readOnly={true}
             />
             <FloatingInput
               label="Date of birth"
@@ -137,19 +136,23 @@ const BasicInfo = () => {
                 dateOfBirth === "" && error ? "Date of birth is required." : ""
               }
               readOnly={true}
-              onClick={() => setIsModalOpen(true)}
+              // onClick={() => setIsModalOpen(true)}
               icon={<Icon type="calendar" className="w-6 h-6" />}
             />
             <FloatingSelect
               label="Nationality"
-              options={nationalityOptions}
+              options={nationalityOptions.map((option) => ({
+                value: option.value,
+                label: option.name,
+              }))}
               value={nationality}
               onChange={setNationality}
               error={
                 nationality === "" && error ? "Nationality is required." : ""
               }
+              readOnly={true}
             />
-            <button
+            {/* <button
               type="submit"
               className={`mt-4 w-full py-4 rounded-md ${
                 isFormComplete
@@ -159,7 +162,7 @@ const BasicInfo = () => {
             >
               Save changes
             </button>
-            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
+            {error && <p className="text-red-500 text-xs mt-2">{error}</p>} */}
           </form>
         </div>
       </div>

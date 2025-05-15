@@ -32,6 +32,8 @@ interface ApiUrls {
   logout: string;
   getAllLeaderboardDataPublic: string;
   changePassword: string;
+  updateContactInfo: string;
+  getLocation: string;
 }
 
 // const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://api.test.nssf.ng/api/v1/";
@@ -71,4 +73,6 @@ export const apiUrl: ApiUrls = {
   logout: `${BASE_URL}auth/logout`,
   getAllLeaderboardDataPublic: `${BASE_URL}leaderboard/public`,
   changePassword: `${BASE_URL}agent/process/change-password`,
+  updateContactInfo: `${BASE_URL}agent/update/contact-info`,
+  getLocation: `${BASE_URL}locations`,
 };

@@ -14,6 +14,8 @@ import { triggerGetUserProfile } from "../../redux/Services/settings/settingsSer
 import { AppDispatch, RootState } from "../../redux/Store/store";
 import { toast } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
+import ReportCards from "../../Components/Home/ReportCards";
+import { ClipLoader } from "react-spinners";
 
 const PendingKyc = () => {
   const [institutionsData, setInstitutionsData] = useState<any[]>([]);
@@ -61,8 +63,8 @@ const PendingKyc = () => {
 
   const firstName = localStorage.getItem("first_name") || userData?.first_name;
 
-  // const isKycApproved = data?.kyc_status === "approved";
-  const isKycApproved = data?.kyc_step === "completed";
+  const isKycApproved = data?.kyc_status === "approved";
+  // const isKycApproved = data?.kyc_step === "completed";
 
   return (
     <div>
@@ -73,17 +75,41 @@ const PendingKyc = () => {
       <p className="font-light text-[#5E5959] text-sm">
         Let's improve health care service together.
       </p>
-      <div className="w-full sm:grid sm:grid-cols-1 md:flex lg:flex items-start lg:w-[55rem] mt-4 mb-10">
-        {isKycApproved && (
-          <VerificationCard
-            statusMessage="Your ID & profile details are being verified"
-            progressPercentage={90}
-            responseTimeMessage="You would receive a response in less than 12 hours"
-          />
-        )}
-        <br />
-        <HomeGoToReportCard backgroundImage={backgroundImage} />
-      </div>
+      {userProfileData.loading ? (
+        <div className="flex justify-center items-center w-full h-full p-6 bg-white rounded-lg mx-auto mb-12">
+          <ClipLoader color="#007A61" size={24} className="mr-6" />
+        </div>
+      ) : (
+        <div className="w-full sm:grid sm:grid-cols-1 md:flex lg:flex items-start gap-4 mt-4 mb-10">
+          {!isKycApproved && (
+            <>
+              <VerificationCard
+                statusMessage="Your ID & profile details are being verified"
+                progressPercentage={90}
+                responseTimeMessage="You would receive a response in less than 12 hours"
+              />
+              <HomeGoToReportCard backgroundImage={backgroundImage} />
+            </>
+          )}
+
+          {isKycApproved && (
+            <>
+              <HomeGoToReportCard backgroundImage={backgroundImage} />
+              <ReportCards
+                icon="calendarg"
+                title="No. reports completed"
+                number={data?.reports_completed}
+              />
+              <ReportCards
+                icon="starIcon"
+                title="Total star points"
+                number={data?.star_points}
+              />
+            </>
+          )}
+        </div>
+      )}
+
       <p className="font-bold text-black">Recommended institutes</p>
       <p className="font-light text-[#5E5959] text-sm">
         Below are list of recommend institute to visit and give a report based
