@@ -9,16 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   triggerGetUserProfile,
   triggerUpdateContactInfo,
+  triggerGetLocation,
 } from "../../redux/Services/settings/settingsServices";
 import FloatingSelect from "../../Components/Input/FloatingSelect";
-import { stateOptions, lgaOptions } from "../../utils/selectOptions";
+import { allNigerianStates } from "../../utils/selectOptions";
 import { toast, ToastContainer } from "react-toastify";
+import { resetUpdateContactInfoState } from "../../redux/Services/settings/settingsSlice";
+import { ClipLoader } from "react-spinners";
+import { Button } from "@gpiiltd/gpi-ui-library";
 
-// interface IContactInfo {
-//   state: string;
-//   lga: string;
-//   address: string;
-// }
 const ContactInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState("");
@@ -27,24 +26,52 @@ const ContactInfo = () => {
   const [state, setState] = useState("");
   const [lga, setLga] = useState("");
   const [error] = useState("");
+  const [lgaDataOptions, setLgaDataOptions] = useState<
+    { id: string; name: string }[]
+  >([]);
   const navigate = useNavigate();
 
-  const { userProfileData, updateContactInfo } = useSelector(
+  const { userProfileData, updateContactInfo, locationData } = useSelector(
     (state: RootState) => state.settings,
   );
   const { data, loading } = userProfileData;
 
   useEffect(() => {
-    dispatch(triggerGetUserProfile({}) as any);
+    dispatch(triggerGetUserProfile({}));
   }, [dispatch]);
 
   useEffect(() => {
+    if (state) {
+      const selectedState = Array.isArray(allNigerianStates)
+        ? allNigerianStates
+            .flat()
+            .find((option) => option.name.toString() === state)
+        : undefined;
+      if (selectedState) {
+        dispatch(triggerGetLocation(selectedState.id));
+      }
+    } else {
+      setLgaDataOptions([]);
+    }
+  }, [dispatch, state]);
+
+  useEffect(() => {
+    if (locationData.data) {
+      setLgaDataOptions(locationData.data);
+    }
+  }, [locationData]);
+
+  useEffect(() => {
     if (data) {
+      const selectedStated = Array.isArray(allNigerianStates)
+        ? allNigerianStates.flat().find((option) => option.id === data.state)
+        : undefined;
+      const stateName = selectedStated ? selectedStated.name : "";
       setEmail(data.email || "");
-      setPhoneNumber(data.mobile_number ? `+234${data.mobile_number}` : "");
+      setPhoneNumber(data.mobile_number ? `${data.mobile_number}` : "");
       setAddress(data.address || "");
-      setState(data.state_id || "");
-      setLga(data.lga_id || "");
+      setState(stateName || "");
+      setLga(data.lga || "");
     }
   }, [data]);
 
@@ -52,18 +79,20 @@ const ContactInfo = () => {
 
   const handleUpdateContactInfo = (e: React.FormEvent) => {
     e.preventDefault();
-    const selectedState = stateOptions.find(
-      (option) => option.name.toString() === state,
-    );
-    const selectedLga = lgaOptions.find(
+
+    const selectedState = allNigerianStates
+      .flat()
+      .find((option) => option?.name.toString() === state);
+
+    const selectedLga = lgaDataOptions.find(
       (option) => option.name.toString() === lga,
     );
     const payload = {
       address,
-      state_id: selectedState?.value,
-      lga_id: selectedLga?.value,
+      state_id: selectedState?.id,
+      lga_id: selectedLga?.id,
     };
-    console.log("payloadXXXX", payload);
+
     dispatch(triggerUpdateContactInfo(payload));
   };
 
@@ -71,21 +100,22 @@ const ContactInfo = () => {
     if (updateContactInfo.statusCode !== 200 && updateContactInfo.error) {
       toast.error(updateContactInfo.message);
     }
-    if (updateContactInfo.statusCode === 200 && updateContactInfo.data) {
+    if (updateContactInfo.statusCode === 200) {
       toast.success(updateContactInfo.message);
     }
+    dispatch(resetUpdateContactInfoState());
   }, [updateContactInfo]);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <Typography variant={TypographyVariant.NORMAL}>Loading...</Typography>
+      <div className="flex justify-center items-center w-full h-full p-6 bg-white rounded-lg mx-auto mb-12">
+        <ClipLoader color="#007A61" size={24} className="mr-6" />
       </div>
     );
   }
 
   return (
-    <div className="flex justify-center items-center md:mt-4">
+    <div className="flex justify-center items-center md:my-4">
       <ToastContainer />
       <div className="w-full md:w-[50%]">
         <div className="flex flex-col gap-2">
@@ -109,7 +139,7 @@ const ContactInfo = () => {
             Edit your contact information{" "}
           </Typography>
         </div>
-        <div className="pt-10">
+        <div className="pt-10 mb-8">
           <form
             onSubmit={handleUpdateContactInfo}
             className="flex flex-col gap-1"
@@ -140,10 +170,14 @@ const ContactInfo = () => {
 
             <FloatingSelect
               label="State"
-              options={stateOptions.map((option) => ({
-                value: option.value.toString(),
-                label: option.name,
-              }))}
+              options={
+                Array.isArray(allNigerianStates)
+                  ? allNigerianStates.flat().map((option) => ({
+                      value: option.id.toString(),
+                      label: option.name,
+                    }))
+                  : []
+              }
               value={state}
               onChange={setState}
               error={state === "" && error ? "State is required." : ""}
@@ -151,25 +185,26 @@ const ContactInfo = () => {
 
             <FloatingSelect
               label="LGA"
-              options={lgaOptions.map((option) => ({
-                value: option.value.toString(),
-                label: option.name,
-              }))}
+              options={
+                Array.isArray(lgaDataOptions)
+                  ? lgaDataOptions.map((option) => ({
+                      value: option.id.toString(),
+                      label: option.name,
+                    }))
+                  : []
+              }
               value={lga}
               onChange={setLga}
               error={lga === "" && error ? "LGA is required." : ""}
             />
 
-            <button
-              type="submit"
-              className={`my-4 mb-8 w-full py-4 rounded-md ${
-                isFormComplete
-                  ? "bg-[#007A61] hover:bg-[#015443] text-white"
-                  : "bg-[#007A61] text-white cursor-not-allowed opacity-50"
-              }`}
-            >
-              Save changes
-            </button>
+            <Button
+              text="Save"
+              active={isFormComplete}
+              bg_color="#007A61"
+              text_color="white"
+              loading={loading}
+            />
             {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
           </form>
         </div>
