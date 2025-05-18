@@ -60,3 +60,57 @@ export const triggerGetAllLeaderboardDataPublic = createAsyncThunk<
     });
   }
 });
+
+export const triggerGetAllCompletedTaskData = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("leaderboard/GetAllCompletedTaskData", async (payload, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getAllCompletedTask}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerGetAllCompletedSurveyData = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("leaderboard/GetAllCompletedSurveyData", async (payload, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getAllCompletedSurvey}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});

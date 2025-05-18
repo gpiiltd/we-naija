@@ -106,6 +106,10 @@ import infoIcon from "../Assets/svgImages/info-icon.svg";
 import toastCheck from "../Assets/svgImages/toast-check.svg";
 import cancel from "../Assets/svgImages/cancel.svg";
 import calendarg from "../Assets/svgImages/calenderg.svg";
+import redcalender from "../Assets/svgImages/redcalender.svg";
+import blucalender from "../Assets/svgImages/blucalender.svg";
+import tick from "../Assets/svgImages/tick.svg";
+import document from "../Assets/svgImages/document.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -537,6 +541,19 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return (
           <img src={calendarg} alt="calendarg icon" className={className} />
         );
+      case "redcalender":
+        return (
+          <img src={redcalender} alt="redcalender icon" className={className} />
+        );
+      case "blucalender":
+        return (
+          <img src={blucalender} alt="blucalender icon" className={className} />
+        );
+      case "tick":
+        return <img src={tick} alt="tick icon" className={className} />;
+      case "document":
+        return <img src={document} alt="document icon" className={className} />;
+
       default:
         return null;
     }

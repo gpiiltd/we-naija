@@ -34,6 +34,8 @@ interface ApiUrls {
   changePassword: string;
   updateContactInfo: string;
   getLocation: string;
+  getAllCompletedTask: string;
+  getAllCompletedSurvey: string;
 }
 
 // const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://api.test.nssf.ng/api/v1/";
@@ -75,4 +77,6 @@ export const apiUrl: ApiUrls = {
   changePassword: `${BASE_URL}agent/process/change-password`,
   updateContactInfo: `${BASE_URL}agent/update/contact-info`,
   getLocation: `${BASE_URL}locations`,
+  getAllCompletedTask: `${BASE_URL}task/submissions/completed`,
+  getAllCompletedSurvey: `${BASE_URL}survey/completed/`,
 };

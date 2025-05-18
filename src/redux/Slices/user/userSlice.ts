@@ -38,6 +38,20 @@ interface UserState {
   kycPersonalInfo: Record<string, any>;
   instituteData: Record<string, any>;
   surveyCategories: Record<string, any>;
+  forgotPasswordOtp: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  resetPassword: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
 }
 
 const initialState: UserState = {
@@ -52,6 +66,20 @@ const initialState: UserState = {
   kycPersonalInfo: {},
   instituteData: {},
   surveyCategories: {},
+  forgotPasswordOtp: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
+  resetPassword: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 
 const userSlice = createSlice({
@@ -88,9 +116,17 @@ const userSlice = createSlice({
       state.kycPersonalInfo.backFile = action.payload.backFile;
       state.kycPersonalInfo.mobileNumber = action.payload.mobileNumber;
     },
-    // setLastScreenTime: (state, action: PayloadAction<string>) => {
-    //   state.lastScreenTime = action.payload;
-    // }
+    resetForgotPasswordOtp: (state) => {
+      state.forgotPasswordOtp.error = initialState.forgotPasswordOtp.error;
+      state.forgotPasswordOtp.message = initialState.forgotPasswordOtp.message;
+      state.forgotPasswordOtp.statusCode =
+        initialState.forgotPasswordOtp.statusCode;
+    },
+    resetResetPassword: (state) => {
+      state.resetPassword.error = initialState.resetPassword.error;
+      state.resetPassword.message = initialState.resetPassword.message;
+      state.resetPassword.statusCode = initialState.resetPassword.statusCode;
+    },
   },
 
   extraReducers: (builder) => {
@@ -158,14 +194,17 @@ const userSlice = createSlice({
         },
       )
       .addCase(triggerForgotPasswordOtp.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.forgotPasswordOtp.loading = true;
+        state.forgotPasswordOtp.error = false;
       })
       .addCase(
         triggerForgotPasswordOtp.fulfilled,
         (state, action: PayloadAction<DefaultResponse>) => {
-          state.loading = false;
-          state.message = action.payload.message;
+          console.log("FORGOTPASSWWOROTP DOTP actionforgotPasswordOtp", action);
+          state.forgotPasswordOtp.loading = false;
+          state.forgotPasswordOtp.message = action.payload.message;
+          state.forgotPasswordOtp.statusCode = action.payload.status_code;
+          state.forgotPasswordOtp.data = action.payload.results;
           state.otpToken =
             action.payload.results?.access_credentials.token || "";
         },
@@ -173,9 +212,11 @@ const userSlice = createSlice({
       .addCase(
         triggerForgotPasswordOtp.rejected,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.status_code;
-          state.message = action.payload.message;
+          console.log("actionforgotPasswordOtprejected", action);
+          state.forgotPasswordOtp.loading = false;
+          state.forgotPasswordOtp.error = action.payload.status_code;
+          state.forgotPasswordOtp.message = action.payload.message;
+          state.forgotPasswordOtp.statusCode = action.payload.status_code;
         },
       )
       .addCase(triggerOTPRequest.pending, (state) => {
@@ -197,21 +238,29 @@ const userSlice = createSlice({
         },
       )
       .addCase(triggerResetPassword.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.resetPassword.loading = true;
+        state.resetPassword.error = false;
       })
       .addCase(
         triggerResetPassword.fulfilled,
         (state, action: PayloadAction<DefaultResponse>) => {
-          state.loading = false;
-          state.message = action.payload.message;
+          console.log("actionresetPassword", action);
+          state.resetPassword.loading = false;
+          state.resetPassword.message = action.payload.message;
+          state.resetPassword.statusCode = action.payload.status_code;
+          state.resetPassword.data = action.payload.results;
+          state.resetPassword.error = false;
         },
       )
       .addCase(
         triggerResetPassword.rejected,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload.message;
+          console.log("actionresetPasswordrejected", action);
+          state.resetPassword.loading = false;
+          state.resetPassword.error = action.payload.message;
+          state.resetPassword.statusCode = action.payload.status_code;
+          state.resetPassword.data = action.payload.results;
+          state.resetPassword.message = action.payload.message;
         },
       )
 
@@ -391,6 +440,8 @@ export const {
   resetUserData,
   setKycPhoneNumber,
   setKycPersonalInfo,
+  resetForgotPasswordOtp,
+  resetResetPassword,
 } = userSlice.actions;
 
 export default userSlice.reducer;

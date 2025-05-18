@@ -190,17 +190,16 @@ export const triggerOTPValidation = createAsyncThunk<
 });
 
 export const triggerForgotPasswordOtp = createAsyncThunk<
-  DefaultResponse,
+  any,
   OTPData,
   { rejectValue: any }
 >("user/ForgotPasswordOtp", async (otpData, thunkAPI) => {
   try {
-    const response = await axios.post<DefaultResponse>(
-      apiUrl.forgotPasswordOtp,
-      otpData,
-    );
+    const response = await axios.post<any>(apiUrl.forgotPasswordOtp, otpData);
+    console.log("responseOTP", response.data);
 
-    const token = response.data.results?.access_credentials.token;
+    const token = response.data?.access_credentials.token;
+    console.log("otpToken", token);
     if (token) {
       localStorage.setItem("otpToken", token);
     }

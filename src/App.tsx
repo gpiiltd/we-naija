@@ -45,6 +45,7 @@ import LandingView from "./Pages/LandingPage/LandingView";
 import LandingHome from "./Pages/LandingPage/LandingHome";
 import ContactView from "./Pages/LandingPage/ContactView";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import CompletedReports from "./Pages/Home/CompletedReports";
 
 function App() {
   return (
@@ -88,6 +89,10 @@ function App() {
                   Component={HospitalDetail}
                 />
                 <Route path="reports" Component={Reports} />
+                <Route
+                  path="/verified-agent-dashboard/reports/completed"
+                  Component={CompletedReports}
+                />
                 <Route
                   path="/verified-agent-dashboard/reports/community-tasks"
                   Component={CommunityTasks}

@@ -99,11 +99,13 @@ const PendingKyc = () => {
                 icon="calendarg"
                 title="No. reports completed"
                 number={data?.reports_completed}
+                link="/verified-agent-dashboard/reports/completed"
               />
               <ReportCards
                 icon="starIcon"
                 title="Total star points"
                 number={data?.star_points}
+                link="/verified-agent-dashboard/reports/completed"
               />
             </>
           )}
