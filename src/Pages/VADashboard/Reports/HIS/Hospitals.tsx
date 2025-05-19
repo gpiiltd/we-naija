@@ -27,6 +27,7 @@ const Hospitals = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { userData } = useSelector((state: RootState) => state.user);
   const { institution } = useSelector((state: RootState) => state.institute);
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -170,7 +171,7 @@ const Hospitals = () => {
     // setButtonText("Location");
   };
 
-  const kycStatus = localStorage.getItem("kyc_status") || userData?.kyc_status;
+  const kycStatus = userProfileData?.data?.kyc_status || userData?.kyc_status;
 
   const handleTaskClick = (taskIdentifier: string) => {
     if (kycStatus === "approved") {
