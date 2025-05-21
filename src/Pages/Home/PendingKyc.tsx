@@ -28,11 +28,18 @@ const PendingKyc = () => {
   const { userProfileData } = useSelector((state: RootState) => state.settings);
   const { data } = userProfileData;
 
+  console.log("data>>>>>", data.state);
+  console.log("lga>>>>>", data.lga);
   useEffect(() => {
     const fetchData = async () => {
       try {
         await Promise.all([
-          dispatch(triggerGetNearbyInstitution({ state: 13 })),
+          dispatch(
+            triggerGetNearbyInstitution({
+              state: data?.state,
+              lga: data?.lga,
+            }),
+          ),
           dispatch(triggerGetUserProfile({})),
         ]);
       } catch (error) {
@@ -53,7 +60,6 @@ const PendingKyc = () => {
 
   const isKycApproved = data?.kyc_status === "approved";
 
-  console.log("instituteData", nearbyInstitution);
   return (
     <div>
       <p className="font-normal text-[#5E5959] text-lg">

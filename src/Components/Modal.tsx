@@ -4,8 +4,16 @@ interface Modalprops {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  width?: string;
+  height?: string;
 }
-const CustomModal: FC<Modalprops> = ({ isOpen, onClose, children }) => {
+const CustomModal: FC<Modalprops> = ({
+  isOpen,
+  onClose,
+  children,
+  width,
+  height,
+}) => {
   if (!isOpen) return null;
   return (
     <div
@@ -16,6 +24,7 @@ const CustomModal: FC<Modalprops> = ({ isOpen, onClose, children }) => {
     >
       <div
         className="bg-white rounded-lg shadow-lg  w-96"
+        style={{ width, height }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-end mr-4 mt-4">

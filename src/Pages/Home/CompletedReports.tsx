@@ -192,7 +192,7 @@ const CompletedReports = () => {
               <div className="flex items-center gap-1 text-orange-500 font-semibold">
                 <Icon type="starIcon" className="w-6 h-6" />
                 <span className="text-sm font-semibold text-[#ED7D31]">
-                  {item.sp || 5} SP
+                  {item.sp_earned || 0} SP
                 </span>
               </div>
             </div>

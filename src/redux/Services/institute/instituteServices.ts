@@ -219,7 +219,7 @@ export const triggerGetNearbyInstitution = createAsyncThunk<
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
-      `${apiUrl.allInstitute}/?state=${params.state}`,
+      `${apiUrl.allInstitute}/?state=${params.state}&local_government=${params.lga}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

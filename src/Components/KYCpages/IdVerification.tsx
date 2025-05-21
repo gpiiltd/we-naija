@@ -63,14 +63,12 @@ const IDVerification = () => {
     }
   };
 
-  const profilePhoneNumber = userProfileData.data.mobile_number;
-  const phoneNumber =
-    kycPhoneNumber === null || kycPhoneNumber === undefined
-      ? profilePhoneNumber
-      : kycPhoneNumber;
+  const profilePhoneNumber = userProfileData.data?.mobile_number;
+  const phoneNumber = profilePhoneNumber ?? kycPhoneNumber;
 
   const handleSubmit = async () => {
     setLoading(!loading);
+    console.log("phoneNumber", phoneNumber);
 
     const payload = new FormData();
     payload.append("address", kycPersonalInfo.address);

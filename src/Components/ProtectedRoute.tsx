@@ -1,4 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const isTokenExpired = (token: string): boolean => {
   try {
@@ -24,14 +26,42 @@ const isTokenExpired = (token: string): boolean => {
 };
 
 const ProtectedRoute = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
   const accessToken = localStorage.getItem("accessToken");
 
-  const isAuthenticated = accessToken && !isTokenExpired(accessToken);
+  useEffect(() => {
+    // Skip the check if we're already on the login page
+    if (location.pathname === "/login") {
+      setIsAuthenticated(false);
+      return;
+    }
 
+    const checkAuth = () => {
+      const isValid =
+        Boolean(accessToken) && !isTokenExpired(accessToken as string);
+      setIsAuthenticated(isValid);
+
+      if (!isValid) {
+        navigate("/login", { replace: true });
+      }
+    };
+
+    checkAuth();
+  }, [accessToken, navigate, location.pathname]);
+
+  // Show nothing while checking authentication
+  if (isAuthenticated === null) {
+    return null;
+  }
+
+  // If not authenticated, redirect to login
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
+  // If authenticated, render the child routes
   return <Outlet />;
 };
 
