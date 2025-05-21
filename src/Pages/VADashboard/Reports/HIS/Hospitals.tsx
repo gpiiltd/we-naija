@@ -18,7 +18,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { allNigerianStates } from "../../../../utils/selectOptions";
 import { triggerGetLocation } from "../../../../redux/Services/settings/settingsServices";
 import { Button } from "@gpiiltd/gpi-ui-library";
-// import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
 
 const Hospitals = () => {
   const navigate = useNavigate();
