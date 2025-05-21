@@ -80,7 +80,6 @@ const Hospitals = () => {
     if (institution.error && institution.message) {
       setIsLoading(false);
     }
-    // dispatch(resetInstitutionState());
   }, [institution, dispatch, currentPage]);
 
   const getRandomItems = (arr: string[], num: number) => {
