@@ -13,12 +13,18 @@ export const triggerGetAllInstitution = createAsyncThunk<
   any,
   any,
   { rejectValue: ErroResponseData }
->("user/GetAllInstitution", async (params: any, thunkAPI) => {
+>("user/GetAllInstitution", async (params: Record<string, any>, thunkAPI) => {
   try {
-    const pageNumber = params.page || 1;
+    const { page = 1, state, lga } = params;
+
+    const filterParams = new URLSearchParams({ page: page.toString() });
+
+    if (state) filterParams.append("state", state);
+    if (lga) filterParams.append("local_government", lga);
+
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
-      `${apiUrl.allInstitute}?page=${pageNumber}`,
+      `${apiUrl.allInstitute}?${filterParams.toString()}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

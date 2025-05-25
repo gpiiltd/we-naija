@@ -28,8 +28,6 @@ const PendingKyc = () => {
   const { userProfileData } = useSelector((state: RootState) => state.settings);
   const { data } = userProfileData;
 
-  console.log("data>>>>>", data.state);
-  console.log("lga>>>>>", data.lga);
   useEffect(() => {
     const fetchData = async () => {
       try {

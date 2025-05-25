@@ -64,7 +64,6 @@ export const allNigerianStates = [
     { id: 35, name: "Yobe" },
     { id: 36, name: "Zamfara" },
     { id: 37, name: "Abuja" },
-    { id: 38, name: "Abuja" },
   ],
 ];
 
