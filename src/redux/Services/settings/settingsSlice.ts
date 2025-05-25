@@ -4,6 +4,7 @@ import {
   triggerGetLocation,
   triggerGetNotifications,
   triggerGetUserProfile,
+  triggerKycInfoUpdate,
   triggerReadNotifications,
   triggerUpdateContactInfo,
 } from "./settingsServices";
@@ -44,6 +45,13 @@ interface IinitialState {
     statusCode?: number | null;
   };
   locationData: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  updateKyc: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -95,6 +103,13 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  updateKyc: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 const settingsSlice = createSlice({
   name: "settings",
@@ -121,6 +136,11 @@ const settingsSlice = createSlice({
       state.locationData.error = initialState.locationData.error;
       state.locationData.message = initialState.locationData.message;
       state.locationData.statusCode = initialState.locationData.statusCode;
+    },
+    resetUpdateKycState: (state) => {
+      state.updateKyc.error = initialState.updateKyc.error;
+      state.updateKyc.message = initialState.updateKyc.message;
+      state.updateKyc.statusCode = initialState.updateKyc.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -260,6 +280,27 @@ const settingsSlice = createSlice({
       state.locationData.message = action.payload?.message ?? "";
       state.locationData.statusCode = action.payload?.status_code ?? null;
     });
+
+    //UPDATE KYC
+    builder.addCase(triggerKycInfoUpdate.pending, (state) => {
+      state.updateKyc.loading = true;
+      state.updateKyc.error = false;
+      state.updateKyc.data = {};
+      state.updateKyc.message = "";
+    });
+    builder.addCase(triggerKycInfoUpdate.fulfilled, (state, action) => {
+      state.updateKyc.loading = false;
+      state.updateKyc.data = action.payload?.results;
+      state.updateKyc.error = false;
+      state.updateKyc.message = action.payload?.message ?? "";
+      state.updateKyc.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerKycInfoUpdate.rejected, (state, action) => {
+      state.updateKyc.loading = false;
+      state.updateKyc.error = true;
+      state.updateKyc.message = action.payload?.message ?? "";
+      state.updateKyc.statusCode = action.payload?.status_code ?? null;
+    });
   },
 });
 
@@ -268,6 +309,7 @@ export const {
   resetChangePasswordState,
   resetUpdateContactInfoState,
   resetLocationDataState,
+  resetUpdateKycState,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
