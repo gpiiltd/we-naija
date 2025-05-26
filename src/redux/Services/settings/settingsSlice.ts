@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   triggerChangePassword,
+  triggerGetLocation,
   triggerGetNotifications,
   triggerGetUserProfile,
   triggerReadNotifications,
+  triggerUpdateContactInfo,
 } from "./settingsServices";
 interface IinitialState {
   userProfileData: {
@@ -28,6 +30,20 @@ interface IinitialState {
     statusCode?: number | null;
   };
   changePassword: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  updateContactInfo: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  locationData: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -65,6 +81,20 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  updateContactInfo: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
+  locationData: {
+    data: [],
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 const settingsSlice = createSlice({
   name: "settings",
@@ -80,6 +110,17 @@ const settingsSlice = createSlice({
       state.changePassword.error = initialState.changePassword.error;
       state.changePassword.message = initialState.changePassword.message;
       state.changePassword.statusCode = initialState.changePassword.statusCode;
+    },
+    resetUpdateContactInfoState: (state) => {
+      state.updateContactInfo.error = initialState.updateContactInfo.error;
+      state.updateContactInfo.message = initialState.updateContactInfo.message;
+      state.updateContactInfo.statusCode =
+        initialState.updateContactInfo.statusCode;
+    },
+    resetLocationDataState: (state) => {
+      state.locationData.error = initialState.locationData.error;
+      state.locationData.message = initialState.locationData.message;
+      state.locationData.statusCode = initialState.locationData.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -166,20 +207,67 @@ const settingsSlice = createSlice({
       state.changePassword.loading = false;
       state.changePassword.data = action.payload?.results;
       state.changePassword.error = false;
-      state.changePassword.message = action.payload?.message ?? "";
+      state.changePassword.message = action.payload
+        ?.message as unknown as string;
       state.changePassword.statusCode = action.payload?.status_code ?? null;
     });
     builder.addCase(triggerChangePassword.rejected, (state, action) => {
       console.log("action rejected", action.payload);
       state.changePassword.loading = false;
       state.changePassword.error = true;
-      state.changePassword.message = action.payload?.message;
+      state.changePassword.message = action.payload
+        ?.message as unknown as string;
       state.changePassword.statusCode = action.payload?.status_code ?? null;
+    });
+
+    //UPDATE CONTACT INFO
+    builder.addCase(triggerUpdateContactInfo.pending, (state) => {
+      state.updateContactInfo.loading = true;
+      state.updateContactInfo.error = false;
+      state.updateContactInfo.data = {};
+    });
+    builder.addCase(triggerUpdateContactInfo.fulfilled, (state, action) => {
+      state.updateContactInfo.loading = false;
+      state.updateContactInfo.data = action.payload?.results;
+      state.updateContactInfo.error = false;
+      state.updateContactInfo.message = action.payload?.message ?? "";
+      state.updateContactInfo.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerUpdateContactInfo.rejected, (state, action) => {
+      state.updateContactInfo.loading = false;
+      state.updateContactInfo.error = true;
+      state.updateContactInfo.message = action.payload?.message ?? "";
+      state.updateContactInfo.statusCode = action.payload?.status_code ?? null;
+    });
+
+    //GET LOCATION DATA
+    builder.addCase(triggerGetLocation.pending, (state) => {
+      state.locationData.loading = true;
+      state.locationData.error = false;
+      state.locationData.data = {};
+      state.locationData.message = "";
+    });
+    builder.addCase(triggerGetLocation.fulfilled, (state, action) => {
+      state.locationData.loading = false;
+      state.locationData.data = action.payload?.results;
+      state.locationData.error = false;
+      state.locationData.message = action.payload?.message ?? "";
+      state.locationData.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerGetLocation.rejected, (state, action) => {
+      state.locationData.loading = false;
+      state.locationData.error = true;
+      state.locationData.message = action.payload?.message ?? "";
+      state.locationData.statusCode = action.payload?.status_code ?? null;
     });
   },
 });
 
-export const { resetUserProfileState, resetChangePasswordState } =
-  settingsSlice.actions;
+export const {
+  resetUserProfileState,
+  resetChangePasswordState,
+  resetUpdateContactInfoState,
+  resetLocationDataState,
+} = settingsSlice.actions;
 
 export default settingsSlice.reducer;

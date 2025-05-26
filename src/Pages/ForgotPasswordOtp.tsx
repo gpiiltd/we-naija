@@ -7,14 +7,16 @@ import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/Store/store";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  triggerOTPRequest,
-  triggerForgotPasswordOtp,
-} from "../redux/Services/user/UserServices";
+// import {
+//   triggerOTPRequest,
+//   triggerForgotPasswordOtp,
+// } from "../redux/Services/user/UserServices";
 import type { AppDispatch } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { resetState } from "../redux/Slices/user/userSlice";
+// import { resetState } from "../redux/Slices/user/userSlice";
+import { resetPasswordOtp } from "../redux/Services/auth/authSlice";
+import { triggerRequestForgotPasswordOtp } from "../redux/Services/auth/authService";
 
 const borderStyle = {
   border: "1px solid #ccc",
@@ -37,41 +39,46 @@ const ForgotPasswordOtp = () => {
   const { error, message, loading, email } = useSelector(
     (state: RootState) => state.user,
   );
+  const { passwordOtp } = useSelector((state: RootState) => state.auth);
 
   const sendOtp = () => {
     const payload = {
       otp: OTP,
     };
-    dispatch(triggerForgotPasswordOtp(payload));
+    dispatch(triggerRequestForgotPasswordOtp(payload));
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(message);
-    } else if (!error && message) {
-      toast(message);
+    if (passwordOtp.statusCode === 400) {
+      toast.error(passwordOtp.message);
+    } else if (passwordOtp.statusCode === 200) {
+      toast.success(passwordOtp.message);
       setTimeout(() => {
         navigate("/reset-password");
       }, 1000);
     }
-    dispatch(resetState());
-  }, [error, message, navigate, dispatch]);
+    dispatch(resetPasswordOtp());
+  }, [passwordOtp, dispatch, navigate]);
 
   const handleResendOTP = () => {
-    const payload = {
-      email: email,
-    };
+    // const payload = {
+    //   email: email,
+    // };
     if (canResend) {
-      dispatch(triggerOTPRequest(payload));
-      if (error) {
-        toast.error(error);
-      } else if (!error && message) {
-        toast(message);
-      }
+      // dispatch(triggerRequestForgotPasswordOtp(payload));
       setCountdown(30);
       setCanResend(false);
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    } else if (!error && message) {
+      toast.success(message);
+    }
+    dispatch(resetPasswordOtp());
+  }, [error, message]);
 
   useEffect(() => {
     const timer =

@@ -4,6 +4,7 @@ import instituteReducer from "../Services/institute/instituteSlice";
 import communityReducer from "../Services/community/communitySlice";
 import leaderboardReducer from "../Services/leaderboard/leaderboardSlice";
 import settingsReducer from "../Services/settings/settingsSlice";
+import authReducer from "../Services/auth/authSlice";
 const store = configureStore({
   reducer: {
     user: userReducer,
@@ -11,6 +12,7 @@ const store = configureStore({
     community: communityReducer,
     leaderboard: leaderboardReducer,
     settings: settingsReducer,
+    auth: authReducer,
   },
 });
 

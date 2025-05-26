@@ -13,7 +13,6 @@ const SettingsMobile = () => {
   const handleLogout = async () => {
     try {
       await dispatch(triggerLogout() as any);
-      // Wait for the Redux store to be cleared before navigating
       setTimeout(() => {
         navigate("/login", { replace: true });
       }, 100);
@@ -157,18 +156,6 @@ const SettingsMobile = () => {
               </div>
               <Icon type="arrowRight" className="w-fit" />
             </button>
-            {/* <button
-              className="cursor-pointer flex justify-between items-center p-2  rounded hover:bg-gray-100"
-              onClick={() =>
-                navigate("/verified-agent-dashboard/settings/help-and-support")
-              }
-            >
-              <div className="flex items-center gap-2">
-                <Icon type="chatUs" className="w-fit" />
-                <span>Chat with us</span>
-              </div>
-              <Icon type="arrowRight" className="w-fit" />
-            </button> */}
           </div>
         </div>
       </div>

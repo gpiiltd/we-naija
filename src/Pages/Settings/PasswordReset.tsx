@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { triggerChangePassword } from "../../redux/Services/settings/settingsServices";
 import { RootState, AppDispatch } from "../../redux/Store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { resetChangePasswordState } from "../../redux/Services/settings/settingsSlice";
 
 const PasswordReset = () => {
@@ -56,7 +56,7 @@ const PasswordReset = () => {
       old_password: values.existingPassword,
       new_password: values.newPassword,
     };
-    console.log("payload", payload);
+
     dispatch(triggerChangePassword(payload));
     setTimeout(() => {
       setLoading(false);
@@ -77,6 +77,7 @@ const PasswordReset = () => {
 
   return (
     <div className="flex justify-center items-center md:mt-4">
+      <ToastContainer />
       <div className="flex w-full md:w-[50%] px-4  justify-center items-center ">
         <div className="w-full  ">
           <div className="flex flex-col ">
@@ -156,7 +157,6 @@ const PasswordReset = () => {
                     bg_color="#007A61"
                     text_color="white"
                     loading={loading}
-                    // onClick={handleForgotPassword}
                   />
                 </Form>
               )}

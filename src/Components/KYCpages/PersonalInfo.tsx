@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "../Typography";
 import { TypographyVariant } from "../types";
 import SkipButton from "./SkipButton";
@@ -7,24 +7,52 @@ import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import FloatingInput from "../Input/FloatingInput";
 import FloatingSelect from "../Input/FloatingSelect";
-import { genderOptions } from "../../utils/selectOptions";
+import { genderOptions, allNigerianStates } from "../../utils/selectOptions";
 import { nationalityOptions } from "../../utils/selectOptions";
 import { setKycPersonalInfo } from "../../redux/Slices/user/userSlice";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../redux/Store/store";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../redux/Store/store";
 import CustomDatePicker from "./CustomDatePicker";
+import { triggerGetLocation } from "../../redux/Services/settings/settingsServices";
 
 const PersonalInfo = () => {
   const [address, setAddress] = useState("");
+  const [state, setState] = useState("");
+  const [lga, setLga] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
   const [error, setError] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
   const [dateError, setDateError] = useState("");
+  const [lgaDataOptions, setLgaDataOptions] = useState<
+    { id: string; name: string }[]
+  >([]);
 
   const dispatch: AppDispatch = useDispatch();
 
   const navigate = useNavigate();
+  const { locationData } = useSelector((state: RootState) => state.settings);
+
+  useEffect(() => {
+    if (state) {
+      const selectedState = Array.isArray(allNigerianStates)
+        ? allNigerianStates
+            .flat()
+            .find((option) => option.name.toString() === state)
+        : undefined;
+      if (selectedState) {
+        dispatch(triggerGetLocation(selectedState.id));
+      }
+    } else {
+      setLgaDataOptions([]);
+    }
+  }, [dispatch, state]);
+
+  useEffect(() => {
+    if (locationData.data) {
+      setLgaDataOptions(locationData.data);
+    }
+  }, [locationData]);
 
   const isOver18 = (date: Date): boolean => {
     const today = new Date();
@@ -60,6 +88,8 @@ const PersonalInfo = () => {
 
   const isFormComplete =
     address !== "" &&
+    state !== "" &&
+    lga !== "" &&
     nationality !== "" &&
     gender !== "" &&
     dateOfBirth !== null &&
@@ -67,6 +97,14 @@ const PersonalInfo = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const selectedState = allNigerianStates
+      .flat()
+      .find((option) => option?.name.toString() === state);
+
+    const selectedLga = lgaDataOptions.find(
+      (option) => option.name.toString() === lga,
+    );
 
     if (!isFormComplete) {
       setError(".");
@@ -77,9 +115,20 @@ const PersonalInfo = () => {
       dateOfBirth?.getMonth() + 1,
     ).padStart(2, "0")}-${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
 
+    console.log("hjhjjb", {
+      address,
+      state_id: selectedState?.id,
+      lga_id: selectedLga?.id,
+      nationality,
+      gender,
+      dateOfBirth: formattedDate,
+    });
+
     dispatch(
       setKycPersonalInfo({
         address,
+        state_id: selectedState?.id,
+        lga_id: selectedLga?.id,
         nationality,
         gender,
         dateOfBirth: formattedDate,
@@ -117,8 +166,51 @@ const PersonalInfo = () => {
               error={address === "" && error ? "Address is required." : ""}
             />
             <FloatingSelect
+              label="State"
+              options={
+                Array.isArray(allNigerianStates)
+                  ? allNigerianStates.flat().map((option) => ({
+                      value: option.id.toString(),
+                      label: option.name,
+                    }))
+                  : [
+                      {
+                        value: "",
+                        label: "Select State",
+                      },
+                    ]
+              }
+              value={state}
+              onChange={setState}
+              error={state === "" && error ? "State is required." : ""}
+            />
+
+            <FloatingSelect
+              label="LGA"
+              options={
+                Array.isArray(lgaDataOptions)
+                  ? lgaDataOptions.map((option) => ({
+                      value: option.id.toString(),
+                      label: option.name,
+                    }))
+                  : [
+                      {
+                        value: "",
+                        label: "Select LGA",
+                      },
+                    ]
+              }
+              value={lga}
+              onChange={setLga}
+              error={lga === "" && error ? "LGA is required." : ""}
+            />
+
+            <FloatingSelect
               label="Nationality"
-              options={nationalityOptions}
+              options={nationalityOptions.map((option) => ({
+                value: option.value,
+                label: option.name,
+              }))}
               value={nationality}
               onChange={setNationality}
               error={
@@ -127,11 +219,11 @@ const PersonalInfo = () => {
             />
             <FloatingSelect
               label="Gender"
-              options={genderOptions.map((option) => option.name)}
-              value={
-                genderOptions.find((option) => option.value === gender)?.name ||
-                ""
-              }
+              options={genderOptions.map((option) => ({
+                value: option.value,
+                label: option.name,
+              }))}
+              value={gender}
               onChange={(selectedOption) => {
                 const selectedGender = genderOptions.find(
                   (option) => option.name === selectedOption,

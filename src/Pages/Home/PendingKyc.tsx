@@ -8,26 +8,38 @@ import { PiPaperPlaneTiltFill } from "react-icons/pi";
 import woman from "../../Assets/svgImages/woman_green.svg";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { triggerGetAllInstitute } from "../../redux/Services/user/UserServices";
 import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
 
 import { AppDispatch, RootState } from "../../redux/Store/store";
-import { toast } from "react-toastify";
-import { resetState } from "../../redux/Slices/user/userSlice";
+import ReportCards from "../../Components/Home/ReportCards";
+import { ClipLoader } from "react-spinners";
+import { triggerGetNearbyInstitution } from "../../redux/Services/institute/instituteServices";
 
 const PendingKyc = () => {
   const [institutionsData, setInstitutionsData] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const userData = useSelector((state: any) => state.user.userData);
   const dispatch = useDispatch<AppDispatch>();
 
+  const { nearbyInstitution } = useSelector(
+    (state: RootState) => state.institute,
+  );
+
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
+  const { data } = userProfileData;
+
+  console.log("data>>>>>", data.state);
+  console.log("lga>>>>>", data.lga);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true);
         await Promise.all([
-          dispatch(triggerGetAllInstitute({})),
+          dispatch(
+            triggerGetNearbyInstitution({
+              state: data?.state,
+              lga: data?.lga,
+            }),
+          ),
           dispatch(triggerGetUserProfile({})),
         ]);
       } catch (error) {
@@ -38,31 +50,15 @@ const PendingKyc = () => {
     fetchData();
   }, [dispatch]);
 
-  const { instituteData, error, message } = useSelector(
-    (state: RootState) => state.user,
-  );
-
-  const { userProfileData } = useSelector((state: RootState) => state.settings);
-  const { data } = userProfileData;
-
   useEffect(() => {
-    if (Array.isArray(instituteData) && instituteData.length > 0 && !error) {
-      setInstitutionsData(instituteData);
+    if (nearbyInstitution.data && !nearbyInstitution.error) {
+      setInstitutionsData(nearbyInstitution.data.data?.results);
     }
-
-    if (error) {
-      console.error("Error fetching data:", message);
-      toast.error(message);
-    }
-
-    setIsLoading(false);
-    dispatch(resetState());
-  }, [error, message, instituteData, dispatch]);
+  }, [nearbyInstitution]);
 
   const firstName = localStorage.getItem("first_name") || userData?.first_name;
 
-  // const isKycApproved = data?.kyc_status === "approved";
-  const isKycApproved = data?.kyc_step === "completed";
+  const isKycApproved = data?.kyc_status === "approved";
 
   return (
     <div>
@@ -73,17 +69,43 @@ const PendingKyc = () => {
       <p className="font-light text-[#5E5959] text-sm">
         Let's improve health care service together.
       </p>
-      <div className="w-full sm:grid sm:grid-cols-1 md:flex lg:flex items-start lg:w-[55rem] mt-4 mb-10">
-        {isKycApproved && (
-          <VerificationCard
-            statusMessage="Your ID & profile details are being verified"
-            progressPercentage={90}
-            responseTimeMessage="You would receive a response in less than 12 hours"
-          />
-        )}
-        <br />
-        <HomeGoToReportCard backgroundImage={backgroundImage} />
-      </div>
+      {userProfileData.loading ? (
+        <div className="flex justify-center items-center w-full h-full p-6 bg-white rounded-lg mx-auto mb-12">
+          <ClipLoader color="#007A61" size={24} className="mr-6" />
+        </div>
+      ) : (
+        <div className="w-full sm:grid sm:grid-cols-1 md:flex lg:flex items-start gap-4 mt-4 mb-10">
+          {!isKycApproved && (
+            <>
+              <VerificationCard
+                statusMessage="Your ID & profile details are being verified"
+                progressPercentage={90}
+                responseTimeMessage="You would receive a response in less than 12 hours"
+              />
+              <HomeGoToReportCard backgroundImage={backgroundImage} />
+            </>
+          )}
+
+          {isKycApproved && (
+            <>
+              <HomeGoToReportCard backgroundImage={backgroundImage} />
+              <ReportCards
+                icon="calendarg"
+                title="No. reports completed"
+                number={data?.reports_completed}
+                link="/verified-agent-dashboard/reports/completed"
+              />
+              <ReportCards
+                icon="starIcon"
+                title="Total star points"
+                number={data?.star_points}
+                link="/verified-agent-dashboard/reports/completed"
+              />
+            </>
+          )}
+        </div>
+      )}
+
       <p className="font-bold text-black">Recommended institutes</p>
       <p className="font-light text-[#5E5959] text-sm">
         Below are list of recommend institute to visit and give a report based
@@ -91,11 +113,11 @@ const PendingKyc = () => {
       </p>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-        {isLoading ? (
+        {nearbyInstitution.loading ? (
           <div className="col-span-3 text-center py-4">
             <p>Loading...</p>
           </div>
-        ) : institutionsData.length > 0 ? (
+        ) : institutionsData?.length > 0 ? (
           institutionsData.map((institution) => (
             <InstitutionsCard
               key={institution.identifier}

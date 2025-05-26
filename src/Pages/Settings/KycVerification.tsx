@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
-import { Errors } from "../../Components/types";
-import FileUpload from "../../Components/KYCpages/FileUpload";
 import { useNavigate } from "react-router-dom";
 import VerificationCard from "../../Components/Home/VerificationCard";
 import { Formik, Form } from "formik";
@@ -11,26 +9,24 @@ import FloatingSelect from "../../Components/Input/FloatingSelect";
 import FloatingInput from "../../Components/Input/FloatingInput";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/Store/store";
+import { AppDispatch, RootState } from "../../redux/Store/store";
 import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 const IDVerification = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [idType, setIdType] = useState("");
   const [idNumber, setIdNumber] = useState("");
-  const [frontFile, setFrontFile] = useState<File | null>(null);
-  const [backFile, setBackFile] = useState<File | null>(null);
   const [frontImageUrl, setFrontImageUrl] = useState<string>("");
   const [backImageUrl, setBackImageUrl] = useState<string>("");
-  const [errors] = useState<Errors>({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImageUrl, setModalImageUrl] = useState<string>("");
 
   const navigate = useNavigate();
   const { userProfileData } = useSelector((state: RootState) => state.settings);
   const { data, loading } = userProfileData;
 
   useEffect(() => {
-    dispatch(triggerGetUserProfile({}) as any);
+    dispatch(triggerGetUserProfile({}));
   }, [dispatch]);
 
   useEffect(() => {
@@ -47,35 +43,7 @@ const IDVerification = () => {
     email: "",
   };
 
-  console.log(frontFile, backFile);
-
-  const idTypes = ["International passport"];
-
-  const handleFileChange = (file: File | null, isFront: boolean) => {
-    if (isFront) {
-      setFrontFile(file);
-      if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        setFrontImageUrl(imageUrl);
-      }
-    } else {
-      setBackFile(file);
-      if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        setBackImageUrl(imageUrl);
-      }
-    }
-  };
-
-  const handleDeleteImage = (isFront: boolean) => {
-    if (isFront) {
-      setFrontFile(null);
-      setFrontImageUrl("");
-    } else {
-      setBackFile(null);
-      setBackImageUrl("");
-    }
-  };
+  const idTypes = [{ name: "National ID", value: "national_id" }];
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -85,6 +53,11 @@ const IDVerification = () => {
     idNumber: Yup.string().required("ID number is required"),
   });
 
+  const handleImageClick = (url: string) => {
+    setModalImageUrl(url);
+    setModalOpen(true);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -92,27 +65,6 @@ const IDVerification = () => {
       </div>
     );
   }
-
-  const renderImagePreview = (imageUrl: string, onDelete: () => void) => {
-    return (
-      <section className="flex justify-between items-center w-full border border-primary_green rounded-lg p-3">
-        <div className="flex gap-2 items-center">
-          <Icon type="imageUploadIcon" />
-          <div className="flex flex-col gap-1">
-            <img
-              src={imageUrl}
-              alt="ID Card"
-              className="w-20 h-20 object-cover rounded"
-            />
-          </div>
-        </div>
-        <RiDeleteBin6Line
-          onClick={onDelete}
-          className="cursor-pointer text-red-500 hover:text-red-700"
-        />
-      </section>
-    );
-  };
 
   return (
     <>
@@ -160,15 +112,20 @@ const IDVerification = () => {
                 <Form className="flex flex-col gap-5">
                   <FloatingSelect
                     label="ID Type"
-                    options={idTypes}
+                    options={idTypes.map((option) => ({
+                      value: option.value,
+                      label: option.name,
+                    }))}
                     value={idType}
                     onChange={setIdType}
+                    readOnly={true}
                   />
 
                   <FloatingInput
                     label="ID Number"
                     value={idNumber}
                     onChange={setIdNumber}
+                    readOnly={true}
                   />
 
                   <Typography
@@ -184,17 +141,20 @@ const IDVerification = () => {
                     >
                       Front of the ID card
                     </Typography>
-
                     {frontImageUrl ? (
-                      renderImagePreview(frontImageUrl, () =>
-                        handleDeleteImage(true),
-                      )
-                    ) : (
-                      <FileUpload
-                        label="Kindly upload it as an image or pdf"
-                        onChange={(file) => handleFileChange(file, true)}
-                        error={errors.frontFile}
+                      <img
+                        src={frontImageUrl}
+                        alt="Front of ID Card"
+                        className="w-40 h-40 object-cover rounded border cursor-pointer"
+                        onClick={() => handleImageClick(frontImageUrl)}
                       />
+                    ) : (
+                      <Typography
+                        variant={TypographyVariant.SMALL}
+                        className="text-gray-400"
+                      >
+                        No front image available.
+                      </Typography>
                     )}
 
                     <Typography
@@ -204,15 +164,19 @@ const IDVerification = () => {
                       Back of the ID card
                     </Typography>
                     {backImageUrl ? (
-                      renderImagePreview(backImageUrl, () =>
-                        handleDeleteImage(false),
-                      )
-                    ) : (
-                      <FileUpload
-                        label="Kindly upload it as an image or pdf"
-                        onChange={(file) => handleFileChange(file, false)}
-                        error={errors.backFile}
+                      <img
+                        src={backImageUrl}
+                        alt="Back of ID Card"
+                        className="w-40 h-40 object-cover rounded border cursor-pointer"
+                        onClick={() => handleImageClick(backImageUrl)}
                       />
+                    ) : (
+                      <Typography
+                        variant={TypographyVariant.SMALL}
+                        className="text-gray-400"
+                      >
+                        No back image available.
+                      </Typography>
                     )}
                   </div>
                 </Form>
@@ -221,7 +185,47 @@ const IDVerification = () => {
           </div>
         </div>
       </div>
+      <ImageModal
+        open={modalOpen}
+        imageUrl={modalImageUrl}
+        onClose={() => setModalOpen(false)}
+      />
     </>
+  );
+};
+
+const ImageModal = ({
+  open,
+  imageUrl,
+  onClose,
+}: {
+  open: boolean;
+  imageUrl: string;
+  onClose: () => void;
+}) => {
+  if (!open) return null;
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white p-0 rounded shadow-lg w-[80vw] h-[70vh] max-w-4xl flex flex-col items-center justify-center relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={imageUrl}
+          alt="Preview"
+          className="w-full h-full object-cover rounded"
+        />
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 px-4 py-2 bg-[#007A61] text-white rounded"
+        >
+          Close
+        </button>
+      </div>
+    </div>
   );
 };
 
