@@ -188,7 +188,7 @@ export const triggerKycInfoUpdate = createAsyncThunk<
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.post<DefaultResponse>(
-      `${apiUrl.kycInfoSubmit}`,
+      `${apiUrl.resubmitKyc}`,
       KycInfoUpdateData,
       {
         headers: {

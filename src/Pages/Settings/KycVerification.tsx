@@ -69,7 +69,12 @@ const IDVerification = () => {
     email: "",
   };
 
-  const idTypes = [{ name: "National ID", value: "national_id" }];
+  const idTypes = [
+    { name: "National ID", value: "national_id" },
+    { name: "International passport", value: "passport" },
+    { name: "Drivers licence", value: "driver_license" },
+    { name: "Permanent voter card", value: "permanent_voters_card" },
+  ];
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -105,16 +110,25 @@ const IDVerification = () => {
   };
 
   const handleUpdateKyc = async () => {
+    console.log("idType>>>>>>", idType);
+    console.log("idNumber>>>>>>", idNumber);
+    console.log("newFrontImage>>>>>>", newFrontImage);
+    console.log("newBackImage>>>>>>", newBackImage);
+
+    const selectedIdType = idTypes.find((option) => option.name === idType);
+
+    console.log("selectedIdType>>>>>>", selectedIdType?.value);
+
     const payload = new FormData();
-    payload.append("address", data.address || "new address");
-    payload.append("state_id", data.state);
-    payload.append("lga_id", data.lga);
-    payload.append("nationality", data.nationality);
-    payload.append("gender", data.gender);
-    payload.append("date_of_birth", data.date_of_birth);
-    payload.append("mobile_number", data.mobile_number);
-    payload.append("id_type", data.id_type);
-    payload.append("id_number", data.id_number);
+    // payload.append("address", data.address);
+    // payload.append("state_id", data.state);
+    // payload.append("lga_id", data.lga);
+    // payload.append("nationality", data.nationality);
+    // payload.append("gender", data.gender);
+    // payload.append("date_of_birth", data.date_of_birth);
+    // payload.append("mobile_number", data.mobile_number);
+    payload.append("id_type", selectedIdType?.value || "");
+    payload.append("id_number", idNumber);
     payload.append("id_front", newFrontImage as File);
     payload.append("id_back", newBackImage as File);
 
@@ -122,7 +136,7 @@ const IDVerification = () => {
   };
 
   useEffect(() => {
-    if (updateKyc?.statusCode === 200 && updateKyc.data) {
+    if (updateKyc?.statusCode === 200) {
       toast.success(updateKyc.message);
     }
 
@@ -179,7 +193,7 @@ const IDVerification = () => {
                     variant={TypographyVariant.SMALL}
                     className="text-red-600 mb-4"
                   >
-                    {data?.kyc_status_message ||
+                    {data?.rejection_reason ||
                       "Your KYC verification has been rejected because the images are not clear. Please upload new, clear images of your ID card."}
                   </Typography>
                   <button
@@ -226,14 +240,14 @@ const IDVerification = () => {
                     }))}
                     value={idType}
                     onChange={setIdType}
-                    readOnly={true}
+                    readOnly={!isEditing}
                   />
 
                   <FloatingInput
                     label="ID Number"
                     value={idNumber}
                     onChange={setIdNumber}
-                    readOnly={true}
+                    readOnly={!isEditing}
                   />
 
                   <Typography
