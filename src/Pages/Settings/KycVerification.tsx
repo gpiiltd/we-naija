@@ -110,23 +110,9 @@ const IDVerification = () => {
   };
 
   const handleUpdateKyc = async () => {
-    console.log("idType>>>>>>", idType);
-    console.log("idNumber>>>>>>", idNumber);
-    console.log("newFrontImage>>>>>>", newFrontImage);
-    console.log("newBackImage>>>>>>", newBackImage);
-
     const selectedIdType = idTypes.find((option) => option.name === idType);
 
-    console.log("selectedIdType>>>>>>", selectedIdType?.value);
-
     const payload = new FormData();
-    // payload.append("address", data.address);
-    // payload.append("state_id", data.state);
-    // payload.append("lga_id", data.lga);
-    // payload.append("nationality", data.nationality);
-    // payload.append("gender", data.gender);
-    // payload.append("date_of_birth", data.date_of_birth);
-    // payload.append("mobile_number", data.mobile_number);
     payload.append("id_type", selectedIdType?.value || "");
     payload.append("id_number", idNumber);
     payload.append("id_front", newFrontImage as File);
