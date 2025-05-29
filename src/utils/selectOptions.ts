@@ -176,6 +176,6 @@ export const socialsFooter = [
     id: "4",
     title: "LinkedIn",
     iconUrl: "linkedin",
-    url: "https://ng.linkedin.com/company/nssf-ng ",
+    url: "https://ng.linkedin.com/company/nssf-ng",
   },
 ];

@@ -146,7 +146,7 @@ const ContactView = () => {
                       variant={TypographyVariant.SMALL}
                       className="font-light text-[#E5E7EB] font-raleway"
                     >
-                      +234 ---- --- ----
+                      +2348141226613
                     </Typography>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -300,8 +300,8 @@ export const TextAreaField = React.forwardRef<HTMLTextAreaElement, Propss>(
       <div className="space-y-1">
         <label className="text-sm font-medium">{label}</label>
         <textarea
-          ref={ref} // ✅ necessary for react-hook-form
-          {...props} // ✅ includes `register` props like name, onChange, etc.
+          ref={ref}
+          {...props}
           className="block w-full rounded-md bg-blue-50 px-3 py-2 text-sm shadow-sm"
         />
         {error && <p className="text-red-500 text-xs">{error}</p>}
@@ -309,91 +309,3 @@ export const TextAreaField = React.forwardRef<HTMLTextAreaElement, Propss>(
     );
   },
 );
-
-//  <Formik
-//             initialValues={initialValues}
-//             validateOnChange={true}
-//             validateOnBlur={true}
-//             onSubmit={(values) => {
-//               console.log("Form values:", values);
-//             }}
-//             validationSchema={validationSchema}
-//           >
-//             {({ isValid, dirty, setFieldValue, setFieldTouched }) => (
-//               <Form onSubmit={handleSubmit(onSubmit)}>
-//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-//                   <InputField
-//                     placeHolder="First Name"
-//                     type="text"
-//                     focusStyle="green"
-//                     label="First Name"
-//                     name="fName"
-//                      {...register("fName")}
-//                     setFieldValue={setFieldValue}
-//                     setFieldTouched={setFieldTouched}
-//                   />
-//                   <InputField
-//                     placeHolder="Last Name"
-//                     type="text"
-//                     focusStyle="green"
-//                     label="Last Name"
-//                     name="lName"
-//                     {...register("lName")}
-//                     setFieldValue={setFieldValue}
-//                     setFieldTouched={setFieldTouched}
-//                   />
-//                 </div>
-//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-//                   <InputField
-//                     placeHolder="Email address"
-//                     type="text"
-//                     focusStyle="green"
-//                     label="Email address"
-//                     helperText={errors?.email?.message}
-//                     name="email"
-//                      {...register("email")}
-//                     setFieldValue={setFieldValue}
-//                     setFieldTouched={setFieldTouched}
-//                   />
-//                   <InputField
-//                     placeHolder="Phone Number"
-//                     type="text"
-//                     focusStyle="green"
-//                     label="Phone Number"
-//                      {...register("phone")}
-//                     name="phone"
-//                     setFieldValue={setFieldValue}
-//                     setFieldTouched={setFieldTouched}
-//                   />
-//                 </div>
-//                 {/* <TextArea
-//                   placeHolder="Message"
-//                   type="text"
-//                   focusStyle="green"
-//                   label="Message"
-//                   name="message"
-//                 /> */}
-
-//                 <TextAreaField
-//                   label={""}
-//                   name="message"
-//                   {...register("message")}
-//                   placeHolder="Write message here..."
-//                 />
-
-//                 <input type="text" {...register("honeypot")} className="hidden" />
-
-// <div className="w-[15rem] mt-8">
-//   <Button
-//     text="Send message"
-//     active={isValid && dirty}
-//     //active={true}
-//     bg_color="#007A61"
-//     text_color="white"
-//     loading={false}
-//     onClick={() => {}}
-//   />
-// </div>
-//               </Form>
-//             )}
-//           </Formik>
