@@ -140,7 +140,7 @@ const IDVerification = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Typography variant={TypographyVariant.NORMAL}>Loading...</Typography>
+        <Typography variant={TypographyVariant.NORMAL}>Loading....</Typography>
       </div>
     );
   }
