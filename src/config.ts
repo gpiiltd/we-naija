@@ -36,6 +36,7 @@ interface ApiUrls {
   getLocation: string;
   getAllCompletedTask: string;
   getAllCompletedSurvey: string;
+  resubmitKyc: string;
 }
 
 // const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://api.test.nssf.ng/api/v1/";
@@ -79,4 +80,5 @@ export const apiUrl: ApiUrls = {
   getLocation: `${BASE_URL}locations`,
   getAllCompletedTask: `${BASE_URL}task/submissions/completed`,
   getAllCompletedSurvey: `${BASE_URL}survey/completed/`,
+  resubmitKyc: `${BASE_URL}agent/process/resubmit-kyc`,
 };

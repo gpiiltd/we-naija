@@ -41,7 +41,7 @@ const ContactUs = () => {
                 <span className="material-icons">
                   <Icon type="phone" />
                 </span>
-                <span className="ml-8 text-lg">+29000000000</span>
+                <span className="ml-8 text-lg">+2348141226613</span>
               </div>
               <div className="flex items-center my-10">
                 <span className="material-icons">
@@ -60,29 +60,32 @@ const ContactUs = () => {
               <div className="flex space-x-8">
                 <a
                   href="https://www.facebook.com/NSSF.NG"
+                  target="_blank"
                   className="text-white hover:text-gray-300"
                 >
                   <Icon type="facebooko" />
                 </a>
                 <a
                   href="https://x.com/nssf_ng"
+                  target="_blank"
                   className="text-white hover:text-gray-300"
                 >
                   <Icon type="twittero" />
                 </a>
                 <a
                   href="https://www.instagram.com/nssf_ng"
+                  target="_blank"
                   className="text-white hover:text-gray-300"
-                  // target="_blank"
                 >
                   <Icon type="instagramo" />
                 </a>
-                {/* <a
+                <a
                   href="https://ng.linkedin.com/company/nssf-ng"
                   target="_blank"
+                  className="text-white hover:text-gray-300"
                 >
-                  <Icon type="linkedin2" className="text-white w-10 h-10" />
-                </a> */}
+                  <Icon type="linkedin2" className="w-12 h-12" />
+                </a>
               </div>
             </div>
           </div>

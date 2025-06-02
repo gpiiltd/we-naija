@@ -9,26 +9,32 @@ import { triggerPhoneNumberVerificationOtp } from "../../redux/Services/user/Use
 import { toast, ToastContainer } from "react-toastify";
 import { AppDispatch, RootState } from "../../redux/Store/store";
 import { resetState } from "../../redux/Slices/user/userSlice";
+import { triggerPhoneNumberVerificationResend } from "../../redux/Services/auth/authService";
+import { resetPhoneNumberVerificationResend } from "../../redux/Services/auth/authSlice";
 
 const EnterOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [Errors, setError] = useState("");
+  const [countdown, setCountdown] = useState(180);
+  const [canResend, setCanResend] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const { error, message, kycPhoneNumber, loading } = useSelector(
     (state: RootState) => state.user,
   );
+  const { resendPhoneNumberOtp } = useSelector(
+    (state: RootState) => state.auth,
+  );
 
   const handleChange = (index: number, value: string) => {
     if (/^[0-9]*$/.test(value)) {
-      // Allow only numeric input
       const newOtp = [...otp];
-      newOtp[index] = value.slice(0, 1); // Only allow one character
+      newOtp[index] = value.slice(0, 1);
       setOtp(newOtp);
-      setError(""); // Clear error on valid input
+      setError("");
       if (value && index < 5) {
-        document.getElementById(`otp-input-${index + 1}`)?.focus(); // Focus next input
+        document.getElementById(`otp-input-${index + 1}`)?.focus();
       }
     }
   };
@@ -38,7 +44,6 @@ const EnterOtp = () => {
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === "Backspace" && !otp[index]) {
-      // If the current input is empty and backspace is pressed, focus the previous input
       if (index > 0) {
         document.getElementById(`otp-input-${index - 1}`)?.focus();
       }
@@ -51,7 +56,6 @@ const EnterOtp = () => {
       return;
     }
     const otpCode = otp.join("");
-    // navigate('/kyc/personal-information')
     const payload = {
       mobile_number: kycPhoneNumber,
       otp: otpCode,
@@ -72,6 +76,47 @@ const EnterOtp = () => {
   }, [error, message, navigate, dispatch]);
 
   const isSubmitDisabled = otp.some((digit) => digit === "") || Errors !== "";
+
+  const handleResendOTP = () => {
+    const payload = {
+      mobile_number: kycPhoneNumber,
+    };
+    if (canResend) {
+      dispatch(triggerPhoneNumberVerificationResend(payload));
+      setCountdown(180);
+      setCanResend(false);
+    }
+  };
+
+  useEffect(() => {
+    if (resendPhoneNumberOtp.statusCode === 200) {
+      toast.success(resendPhoneNumberOtp.message);
+    } else if (resendPhoneNumberOtp.error) {
+      toast.error(resendPhoneNumberOtp.message);
+
+      dispatch(resetPhoneNumberVerificationResend());
+    }
+  }, [resendPhoneNumberOtp, dispatch]);
+  useEffect(() => {
+    const timer =
+      countdown > 0 &&
+      setInterval(() => {
+        setCountdown((current) => {
+          if (current <= 1) {
+            setCanResend(true);
+            return 0;
+          }
+          return current - 1;
+        });
+      }, 1000);
+    return () => clearInterval(timer as NodeJS.Timeout);
+  }, [countdown]);
+
+  const formatCountdown = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
 
   return (
     <>
@@ -111,11 +156,24 @@ const EnterOtp = () => {
             variant={TypographyVariant.NORMAL}
             className="text-center mt-12 flex flex-col items-center justify-center"
           >
-            Didn’t receive a code?{" "}
-            <p className=" mt-4" style={{ color: "#ED7D31" }}>
-              Re-send code via SMS
-            </p>
+            Didn't receive a code?{" "}
           </Typography>
+
+          <div
+            onClick={handleResendOTP}
+            className={`mb-8 mt-4 cursor-${canResend ? "pointer" : "default"}`}
+          >
+            <Typography
+              variant={TypographyVariant.SMALL}
+              className={`text-center ${
+                canResend ? "text-orange underline" : "text-black"
+              }`}
+            >
+              {canResend
+                ? "Re-send code via SMS "
+                : `Re-send code via SMS  (${formatCountdown(countdown)})`}
+            </Typography>
+          </div>
 
           <Button
             text="Proceed"

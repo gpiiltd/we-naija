@@ -10,7 +10,7 @@ import Icon from "../../../../Assets/SvgImagesAndIcons";
 import CustomModal from "../../../../Components/Modal";
 import Breadcrumb from "../BreadCrum";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/Store/store";
+import { AppDispatch, RootState } from "../../../../redux/Store/store";
 import { triggerGetAllInstitution } from "../../../../redux/Services/institute/instituteServices";
 import { formatOperationalDays } from "../../../../utils/inputValidations";
 import { ClipLoader } from "react-spinners";
@@ -26,6 +26,7 @@ const Hospitals = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState("");
   const [lga, setLga] = useState("");
   const [lgaDataOptions, setLgaDataOptions] = useState<
@@ -36,11 +37,11 @@ const Hospitals = () => {
   const { userProfileData, locationData } = useSelector(
     (state: RootState) => state.settings,
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setIsLoading(true);
-    dispatch(triggerGetAllInstitution({ page: currentPage }) as any);
+    dispatch(triggerGetAllInstitution({ page: currentPage }));
   }, [dispatch, currentPage]);
 
   const handlePageChange = (page: number) => {
@@ -93,16 +94,8 @@ const Hospitals = () => {
       )
     : [];
 
-  const [showModal, setShowModal] = useState(false);
-
-  const [buttonText, setButtonText] = useState("Location");
-
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
-  };
-
-  const handleSearchSubmit = (query: string) => {
-    console.log("Search submitted with:", query);
   };
 
   const openModal = () => {
@@ -110,9 +103,21 @@ const Hospitals = () => {
   };
 
   const handleFilter = () => {
-    console.log("state>>>>>>", state);
-    console.log("lga>>>>>>", lga);
-    console.log("setButtonText>>>>>>", setButtonText);
+    setShowModal(false);
+    const payload = {
+      state: state,
+      lga: lga,
+    };
+
+    setCurrentPage(1);
+    dispatch(triggerGetAllInstitution({ ...payload, page: 1 }));
+  };
+
+  const handleClearFilter = () => {
+    setState("");
+    setLga("");
+    setShowModal(false);
+    dispatch(triggerGetAllInstitution({ page: 1 }));
   };
 
   const kycStatus = userProfileData?.data?.kyc_status || userData?.kyc_status;
@@ -160,11 +165,11 @@ const Hospitals = () => {
               placeholder="Search for a clinic or hospital..."
               value={searchQuery}
               onChange={handleSearchChange}
-              onSubmit={handleSearchSubmit}
+              // onSubmit={handleSearchSubmit}
               suggestions={suggestions}
             />
             <ButtonComponent
-              text={buttonText}
+              text={"Location"}
               bg_color="#007A61"
               active={true}
               text_color="#FFFFFF"
@@ -388,7 +393,8 @@ const Hospitals = () => {
               text_color="black"
               border_color="border-green-500"
               active={true}
-              loading={false}
+              loading={institution.loading}
+              onClick={handleClearFilter}
             />
 
             <Button
@@ -396,8 +402,8 @@ const Hospitals = () => {
               bg_color="#007A61"
               text_color="white"
               border_color="border-green-500"
-              active={true}
-              loading={false}
+              active={!!state || !!lga}
+              loading={institution.loading}
               onClick={handleFilter}
             />
           </div>

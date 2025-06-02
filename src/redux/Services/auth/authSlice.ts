@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   triggerRequestForgotPasswordOtp,
   triggerResetPassword,
+  triggerPhoneNumberVerificationResend,
 } from "./authService";
 interface IinitialState {
   passwordOtp: {
@@ -12,6 +13,13 @@ interface IinitialState {
     statusCode?: number | null;
   };
   resetPassword: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  resendPhoneNumberOtp: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -35,6 +43,13 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  resendPhoneNumberOtp: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 
 const authSlice = createSlice({
@@ -50,6 +65,14 @@ const authSlice = createSlice({
       state.resetPassword.error = initialState.resetPassword.error;
       state.resetPassword.message = initialState.resetPassword.message;
       state.resetPassword.statusCode = initialState.resetPassword.statusCode;
+    },
+    resetPhoneNumberVerificationResend: (state) => {
+      state.resendPhoneNumberOtp.error =
+        initialState.resendPhoneNumberOtp.error;
+      state.resendPhoneNumberOtp.message =
+        initialState.resendPhoneNumberOtp.message;
+      state.resendPhoneNumberOtp.statusCode =
+        initialState.resendPhoneNumberOtp.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -101,8 +124,43 @@ const authSlice = createSlice({
         state.resetPassword.statusCode = action.payload
           ?.status_code as unknown as number;
       });
+
+    //PHONE NUMBER VERIFICATION RESEND
+    builder
+      .addCase(triggerPhoneNumberVerificationResend.pending, (state) => {
+        state.resendPhoneNumberOtp.loading = true;
+        state.resendPhoneNumberOtp.error = false;
+        state.resendPhoneNumberOtp.data = {};
+        state.resendPhoneNumberOtp.message = "";
+      })
+      .addCase(
+        triggerPhoneNumberVerificationResend.fulfilled,
+        (state, action) => {
+          state.resendPhoneNumberOtp.loading = false;
+          state.resendPhoneNumberOtp.data = action.payload;
+          state.resendPhoneNumberOtp.message = action.payload
+            ?.message as unknown as string;
+          state.resendPhoneNumberOtp.statusCode = action.payload
+            ?.status_code as unknown as number;
+        },
+      )
+      .addCase(
+        triggerPhoneNumberVerificationResend.rejected,
+        (state, action) => {
+          state.resendPhoneNumberOtp.loading = false;
+          state.resendPhoneNumberOtp.error = true;
+          state.resendPhoneNumberOtp.message = action.payload
+            ?.message as unknown as string;
+          state.resendPhoneNumberOtp.statusCode = action.payload
+            ?.status_code as unknown as number;
+        },
+      );
   },
 });
-export const { resetPasswordOtp, resetResetPassword } = authSlice.actions;
+export const {
+  resetPasswordOtp,
+  resetResetPassword,
+  resetPhoneNumberVerificationResend,
+} = authSlice.actions;
 
 export default authSlice.reducer;

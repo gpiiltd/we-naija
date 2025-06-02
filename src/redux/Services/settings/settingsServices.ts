@@ -179,3 +179,31 @@ export const triggerGetLocation = createAsyncThunk<
     });
   }
 });
+
+export const triggerKycInfoUpdate = createAsyncThunk<
+  DefaultResponse,
+  any,
+  { rejectValue: ErroResponseData }
+>("settings/KycInfoUpdate", async (KycInfoUpdateData, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post<DefaultResponse>(
+      `${apiUrl.resubmitKyc}`,
+      KycInfoUpdateData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    console.log("responseUPDATE", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});

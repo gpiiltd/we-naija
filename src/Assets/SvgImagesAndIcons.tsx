@@ -110,6 +110,7 @@ import redcalender from "../Assets/svgImages/redcalender.svg";
 import blucalender from "../Assets/svgImages/blucalender.svg";
 import tick from "../Assets/svgImages/tick.svg";
 import document from "../Assets/svgImages/document.svg";
+import edit from "../Assets/svgImages/edit.svg";
 
 const Icon: FC<Svgprops> = ({ type, className, click }) => {
   const renderIcon = () => {
@@ -553,7 +554,8 @@ const Icon: FC<Svgprops> = ({ type, className, click }) => {
         return <img src={tick} alt="tick icon" className={className} />;
       case "document":
         return <img src={document} alt="document icon" className={className} />;
-
+      case "edit":
+        return <img src={edit} alt="edit icon" className={className} />;
       default:
         return null;
     }
