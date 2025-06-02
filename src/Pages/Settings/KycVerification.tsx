@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@gpiiltd/gpi-ui-library";
+import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../../Components/types";
 import { useNavigate } from "react-router-dom";
 import VerificationCard from "../../Components/Home/VerificationCard";
@@ -10,7 +10,28 @@ import FloatingInput from "../../Components/Input/FloatingInput";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/Store/store";
-import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
+import {
+  triggerGetUserProfile,
+  triggerKycInfoUpdate,
+} from "../../redux/Services/settings/settingsServices";
+import { toast, ToastContainer } from "react-toastify";
+import { resetUpdateKycState } from "../../redux/Services/settings/settingsSlice";
+
+type KYCStatus = "pending" | "approved" | "rejected";
+
+interface UserProfileData {
+  id_type?: string;
+  id_number?: string;
+  id_front?: string;
+  id_back?: string;
+  kyc_status?: KYCStatus;
+  address?: string;
+  state?: string;
+  lga?: string;
+  nationality?: string;
+  gender?: string;
+  date_of_birth?: string;
+}
 
 const IDVerification = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,9 +41,14 @@ const IDVerification = () => {
   const [backImageUrl, setBackImageUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState<string>("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [newFrontImage, setNewFrontImage] = useState<File | null>(null);
+  const [newBackImage, setNewBackImage] = useState<File | null>(null);
 
   const navigate = useNavigate();
-  const { userProfileData } = useSelector((state: RootState) => state.settings);
+  const { userProfileData, updateKyc } = useSelector(
+    (state: RootState) => state.settings,
+  );
   const { data, loading } = userProfileData;
 
   useEffect(() => {
@@ -43,7 +69,12 @@ const IDVerification = () => {
     email: "",
   };
 
-  const idTypes = [{ name: "National ID", value: "national_id" }];
+  const idTypes = [
+    { name: "National ID", value: "national_id" },
+    { name: "International passport", value: "passport" },
+    { name: "Drivers licence", value: "driver_license" },
+    { name: "Permanent voter card", value: "permanent_voters_card" },
+  ];
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -58,18 +89,67 @@ const IDVerification = () => {
     setModalOpen(true);
   };
 
+  const handleImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "front" | "back",
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (type === "front") {
+          setNewFrontImage(file);
+          setFrontImageUrl(reader.result as string);
+        } else {
+          setNewBackImage(file);
+          setBackImageUrl(reader.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUpdateKyc = async () => {
+    const selectedIdType = idTypes.find((option) => option.name === idType);
+
+    const payload = new FormData();
+    payload.append("id_type", selectedIdType?.value || "");
+    payload.append("id_number", idNumber);
+    payload.append("id_front", newFrontImage as File);
+    payload.append("id_back", newBackImage as File);
+
+    await dispatch(triggerKycInfoUpdate(payload));
+  };
+
+  useEffect(() => {
+    if (updateKyc?.statusCode === 200) {
+      toast.success(updateKyc.message);
+    }
+
+    if (updateKyc?.error && updateKyc?.message) {
+      toast.error(updateKyc.message);
+    }
+    dispatch(resetUpdateKycState());
+    setIsEditing(false);
+    setNewFrontImage(null);
+    setNewBackImage(null);
+  }, [updateKyc]);
+
+  const kycStatus = (data as UserProfileData)?.kyc_status;
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Typography variant={TypographyVariant.NORMAL}>Loading...</Typography>
+        <Typography variant={TypographyVariant.NORMAL}>Loading....</Typography>
       </div>
     );
   }
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center  md:mt-4 mb-8">
-        <div className="bg-white  rounded-lg w-full md:w-[50%] ">
+      <ToastContainer />
+      <div className="flex flex-col items-center justify-center md:mt-4 mb-8">
+        <div className="bg-white rounded-lg w-full md:w-[50%]">
           <div className="flex items-center mb-4">
             <div className="flex">
               <span
@@ -79,25 +159,53 @@ const IDVerification = () => {
               >
                 <Icon type="arrowBackSvg" className="mr-8 md:hidden" />
               </span>
-
               <Typography variant={TypographyVariant.SUBTITLE}>
                 KYC Verification
               </Typography>
             </div>
           </div>
-
-          <VerificationCard
-            statusMessage="Completed"
-            progressPercentage={100}
-            responseTimeMessage=""
-          />
+          {kycStatus === "rejected" ? (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+              <div className="flex gap-4">
+                <Icon type="warning" className="text-red-500 mt-1 mr-2" />
+                <div>
+                  <Typography
+                    variant={TypographyVariant.NORMAL}
+                    className="text-red-700 font-semibold mb-2"
+                  >
+                    KYC Verification Rejected
+                  </Typography>
+                  <Typography
+                    variant={TypographyVariant.SMALL}
+                    className="text-red-600 mb-4"
+                  >
+                    {data?.rejection_reason ||
+                      "Your KYC verification has been rejected because the images are not clear. Please upload new, clear images of your ID card."}
+                  </Typography>
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="bg-[#007A61] text-white px-4 py-2 rounded hover:bg-[#006B54] transition-colors mt-4 cursor-pointer"
+                  >
+                    Reupload Documents
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <VerificationCard
+              statusMessage="Completed"
+              progressPercentage={100}
+              responseTimeMessage=""
+            />
+          )}
 
           <Typography
             variant={TypographyVariant.NORMAL}
-            className=" mt-8 font-semibold text-lg"
+            className="mt-8 font-semibold text-lg"
           >
             Identity card details
           </Typography>
+
           <div className="pt-2">
             <Formik
               initialValues={initialValues}
@@ -118,22 +226,23 @@ const IDVerification = () => {
                     }))}
                     value={idType}
                     onChange={setIdType}
-                    readOnly={true}
+                    readOnly={!isEditing}
                   />
 
                   <FloatingInput
                     label="ID Number"
                     value={idNumber}
                     onChange={setIdNumber}
-                    readOnly={true}
+                    readOnly={!isEditing}
                   />
 
                   <Typography
                     variant={TypographyVariant.NORMAL}
-                    className=" mt-4 font-semibold text-lg"
+                    className="mt-4 font-semibold text-lg"
                   >
                     Identity card upload
                   </Typography>
+
                   <div className="relative mb-4">
                     <Typography
                       variant={TypographyVariant.NORMAL}
@@ -141,21 +250,36 @@ const IDVerification = () => {
                     >
                       Front of the ID card
                     </Typography>
-                    {frontImageUrl ? (
-                      <img
-                        src={frontImageUrl}
-                        alt="Front of ID Card"
-                        className="w-40 h-40 object-cover rounded border cursor-pointer"
-                        onClick={() => handleImageClick(frontImageUrl)}
-                      />
-                    ) : (
-                      <Typography
-                        variant={TypographyVariant.SMALL}
-                        className="text-gray-400"
-                      >
-                        No front image available.
-                      </Typography>
-                    )}
+                    <div className="relative inline-block">
+                      {frontImageUrl ? (
+                        <>
+                          <img
+                            src={frontImageUrl}
+                            alt="Front of ID Card."
+                            className="w-40 h-40 object-cover rounded border cursor-pointer"
+                            onClick={() => handleImageClick(frontImageUrl)}
+                          />
+                          {isEditing && (
+                            <label className="absolute bottom-2 right-2 rounded-full p-1 cursor-pointer shadow-md">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => handleImageChange(e, "front")}
+                              />
+                              <Icon type="edit" className="w-5 h-5" />
+                            </label>
+                          )}
+                        </>
+                      ) : (
+                        <Typography
+                          variant={TypographyVariant.SMALL}
+                          className="text-gray-400"
+                        >
+                          No front image available.
+                        </Typography>
+                      )}
+                    </div>
 
                     <Typography
                       variant={TypographyVariant.NORMAL}
@@ -163,20 +287,49 @@ const IDVerification = () => {
                     >
                       Back of the ID card
                     </Typography>
-                    {backImageUrl ? (
-                      <img
-                        src={backImageUrl}
-                        alt="Back of ID Card"
-                        className="w-40 h-40 object-cover rounded border cursor-pointer"
-                        onClick={() => handleImageClick(backImageUrl)}
-                      />
-                    ) : (
-                      <Typography
-                        variant={TypographyVariant.SMALL}
-                        className="text-gray-400"
-                      >
-                        No back image available.
-                      </Typography>
+                    <div className="relative inline-block">
+                      {backImageUrl ? (
+                        <>
+                          <img
+                            src={backImageUrl}
+                            alt="Back of ID Card"
+                            className="w-40 h-40 object-cover rounded border cursor-pointer"
+                            onClick={() => handleImageClick(backImageUrl)}
+                          />
+                          {isEditing && (
+                            <label className="absolute bottom-2 right-2 rounded-full p-1 cursor-pointer shadow-md">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => handleImageChange(e, "back")}
+                              />
+                              <Icon type="edit" className="w-5 h-5" />
+                            </label>
+                          )}
+                        </>
+                      ) : (
+                        <Typography
+                          variant={TypographyVariant.SMALL}
+                          className="text-gray-400"
+                        >
+                          No back image available.
+                        </Typography>
+                      )}
+                    </div>
+
+                    {isEditing && (
+                      <div className="mt-8 w-full flex justify-center items-center ">
+                        <Button
+                          text="Save Changes"
+                          bg_color="#007A61"
+                          text_color="white"
+                          border_color="border-green-500"
+                          active={true}
+                          loading={false}
+                          onClick={handleUpdateKyc}
+                        />
+                      </div>
                     )}
                   </div>
                 </Form>
