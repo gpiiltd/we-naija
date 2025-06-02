@@ -52,9 +52,9 @@ const LandingHome = () => {
                   variant={TypographyVariant.TITLE}
                   className="font-raleway max-w-lg mx-auto  mb-6 md:text-[56px] font-bold leading-tight"
                 >
-                  VOICE YOUR {` `}
+                  WHERE ADVOCACY MEETS {` `}
                   <span className="inline-block relative font-raleway">
-                    CHANGE{" "}
+                    ACTION{" "}
                     <Icon
                       type="homeSVg"
                       className="ax-w-lg h-25 hidden lg:block absolute -right-[90px] -bottom-3 xl:-mt-2"
@@ -74,7 +74,7 @@ const LandingHome = () => {
                     variant={TypographyVariant.TITLE}
                     className="font-raleway text-[30px] font-bold text-gray-800 mb-1 leading-9 lg:text[176px]"
                   >
-                    VOICE YOUR CHANGE{" "}
+                    Where Advocacy Meets Action{" "}
                     <span className="hidden md:inline lg:inline">
                       <Icon type="homeSVg" className="" />
                     </span>

@@ -3,25 +3,25 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 
-import image1 from "../../Assets/svgImages/carosel1.svg";
-import image2 from "../../Assets/svgImages/carosel2.svg";
-import image3 from "../../Assets/svgImages/carosel3.svg";
-import image4 from "../../Assets/svgImages/carosel4.svg";
-import image5 from "../../Assets/svgImages/carosel5.svg";
-import image6 from "../../Assets/svgImages/carosel6.svg";
+import image1 from "../../Assets/svgImages/slide1.svg";
+import image2 from "../../Assets/svgImages/slide2.svg";
+import image3 from "../../Assets/svgImages/slide3.svg";
+import image4 from "../../Assets/svgImages/slide4.svg";
+import image5 from "../../Assets/svgImages/slide5.svg";
+import image6 from "../../Assets/svgImages/carosel5.svg";
 
 const imageList = [image1, image2, image3, image4, image5, image6];
 
 const SwiperCarosel = () => {
   return (
-    <div className="relative w-full  bg-slate-300 my-10">
+    <div className="relative w-full  bg-slate-100 my-10">
       <Swiper
         spaceBetween={10}
         slidesPerView={2}
         breakpoints={{
           640: { slidesPerView: 5 },
-          768: { slidesPerView: 6 },
-          1024: { slidesPerView: 6 },
+          768: { slidesPerView: 5 },
+          1024: { slidesPerView: 5 },
         }}
         autoplay={{
           delay: 3000,
