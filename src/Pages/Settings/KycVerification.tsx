@@ -255,7 +255,7 @@ const IDVerification = () => {
                         <>
                           <img
                             src={frontImageUrl}
-                            alt="Front of ID Card"
+                            alt="Front of ID Card."
                             className="w-40 h-40 object-cover rounded border cursor-pointer"
                             onClick={() => handleImageClick(frontImageUrl)}
                           />
