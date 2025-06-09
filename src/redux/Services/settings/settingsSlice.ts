@@ -176,7 +176,6 @@ const settingsSlice = createSlice({
       state.notificationsData.message = "";
     });
     builder.addCase(triggerGetNotifications.fulfilled, (state, action) => {
-      console.log("action", action.payload);
       state.notificationsData.loading = false;
       state.notificationsData.data = action.payload?.results;
       state.notificationsData.error = false;
