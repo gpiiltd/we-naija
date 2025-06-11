@@ -43,6 +43,7 @@ const Login = () => {
   });
 
   const handleLogin = (values: LoginData) => {
+    localStorage.setItem("emailverification", values.email);
     const payload = {
       email: values.email.trim().toLowerCase(),
       password: values.password.trim(),

@@ -124,6 +124,7 @@ const IDVerification = () => {
   useEffect(() => {
     if (updateKyc?.statusCode === 200) {
       toast.success(updateKyc.message);
+      window.location.reload();
     }
 
     if (updateKyc?.error && updateKyc?.message) {
@@ -176,11 +177,17 @@ const IDVerification = () => {
                     KYC Verification Rejected
                   </Typography>
                   <Typography
-                    variant={TypographyVariant.SMALL}
-                    className="text-red-600 mb-4"
+                    variant={TypographyVariant.NORMAL}
+                    className="text-red-600 mb-2"
                   >
                     {data?.rejection_reason ||
                       "Your KYC verification has been rejected because the images are not clear. Please upload new, clear images of your ID card."}
+                  </Typography>
+                  <Typography
+                    variant={TypographyVariant.SMALL}
+                    className="text-red-600 mb-4"
+                  >
+                    {data?.comment}
                   </Typography>
                   <button
                     onClick={() => setIsEditing(true)}

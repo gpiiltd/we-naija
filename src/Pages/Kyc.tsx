@@ -61,13 +61,13 @@ const Kyc = () => {
             title="Personal Information"
             description="Provide details such as your name, age D.O.B etc..."
             icon="person"
-            linkTo="/kyc/personal-information"
+            // linkTo="/kyc/personal-information"
           />
           <KycCard
             title="ID Verification"
             description="Use government issued documents to verify your ID"
             icon="idcard"
-            linkTo="/kyc/id-verification"
+            // linkTo="/kyc/id-verification"
           />
         </div>
       </div>

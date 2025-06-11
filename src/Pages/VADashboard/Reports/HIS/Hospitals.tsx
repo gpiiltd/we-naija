@@ -272,7 +272,7 @@ const Hospitals = () => {
                       <p className="font-normal text-sm pt-3">
                         {hospital.address}
                       </p>
-                      <div className="flex items-center justify-start pt-2">
+                      <div className="flex items-center justify-start pt-1">
                         <Icon type="timeClocKSvg" className="pr-2" />
                         <p className="font-normal text-sm text-[#5E5959] pr-1">
                           {formatOperationalDays(
@@ -280,7 +280,7 @@ const Hospitals = () => {
                           )}
                         </p>
                         <p className="font-normal text-sm">
-                          ({hospital.closing_time} - {hospital.opening_time})
+                          ({hospital.opening_time} - {hospital.closing_time})
                         </p>
                       </div>
                     </div>

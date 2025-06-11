@@ -29,7 +29,7 @@ const KycCard = ({
 
   return (
     <div className="mb-4 border p-8 rounded-2xl shadow-md hover:bg-gray-100">
-      <Link to={linkTo} className="flex items-start justify-between">
+      <Link to={linkTo || ""} className="flex items-start justify-between">
         <div className="flex items-start">
           <Icon type={icon} className="w-10 h-10 mr-4" />
           <div className="pl-4">

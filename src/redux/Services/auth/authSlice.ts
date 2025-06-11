@@ -3,6 +3,8 @@ import {
   triggerRequestForgotPasswordOtp,
   triggerResetPassword,
   triggerPhoneNumberVerificationResend,
+  triggerEmailLinkResend,
+  triggerEmailVerification,
 } from "./authService";
 interface IinitialState {
   passwordOtp: {
@@ -20,6 +22,20 @@ interface IinitialState {
     statusCode?: number | null;
   };
   resendPhoneNumberOtp: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  verifyEmail: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  resendEmailLink: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -50,6 +66,20 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  verifyEmail: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
+  resendEmailLink: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 
 const authSlice = createSlice({
@@ -73,6 +103,17 @@ const authSlice = createSlice({
         initialState.resendPhoneNumberOtp.message;
       state.resendPhoneNumberOtp.statusCode =
         initialState.resendPhoneNumberOtp.statusCode;
+    },
+    resetVerifyEmail: (state) => {
+      state.verifyEmail.error = initialState.verifyEmail.error;
+      state.verifyEmail.message = initialState.verifyEmail.message;
+      state.verifyEmail.statusCode = initialState.verifyEmail.statusCode;
+    },
+    resetEmailLink: (state) => {
+      state.resendEmailLink.error = initialState.resendEmailLink.error;
+      state.resendEmailLink.message = initialState.resendEmailLink.message;
+      state.resendEmailLink.statusCode =
+        initialState.resendEmailLink.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -155,12 +196,60 @@ const authSlice = createSlice({
             ?.status_code as unknown as number;
         },
       );
+
+    //EMAIL VERIFICATION
+    builder
+      .addCase(triggerEmailVerification.pending, (state) => {
+        state.verifyEmail.loading = true;
+        state.verifyEmail.error = false;
+      })
+      .addCase(triggerEmailVerification.fulfilled, (state, action) => {
+        state.verifyEmail.loading = false;
+        state.verifyEmail.data = action.payload;
+        state.verifyEmail.message = action.payload
+          ?.message as unknown as string;
+        state.verifyEmail.statusCode = action.payload
+          ?.status_code as unknown as number;
+      })
+      .addCase(triggerEmailVerification.rejected, (state, action) => {
+        state.verifyEmail.loading = false;
+        state.verifyEmail.error = true;
+        state.verifyEmail.message = action.payload
+          ?.message as unknown as string;
+        state.verifyEmail.statusCode = action.payload
+          ?.status_code as unknown as number;
+      });
+
+    //EMAIL VERIFICATION LINK RESEND
+    builder
+      .addCase(triggerEmailLinkResend.pending, (state) => {
+        state.resendEmailLink.loading = true;
+        state.resendEmailLink.error = false;
+      })
+      .addCase(triggerEmailLinkResend.fulfilled, (state, action) => {
+        state.resendEmailLink.loading = false;
+        state.resendEmailLink.data = action.payload;
+        state.resendEmailLink.message = action.payload
+          ?.message as unknown as string;
+        state.resendEmailLink.statusCode = action.payload
+          ?.status_code as unknown as number;
+      })
+      .addCase(triggerEmailLinkResend.rejected, (state, action) => {
+        state.resendEmailLink.loading = false;
+        state.resendEmailLink.error = true;
+        state.resendEmailLink.message = action.payload
+          ?.message as unknown as string;
+        state.resendEmailLink.statusCode = action.payload
+          ?.status_code as unknown as number;
+      });
   },
 });
 export const {
   resetPasswordOtp,
   resetResetPassword,
   resetPhoneNumberVerificationResend,
+  resetEmailLink,
+  resetVerifyEmail,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,5 +1,6 @@
 import React from "react";
 import Icon from "../../Assets/SvgImagesAndIcons";
+import { formatOperationalDays } from "../../utils/inputValidations";
 
 interface InstitutionsCardProps {
   name?: string;
@@ -13,14 +14,20 @@ interface InstitutionsCardProps {
   statusMessage?: string;
   responseTimeMessage?: string;
   icon?: string;
+  opening_time?: string;
+  closing_time?: string;
+  operation_days?: string;
   onClick?: () => void;
 }
 
 const InstitutionsCard: React.FC<InstitutionsCardProps> = ({
   name,
   address,
-  hours,
+  // hours,
   icon,
+  opening_time,
+  closing_time,
+  operation_days,
   onClick,
 }) => {
   return (
@@ -50,11 +57,15 @@ const InstitutionsCard: React.FC<InstitutionsCardProps> = ({
               </p>
             </div>
           </section>
-          <p className="font-normal text-sm pt-3">{address}</p>
-          <div className="flex items-center justify-start pt-2">
+          <p className="font-normal text-sm pt-3">{address || "NA"}</p>
+          <div className="flex items-center justify-start pt-1">
             <Icon type="timeClocKSvg" className="pr-2" />
-            <p className="font-normal text-sm text-[#5E5959] pr-1">{hours}</p>
-            <p className="font-normal text-sm">(24 hours)</p>
+            <p className="font-normal text-sm text-[#5E5959] pr-1">
+              {formatOperationalDays(operation_days || "")}
+            </p>
+            <p className="font-normal text-sm">
+              ({opening_time} - {closing_time})
+            </p>
           </div>
         </div>
 

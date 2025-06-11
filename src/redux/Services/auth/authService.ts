@@ -3,6 +3,8 @@ import axios from "axios";
 import { apiUrl } from "../../../config";
 import {
   DefaultResponse,
+  EmailVerificationData,
+  ForgotPasswordData,
   OTPData,
   PhoneNumberVerificationData,
   ResetPasswordData,
@@ -90,3 +92,54 @@ export const triggerPhoneNumberVerificationResend = createAsyncThunk<
     }
   },
 );
+
+export const triggerEmailVerification = createAsyncThunk<
+  DefaultResponse,
+  EmailVerificationData,
+  { rejectValue: ErroResponseData }
+>("auth/EmailVerifications", async (EmailVerificationData, thunkAPI) => {
+  try {
+    console.log(" TRIGGERREFRESH");
+    const { uid, email_token } = EmailVerificationData;
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.emailVerification}/${uid}/${email_token}`,
+      //
+      {
+        headers: {
+          "access-control-allow-origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Methods": "*",
+        },
+        withCredentials: true,
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerEmailLinkResend = createAsyncThunk<
+  DefaultResponse,
+  ForgotPasswordData,
+  { rejectValue: ErroResponseData }
+>("auth/EmailLinkResends", async (forgotPasswordData, thunkAPI) => {
+  try {
+    console.log("RESEND TRIGGERREFRESH");
+    const response = await axios.post<DefaultResponse>(
+      apiUrl.emailVerificationResend,
+      forgotPasswordData,
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});

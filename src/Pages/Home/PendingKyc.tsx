@@ -113,9 +113,20 @@ const PendingKyc = () => {
       <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {nearbyInstitution.loading ? (
           <div className="col-span-3 text-center py-4">
-            <p>Loading...</p>
+            <ClipLoader color="#007A61" size={24} className="mr-6" />
+            <p>Loading institutions...</p>
           </div>
-        ) : institutionsData?.length > 0 ? (
+        ) : nearbyInstitution.error ? (
+          <div className="col-span-3 text-center py-4">
+            <p className="text-red-500">
+              Failed to load institutions. Please try again later.
+            </p>
+          </div>
+        ) : !institutionsData || institutionsData.length === 0 ? (
+          <div className="col-span-3 text-center py-4">
+            <p>No institutions found in your area.</p>
+          </div>
+        ) : (
           institutionsData.map((institution) => (
             <InstitutionsCard
               key={institution.identifier}
@@ -123,7 +134,9 @@ const PendingKyc = () => {
               name={institution.name}
               abbreviation={institution.abbreviation}
               address={institution.address}
-              hours={institution.operation_days}
+              operation_days={institution.operation_days}
+              opening_time={institution.opening_time}
+              closing_time={institution.closing_time}
               onClick={() =>
                 navigate(
                   `/verified-agent-dashboard/reports/hospitals/survey-list/${institution?.identifier}`,
@@ -131,10 +144,6 @@ const PendingKyc = () => {
               }
             />
           ))
-        ) : (
-          <div className="col-span-3 text-center py-4">
-            <p>No institutions found.</p>
-          </div>
         )}
       </div>
 
