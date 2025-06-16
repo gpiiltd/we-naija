@@ -4,7 +4,6 @@ import { TypographyVariant } from "../types";
 import { Errors } from "../types";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import FileUpload from "./FileUpload";
-import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import CustomModal from "../Modal";
@@ -20,9 +19,7 @@ import { triggerGetUserProfile } from "../../redux/Services/settings/settingsSer
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
   const [idNumber, setIdNumber] = useState("");
-  // eslint-disable-next-line
   const [frontFile, setFrontFile] = useState<File | null>(null);
-  // eslint-disable-next-line
   const [backFile, setBackFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const navigate = useNavigate();
@@ -47,9 +44,6 @@ const IDVerification = () => {
     dispatch(triggerGetUserProfile({}));
   }, [dispatch]);
 
-  console.log("phone", userProfileData.data.mobile_number);
-  console.log("kycPersonalInfo", kycPersonalInfo);
-
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdNumber(e.target.value);
     setErrors({ ...errors, idNumber: "" });
@@ -68,7 +62,6 @@ const IDVerification = () => {
 
   const handleSubmit = async () => {
     setLoading(!loading);
-    console.log("phoneNumber", phoneNumber);
 
     const payload = new FormData();
     payload.append("address", kycPersonalInfo.address);
@@ -83,8 +76,7 @@ const IDVerification = () => {
     payload.append("id_front", frontFile as File);
     payload.append("id_back", backFile as File);
 
-    console.log("payload", payload);
-    dispatch(triggerKycInfoSubmit(payload) as any);
+    dispatch(triggerKycInfoSubmit(payload));
   };
 
   useEffect(() => {
@@ -235,10 +227,6 @@ const IDVerification = () => {
             loading={loading}
             onClick={handleSubmit}
           />
-
-          <div className="flex pt-4 items-center justify-center">
-            <SkipButton />
-          </div>
         </div>
 
         <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>

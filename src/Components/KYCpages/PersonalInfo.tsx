@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Typography from "../Typography";
 import { TypographyVariant } from "../types";
-import SkipButton from "./SkipButton";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
@@ -114,15 +113,6 @@ const PersonalInfo = () => {
     const formattedDate = `${dateOfBirth?.getFullYear()}-${String(
       dateOfBirth?.getMonth() + 1,
     ).padStart(2, "0")}-${String(dateOfBirth?.getDate()).padStart(2, "0")}`;
-
-    console.log("hjhjjb", {
-      address,
-      state_id: selectedState?.id,
-      lga_id: selectedLga?.id,
-      nationality,
-      gender,
-      dateOfBirth: formattedDate,
-    });
 
     dispatch(
       setKycPersonalInfo({
@@ -258,10 +248,6 @@ const PersonalInfo = () => {
               {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
             </div>
           </form>
-
-          <div className="flex pt-4 items-center justify-center">
-            <SkipButton />
-          </div>
         </div>
       </div>
     </>

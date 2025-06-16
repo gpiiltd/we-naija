@@ -34,7 +34,7 @@ export interface KycCardProps {
   title: string;
   description: string;
   icon: string;
-  linkTo: string;
+  linkTo?: string;
   kycStep?: string;
 }
 

@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { Button, Typography } from "@gpiiltd/gpi-ui-library";
 import { TypographyVariant } from "../types";
-import SkipButton from "./SkipButton";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-// import InputField from "../../Components/Input/InputField";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { useNavigate } from "react-router-dom";
 import KycHeader from "./KycHeader";
@@ -34,7 +32,6 @@ const KycPhonenumber = () => {
       mobile_number: phoneNumberWithCountryCode,
     };
 
-    console.log("payload", payload);
     dispatch(setKycPhoneNumber(phoneNumberWithCountryCode));
     dispatch(triggerPhoneNumberVerification(payload));
   };
@@ -148,9 +145,6 @@ const KycPhonenumber = () => {
               </Form>
             )}
           </Formik>
-          <div className="flex pt-4 items-center justify-center">
-            <SkipButton />
-          </div>
         </div>
       </div>
     </>
