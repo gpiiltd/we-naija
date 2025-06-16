@@ -5,18 +5,19 @@ import Typography from "../../../../Components/Typography";
 import { TypographyVariant } from "../../../../Components/types";
 import SearchBar from "../../../../Components/Searchbar";
 import ButtonComponent from "../../../../Components/ButtonComponent";
-// import { CiLocationOn } from "react-icons/ci";
+import { CiLocationOn } from "react-icons/ci";
 import Icon from "../../../../Assets/SvgImagesAndIcons";
 import CustomModal from "../../../../Components/Modal";
-import { AiOutlineDown } from "react-icons/ai";
 import Breadcrumb from "../BreadCrum";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/Store/store";
+import { AppDispatch, RootState } from "../../../../redux/Store/store";
 import { triggerGetAllInstitution } from "../../../../redux/Services/institute/instituteServices";
 import { formatOperationalDays } from "../../../../utils/inputValidations";
 import { ClipLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
-// import { resetInstitutionState } from "../../../../redux/Services/institute/instituteSlice";
+import { allNigerianStates } from "../../../../utils/selectOptions";
+import { triggerGetLocation } from "../../../../redux/Services/settings/settingsServices";
+import { Button } from "@gpiiltd/gpi-ui-library";
 
 const Hospitals = () => {
   const navigate = useNavigate();
@@ -25,18 +26,41 @@ const Hospitals = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [state, setState] = useState("");
+  const [lga, setLga] = useState("");
+  const [lgaDataOptions, setLgaDataOptions] = useState<
+    { id: string; name: string }[]
+  >([]);
   const { userData } = useSelector((state: RootState) => state.user);
   const { institution } = useSelector((state: RootState) => state.institute);
-  const dispatch = useDispatch();
+  const { userProfileData, locationData } = useSelector(
+    (state: RootState) => state.settings,
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setIsLoading(true);
-    dispatch(triggerGetAllInstitution({ page: currentPage }) as any);
+    dispatch(triggerGetAllInstitution({ page: currentPage }));
   }, [dispatch, currentPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    if (state) {
+      dispatch(triggerGetLocation(state) as any);
+    } else {
+      setLgaDataOptions([]);
+    }
+  }, [dispatch, state]);
+
+  useEffect(() => {
+    if (locationData.data) {
+      setLgaDataOptions(locationData.data);
+    }
+  }, [locationData]);
 
   useEffect(() => {
     if (institution) {
@@ -56,7 +80,6 @@ const Hospitals = () => {
     if (institution.error && institution.message) {
       setIsLoading(false);
     }
-    // dispatch(resetInstitutionState());
   }, [institution, dispatch, currentPage]);
 
   const getRandomItems = (arr: string[], num: number) => {
@@ -71,106 +94,33 @@ const Hospitals = () => {
       )
     : [];
 
-  const [showModal, setShowModal] = useState(false);
-  const states = [
-    "Abia",
-    "Adamawa",
-    "Akwa Ibom",
-    "Anambra",
-    "Bauchi",
-    "Bayelsa",
-    "Benue",
-    "Borno",
-    "Cross River",
-    "Delta",
-    "Ebonyi",
-    "Edo",
-    "Ekiti",
-    "Enugu",
-    "Gombe",
-    "Imo",
-    "Jigawa",
-    "Kaduna",
-    "Kano",
-    "Katsina",
-    "Kebbi",
-    "Kogi",
-    "Kwara",
-    "Lagos",
-    "Nasarawa",
-    "Niger",
-    "Ogun",
-    "Ondo",
-    "Osun",
-    "Oyo",
-    "Plateau",
-    "Rivers",
-    "Sokoto",
-    "Taraba",
-    "Yobe",
-    "Zamfara",
-  ];
-  const cities = [
-    "Ikeja",
-    "Maitama",
-    "Sabon Gari",
-    "Port Harcourt",
-    "Zaria",
-    "Ibadan",
-  ];
-  // const [buttonText, setButtonText] = useState("Location");
-
   const handleSearchChange = (newSearchQuery: string) => {
     setSearchQuery(newSearchQuery);
-  };
-
-  const handleSearchSubmit = (query: string) => {
-    console.log("Search submitted with:", query);
   };
 
   const openModal = () => {
     setShowModal(true);
   };
 
-  const [stateDropdown, setStateDropdown] = useState({
-    selected: "",
-    isOpen: false,
-  });
-
-  const [cityDropdown, setCityDropdown] = useState({
-    selected: "",
-    isOpen: false,
-  });
-
-  const handleStateSelect = (state: string) => {
-    setStateDropdown({ selected: state, isOpen: false });
-  };
-
-  const handleCitySelect = (city: string) => {
-    setCityDropdown({ selected: city, isOpen: false });
-  };
   const handleFilter = () => {
-    if (cityDropdown.selected && stateDropdown.selected) {
-      setIsLoading(!isLoading);
-      setTimeout(() => {
-        setIsLoading(false);
-        // setButtonText(`${cityDropdown.selected}, ${stateDropdown.selected}`);
-        setShowModal(false);
-      }, 3000);
-    } else {
-      // setButtonText("Location");
-      setShowModal(false);
-    }
+    setShowModal(false);
+    const payload = {
+      state: state,
+      lga: lga,
+    };
+
+    setCurrentPage(1);
+    dispatch(triggerGetAllInstitution({ ...payload, page: 1 }));
   };
 
-  const handleClearAll = () => {
-    setSearchQuery("");
-    setStateDropdown({ selected: "", isOpen: false });
-    setCityDropdown({ selected: "", isOpen: false });
-    // setButtonText("Location");
+  const handleClearFilter = () => {
+    setState("");
+    setLga("");
+    setShowModal(false);
+    dispatch(triggerGetAllInstitution({ page: 1 }));
   };
 
-  const kycStatus = localStorage.getItem("kyc_status") || userData?.kyc_status;
+  const kycStatus = userProfileData?.data?.kyc_status || userData?.kyc_status;
 
   const handleTaskClick = (taskIdentifier: string) => {
     if (kycStatus === "approved") {
@@ -215,17 +165,17 @@ const Hospitals = () => {
               placeholder="Search for a clinic or hospital..."
               value={searchQuery}
               onChange={handleSearchChange}
-              onSubmit={handleSearchSubmit}
+              // onSubmit={handleSearchSubmit}
               suggestions={suggestions}
             />
-            {/* <ButtonComponent
-              text={buttonText}
+            <ButtonComponent
+              text={"Location"}
               bg_color="#007A61"
               active={true}
               text_color="#FFFFFF"
               icon={<CiLocationOn size={30} />}
               onClick={openModal}
-            /> */}
+            />
           </div>
         </div>
       </div>
@@ -322,7 +272,7 @@ const Hospitals = () => {
                       <p className="font-normal text-sm pt-3">
                         {hospital.address}
                       </p>
-                      <div className="flex items-center justify-start pt-2">
+                      <div className="flex items-center justify-start pt-1">
                         <Icon type="timeClocKSvg" className="pr-2" />
                         <p className="font-normal text-sm text-[#5E5959] pr-1">
                           {formatOperationalDays(
@@ -330,7 +280,7 @@ const Hospitals = () => {
                           )}
                         </p>
                         <p className="font-normal text-sm">
-                          ({hospital.closing_time} - {hospital.opening_time})
+                          ({hospital.opening_time} - {hospital.closing_time})
                         </p>
                       </div>
                     </div>
@@ -372,120 +322,90 @@ const Hospitals = () => {
       )}
       {/*  */}
 
-      <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <div className="py-2 flex flex-col">
-          <div className="flex flex-col gap-4 justify-center ">
-            <div className="border-b text-center pb-4">
-              <Typography
-                variant={TypographyVariant.NORMAL}
-                className="font-bold"
+      <CustomModal
+        width="45%"
+        height="65%"
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+      >
+        <div className="flex flex-col  px-12 w-full">
+          <Typography
+            variant={TypographyVariant.TITLE}
+            className="text-dark_gray font-semibold "
+          >
+            Filter
+          </Typography>
+          <div className="flex flex-col w-full">
+            <div className="mt-5">
+              <label
+                className="block text-dark_gray text-sm  mb-2"
+                htmlFor="state"
               >
-                Location Filter
-              </Typography>
+                By State
+              </label>
+              <select
+                name="state"
+                value={state}
+                onChange={(event) => setState(event.target.value)}
+                className=" appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight"
+                required
+              >
+                <option value="">Select state</option>
+                {Array.isArray(allNigerianStates) &&
+                  allNigerianStates.flat().map((option) => (
+                    <option key={option.id} value={option.id.toString()}>
+                      {option.name}
+                    </option>
+                  ))}
+                {/* Add state options here */}
+              </select>
             </div>
 
-            <div className="flex flex-col gap-4 px-4">
-              {/* State Input */}
-              <div className="relative ">
-                <label className="text-sm font-medium mb-1">By State</label>
-                <input
-                  type="text"
-                  value={stateDropdown.selected}
-                  placeholder="Select state"
-                  readOnly
-                  onClick={() =>
-                    setStateDropdown({
-                      ...stateDropdown,
-                      isOpen: !stateDropdown.isOpen,
-                    })
-                  }
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 mt-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <div
-                  className="absolute right-2 top-10 cursor-pointer text-gray-500"
-                  onClick={() =>
-                    setStateDropdown({
-                      ...stateDropdown,
-                      isOpen: !stateDropdown.isOpen,
-                    })
-                  }
-                >
-                  <AiOutlineDown size={20} />
-                </div>
-                {stateDropdown.isOpen && (
-                  <ul className="absolute w-full border border-gray-300 bg-white rounded-lg shadow-lg mt-2 max-h-40 overflow-y-auto z-50">
-                    {states.map((state, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleStateSelect(state)}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                      >
-                        {state}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              {/* City Input */}
-              <div className="relative w-full">
-                <label className="text-sm font-medium mb-1">By City</label>
-                <input
-                  type="text"
-                  value={cityDropdown.selected}
-                  placeholder="Select city"
-                  readOnly
-                  onClick={() =>
-                    setCityDropdown({
-                      ...cityDropdown,
-                      isOpen: !cityDropdown.isOpen,
-                    })
-                  }
-                  className="w-full border border-gray-300 rounded-lg px-4 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <div
-                  className="absolute right-2 top-10 cursor-pointer text-gray-500"
-                  onClick={() =>
-                    setCityDropdown({
-                      ...cityDropdown,
-                      isOpen: !cityDropdown.isOpen,
-                    })
-                  }
-                >
-                  <AiOutlineDown size={20} />
-                </div>
-                {cityDropdown.isOpen && (
-                  <ul className="absolute w-full border border-gray-300 bg-white rounded-lg shadow-lg mt-2 max-h-40 overflow-y-auto z-50">
-                    {cities.map((city, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleCitySelect(city)}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                      >
-                        {city}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+            <div className="mt-8">
+              <label
+                className="block text-dark_gray text-sm  mb-2"
+                htmlFor="localGovt"
+              >
+                By Local government
+              </label>
+              <select
+                name="localGovt"
+                value={lga}
+                onChange={(event) => setLga(event.target.value)}
+                className=" appearance-none border rounded w-full py-4 px-3 text-gray-700 leading-tight"
+                required
+              >
+                <option value="">Select local govt</option>
+                {Array.isArray(lgaDataOptions) &&
+                  lgaDataOptions.map((option) => (
+                    <option key={option.id} value={option.id.toString()}>
+                      {option.name}
+                    </option>
+                  ))}
+              </select>
             </div>
-            <div className="flex justify-between items-center pt-6 pb-3 border-t mt-4">
-              <div className="px-4 cursor-pointer" onClick={handleClearAll}>
-                <Typography variant={TypographyVariant.NORMAL}>
-                  Clear all
-                </Typography>
-              </div>
-              <div className="px-4">
-                {" "}
-                <ButtonComponent
-                  text="Show 50+ Institute"
-                  bg_color="#007A61"
-                  active={true}
-                  text_color="#FFFFFF"
-                  onClick={handleFilter}
-                  loading={isLoading}
-                />
-              </div>
-            </div>
+          </div>
+
+          <div className="flex items-center justify-center my-8 gap-4  mx-16">
+            <Button
+              text="Clear filter"
+              bg_color="white"
+              text_color="black"
+              border_color="border-green-500"
+              active={true}
+              loading={institution.loading}
+              onClick={handleClearFilter}
+            />
+
+            <Button
+              text="Apply filter"
+              bg_color="#007A61"
+              text_color="white"
+              border_color="border-green-500"
+              active={!!state || !!lga}
+              loading={institution.loading}
+              onClick={handleFilter}
+            />
           </div>
         </div>
       </CustomModal>

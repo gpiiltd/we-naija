@@ -3,43 +3,54 @@ import Typography from "../Components/Typography/Typography";
 import { TypographyVariant } from "../Components/types";
 import Icon from "../Assets/SvgImagesAndIcons";
 import { useSelector, useDispatch } from "react-redux";
-import { triggerEmailVerificationResend } from "../redux/Services/user/UserServices";
+// import { triggerEmailVerificationResend } from "../redux/Services/user/UserServices";
+import { triggerEmailLinkResend } from "../redux/Services/auth/authService";
 import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { resetState } from "../redux/Slices/user/userSlice";
+import { formatCountdown } from "../utils/inputValidations";
+import { resetEmailLink } from "../redux/Services/auth/authSlice";
+
 const EmailSent = () => {
   const dispatch: AppDispatch = useDispatch();
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(180);
   const [canResend, setCanResend] = useState(false);
-  const { error, message, email } = useSelector(
-    (state: RootState) => state.user,
-  );
+  const { email } = useSelector((state: RootState) => state.user);
 
-  localStorage.setItem("emailverification", email);
+  const { resendEmailLink } = useSelector((state: RootState) => state.auth);
+
+  const emailverification = localStorage.getItem("emailverification");
+
+  const emailToSend = email ? email : (emailverification as string);
 
   const handleResendOTP = () => {
     const payload = {
-      email: email,
+      email: emailToSend,
     };
     if (canResend) {
-      dispatch(triggerEmailVerificationResend(payload));
-
-      setCountdown(30);
+      dispatch(triggerEmailLinkResend(payload));
+      setCountdown(180);
       setCanResend(false);
     }
     dispatch(resetState());
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-    } else if (!error && message) {
-      toast.success(message);
+    if (resendEmailLink.statusCode === 200 && resendEmailLink.message) {
+      toast.success(resendEmailLink.message);
     }
-    dispatch(resetState());
-  }, [error, message, dispatch]);
+    if (resendEmailLink.error && resendEmailLink.message) {
+      toast.error(resendEmailLink.message);
+    }
+    dispatch(resetEmailLink());
+  }, [
+    dispatch,
+    resendEmailLink.message,
+    resendEmailLink.error,
+    resendEmailLink.statusCode,
+  ]);
 
   useEffect(() => {
     const timer =
@@ -92,7 +103,7 @@ const EmailSent = () => {
               className="text-light_gray md:text-center "
             >
               A verification link has been sent to{" "}
-              <span className="font-bold text-[#007A61]">{email}</span>
+              <span className="font-bold text-[#007A61]">{emailToSend}</span>
             </Typography>
           </div>
 
@@ -119,9 +130,7 @@ const EmailSent = () => {
               >
                 {canResend
                   ? "Re-send link via email "
-                  : `Re-send link via email  (0:${
-                      countdown < 10 ? `0${countdown}` : countdown
-                    })`}
+                  : `Re-send link via email  (${formatCountdown(countdown)})`}
               </Typography>
             </div>
           </div>

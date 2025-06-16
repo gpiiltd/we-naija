@@ -7,6 +7,7 @@ import {
   triggerSurveyIndicatorQuestions,
   triggerSubmitSurveyReport,
   triggerSubmitSurveyReportMultiple,
+  triggerGetNearbyInstitution,
 } from "./instituteServices";
 interface IinitialState {
   institution: {
@@ -53,6 +54,13 @@ interface IinitialState {
     statusCode?: number | null;
   };
   surveyReportMultiple: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  nearbyInstitution: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -112,6 +120,13 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  nearbyInstitution: {
+    data: [],
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 
 const instituteSlice = createSlice({
@@ -155,6 +170,12 @@ const instituteSlice = createSlice({
         initialState.surveyReportMultiple.message;
       state.surveyReportMultiple.statusCode =
         initialState.surveyReportMultiple.statusCode;
+    },
+    resetNearbyInstitutionState: (state) => {
+      state.nearbyInstitution.error = initialState.nearbyInstitution.error;
+      state.nearbyInstitution.message = initialState.nearbyInstitution.message;
+      state.nearbyInstitution.statusCode =
+        initialState.nearbyInstitution.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -339,6 +360,24 @@ const instituteSlice = createSlice({
           ?.status_code as unknown as number;
       },
     );
+
+    //LIST NEARBY INSTITUTION
+    builder.addCase(triggerGetNearbyInstitution.pending, (state) => {
+      state.nearbyInstitution.loading = true;
+      state.nearbyInstitution.error = false;
+      state.nearbyInstitution.message = "";
+    });
+    builder.addCase(triggerGetNearbyInstitution.fulfilled, (state, action) => {
+      state.nearbyInstitution.loading = false;
+      state.nearbyInstitution.data = action.payload;
+      state.nearbyInstitution.error = false;
+      state.nearbyInstitution.message = action.payload?.message;
+    });
+    builder.addCase(triggerGetNearbyInstitution.rejected, (state, action) => {
+      state.nearbyInstitution.loading = false;
+      state.nearbyInstitution.error = true;
+      state.nearbyInstitution.message = action.payload?.message;
+    });
   },
 });
 
@@ -348,6 +387,7 @@ export const {
   resetSurveyIndicatorState,
   resetSurveyReportState,
   resetSurveyReportMultipleState,
+  resetNearbyInstitutionState,
 } = instituteSlice.actions;
 
 export default instituteSlice.reducer;

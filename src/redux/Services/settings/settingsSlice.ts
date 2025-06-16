@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   triggerChangePassword,
+  triggerGetLocation,
   triggerGetNotifications,
   triggerGetUserProfile,
+  triggerKycInfoUpdate,
   triggerReadNotifications,
+  triggerUpdateContactInfo,
 } from "./settingsServices";
 interface IinitialState {
   userProfileData: {
@@ -28,6 +31,27 @@ interface IinitialState {
     statusCode?: number | null;
   };
   changePassword: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  updateContactInfo: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  locationData: {
+    data: Record<string, string>[] | any;
+    loading: boolean;
+    error: boolean;
+    message: string | undefined;
+    statusCode?: number | null;
+  };
+  updateKyc: {
     data: Record<string, string>[] | any;
     loading: boolean;
     error: boolean;
@@ -65,6 +89,27 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+  updateContactInfo: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
+  locationData: {
+    data: [],
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
+  updateKyc: {
+    data: {},
+    loading: false,
+    error: false,
+    message: "",
+    statusCode: null,
+  },
 };
 const settingsSlice = createSlice({
   name: "settings",
@@ -80,6 +125,22 @@ const settingsSlice = createSlice({
       state.changePassword.error = initialState.changePassword.error;
       state.changePassword.message = initialState.changePassword.message;
       state.changePassword.statusCode = initialState.changePassword.statusCode;
+    },
+    resetUpdateContactInfoState: (state) => {
+      state.updateContactInfo.error = initialState.updateContactInfo.error;
+      state.updateContactInfo.message = initialState.updateContactInfo.message;
+      state.updateContactInfo.statusCode =
+        initialState.updateContactInfo.statusCode;
+    },
+    resetLocationDataState: (state) => {
+      state.locationData.error = initialState.locationData.error;
+      state.locationData.message = initialState.locationData.message;
+      state.locationData.statusCode = initialState.locationData.statusCode;
+    },
+    resetUpdateKycState: (state) => {
+      state.updateKyc.error = initialState.updateKyc.error;
+      state.updateKyc.message = initialState.updateKyc.message;
+      state.updateKyc.statusCode = initialState.updateKyc.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -115,7 +176,6 @@ const settingsSlice = createSlice({
       state.notificationsData.message = "";
     });
     builder.addCase(triggerGetNotifications.fulfilled, (state, action) => {
-      console.log("action", action.payload);
       state.notificationsData.loading = false;
       state.notificationsData.data = action.payload?.results;
       state.notificationsData.error = false;
@@ -166,20 +226,89 @@ const settingsSlice = createSlice({
       state.changePassword.loading = false;
       state.changePassword.data = action.payload?.results;
       state.changePassword.error = false;
-      state.changePassword.message = action.payload?.message ?? "";
+      state.changePassword.message = action.payload
+        ?.message as unknown as string;
       state.changePassword.statusCode = action.payload?.status_code ?? null;
     });
     builder.addCase(triggerChangePassword.rejected, (state, action) => {
       console.log("action rejected", action.payload);
       state.changePassword.loading = false;
       state.changePassword.error = true;
-      state.changePassword.message = action.payload?.message;
+      state.changePassword.message = action.payload
+        ?.message as unknown as string;
       state.changePassword.statusCode = action.payload?.status_code ?? null;
+    });
+
+    //UPDATE CONTACT INFO
+    builder.addCase(triggerUpdateContactInfo.pending, (state) => {
+      state.updateContactInfo.loading = true;
+      state.updateContactInfo.error = false;
+      state.updateContactInfo.data = {};
+    });
+    builder.addCase(triggerUpdateContactInfo.fulfilled, (state, action) => {
+      state.updateContactInfo.loading = false;
+      state.updateContactInfo.data = action.payload?.results;
+      state.updateContactInfo.error = false;
+      state.updateContactInfo.message = action.payload?.message ?? "";
+      state.updateContactInfo.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerUpdateContactInfo.rejected, (state, action) => {
+      state.updateContactInfo.loading = false;
+      state.updateContactInfo.error = true;
+      state.updateContactInfo.message = action.payload?.message ?? "";
+      state.updateContactInfo.statusCode = action.payload?.status_code ?? null;
+    });
+
+    //GET LOCATION DATA
+    builder.addCase(triggerGetLocation.pending, (state) => {
+      state.locationData.loading = true;
+      state.locationData.error = false;
+      state.locationData.data = {};
+      state.locationData.message = "";
+    });
+    builder.addCase(triggerGetLocation.fulfilled, (state, action) => {
+      state.locationData.loading = false;
+      state.locationData.data = action.payload?.results;
+      state.locationData.error = false;
+      state.locationData.message = action.payload?.message ?? "";
+      state.locationData.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerGetLocation.rejected, (state, action) => {
+      state.locationData.loading = false;
+      state.locationData.error = true;
+      state.locationData.message = action.payload?.message ?? "";
+      state.locationData.statusCode = action.payload?.status_code ?? null;
+    });
+
+    //UPDATE KYC
+    builder.addCase(triggerKycInfoUpdate.pending, (state) => {
+      state.updateKyc.loading = true;
+      state.updateKyc.error = false;
+      state.updateKyc.data = {};
+      state.updateKyc.message = "";
+    });
+    builder.addCase(triggerKycInfoUpdate.fulfilled, (state, action) => {
+      state.updateKyc.loading = false;
+      state.updateKyc.data = action.payload?.results;
+      state.updateKyc.error = false;
+      state.updateKyc.message = action.payload?.message ?? "";
+      state.updateKyc.statusCode = action.payload?.status_code ?? null;
+    });
+    builder.addCase(triggerKycInfoUpdate.rejected, (state, action) => {
+      state.updateKyc.loading = false;
+      state.updateKyc.error = true;
+      state.updateKyc.message = action.payload?.message ?? "";
+      state.updateKyc.statusCode = action.payload?.status_code ?? null;
     });
   },
 });
 
-export const { resetUserProfileState, resetChangePasswordState } =
-  settingsSlice.actions;
+export const {
+  resetUserProfileState,
+  resetChangePasswordState,
+  resetUpdateContactInfoState,
+  resetLocationDataState,
+  resetUpdateKycState,
+} = settingsSlice.actions;
 
 export default settingsSlice.reducer;

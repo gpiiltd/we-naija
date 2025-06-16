@@ -68,6 +68,7 @@ const SignUp = () => {
   });
 
   const handleSignup = (values: any) => {
+    localStorage.setItem("emailverification", values.email);
     const payload = {
       email: values.email.trim().toLowerCase(),
       full_name: values.fullName.trim(),

@@ -8,18 +8,37 @@ import bigGirlSvg from "../../Assets/svgImages/bgGirl.svg";
 import backgroundImage from "../../Assets/svgImages/reportCardBg.svg";
 import Leaderboard from "../../Components/Landing/Leaderboard";
 import SwiperCarosel from "../../Components/Landing/SwiperCarosel";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import SectionWrapper from "./Section";
+import { useEffect } from "react";
 const LandingHome = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const scrollTarget = params.get("scroll");
+    if (scrollTarget) {
+      const el = document.getElementById(scrollTarget);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+
+        // Clean the URL
+        const newUrl = location.pathname;
+        window.history.replaceState({}, "", newUrl);
+      }
+    }
+  }, [location]);
+
   return (
     <div>
-      <div>
+      <SectionWrapper id="share-experience">
         <div className="relative w-full">
           {/* SVG Background */}
           <div
             className="absolute inset-0 bg-no-repeat bg-cover bg-center"
             style={{
-              backgroundImage: `url(${LandingBg})`, // ✅ Fix: Use backticks
+              backgroundImage: `url(${LandingBg})`,
               zIndex: 0,
             }}
           ></div>
@@ -31,11 +50,11 @@ const LandingHome = () => {
               <div className="hidden lg:block md:block flex-col lg:basis-1/2 lg:px-16 px-8">
                 <Typography
                   variant={TypographyVariant.TITLE}
-                  className="max-w-lg mx-auto  mb-6 md:text-[56px] font-bold leading-tight"
+                  className="font-raleway max-w-lg mx-auto  mb-6 md:text-[56px] font-bold leading-tight"
                 >
-                  VOICE YOUR {` `}
-                  <span className="inline-block relative">
-                    CHANGE{" "}
+                  WHERE ADVOCACY MEETS {` `}
+                  <span className="inline-block relative font-raleway">
+                    ACTION{" "}
                     <Icon
                       type="homeSVg"
                       className="ax-w-lg h-25 hidden lg:block absolute -right-[90px] -bottom-3 xl:-mt-2"
@@ -53,9 +72,9 @@ const LandingHome = () => {
                 <div className="flex flex-row items-center justify-center lg:justify-start">
                   <Typography
                     variant={TypographyVariant.TITLE}
-                    className="text-[30px] font-bold text-gray-800 mb-1 leading-9 lg:text[176px]"
+                    className="font-raleway text-[30px] font-bold text-gray-800 mb-1 leading-9 lg:text[176px]"
                   >
-                    VOICE YOUR CHANGE{" "}
+                    Where Advocacy Meets Action{" "}
                     <span className="hidden md:inline lg:inline">
                       <Icon type="homeSVg" className="" />
                     </span>
@@ -71,7 +90,7 @@ const LandingHome = () => {
               <div className="lg:basis-1/2 px-8 mt-2 lg:mt-0">
                 <Typography
                   variant={TypographyVariant.NORMAL}
-                  className="font-normal text-base md:text-lg text-[#575757] mb-4 leading-9"
+                  className="font-normal font-raleway text-base md:text-lg text-[#575757] mb-4 leading-9"
                 >
                   Your voice matters! Share your experiences and insights to
                   help drive real improvements in healthcare. Make your impact—
@@ -80,7 +99,7 @@ const LandingHome = () => {
 
                 <div className="max-w-lg mt-5  flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
                   <Button
-                    text="Send message"
+                    text="Sign up"
                     active={true}
                     bg_color="#007A61"
                     text_color="white"
@@ -96,7 +115,11 @@ const LandingHome = () => {
                     text_color="white"
                     loading={false}
                     onClick={() => {
-                      navigate("/create-account");
+                      //navigate("/create-account");
+                      // const section = document.getElementById("about");
+                      // if (section) {
+                      //   section.scrollIntoView({ behavior: "smooth" });
+                      // }
                     }}
                   />
                 </div>
@@ -162,7 +185,7 @@ const LandingHome = () => {
               <div>
                 <Typography
                   variant={TypographyVariant.TITLE}
-                  className="text-sm font-normal text-gray-800 mb-1 pr-3"
+                  className="text-[18px] font-normal text-gray-800 mb-1 pr-3 font-raleway"
                 >
                   Initiative of
                 </Typography>
@@ -171,72 +194,74 @@ const LandingHome = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="bg-[#006C55] px-8 py-12 w-full flex flex-col md:flex-row-reverse items-center md:items-start gap-12 max-w-10xl mx-auto">
-        {/* Left Side - Text Content */}
-        <div className="md:w-1/2">
-          <Typography
-            variant={TypographyVariant.TITLE}
-            className="text-2xl font-bold text-white mb-6"
-          >
-            ABOUT US
-          </Typography>
-          <Typography
-            variant={TypographyVariant.TITLE}
-            className="text-[16px] font-light text-white mb-1 leading-7 max-w-lg"
-          >
-            WeNaija is an initiative of NSSF launched in 2021 to enable
-            creatives engage in health advocacy. Using art forms such as
-            photography, literature, and video storytelling, we have engaged
-            over young Nigerians in health advocacy.
-            <br />
-            <br />
-            Building on the success of the WeNaija campaign, NSSF launched the
-            WeNaija community to leverage the power, passion, and creativity of
-            Nigerian youths to transform our healthcare system.
-            <br />
-            <br />
-            Through our community, we are empowering Nigerian youth to use the
-            tools at their disposal to advocate for a healthier future.
-          </Typography>
-          <div className="w-[10rem] mt-6">
-            <Button
-              text="Sign up"
-              active={true}
-              border_color="#ffffff"
-              text_color="white"
-              loading={false}
-              onClick={() => {
-                navigate("/create-account");
-              }}
+      </SectionWrapper>
+
+      <SectionWrapper id="about">
+        {/* About content */}
+        <div className="bg-[#006C55] px-8 py-16 w-full flex flex-col md:flex-row-reverse items-center md:items-start gap-12 max-w-10xl mx-auto">
+          {/* Left Side - Text Content */}
+          <div className="md:w-1/2">
+            <Typography
+              variant={TypographyVariant.TITLE}
+              className="font-raleway text-2xl font-bold text-white mb-6"
+            >
+              ABOUT US
+            </Typography>
+            <Typography
+              variant={TypographyVariant.TITLE}
+              className="text-[16px] font-raleway  font-light text-white mb-1 leading-7 max-w-lg"
+            >
+              WeNaija is an initiative of NSSF launched in 2021 to enable
+              creatives engage in health advocacy. Using art forms such as
+              photography, literature, and video storytelling, we have engaged
+              over young Nigerians in health advocacy.
+              <br />
+              <br />
+              Building on the success of the WeNaija campaign, NSSF launched the
+              WeNaija community to leverage the power, passion, and creativity
+              of Nigerian youths to transform our healthcare system.
+              <br />
+              <br />
+              Through our community, we are empowering Nigerian youth to use the
+              tools at their disposal to advocate for a healthier future.
+            </Typography>
+            <div className="w-[10rem] mt-6">
+              <Button
+                text="Sign up"
+                active={true}
+                border_color="#ffffff"
+                text_color="white"
+                loading={false}
+                onClick={() => navigate("/create-account")}
+              />
+            </div>
+          </div>
+
+          {/* Right Side - Image */}
+          <div className="md:w-1/2 w-full">
+            <Icon
+              type="millionpic"
+              className="w-full h-auto max-h-[500px] object-contain"
             />
           </div>
         </div>
+      </SectionWrapper>
 
-        {/* Right Side - Image */}
-        <div className="md:w-1/2 w-full">
-          <Icon
-            type="millionpic"
-            className="w-full h-auto max-h-[500px] object-contain"
-          />
-        </div>
-      </div>
-
-      <div className="bg-[#001611] p-6 w-full">
+      <div className="bg-[#001611] p-6 w-full font-raleway">
         <Typography
           variant={TypographyVariant.TITLE}
-          className="text-2xl text-center leading-normal font-bold text-white mb-6"
+          className="font-raleway text-center leading-normal font-bold text-white mb-6"
         >
           BECOME A HEALTH CHAMPION
         </Typography>
         <Typography
           variant={TypographyVariant.NORMAL}
-          className="text-base text-center leading-10 font-light text-white mb-6 md:max-w-4xl mx-auto"
+          className="font-raleway text-base text-center leading-10 font-light text-white mb-6 md:max-w-4xl mx-auto"
         >
           Join a vibrant community of health advocates! As a Health Champion,
           you’ll take on exciting challenges, earn rewards, and make a lasting
           impact.{" "}
-          <span className="text-base text-justify font-bold">
+          <span className="font-raleway text-base text-justify font-bold">
             Here’s how it works:
           </span>
         </Typography>
@@ -244,7 +269,10 @@ const LandingHome = () => {
           <InfoSection />
         </div>
       </div>
-      <Leaderboard />
+      <SectionWrapper id="leaderboard">
+        <Leaderboard />
+      </SectionWrapper>
+
       {/* Second Row - Full Width on All Screens */}
       <CommunitySection />
     </div>
@@ -256,7 +284,7 @@ export default LandingHome;
 const CommunitySection = () => {
   const navigate = useNavigate();
   return (
-    <div className="w-full flex justify-center p-6 mt-16 mb-[30px] lg:mb-10">
+    <div className="w-full flex justify-center p-6 mt-16 mb-[30px] lg:mb-10 font-raleway ">
       <div className="relative flex flex-col lg:flex-row items-center w-full md:w-[80vw]">
         {/* Text + Button Section */}
         <div
@@ -299,7 +327,7 @@ const CommunitySection = () => {
                 text_color="white"
                 loading={false}
                 onClick={() => {
-                  navigate("/create-account");
+                  //navigate("/create-account");
                 }}
               />
             </div>

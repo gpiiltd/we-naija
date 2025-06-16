@@ -30,7 +30,13 @@ interface ApiUrls {
   getNotifications: string;
   readNotifications: string;
   logout: string;
+  getAllLeaderboardDataPublic: string;
   changePassword: string;
+  updateContactInfo: string;
+  getLocation: string;
+  getAllCompletedTask: string;
+  getAllCompletedSurvey: string;
+  resubmitKyc: string;
 }
 
 // const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://api.test.nssf.ng/api/v1/";
@@ -68,5 +74,11 @@ export const apiUrl: ApiUrls = {
   getNotifications: `${BASE_URL}notifications`,
   readNotifications: `${BASE_URL}notifications/mark_as_read`,
   logout: `${BASE_URL}auth/logout`,
+  getAllLeaderboardDataPublic: `${BASE_URL}leaderboard/public`,
   changePassword: `${BASE_URL}agent/process/change-password`,
+  updateContactInfo: `${BASE_URL}agent/update/contact-info`,
+  getLocation: `${BASE_URL}locations`,
+  getAllCompletedTask: `${BASE_URL}task/submissions/completed`,
+  getAllCompletedSurvey: `${BASE_URL}survey/completed/`,
+  resubmitKyc: `${BASE_URL}agent/process/resubmit-kyc`,
 };

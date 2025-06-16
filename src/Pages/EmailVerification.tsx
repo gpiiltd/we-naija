@@ -5,55 +5,36 @@ import { TypographyVariant } from "../Components/types";
 import Icon from "../Assets/SvgImagesAndIcons";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  triggerEmailLinkResend,
   triggerEmailVerification,
-  triggerEmailVerificationResend,
-} from "../redux/Services/user/UserServices";
+} from "../redux/Services/auth/authService";
 import type { AppDispatch } from "../redux/Store/store";
 import { RootState } from "../redux/Store/store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@gpiiltd/gpi-ui-library";
 import CustomModal from "../Components/Modal";
-import { resetState } from "../redux/Slices/user/userSlice";
-const EmailSent = () => {
+import {
+  resetEmailLink,
+  resetVerifyEmail,
+} from "../redux/Services/auth/authSlice";
+import { formatCountdown } from "../utils/inputValidations";
+
+const EmailVerification = () => {
   const dispatch: AppDispatch = useDispatch();
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(180);
   const [canResend, setCanResend] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { uid, email_token } = useParams();
   const navigate = useNavigate();
-  const { error, message, email } = useSelector(
-    (state: RootState) => state.user,
+  const { email } = useSelector((state: RootState) => state.user);
+  const { resendEmailLink, verifyEmail } = useSelector(
+    (state: RootState) => state.auth,
   );
 
   const emailverification = localStorage.getItem("emailverification");
 
   const emailToSend = email ? email : (emailverification as string);
-
-  const handleResendOTP = () => {
-    const payload = {
-      email: emailToSend,
-      //   email: "newuser@yopmail.com",
-    };
-    if (canResend) {
-      dispatch(triggerEmailVerificationResend(payload));
-
-      if (error) {
-        toast.error(error);
-      } else if (!error && message) {
-        toast.success(message);
-      }
-      dispatch(resetState());
-      setCountdown(30);
-      setCanResend(false);
-    }
-  };
-
-  const navigateToLogin = () => {
-    setShowModal(false);
-    navigate("/login");
-    // navigate("/verified-agent-dashboard");
-  };
 
   useEffect(() => {
     const payload = {
@@ -62,19 +43,50 @@ const EmailSent = () => {
     };
 
     dispatch(triggerEmailVerification(payload));
+  }, [uid, email_token]);
 
-    setTimeout(() => {
-      if (error) {
-        toast.error(error);
-      } else if (!error && message) {
-        toast.success(message);
-        setShowModal(true);
-      }
-    }, 2000);
+  useEffect(() => {
+    if (verifyEmail?.statusCode === 200 && verifyEmail?.message) {
+      // toast.success(verifyEmail.message);
+      setShowModal(true);
+    }
+    if (verifyEmail?.error && verifyEmail?.message) {
+      toast.error(verifyEmail.message);
+    }
+    dispatch(resetVerifyEmail());
+  }, [
+    dispatch,
+    verifyEmail.message,
+    verifyEmail.error,
+    verifyEmail.statusCode,
+  ]);
 
-    setShowModal(true);
-    dispatch(resetState());
-  }, [dispatch, uid, email_token]);
+  const handleResendOTP = () => {
+    const payload = {
+      email: emailToSend,
+      //   email: "newuser@yopmail.com",
+    };
+    if (canResend) {
+      dispatch(triggerEmailLinkResend(payload));
+      setCountdown(180);
+      setCanResend(false);
+    }
+  };
+
+  useEffect(() => {
+    if (resendEmailLink.statusCode === 200 && resendEmailLink.message) {
+      toast.success(resendEmailLink.message);
+      setShowModal(true);
+    }
+    if (resendEmailLink.error && resendEmailLink.message) {
+      toast.error(resendEmailLink.message);
+    }
+    dispatch(resetEmailLink());
+  }, [
+    resendEmailLink.message,
+    resendEmailLink.error,
+    resendEmailLink.statusCode,
+  ]);
 
   useEffect(() => {
     const timer =
@@ -90,6 +102,12 @@ const EmailSent = () => {
       }, 1000);
     return () => clearInterval(timer as NodeJS.Timeout);
   }, [countdown]);
+
+  const navigateToLogin = () => {
+    setShowModal(false);
+    navigate("/login");
+    // navigate("/verified-agent-dashboard");
+  };
 
   return (
     <div className="w-full flex flex-col h-screen lg:flex-row">
@@ -154,14 +172,13 @@ const EmailSent = () => {
               >
                 {canResend
                   ? "Re-send link via email "
-                  : `Re-send link via email  (0:${
-                      countdown < 10 ? `0${countdown}` : countdown
-                    })`}
+                  : `Re-send link via email  (${formatCountdown(countdown)})`}
               </Typography>
             </div>
           </div>
         </div>
       </div>
+
       <CustomModal isOpen={showModal} onClose={() => setShowModal(!showModal)}>
         <section className="flex flex-col gap-3 py-6 px-3">
           <div className="flex flex-col gap-2 items-center justify-center">
@@ -192,4 +209,4 @@ const EmailSent = () => {
   );
 };
 
-export default EmailSent;
+export default EmailVerification;

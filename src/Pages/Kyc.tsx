@@ -1,7 +1,6 @@
 import Typography from "../Components/Typography";
 import { TypographyVariant } from "../Components/types";
 import KycCard from "../Components/KYCpages/KycCard";
-import SkipButton from "../Components/KYCpages/SkipButton";
 import KycHeader from "../Components/KYCpages/KycHeader";
 import { useEffect } from "react";
 import { triggerGetUserProfile } from "../redux/Services/settings/settingsServices";
@@ -62,17 +61,15 @@ const Kyc = () => {
             title="Personal Information"
             description="Provide details such as your name, age D.O.B etc..."
             icon="person"
-            linkTo="/kyc/personal-information"
+            // linkTo="/kyc/personal-information"
           />
           <KycCard
             title="ID Verification"
-            description="Use government issued documents to verify your ID                                          "
+            description="Use government issued documents to verify your ID"
             icon="idcard"
-            linkTo="/kyc/id-verification"
+            // linkTo="/kyc/id-verification"
           />
         </div>
-
-        <SkipButton />
       </div>
     </div>
   );

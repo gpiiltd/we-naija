@@ -13,12 +13,18 @@ export const triggerGetAllInstitution = createAsyncThunk<
   any,
   any,
   { rejectValue: ErroResponseData }
->("user/GetAllInstitution", async (params: any, thunkAPI) => {
+>("user/GetAllInstitution", async (params: Record<string, any>, thunkAPI) => {
   try {
-    const pageNumber = params.page || 1;
+    const { page = 1, state, lga } = params;
+
+    const filterParams = new URLSearchParams({ page: page.toString() });
+
+    if (state) filterParams.append("state", state);
+    if (lga) filterParams.append("local_government", lga);
+
     const token = localStorage.getItem("accessToken");
     const response = await axios.get<DefaultResponse>(
-      `${apiUrl.allInstitute}?page=${pageNumber}`,
+      `${apiUrl.allInstitute}?${filterParams.toString()}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -197,6 +203,33 @@ export const triggerSubmitSurveyReportMultiple = createAsyncThunk<
         headers: {
           Authorization: `Bearer ${token}`,
           // "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerGetNearbyInstitution = createAsyncThunk<
+  DefaultResponse,
+  any,
+  { rejectValue: ErroResponseData }
+>("user/GetNearbyInstitution", async (params, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.allInstitute}/?state=${params.state}&local_government=${params.lga}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
           Accept: "application/json",
         },
       },

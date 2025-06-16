@@ -5,9 +5,15 @@ interface FileUploadProps {
   label: string;
   onChange: (file: File | null) => void;
   error?: string;
+  readOnly?: boolean;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ label, onChange, error }) => {
+const FileUpload: React.FC<FileUploadProps> = ({
+  label,
+  onChange,
+  error,
+  readOnly,
+}) => {
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,12 +70,14 @@ const FileUpload: React.FC<FileUploadProps> = ({ label, onChange, error }) => {
               </p>
             </div>
           </div>
-          <button
-            onClick={handleRemoveFile}
-            className="text-gray-500 hover:text-red-500"
-          >
-            <Icon type="deleteIcon" className="h-14 w-14" />
-          </button>
+          {!readOnly && (
+            <button
+              onClick={handleRemoveFile}
+              className="text-gray-500 hover:text-red-500"
+            >
+              <Icon type="deleteIcon" className="h-14 w-14" />
+            </button>
+          )}
         </div>
       )}
     </div>

@@ -15,7 +15,7 @@ const VerificationCard: React.FC<VerificationCardProps> = ({
   responseTimeMessage,
 }) => {
   return (
-    <div className="w-full border-[1px] border-solid border-[#D0D5DD] py-6 px-8 rounded-lg mr-4">
+    <div className="w-full border-[1px] border-solid border-[#D0D5DD] py-6 px-8 rounded-lg ">
       <section className="flex justify-start">
         <Icon type="home-kyc-verification" className="pr-2" />
         <p>KYC Verification Status</p>

@@ -121,3 +121,89 @@ export const triggerChangePassword = createAsyncThunk<
     });
   }
 });
+
+export const triggerUpdateContactInfo = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("settings/UpdateContactInfo", async (payload, thunkAPI) => {
+  try {
+    console.log("I GOT TRIGGERED");
+    console.log("payload", payload);
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.patch<DefaultResponse>(
+      `${apiUrl.updateContactInfo}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
+    console.log("response", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerGetLocation = createAsyncThunk<
+  any,
+  any,
+  { rejectValue: ErroResponseData }
+>("settings/GetLocation", async (state_id, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get<DefaultResponse>(
+      `${apiUrl.getLocation}?state_id=${state_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});
+
+export const triggerKycInfoUpdate = createAsyncThunk<
+  DefaultResponse,
+  any,
+  { rejectValue: ErroResponseData }
+>("settings/KycInfoUpdate", async (KycInfoUpdateData, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post<DefaultResponse>(
+      `${apiUrl.resubmitKyc}`,
+      KycInfoUpdateData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    console.log("responseUPDATE", response.data);
+    return response.data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({
+      message: error.response.data.message ?? "Something went wrong",
+      status_code: error.response.data.status_code,
+      results: error.response.data.results,
+    });
+  }
+});

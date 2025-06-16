@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Footer from "../../Components/Footer";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import { NavLink } from "react-router-dom";
@@ -11,12 +11,17 @@ import { FiX, FiMenu } from "react-icons/fi";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Button } from "@gpiiltd/gpi-ui-library";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { socialsFooter } from "../../utils/selectOptions";
+
+//import { disablePageScroll, enablePageScroll } from "scroll-lock";
 
 const LandingView = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +35,30 @@ const LandingView = () => {
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+
+  const handleNavigateAndScroll = (id: string) => {
+    setActiveSection(id);
+
+    if (location.pathname === "/contact") {
+      // Coming from contact page – go to home and scroll
+      navigate("/?scroll=" + id);
+    } else {
+      // Already on home – just scroll
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (location.pathname === "/contact") {
+      setActiveSection("contact");
+    } else if (location.pathname === "/") {
+      setActiveSection(""); // or preserve previous scroll section
+    }
+  }, [location.pathname]);
+
   return (
     <div>
       {/* header view */}
@@ -48,27 +77,62 @@ const LandingView = () => {
               <Icon
                 type="logo"
                 className="w-fit"
-                click={() => (window.location.href = "/")}
+                click={() => handleNavigateAndScroll("share-experience")}
               />
             </div>
           </div>
 
           {/* Navigation Menu */}
           <nav className="hidden md:flex items-center space-x-8 text-[#575757] font-light">
-            <NavLink
-              to="/"
+            {/* <button
+              onClick={() => handleNavigateAndScroll("share-experience")}
+              className={`transition ${
+                activeSection === "share-experience"
+                  ? "text-primary_green font-medium"
+                  : "hover:text-primary_green transition"
+              }`}
+            >
+              Share Experience
+            </button> */}
+
+            <button
+              onClick={() => handleNavigateAndScroll("about")}
+              className={`transition ${
+                activeSection === "about"
+                  ? "text-primary_green font-medium"
+                  : "hover:text-primary_green transition"
+              }`}
+            >
+              {/* // {location.pathname === "/contact" ? "Home" : "Share Experience"} */}
+              About Us
+            </button>
+            <button
+              onClick={() => handleNavigateAndScroll("leaderboard")}
+              className={`transition ${
+                activeSection === "leaderboard"
+                  ? "text-primary_green font-medium"
+                  : "hover:text-primary_green transition"
+              }`}
+            >
+              {/* // {location.pathname === "/contact" ? "Home" : "Share Experience"} */}
+              Leaderboard
+            </button>
+
+            {/* <NavLink
+              to="/contact"
               className={({ isActive }) =>
                 isActive
                   ? "text-primary_green font-medium"
                   : "hover:text-primary_green transition"
               }
             >
-              About us
-            </NavLink>
+              Contact us
+            </NavLink> */}
             <NavLink
               to="/contact"
+              onClick={() => setActiveSection("contact")}
               className={({ isActive }) =>
-                isActive
+                isActive || activeSection === "contact"
                   ? "text-primary_green font-medium"
                   : "hover:text-primary_green transition"
               }
@@ -95,7 +159,10 @@ const LandingView = () => {
                     <Icon
                       type="logo"
                       className="w-fit"
-                      click={() => (window.location.href = "/")}
+                      click={() => {
+                        handleNavigateAndScroll("share-experience");
+                        toggleDrawer();
+                      }}
                     />
                     <button onClick={toggleDrawer} className="text-lg">
                       <FiX size={24} className="text-gray-500" />
@@ -104,31 +171,35 @@ const LandingView = () => {
 
                   <nav className="flex flex-col pt-8 text-md text-[#17191C] font-semibold">
                     <ul className="space-y-6 ">
-                      {/* <li className="flex gap-2 ">
-                        <NavLink
-                          to="/"
-                          onClick={toggleDrawer}
-                          className={({ isActive }) =>
-                            isActive
-                              ? "text-primary_green font-normal"
-                              : "font-thin hover:text-primary_green transition duration-300"
-                          }
-                        >
-                          Home
-                        </NavLink>
-                      </li> */}
                       <li className="flex gap-2">
-                        <NavLink
-                          to="/"
-                          onClick={toggleDrawer}
-                          className={({ isActive }) =>
-                            isActive
+                        <button
+                          onClick={() => {
+                            handleNavigateAndScroll("about");
+                            toggleDrawer();
+                          }}
+                          className={`${
+                            activeSection === "about"
                               ? "text-primary_green font-normal"
                               : "font-thin hover:text-primary_green transition duration-300"
-                          }
+                          }`}
                         >
                           About Us
-                        </NavLink>
+                        </button>
+                      </li>
+                      <li className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            handleNavigateAndScroll("leaderboard");
+                            toggleDrawer();
+                          }}
+                          className={`${
+                            activeSection === "leaderboard"
+                              ? "text-primary_green font-normal"
+                              : "font-thin hover:text-primary_green transition duration-300"
+                          }`}
+                        >
+                          Leaderboard
+                        </button>
                       </li>
                       {/* <li className="flex gap-2">
                         <NavLink
@@ -198,21 +269,26 @@ const LandingView = () => {
       <Footer bg_color="black" className="px-8 md:px-6  lg:px-16">
         <div className="border-b border-gray-800 md:mb-8 pb-4">
           <div className="flex flex-col gap-4  md:flex-row md:justify-between">
-            <Icon type="wenaija" className="w-fit" />
-            <div className="text-cream  ">
-              <ul className="flex md:space-x-6">
-                <li className="cursor-pointer">
-                  <Icon type="linkedin" />
-                </li>
-                <li className="cursor-pointer">
-                  <Icon type="facebook" />
-                </li>
-                <li className="cursor-pointer">
-                  <Icon type="twitter" />
-                </li>
-                <li className="cursor-pointer">
-                  <Icon type="instagram" />
-                </li>
+            <button
+              onClick={() => handleNavigateAndScroll("share-experience")}
+              className={`transition`}
+            >
+              <Icon type="wenaija" className="w-fit" />
+            </button>
+            <div className="flex space-x-4 mt-6">
+              <ul className="flex gap-5 flex-wrap">
+                {socialsFooter.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 bg-n-7 rounded-full transition-colors hover:bg-n-6"
+                    >
+                      <Icon type={item.iconUrl} />
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -220,54 +296,59 @@ const LandingView = () => {
           <nav className="text-cream text-xs py-4 ">
             <ul className="flex flex-col gap-4 md:flex-row">
               <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-blue-400 font-thin"
-                      : " font-thin hover:text-gray-300 transition duration-200"
-                  }
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/create-account"
-                  className={({ isActive }) =>
-                    isActive
+                <button
+                  onClick={() => handleNavigateAndScroll("share-experience")}
+                  className={`transition ${
+                    activeSection === "share-experience"
                       ? "text-blue-400 font-thin"
                       : "font-thin hover:text-gray-300 transition duration-200"
-                  }
+                  }`}
                 >
-                  Report
-                </NavLink>
+                  Share Experience
+                </button>
               </li>
+
               <li>
-                <NavLink
-                  to="/create-account"
-                  className={({ isActive }) =>
-                    isActive
+                <button
+                  onClick={() => handleNavigateAndScroll("about")}
+                  className={`transition ${
+                    activeSection === "about"
                       ? "text-blue-400 font-thin"
                       : "font-thin hover:text-gray-300 transition duration-200"
-                  }
+                  }`}
                 >
+                  {/* // {location.pathname === "/contact" ? "Home" : "Share Experience"} */}
+                  About Us
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleNavigateAndScroll("leaderboard")}
+                  className={`transition ${
+                    activeSection === "leaderboard"
+                      ? "text-blue-400 font-thin"
+                      : "font-thin hover:text-gray-300 transition duration-200"
+                  }`}
+                >
+                  {/* // {location.pathname === "/contact" ? "Home" : "Share Experience"} */}
                   Leaderboard
-                </NavLink>
+                </button>
               </li>
+
               <li>
                 <NavLink
-                  to="/create-account"
+                  to="/contact"
+                  onClick={() => setActiveSection("contact")}
                   className={({ isActive }) =>
-                    isActive
+                    isActive || activeSection === "contact"
                       ? "text-blue-400 font-thin"
                       : "font-thin hover:text-gray-300 transition duration-200"
                   }
                 >
-                  Join community
+                  Contact us
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   to="/create-account"
                   className={({ isActive }) =>
@@ -278,7 +359,7 @@ const LandingView = () => {
                 >
                   Settings
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>
@@ -287,11 +368,11 @@ const LandingView = () => {
           <Typography variant={TypographyVariant.SMALL}>
             © 2024 Wenailja. All rights reserved.
           </Typography>
-          <ul className="flex space-x-3">
+          {/* <ul className="flex space-x-3">
             <li className="cursor-pointer">Terms</li>
             <li className="cursor-pointer">Privacy </li>
             <li className="cursor-pointer">Cookies </li>
-          </ul>
+          </ul> */}
         </div>
       </Footer>
     </div>

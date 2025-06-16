@@ -4,7 +4,6 @@ import { TypographyVariant } from "../types";
 import { Errors } from "../types";
 import Icon from "../../Assets/SvgImagesAndIcons";
 import FileUpload from "./FileUpload";
-import SkipButton from "./SkipButton";
 import KycHeader from "./KycHeader";
 import { useNavigate } from "react-router-dom";
 import CustomModal from "../Modal";
@@ -13,15 +12,14 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/Store/store";
 import { triggerKycInfoSubmit } from "../../redux/Services/user/UserServices";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { resetState } from "../../redux/Slices/user/userSlice";
+import { triggerGetUserProfile } from "../../redux/Services/settings/settingsServices";
 
 const IDVerification = () => {
   const [idType, setIdType] = useState("");
   const [idNumber, setIdNumber] = useState("");
-  // eslint-disable-next-line
   const [frontFile, setFrontFile] = useState<File | null>(null);
-  // eslint-disable-next-line
   const [backFile, setBackFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const navigate = useNavigate();
@@ -40,6 +38,12 @@ const IDVerification = () => {
     (state: RootState) => state.user,
   );
 
+  const { userProfileData } = useSelector((state: RootState) => state.settings);
+
+  useEffect(() => {
+    dispatch(triggerGetUserProfile({}));
+  }, [dispatch]);
+
   const handleIdNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdNumber(e.target.value);
     setErrors({ ...errors, idNumber: "" });
@@ -53,21 +57,26 @@ const IDVerification = () => {
     }
   };
 
+  const profilePhoneNumber = userProfileData.data?.mobile_number;
+  const phoneNumber = profilePhoneNumber ?? kycPhoneNumber;
+
   const handleSubmit = async () => {
     setLoading(!loading);
 
     const payload = new FormData();
     payload.append("address", kycPersonalInfo.address);
+    payload.append("state_id", kycPersonalInfo.state_id);
+    payload.append("lga_id", kycPersonalInfo.lga_id);
     payload.append("nationality", kycPersonalInfo.nationality);
     payload.append("gender", kycPersonalInfo.gender);
     payload.append("date_of_birth", kycPersonalInfo.dateOfBirth);
-    payload.append("mobile_number", kycPhoneNumber);
+    payload.append("mobile_number", phoneNumber);
     payload.append("id_type", idType);
     payload.append("id_number", idNumber);
     payload.append("id_front", frontFile as File);
     payload.append("id_back", backFile as File);
 
-    dispatch(triggerKycInfoSubmit(payload) as any);
+    dispatch(triggerKycInfoSubmit(payload));
   };
 
   useEffect(() => {
@@ -87,6 +96,7 @@ const IDVerification = () => {
   return (
     <>
       <KycHeader />
+      <ToastContainer />
       <div className="flex flex-col items-center justify-center min-h-screen ">
         <div className="bg-white p-2 md:p-8 rounded-lg md:w-[50%] mt-10">
           <div className="flex items-center mb-4">
@@ -217,10 +227,6 @@ const IDVerification = () => {
             loading={loading}
             onClick={handleSubmit}
           />
-
-          <div className="flex pt-4 items-center justify-center">
-            <SkipButton />
-          </div>
         </div>
 
         <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>

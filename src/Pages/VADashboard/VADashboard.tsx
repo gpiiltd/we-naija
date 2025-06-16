@@ -5,14 +5,30 @@ import { TypographyVariant } from "../../Components/types";
 import Header from "../../Components/Header";
 import { FiSettings, FiBell, FiX, FiUsers, FiMenu } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Typography from "../../Components/Typography";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { triggerGetNotifications } from "../../redux/Services/settings/settingsServices";
+import { AppDispatch, RootState } from "../../redux/Store/store";
 
 const VADashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: notifications } = useSelector(
+    (state: RootState) => state.settings.notificationsData,
+  );
+
+  useEffect(() => {
+    dispatch(triggerGetNotifications({}));
+  }, [dispatch]);
+
+  const hasUnreadNotifications = Array.isArray(notifications)
+    ? notifications.some((notification: any) => !notification.read_at) &&
+      notifications.length > 0
+    : false;
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -108,7 +124,12 @@ const VADashboard = () => {
                     : "hidden px-2 py-2 font-thin hover:rounded-md hover:text-primary_green hover:bg-effect_green hover:font-normal transition duration-200 md:block"
                 }
               >
-                <FiBell size={20} />
+                <div className="relative">
+                  <FiBell size={20} />
+                  {hasUnreadNotifications && (
+                    <span className="absolute -top-2 -right-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                  )}
+                </div>
               </NavLink>
               {/* <NavLink
                 to="/verified-agent-dashboard/profile"
@@ -209,10 +230,12 @@ const VADashboard = () => {
                         </NavLink>
                       </li>
                       <li className="flex gap-2">
-                        <FiBell
-                          size={24}
-                          className="text-primary_green text-lg"
-                        />
+                        <div className="relative">
+                          <FiBell size={20} />
+                          {hasUnreadNotifications && (
+                            <span className="absolute -top-2 -right-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                          )}
+                        </div>
                         <NavLink
                           to="/verified-agent-dashboard/notifications"
                           onClick={toggleDrawer}
