@@ -138,28 +138,36 @@ const ContactView = () => {
                   Fill up the form and we’ll get back to you in few hours.
                 </Typography>
                 <div className="space-y-4 mb-6 md:mt-10">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-xl">
-                      <IoCall />
-                    </span>
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="font-light text-[#E5E7EB] font-raleway"
-                    >
-                      +2348141226613
-                    </Typography>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-xl">
-                      <MdEmail />
-                    </span>
-                    <Typography
-                      variant={TypographyVariant.SMALL}
-                      className="font-light text-[#E5E7EB] font-raleway"
-                    >
-                      info@nssf.ng
-                    </Typography>
-                  </div>
+                  <ButtonPhoneato
+                    tel={"+2348141226613"}
+                    children={
+                      <div className="flex items-center space-x-3">
+                        <span className="text-xl">
+                          <IoCall />
+                        </span>
+                        <Typography
+                          variant={TypographyVariant.SMALL}
+                          className="font-light text-[#E5E7EB] font-raleway"
+                        >
+                          +2348141226613
+                        </Typography>
+                      </div>
+                    }
+                  ></ButtonPhoneato>
+                  <ButtonMailto mailto={`mailto:info@nssf.ng`}>
+                    <div className="flex items-center space-x-3 mt-6">
+                      <span className="text-xl">
+                        <MdEmail />
+                      </span>
+                      <Typography
+                        variant={TypographyVariant.SMALL}
+                        className="font-light text-[#E5E7EB] font-raleway"
+                      >
+                        info@nssf.ng
+                      </Typography>
+                    </div>
+                  </ButtonMailto>
+
                   <div className="flex items-center space-x-3">
                     <span className="text-xl">
                       <IoLocation />
@@ -174,7 +182,7 @@ const ContactView = () => {
                 </div>
               </div>
 
-              <div className="flex space-x-4 mt-6 relative z-10">
+              <div className="flex space-x-4 mt-8 relative z-10">
                 <ul className="flex gap-5 flex-wrap">
                   {socialsFooter.map((item) => (
                     <li key={item.id}>
@@ -227,6 +235,8 @@ const ContactView = () => {
                   <InputField
                     required
                     label="Phone Number"
+                    maxLength={11}
+                    key={"phone"}
                     type="tel"
                     {...register("phone")}
                     error={errors?.phone?.message}
@@ -309,3 +319,29 @@ export const TextAreaField = React.forwardRef<HTMLTextAreaElement, Propss>(
     );
   },
 );
+
+type ButtonMailtoProps = {
+  mailto: string;
+  children: React.ReactNode;
+};
+
+const ButtonMailto: React.FC<ButtonMailtoProps> = ({ mailto, children }) => {
+  return (
+    <a href={`mailto:${mailto}`} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  );
+};
+
+interface ButtonPhoneatoProps {
+  tel: string;
+  children: React.ReactNode;
+}
+
+const ButtonPhoneato: React.FC<ButtonPhoneatoProps> = ({ tel, children }) => {
+  return (
+    <a href={`tel:${tel}`} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  );
+};
